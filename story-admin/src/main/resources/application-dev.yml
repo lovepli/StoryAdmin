@@ -1,0 +1,81 @@
+project:
+  domain: http://localhost:9430
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3307/story_admin?useSSL=false&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT1FROMDUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+  redis:
+    database: 1     # Redis默认情况下有16个分片，这里配置具体使用的分片。默认是索引为0的分片
+    host: localhost
+    port: 6380
+    password:      # Redis服务器连接密码（默认为空）
+#   timeout: 2000s # 连接超时时间（毫秒）
+    jedis:
+      pool:
+        min-idle: 10    #连接池中的最小空闲连接，默认值是0
+        max-idle: 50    #连接池中的最大空闲连接，默认值也是8
+        max-active: 200 #如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+        max-wait: 3000  # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出
+  data:
+    mongodb:
+      #authSource=admin 为认证数据库(用户具有所有权限可任意指定database,不存在会自动创建)
+      uri: "mongodb://admin:123456@localhost:27017/story_admin_log"
+  mail:
+    host: smtp.126.com
+    mailFrom: abcd@126.com
+    username: abcd
+    password: abcd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 25000
+
+mybatis-plus:
+  configuration:
+    #日志打印sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+file:
+  multipart:
+    #文件上传
+    autoSaveEnabled: true
+    baseDir: D:/upload/
+# 备份
+dbbackup:
+  servername: 127.0.0.1
+  dbname: story_admin
+  username: root
+  password: 123456
+  installPath: ${file.upload:D:/Development/mysql-8.0.13-winx64}
+  backupPath: ${file.export:D:/Backup}
+
+# 日志相关
+logging:
+  file: d:/storyadmin.log #开发环境系统存放日志文件的目录
+  level:
+    com:
+      story:
+        storyadmin: debug #设置日志数据级别，只在com.story.storyadmin包内输出这种级别的日志， 开发环境设置debug级别的日志，生产环境设置error级别的日志
+  pattern:
+    console: '%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:%5p})
+      %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} [%15.15X{username}]
+      [%15.15X{ip}] %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}'
+
+
