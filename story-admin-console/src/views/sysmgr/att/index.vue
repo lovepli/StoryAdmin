@@ -38,7 +38,7 @@
           type="success"
           size="small"
           icon="el-icon-download"
-          @click="showDownloadDialog=true"
+          @click="showDownloadForm()"
         >导出当页数据</el-button>
       </template>
       <!--body-->
@@ -160,14 +160,14 @@ export default {
       showDownloadDialog: false,
       list: [],
       downloadColomns: [
-        { name: 'ID', value: 'ID' },
+        { name: '序号', value: 'id', map: (v, c, i) => i + 1 },
         { name: '源文件名', value: 'originName' },
         { name: '批次', value: 'slotId' },
         { name: '类型', value: 'type' },
         { name: '大小', value: 'fileSize' },
         { name: '路径', value: 'path' },
         { name: '描述', value: 'description' },
-        { name: '创建时间', value: 'createdTime' }
+        { name: '创建时间', value: 'createdTime', map: this.dateFormat }
       ],
       acceptFileType:
         '.jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF,.ZIP,.RAR',
@@ -178,6 +178,8 @@ export default {
     };
   },
   methods: {
+    // 格式化时间
+    dateFormat(d) { return parseTime(d, '{y}-{m}-{d} {h}:{i}:{s}') },
     // 数据重置
     onDataRest() {
       this.listQuery = {};
@@ -185,9 +187,6 @@ export default {
     // 查询
     handleFilter() {
       this.$refs.dataList.fetchData();
-      // console.log(this.$refs.dataList.fetchData())
-      // 将表格数据复制到信息弹框中
-      this.list = this.$refs.dataList.fetchData();
     },
     dropRow(row) {
       this.$confirm('您确定要删除该数据吗?', '提示', {
@@ -219,6 +218,11 @@ export default {
     },
     showUploadForm() {
       this.uploadVisible = true;
+    },
+    showDownloadForm() {
+      // 将表格数据复制到信息弹框中
+      this.list = this.$refs.dataList.list;
+      this.showDownloadDialog = true;
     },
     handleExceed(files, fileList) {
       this.$message.warning('只能选择1个文件!');
