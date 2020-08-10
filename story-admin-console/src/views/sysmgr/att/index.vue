@@ -23,7 +23,7 @@
           />
         </el-form-item>
       </template>
-      <!--extendOperation-->
+      <!--extendOperation 扩展功能-->
       <template slot="extendOperation">
         <el-button
           class="filter-item"
@@ -33,6 +33,13 @@
           icon="el-icon-upload2"
           @click="showUploadForm()"
         >上传</el-button>
+        <el-button
+          class="filter-item"
+          type="success"
+          size="small"
+          icon="el-icon-download"
+          @click="showDownloadDialog=true"
+        >导出当页数据</el-button>
       </template>
       <!--body-->
       <template slot="body">
@@ -107,6 +114,10 @@
         <el-button size="mini" @click="uploadVisible=false">取消</el-button>
       </span>
     </el-dialog>
+    <!-- 下载文件 -->
+    <el-dialog :visible.sync="showDownloadDialog" width="695px" title="请选择打印内容">
+      <file-export :data="list" :cols="downloadColomns" table-name="用户附件管理数据导出" file-name="附件管理数据" />
+    </el-dialog>
   </div>
 </template>
 
@@ -117,10 +128,11 @@ import { getToken } from '@/utils/auth';
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
 import waves from '@/directive/waves'; // Waves directive
+import FileExport from '@/components/FileExport' // 导出文件
 
 export default {
   name: 'User',
-  components: { DataGrid },
+  components: { DataGrid, FileExport },
   directives: { waves },
   filters: {
     parseTime,
@@ -145,6 +157,18 @@ export default {
       uploadAction: process.env.BASE_API + '/sysmgr/att/upload',
       uploadVisible: false,
       uploadLoading: false,
+      showDownloadDialog: false,
+      list: [],
+      downloadColomns: [
+        { name: 'ID', value: 'ID' },
+        { name: '源文件名', value: 'originName' },
+        { name: '批次', value: 'slotId' },
+        { name: '类型', value: 'type' },
+        { name: '大小', value: 'fileSize' },
+        { name: '路径', value: 'path' },
+        { name: '描述', value: 'description' },
+        { name: '创建时间', value: 'createdTime' }
+      ],
       acceptFileType:
         '.jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF,.ZIP,.RAR',
       downLoadLoading: '',
@@ -154,11 +178,16 @@ export default {
     };
   },
   methods: {
+    // 数据重置
     onDataRest() {
       this.listQuery = {};
     },
+    // 查询
     handleFilter() {
       this.$refs.dataList.fetchData();
+      // console.log(this.$refs.dataList.fetchData())
+      // 将表格数据复制到信息弹框中
+      this.list = this.$refs.dataList.fetchData();
     },
     dropRow(row) {
       this.$confirm('您确定要删除该数据吗?', '提示', {
