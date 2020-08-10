@@ -65,6 +65,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
                     if (inform == null) {
                         throw new SrotyAdminException("ID非法");
                     }
+                    // 对象克隆的方法
                     InformVo result = ObjectUtil.generateSubclass(inform, InformVo.class);
                     String attachment = inform.getAttchmentList();
                     if ((attachment = trimToNull(attachment)) != null) {
