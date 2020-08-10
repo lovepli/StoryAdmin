@@ -2,6 +2,8 @@ package com.story.storyadmin.service.sysmgr;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.story.storyadmin.domain.entity.sysmgr.Inform;
+import com.story.storyadmin.domain.entity.sysmgr.User;
+import com.story.storyadmin.domain.vo.Result;
 
 import java.util.Date;
 import java.util.List;
@@ -24,13 +26,13 @@ public interface InformService extends IService<Inform> {
      */
     short OUTDATED = 2;
 
+
     /**
      * 添加公告
      *
      * @param inform    公告信息
-     * @param creatorId 创建人ID
      */
-    void add(Inform inform, int creatorId);
+    Result persist(Inform inform);
 
     /**
      * 获取公告列表简单信息
@@ -51,30 +53,28 @@ public interface InformService extends IService<Inform> {
      * @param id ID
      * @return 详细信息
      */
-    Inform get(int id);
+    Result get(Long id);
 
 
     /**
      * 修改置顶状态
      *
-     * @param id    公告ID
+     * @param inform    公告ID
      * @param isTop 是否置顶
      */
-    void topOrNot(int id, boolean isTop);
+    Result topOrNot(Inform inform, boolean isTop);
 
     /**
      * 撤销公告
-     *
-     * @param id      ID
-     * @param staffId 操作人ID
+     * @param inform
+     * @return
      */
-    void cancel(int id, Integer staffId);
+    Result cancel(Inform inform);
 
     /**
      * 使公告过期
-     *
-     * @param id      ID
-     * @param staffId 操作人ID
+     * @param inform
+     * @return
      */
-    void outdate(int id, Integer staffId);
+    Result outdate(Inform inform);
 }

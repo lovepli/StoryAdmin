@@ -1,9 +1,8 @@
 package com.story.storyadmin.scheduler.listener;
 
-import com.story.storyadmin.domain.StoryServiceException;
+import com.story.storyadmin.common.StoryServiceException;
 import com.story.storyadmin.service.sysmgr.ScheduleJobService;
 import com.story.storyadmin.utils.ExceptionUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;

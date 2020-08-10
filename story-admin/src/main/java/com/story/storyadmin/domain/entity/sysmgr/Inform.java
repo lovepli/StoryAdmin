@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统通知表
@@ -41,19 +42,19 @@ public class Inform extends BaseEntity {
     private Short status;
 
     /**
-     * 创建者
+     * 创建者id
      */
-    private Integer creator;
+    private Long creator;
 
     /**
-     * 附件列表ID
+     * 附件列表ID 的id本来是long类型的
      */
     private String attchmentList;
 
     /**
      * 撤销人ID
      */
-    private Integer canceler;
+    private Long canceler;
 
     /**
      * 撤销时间
@@ -63,7 +64,7 @@ public class Inform extends BaseEntity {
     /**
      * 过期操作人
      */
-    private Integer outdateOperator;
+    private Long outdateOperator;
 
     /**
      * 过期时间

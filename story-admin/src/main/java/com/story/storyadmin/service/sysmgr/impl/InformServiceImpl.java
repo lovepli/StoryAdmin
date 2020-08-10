@@ -1,19 +1,53 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.story.storyadmin.common.cache.CacheKeySeed;
+import com.story.storyadmin.common.cache.KeySeedManager;
+import com.story.storyadmin.common.cache.SimpleKvCache;
+import com.story.storyadmin.config.shiro.security.UserContext;
+import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.common.SrotyAdminException;
+import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.entity.sysmgr.Inform;
+import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.domain.vo.sysmgr.InformVo;
 import com.story.storyadmin.mapper.sysmgr.InformMapper;
+import com.story.storyadmin.service.sysmgr.AttachmentService;
 import com.story.storyadmin.service.sysmgr.InformService;
+import com.story.storyadmin.utils.ObjectUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.apache.logging.log4j.util.Strings.trimToNull;
 
 @Service
 public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> implements InformService {
-    @Override
-    public void add(Inform inform, int creatorId) {
 
+    // 引入自定义缓存
+    private final CacheKeySeed MEM_FLAG_INFORM_INFO = KeySeedManager.get("INFORM_INFO_");
+
+    @Autowired
+    private SimpleKvCache kvCache;
+
+    @Autowired
+    AttachmentService attachmentService;
+
+    @Override
+    public Result persist(Inform inform) {
+        //当前系统日期
+        Date currentDate = Date.from(Instant.now());
+        inform.setCreateDate(currentDate);
+        inform.setCreator(UserContext.getCurrentUser().getUserId());
+        inform.setStatus(NORMAL);
+        //新增用户
+        baseMapper.insert(inform);
+        return new Result(true, "新增公告", null, Constants.TOKEN_CHECK_SUCCESS);
     }
 
     @Override
@@ -22,22 +56,88 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
     }
 
     @Override
-    public Inform get(int id) {
-        return null;
+    public Result get(Long id) {
+
+        return kvCache.getOrDefault(
+                MEM_FLAG_INFORM_INFO.key(id),
+                () -> {
+                    Inform inform = baseMapper.selectById(id);
+                    if (inform == null) {
+                        throw new SrotyAdminException("ID非法");
+                    }
+                    InformVo result = ObjectUtil.generateSubclass(inform, InformVo.class);
+                    String attachment = inform.getAttchmentList();
+                    if ((attachment = trimToNull(attachment)) != null) {
+                        // 获取附件ID
+                        String[] ids = attachment.split(",");
+                        // 根据ID获取所有附件名称信息
+                        List<String> idList = Arrays.stream(ids).collect(Collectors.toList());
+                        // 根据ids
+                        List<Attachment> attachments = attachmentService
+                        List<Attachment> attachments = attachmentMapperExtend.selectNamesByIds(idList);
+                        result.setAttachmentsToShow(attachments);
+                    }
+                    // 通过操作人的id查询出操作人名称
+                    result.setCreatorName(staffMapperExtend.selectNameById(result.getCreator()));
+                    return result;
+                }
+        );
+
+        return new Result(true, "公告的置顶状态改变", null, Constants.TOKEN_CHECK_SUCCESS);
+
+
     }
 
     @Override
-    public void topOrNot(int id, boolean isTop) {
+    public Result topOrNot(Inform inform, boolean isTop) {
 
+        Inform informBean= assertExistAndNormal(inform.getId());
+        informBean.setTop(isTop);
+        return new Result(true, "公告的置顶状态改变", null, Constants.TOKEN_CHECK_SUCCESS);
     }
 
     @Override
-    public void cancel(int id, Integer staffId) {
+    public Result cancel(Inform inform) {
+        //当前系统日期
+        Date currentDate = Date.from(Instant.now());
 
+        Inform informBean = assertExistAndNormal(inform.getId());
+        informBean.setStatus(CANCELED);
+        // 操作人ID
+        informBean.setCanceler(UserContext.getCurrentUser().getUserId());
+        informBean.setCancelDate(currentDate);
+        informBean.setTop(false);
+        return new Result(true, "撤销公告", null, Constants.TOKEN_CHECK_SUCCESS);
     }
 
     @Override
-    public void outdate(int id, Integer staffId) {
+    public Result outdate(Inform inform) {
+        //当前系统日期
+        Date currentDate = Date.from(Instant.now());
 
+        Inform informBean = assertExistAndNormal(inform.getId());
+        informBean.setStatus(OUTDATED);
+        // 操作人ID
+        informBean.setOutdateOperator(UserContext.getCurrentUser().getUserId());
+        informBean.setOutdateDate(currentDate);
+        informBean.setTop(false);
+        return new Result(true, "公告过期", null, Constants.TOKEN_CHECK_SUCCESS);
+    }
+
+    /**
+     * 校验公告存在且状态为正常
+     *
+     * @param id 公告ID
+     * @return 公告
+     */
+    private Inform assertExistAndNormal(Long id) {
+        Inform toCheck = baseMapper.selectById(id);
+        if (toCheck == null) {
+            throw new SrotyAdminException("非法ID");
+        }
+        if (toCheck.getStatus() != NORMAL) {
+            throw new SrotyAdminException("状态错误");
+        }
+        return toCheck;
     }
 }

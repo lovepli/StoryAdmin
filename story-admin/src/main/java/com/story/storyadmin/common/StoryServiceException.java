@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain;
+package com.story.storyadmin.common;
 
 /**
  * 统一Rest API异常类
