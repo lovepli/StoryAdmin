@@ -277,6 +277,7 @@ export default {
       // this.uploadLoading=true;
       var that = this;
       // setTimeout(function () {
+      // eslint-disable-next-line eqeqeq
       if (that.$refs.upload.$children[0].fileList.length == 1) {
         that.$refs.upload.submit();
       } else {
