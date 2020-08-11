@@ -1,47 +1,28 @@
 import request from '@/utils/request'
-
-// // 添加
-// export function addInform(inform) {
-//   var expiration = inform.expiration
-//   if (expiration && expiration.getTime) {
-//     inform.expiration = expiration.getTime()
-//   }
-//   return request({
-//     url: '/inform',
-//     method: 'post',
-//     data: inform
-//   })
-// }
-
-// 查询
-// export function queryInform(cond, page) {
-//   const params = {
-//     status: cond.status,
-//     title: cond.title,
-//     creator: cond.operator,
-//     tf: cond.topFirst,
-//     page: page.num,
-//     limit: page.size
-//   }
-//   const { createDate } = cond
-//   if (createDate && createDate.length === 2) {
-//     params.sd = params[0].getTime()
-//     params.ed = params[1].getTime()
-//   }
-//   return request({
-//     url: `/informs?${search(params)}`,
-//     method: 'get'
-//   })
-// }
+import { search } from '@/utils/common'
 
 // 列表查询
-export function getList(params) {
+export function getList(cond, page) {
+  const params = {
+    status: cond.status,
+    title: cond.title,
+    creator: cond.operator,
+    tf: cond.topFirst,
+    // 分页
+    pageNo: page.num,
+    limit: page.size
+  }
+  const { createDate } = cond
+  if (createDate && createDate.length === 2) {
+    params.sd = params[0].getTime()
+    params.ed = params[1].getTime()
+  }
   return request({
-    url: '/sysmgr/inform/list',
-    method: 'get',
-    params
+    url: `/sysmgr/inform/list?${search(params)}`,
+    method: 'get'
   })
 }
+
 // 根据Id查询
 export function findById(param) {
   return request({
@@ -87,19 +68,16 @@ export function topInform(param) {
   })
 }
 
-// 更改/保存
+// // 添加
 export function save(param) {
+  var expiration = param.expiration
+  if (expiration && expiration.getTime) {
+    param.expiration = expiration.getTime()
+  }
   return request({
     url: '/sysmgr/inform/save',
     method: 'post',
     data: param
   })
 }
-// 删除
-export function drop(param) {
-  return request({
-    url: '/sysmgr/inform/delete',
-    method: 'post',
-    data: param
-  })
-}
+

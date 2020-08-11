@@ -1,11 +1,10 @@
 import request from '@/utils/request'
-import { search } from '@/utils/common'
 
 export function uploadFile(file, data) {
   var formData = new FormData()
   formData.append('file', file)
   return request({
-    url: '/file/upload?' + search(data),
+    url: '/file/upload?',
     method: 'post',
     data: formData
   })

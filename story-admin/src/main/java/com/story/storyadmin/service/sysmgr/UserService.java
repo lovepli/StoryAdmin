@@ -68,4 +68,11 @@ public interface UserService extends IService<User> {
      */
     Result editPassWord(UserPassword userPassword);
 
+    /**
+     * 根据用户ID查查询user
+     * @param id
+     * @return
+     */
+     User selectUserById(Long id);
+
 }

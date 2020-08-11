@@ -5,7 +5,7 @@
         <span slot="label"><i class="el-icon-view" />  已创建</span>
         <inform-table :user-list="allUsers" />
       </el-tab-pane>
-      <el-tab-pane v-if="permissions.tab_add" name="create">
+      <el-tab-pane name="create">
         <span slot="label"><i class="el-icon-edit" />  新公告</span>
         <new-inform class="tab-content" @created="createdNewOne()" />
       </el-tab-pane>
@@ -21,12 +21,11 @@ export default {
   data() {
     return {
       tabIndex: 'send',
-      permissions: {},
       allUsers: []
     }
   },
   created() {
-    this.$permission()
+
   },
   methods: {
     createdNewOne() {

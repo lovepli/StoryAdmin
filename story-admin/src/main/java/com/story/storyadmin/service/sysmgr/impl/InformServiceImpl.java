@@ -9,11 +9,13 @@ import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.common.SrotyAdminException;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.entity.sysmgr.Inform;
+import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.InformVo;
 import com.story.storyadmin.mapper.sysmgr.InformMapper;
 import com.story.storyadmin.service.sysmgr.AttachmentService;
 import com.story.storyadmin.service.sysmgr.InformService;
+import com.story.storyadmin.service.sysmgr.UserService;
 import com.story.storyadmin.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +34,14 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
     // 引入自定义缓存
     private final CacheKeySeed MEM_FLAG_INFORM_INFO = KeySeedManager.get("INFORM_INFO_");
 
-    @Autowired
+    @Autowired(required=true)
     private SimpleKvCache kvCache;
 
     @Autowired
     AttachmentService attachmentService;
+
+    @Autowired
+    UserService UserService;
 
     @Override
     public Result persist(Inform inform) {
@@ -55,9 +60,13 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
         return null;
     }
 
+    /**
+     * 按主键获取详情信息
+     * @param id ID
+     * @return
+     */
     @Override
-    public Result get(Long id) {
-
+    public Inform get(Long id) {
         return kvCache.getOrDefault(
                 MEM_FLAG_INFORM_INFO.key(id),
                 () -> {
@@ -74,19 +83,15 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
                         // 根据ID获取所有附件名称信息
                         List<String> idList = Arrays.stream(ids).collect(Collectors.toList());
                         // 根据ids
-                        List<Attachment> attachments = attachmentService
-                        List<Attachment> attachments = attachmentMapperExtend.selectNamesByIds(idList);
+                        List<Attachment> attachments = attachmentService.selectNamesByIds(idList);
                         result.setAttachmentsToShow(attachments);
                     }
                     // 通过操作人的id查询出操作人名称
-                    result.setCreatorName(staffMapperExtend.selectNameById(result.getCreator()));
+                    User userBean = UserService.selectUserById(UserContext.getCurrentUser().getUserId());
+                    result.setCreatorName(userBean.getName());
                     return result;
                 }
         );
-
-        return new Result(true, "公告的置顶状态改变", null, Constants.TOKEN_CHECK_SUCCESS);
-
-
     }
 
     @Override

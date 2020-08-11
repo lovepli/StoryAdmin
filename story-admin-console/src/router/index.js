@@ -38,6 +38,22 @@ export const constantRouterMap = [
     component: () => import('@/views/login/erpIndex'), // 路由懒加载
     hidden: true
   },
+  // 进入公告页面
+  {
+    path: '/inform',
+    component: Layout,
+    hidden: true,
+    redirect: '/inform/:id',
+    children: [{
+      path: ':id',
+      name: 'InformInfo',
+      component: () => import('@/views/sysmgr/inform/info/index'),
+      meta: {
+        title: '公告'
+      }
+    }]
+
+  },
   {
     path: '/404',
     component: () => import('@/views/404'), // 链接到404界面

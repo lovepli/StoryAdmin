@@ -4,12 +4,15 @@
 
     <select id="selectNamesByIds"  parameterType="java.util.List" >
         select id, file_name, file_size
-        from st_ATTACHMENT
+        from st_attachment
         where id in
         <foreach collection='ids' item='id' open='(' close=')' separator=','>
         #{id}
         </foreach>
     </select>
 
+    <select id="selectBySequence"  parameterType="java.lang.String" >
+          select * from st_attachment where sequence = #{sequence}
+    </select>
 
 </mapper>

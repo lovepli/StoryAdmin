@@ -336,4 +336,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return new Result(false, "参数不完整", null, Constants.PARAMETERS_MISSING);
     }
 
+    public User selectUserById(Long id){
+      return baseMapper.selectById(id);
+    }
+
+
 }

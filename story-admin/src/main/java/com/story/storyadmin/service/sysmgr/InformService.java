@@ -53,7 +53,7 @@ public interface InformService extends IService<Inform> {
      * @param id ID
      * @return 详细信息
      */
-    Result get(Long id);
+    Inform get(Long id);
 
 
     /**

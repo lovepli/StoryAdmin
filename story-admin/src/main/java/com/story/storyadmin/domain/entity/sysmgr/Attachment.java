@@ -41,9 +41,9 @@ public class Attachment extends BaseEntity {
     private Date uploadDate;
 
     /**
-     * 上传人
+     * 上传人Id
      */
-    private Integer uploader;
+    private Long uploader;
 
     /**
      * 1 正常 0 已被删除
@@ -51,9 +51,9 @@ public class Attachment extends BaseEntity {
     private Short status;
 
     /**
-     * 删除人
+     * 删除人Id
      */
-    private Integer deleter;
+    private Long deleter;
 
     /**
      * 删除时间

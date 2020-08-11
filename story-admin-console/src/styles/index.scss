@@ -84,4 +84,20 @@ a:hover {
     vertical-align: middle;
     margin-bottom: 10px;
   }
+
+
+  // 解决文字下沉问题 这下面的这四个是新增公告添加进去的
+  .filter-item.el-input{
+    width: 180px;
+  }
+  .filter-item.el-select{
+    width: 180px;
+  }
+  .filter-item{
+    margin-left: 10px;
+  }
+  // 解决文字下沉问题
+  .filter-item.el-date-editor{
+    line-height: 0px;
+  }
 }
