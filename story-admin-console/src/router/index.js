@@ -43,11 +43,11 @@ export const constantRouterMap = [
     path: '/inform',
     component: Layout,
     hidden: true,
-    redirect: '/inform/:id',
+    redirect: '/sysmgr/inform/:id',
     children: [{
       path: ':id',
       name: 'InformInfo',
-      component: () => import('@/views/sysmgr/inform/info/index'),
+      component: () => import('@/views/sysmgr/inform/info'),
       meta: {
         title: '公告'
       }

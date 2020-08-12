@@ -31,7 +31,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Api(description = "系统通知")
 @RestController
-@RequestMapping("/sysmgr/inform")
+@RequestMapping("/sysmgr")
 public class InformController {
 
     private static final Logger logger = LoggerFactory.getLogger(InformController.class);
@@ -48,7 +48,7 @@ public class InformController {
      */
     @ApiOperation(value = "公告" ,  notes="分页查询公告")
     @RequiresPermissions("sysmgr.inform.query")
-    @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value="/inform/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result get(InformDTO inform,
                       @RequestParam(defaultValue = "1") int pageNo,
                       @RequestParam(defaultValue = "10") int limit) {
@@ -72,16 +72,16 @@ public class InformController {
 
     /**
      * 根据Id查询公告信息 TODO 这里要从缓存中取出来公告信息!!
-     * @param inform
+     * @param id
      * @return
      */
     @ApiOperation(value = "公告" ,  notes="查看公告详情")
     @RequiresPermissions("sysmgr.inform.query")
-    @RequestMapping(value="/find",method = {RequestMethod.POST})
-    public Result findById(@RequestBody Inform inform){
+    @RequestMapping(value = "/inform/{id}", method = GET)
+    public Result findById(@PathVariable Long id){
       //  Inform informBean= informService.getById(inform.getId()); // 这个是从数据库中获取
         // 从缓存中获取公告详情
-        Inform informBean= informService.get(inform.getId());
+        Inform informBean= informService.get(id);
         // 判断状态是否已撤销
         if (Objects.equals(informBean.getStatus(), InformService.CANCELED)) {
             informBean.setContent(null);
@@ -124,50 +124,50 @@ public class InformController {
 
     /**
      * 置顶公告
-     * @param inform
+     * @param id
      * @return
      */
     @ApiOperation(value = "公告" ,  notes="置顶公告")
     @RequiresPermissions("sysmgr.inform.top")
-    @RequestMapping(value = "/top",method = {RequestMethod.POST})
-    public Result top(@RequestBody Inform inform) {
-        return informService.topOrNot(inform, true);
+    @RequestMapping(value = "/inform/{id}/top", method = POST)
+    public Result top(@PathVariable Long id) {
+        return informService.topOrNot(id, true);
     }
 
     /**
      * 取消公告的置顶
-     * @param inform
+     * @param id
      * @return
      */
     @ApiOperation(value = "公告" ,  notes="取消公告的置顶")
     @RequiresPermissions("sysmgr.inform.untop")
-    @RequestMapping(value = "/untop",method = {RequestMethod.POST})
-    public Result untop(@RequestBody Inform inform) {
-        return informService.topOrNot(inform, false);
+    @RequestMapping(value = "/inform/{id}/untop", method = POST)
+    public Result untop(@PathVariable Long id) {
+        return informService.topOrNot(id, false);
     }
 
     /**
      * 撤销公告
-     * @param inform
+     * @param id
      * @return
      */
     @ApiOperation(value = "公告" ,  notes="撤销公告")
     @RequiresPermissions("sysmgr.inform.cancel")
-    @RequestMapping(value = "/cancel", method = POST)
-    public Result cancel(@RequestBody Inform inform) {
-        return informService.cancel(inform);
+    @RequestMapping(value = "/inform/{id}/cancel", method = POST)
+    public Result cancel(@PathVariable Long id) {
+        return informService.cancel(id);
     }
 
     /**
      * 使公告过期
-     * @param inform
+     * @param id
      * @return
      */
     @ApiOperation(value = "公告" ,  notes="使公告过期")
     @RequiresPermissions("sysmgr.inform.outdate")
-    @RequestMapping(value = "/outdate", method = POST)
-    public Result outdate(@RequestBody Inform inform) {
-        return informService.outdate(inform);
+    @RequestMapping(value = "/inform/{id}/outdate", method = POST)
+    public Result outdate(@PathVariable Long id) {
+        return informService.outdate(id);
     }
 
 }

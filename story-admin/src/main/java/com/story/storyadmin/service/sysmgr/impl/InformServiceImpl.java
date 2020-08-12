@@ -95,20 +95,20 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
     }
 
     @Override
-    public Result topOrNot(Inform inform, boolean isTop) {
+    public Result topOrNot(Long id, boolean isTop) {
 
-        Inform informBean= assertExistAndNormal(inform.getId());
+        Inform informBean= assertExistAndNormal(id);
         informBean.setTop(isTop);
         baseMapper.updateById(informBean);
         return new Result(true, "公告的置顶状态改变", null, Constants.TOKEN_CHECK_SUCCESS);
     }
 
     @Override
-    public Result cancel(Inform inform) {
+    public Result cancel(Long id) {
         //当前系统日期
         Date currentDate = Date.from(Instant.now());
 
-        Inform informBean = assertExistAndNormal(inform.getId());
+        Inform informBean = assertExistAndNormal(id);
         informBean.setStatus(CANCELED);
         // 操作人ID
         informBean.setCanceler(UserContext.getCurrentUser().getUserId());
@@ -119,11 +119,11 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
     }
 
     @Override
-    public Result outdate(Inform inform) {
+    public Result outdate(Long id) {
         //当前系统日期
         Date currentDate = Date.from(Instant.now());
 
-        Inform informBean = assertExistAndNormal(inform.getId());
+        Inform informBean = assertExistAndNormal(id);
         informBean.setStatus(OUTDATED);
         // 操作人ID
         informBean.setOutdateOperator(UserContext.getCurrentUser().getUserId());

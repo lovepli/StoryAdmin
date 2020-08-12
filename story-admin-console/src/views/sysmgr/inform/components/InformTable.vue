@@ -158,7 +158,7 @@ export default {
     },
     // 进入公告详情页面
     showInfo(id) {
-      this.$router.push({ path: `/inform/${id}` })
+      this.$router.push({ path: `/sysmgr/inform/${id}` })
     }
   }
 }

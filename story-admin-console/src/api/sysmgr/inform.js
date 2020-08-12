@@ -11,47 +11,42 @@ export function getInformList(param) {
 }
 
 // 根据Id查询
-export function findById(param) {
+export function findById(id) {
   return request({
-    url: '/sysmgr/inform/find',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/find/${id}`,
+    method: 'get'
   })
 }
 
 // 过期
-export function outdateInform(param) {
+export function outdateInform(id) {
   return request({
-    url: '/sysmgr/inform/outdate',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/${id}/outdate`,
+    method: 'post'
   })
 }
 
 // 撤销
-export function cancelInform(param) {
+export function cancelInform(id) {
   return request({
-    url: '/sysmgr/inform/cancel',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/${id}/cancel`,
+    method: 'post'
   })
 }
 
 // 取消置顶
-export function untopInform(param) {
+export function untopInform(id) {
   return request({
-    url: '/sysmgr/inform/untop',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/${id}/untop`,
+    method: 'post'
   })
 }
 
 // 置顶
-export function topInform(param) {
+export function topInform(id) {
   return request({
-    url: '/sysmgr/inform/top',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/${id}/top`,
+    method: 'post'
   })
 }
 

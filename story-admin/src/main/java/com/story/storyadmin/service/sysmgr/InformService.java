@@ -62,19 +62,19 @@ public interface InformService extends IService<Inform> {
      * @param inform    公告ID
      * @param isTop 是否置顶
      */
-    Result topOrNot(Inform inform, boolean isTop);
+    Result topOrNot(Long id, boolean isTop);
 
     /**
      * 撤销公告
-     * @param inform
+     * @param id
      * @return
      */
-    Result cancel(Inform inform);
+    Result cancel(Long id);
 
     /**
      * 使公告过期
-     * @param inform
+     * @param id
      * @return
      */
-    Result outdate(Inform inform);
+    Result outdate(Long id);
 }
