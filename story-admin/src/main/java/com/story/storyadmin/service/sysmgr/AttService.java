@@ -33,7 +33,7 @@ public interface AttService extends IService<Att> {
 
     /**
      * 保存一个新文件。
-     * @param sourceUri 模块路径。 例如: ocn/staff/student/save, <BR>
+     * @param sourceUri 模块存储路径。 例如: ocn/staff/student/save, <BR>
      * 如果是rest接口， 以直接取request.getRequestURI()的值为最好。
      * @param multipartFile 文件
      * @return
@@ -45,10 +45,10 @@ public interface AttService extends IService<Att> {
 
     /**
      * 在指定batchId下， 添加一个新文件。
-     * @param sourceUri 模块路径。 例如: ocn/staff/student/save, <BR>
+     * @param sourceUri 模块存储路径。 例如: ocn/staff/student/save, <BR>
      * 如果是rest接口， 以直接取request.getRequestURI()的值为最好。
-     * @param multipartFile
-     * @param batchId
+     * @param multipartFile 文件
+     * @param batchId 批次
      * @return
      * @throws IllegalStateException
      * @throws IOException

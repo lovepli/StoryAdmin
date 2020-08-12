@@ -1,25 +1,12 @@
 import request from '@/utils/request'
-import { search } from '@/utils/common'
+// import { search } from '@/utils/common'
 
 // 列表查询
-export function getList(cond, page) {
-  const params = {
-    status: cond.status,
-    title: cond.title,
-    creator: cond.operator,
-    tf: cond.topFirst,
-    // 分页
-    pageNo: page.num,
-    limit: page.size
-  }
-  const { createDate } = cond
-  if (createDate && createDate.length === 2) {
-    params.sd = params[0].getTime()
-    params.ed = params[1].getTime()
-  }
+export function getInformList(param) {
   return request({
-    url: `/sysmgr/inform/list?${search(params)}`,
-    method: 'get'
+    url: `/sysmgr/inform/list`,
+    method: 'get',
+    data: param
   })
 }
 

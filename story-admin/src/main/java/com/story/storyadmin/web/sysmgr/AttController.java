@@ -14,6 +14,13 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * <p>
@@ -77,10 +84,17 @@ public class AttController {
      * @param attVo
      * @return
      */
+    /**
+     * 上传文件
+     * @param
+     * @return
+     */
     @RequiresPermissions("sysmgr.att.upload")
-    @PostMapping(value="/upload")
-    public Result upload(AttVo attVo){
-        Result result = new Result(true,null,null,Constants.TOKEN_CHECK_SUCCESS);
+    @RequestMapping(value="/upload", method = POST)
+    public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+        Att att= attService.save(request.getRequestURI(),file,"第一批次");
+
+        Result result = new Result(true,"上传成功",att,Constants.TOKEN_CHECK_SUCCESS);
         return result;
     }
 }

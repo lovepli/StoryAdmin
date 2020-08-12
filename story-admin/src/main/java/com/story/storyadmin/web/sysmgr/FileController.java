@@ -2,9 +2,13 @@ package com.story.storyadmin.web.sysmgr;
 
 import com.story.storyadmin.common.SrotyAdminOutException;
 import com.story.storyadmin.config.shiro.security.UserContext;
+import com.story.storyadmin.config.upload.annotation.FileSlotDisabled;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.IFileService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +29,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  *
  * @author zhyyy
  **/
+@Api(description = "附件")
 @RestController
+@RequestMapping("/sysmgr/file")
 public class FileController  {
 
     @Autowired
@@ -37,7 +43,10 @@ public class FileController  {
      * @param file  文件
      * @return response
      */
-    @RequestMapping(value = "/file/upload", method = POST)
+    @ApiOperation(value = "附件" ,  notes="上传文件")
+    @RequiresPermissions("sysmgr.file.upload")
+    @RequestMapping(value = "/upload", method = POST)
+    @FileSlotDisabled
     public Result upload(@RequestParam("file") MultipartFile file) {
         return fileService.uploadFile(file, UserContext.getCurrentUser().getUserId());
     }
@@ -49,8 +58,9 @@ public class FileController  {
      *
      * @return response
      */
-    //@UserLog("删除文件")
-    @RequestMapping(value = "/file/{id}", method = DELETE)
+    @ApiOperation(value = "附件" ,  notes="删除文件")
+    @RequiresPermissions("sysmgr.file.delete")
+    @RequestMapping(value = "/{id}", method = DELETE)
     public Result delete(@PathVariable("id") Long fileId) {
         return fileService.deleteFile(fileId, UserContext.getCurrentUser().getUserId());
     }
@@ -61,7 +71,9 @@ public class FileController  {
      * @param response 下载人token
      * @param fileId   文件ID
      */
-    @RequestMapping(value = "/file/download/{id}", method = GET)
+    @ApiOperation(value = "附件" ,  notes="下载文件")
+    @RequiresPermissions("sysmgr.file.download")
+    @RequestMapping(value = "/download/{id}", method = GET)
     public void downloadFile(HttpServletResponse response, @PathVariable("id") Long fileId) {
         Attachment attachment = fileService.getById(fileId);
         if (attachment == null) {

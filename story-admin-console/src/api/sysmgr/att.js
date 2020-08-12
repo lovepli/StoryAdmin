@@ -18,3 +18,16 @@ export function drop(param) {
   })
 }
 
+import { search } from '@/utils/common'
+
+// 上传
+export function uploadFile(file, data) {
+  var formData = new FormData()
+  formData.append('file', file)
+  return request({
+    url: '/file/upload?' + search(data),
+    method: 'post',
+    data: formData
+  })
+}
+

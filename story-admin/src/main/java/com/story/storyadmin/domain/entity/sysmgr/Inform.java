@@ -14,8 +14,8 @@ import java.util.List;
  * 系统通知表
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = true)
+//@Accessors(chain = true)
 @TableName("st_inform")
 public class Inform extends BaseEntity {
 
@@ -76,4 +76,13 @@ public class Inform extends BaseEntity {
      */
     private String content;
 
+    @Override
+    public String toString() {
+        return "Inform{" +
+                "title='" + title + '\'' +
+                ", top=" + top +
+                ", status=" + status +
+                ", creator=" + creator +
+                '}';
+    }
 }

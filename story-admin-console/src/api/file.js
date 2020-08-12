@@ -5,7 +5,7 @@ export function uploadFile(file, data) {
   var formData = new FormData()
   formData.append('file', file)
   return request({
-    url: '/file/upload?' + search(data),
+    url: '/sysmgr/file/upload?' + search(data),
     method: 'post',
     data: formData
   })
@@ -13,14 +13,14 @@ export function uploadFile(file, data) {
 
 export function deleteFile(fileId) {
   return request({
-    url: '/file/' + fileId,
+    url: '/sysmgr/file/' + fileId,
     method: 'delete'
   })
 }
 
 export function downloadFile(id) {
   return request({
-    url: '/file/download/' + id,
+    url: '/sysmgr/file/download/' + id,
     method: 'get',
     responseType: 'blob'
   })

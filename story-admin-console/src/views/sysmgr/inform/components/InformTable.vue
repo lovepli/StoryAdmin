@@ -3,22 +3,22 @@
     <!-- 搜索框 -->
     <div class="filter-container">
       <el-input v-model="listQuery.title" class="filter-item" placeholder="标题" />
-      <el-select v-model="listQuery.operator" class="filter-item" placeholder="发布人" clearable @change="query">
+      <el-select v-model="listQuery.creator" class="filter-item" placeholder="发布人" clearable @change="query">
         <el-option v-for="u in allUsers" :key="u.id" :value="u.id" :label="u.name" />
       </el-select>
       <el-select v-model="listQuery.status" class="filter-item" placeholder="状态" clearable @change="query">
         <el-option v-for="(s,i) in statusLabel" :key="i" :value="i" :label="s" />
       </el-select>
-      <date-between :value="listQuery.createDate" class="filter-item" name="发布日期" @keypress.native.enter="query" @change="val=>{listQuery.createDate = val;query()}" />
+      <date-between :value="listQuery.visitTimeRange" class="filter-item" name="发布日期" @keypress.native.enter="query" @change="val=>{listQuery.visitTimeRange = val;query()}" />
       <el-button :loading="listLoading" class="filter-item" type="primary" icon="el-icon-search" @click="query">
         搜索
       </el-button>
     </div>
     <!-- 表格 -->
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <el-table v-loading="listLoading" :data="dataList" border fit highlight-current-row style="width: 100%">
       <el-table-column type="index" label="序号" align="center" width="60" />
       <el-table-column :formatter="r=>r.title" label="标题" align="center" min-width="360" />
-      <el-table-column :formatter="r=>parseDate(r.create_date)" label="发布时间" align="center" min-width="120" />
+      <el-table-column :formatter="r=>parseDate(r.createDate)" label="发布时间" align="center" min-width="120" />
       <el-table-column :formatter="r=>getUserName(r.creator)" label="发布人" align="center" min-width="120" />
       <el-table-column label="状态" align="center">
         <template slot-scope="{row}">
@@ -59,7 +59,7 @@
 </template>
 <script>
 import DateBetween from '@/components/DateBetween' // 引入自定义日期组件
-import { getList, topInform, untopInform, cancelInform, outdateInform } from '@/api/sysmgr/inform'
+import { getInformList, topInform, untopInform, cancelInform, outdateInform } from '@/api/sysmgr/inform'
 import { parseTime } from '@/utils'
 import { getList as findAllUserList } from '@/api/sysmgr/user'
 
@@ -70,9 +70,13 @@ export default {
     return {
       listQuery: {
         title: '',
-        createDate: [], // 发布日期
-        status: undefined,
-        creater: undefined
+        visitTimeRange: [], // 发布日期
+        status: undefined, // 状态
+        creater: undefined, // 发布人
+        startDate: '', // 开始时间
+        endDate: '', // 结束时间
+        pageNo: '',
+        limit: ''
       },
       // 分页
       page: {
@@ -80,7 +84,7 @@ export default {
         size: 10
       },
       total: 0,
-      list: [],
+      dataList: null,
       listLoading: false, // 表格加载
       allUsers: [],
       statusLabel: ['已撤销', '有效中', '已过期'],
@@ -94,11 +98,23 @@ export default {
     findAllUserList().then(res => { this.allUsers = res.data })
   },
   methods: {
+    dateValid() {
+      console.log(this.listQuery.visitTimeRange);
+      if (this.listQuery.visitTimeRange && this.listQuery.visitTimeRange.length === 2) {
+        this.listQuery.startDate = this.visitTimeRange[0];
+        this.listQuery.endDate = this.visitTimeRange[1];
+      }
+    },
     query() {
       this.listLoading = true
-      getList(this.listQuery, this.page).then(r => {
-        this.list = r.data.records
-        this.total = r.data.total
+      // 点击查询之前进行验证日期
+      this.dateValid()
+      this.listQuery.pageNo = this.page.num;
+      this.listQuery.limit = this.page.size;
+
+      getInformList(this.listQuery).then(r => {
+        this.dataList = r.data.records;
+        this.total = r.data.total;
       }).catch(e => {}).finally(() => { this.listLoading = false })
     },
     // 日期格式化

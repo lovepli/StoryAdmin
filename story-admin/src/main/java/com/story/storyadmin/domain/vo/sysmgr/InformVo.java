@@ -53,4 +53,6 @@ public class InformVo extends Inform {
         this.creatorName = creatorName;
         return this;
     }
+
+
 }

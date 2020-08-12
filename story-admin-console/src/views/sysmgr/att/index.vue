@@ -80,15 +80,19 @@
     <el-dialog :visible.sync="uploadVisible" title="上传文件">
       <el-row>
         <el-col :span="24">
+          <!-- 通过 slot 你可以传入自定义的上传按钮类型和文字提示。
+          可通过设置limit和on-exceed来限制上传文件的个数和定义超出限制时的行为。
+          可通过设置before-remove来阻止文件移除操作。 -->
           <el-upload
             ref="upload"
-            :action="uploadAction"
+            :action="filePostUrl"
             :accept="acceptFileType"
             :limit="1"
             :headers="importHeaders"
             :on-exceed="handleExceed"
             :data="fileUploadParam"
             :before-upload="beforeUpload"
+            :before-remove="beforeRemove"
             :on-preview="handlePreview"
             :on-progress="handleProgress"
             :on-remove="handleRemove"
@@ -123,8 +127,8 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { getList, drop } from '@/api/sysmgr/att';
-import { getToken } from '@/utils/auth';
+import { getList, drop, uploadFile } from '@/api/sysmgr/att';
+import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
 import waves from '@/directive/waves'; // Waves directive
@@ -152,10 +156,13 @@ export default {
         slotId: null
       },
 
+      filePostUrl: process.env.BASE_API,
+      addFiles: [],
+
       importHeaders: { Authorization: getToken() },
       fileList: [],
-      uploadAction: process.env.BASE_API + '/sysmgr/att/upload',
-      uploadVisible: false,
+      // uploadAction: process.env.BASE_API + '/sysmgr/att/upload', // 调用上传文件的接口
+      uploadVisible: false, // 上传文件弹框
       uploadLoading: false,
       showDownloadDialog: false,
       list: [],
@@ -188,6 +195,15 @@ export default {
     handleFilter() {
       this.$refs.dataList.fetchData();
     },
+    // 上传文件
+    uploadFile(content) {
+      uploadFile(content.file).then(r => { content.onSuccess(r, content.file) })
+        .catch(e => {
+          this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
+          content.onError(e.message)
+        })
+    },
+    // 删除接口
     dropRow(row) {
       this.$confirm('您确定要删除该数据吗?', '提示', {
         confirmButtonText: '确定',
@@ -216,9 +232,11 @@ export default {
           });
         });
     },
+    // 上传
     showUploadForm() {
       this.uploadVisible = true;
     },
+    // 导出当前页数据
     showDownloadForm() {
       // 将表格数据复制到信息弹框中
       this.list = this.$refs.dataList.list;
@@ -226,25 +244,30 @@ export default {
     },
     handleExceed(files, fileList) {
       this.$message.warning('只能选择1个文件!');
+      // this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
     handleRemove(file, fileList) {
-      // console.log(file,fileList);
+      console.log(file, fileList);
     },
     handlePreview(file) {
-      // console.log(file);
+      console.log(file);
     },
+    // 上传之前
     beforeUpload(file) {
       // 文件类型
       // eslint-disable-next-line no-unused-vars
       var fileName = file.name.substring(file.name.lastIndexOf('.') + 1);
-      // if(fileName!='xls'){
-      //     that.$message({
-      //         type:'error',
-      //         showClose:true,
-      //         duration:3000,
-      //         message:'文件类型不是.xls文件!'
-      //     });
-      //     return false;
+      // 判断是不是xls文件
+      // eslint-disable-next-line eqeqeq
+      // if (fileName != 'xls') {
+      //   // eslint-disable-next-line no-undef
+      //   this.$message({
+      //     type: 'error',
+      //     showClose: true,
+      //     duration: 3000,
+      //     message: '文件类型不是.xls文件!'
+      //   });
+      //   return false;
       // }
       // 读取文件大小
       var fileSize = file.size;
@@ -259,6 +282,10 @@ export default {
       }
       return true;
     },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    // 上传过程
     handleProgress(event, file, fileList) {
       this.downloadLoading = this.$loading({
         lock: true,
@@ -273,25 +300,26 @@ export default {
         this.uploadLoading = false;
       }
     },
+    //  确定上传
     submitUpload() {
-      // this.uploadLoading=true;
+      this.uploadLoading = true;
       var that = this;
-      // setTimeout(function () {
+      setTimeout(function() {
       // eslint-disable-next-line eqeqeq
-      if (that.$refs.upload.$children[0].fileList.length == 1) {
-        that.$refs.upload.submit();
-      } else {
-        that.uploadLoading = false;
-        that.$message({
-          type: 'error',
-          showClose: true,
-          duration: 3000,
-          message: '请选择文件!'
-        });
-      }
-      // },100);
+        if (that.$refs.upload.$children[0].fileList.length == 1) {
+          that.$refs.upload.submit();
+        } else {
+          that.uploadLoading = false;
+          that.$message({
+            type: 'error',
+            showClose: true,
+            duration: 3000,
+            message: '请选择文件!'
+          });
+        }
+      }, 100);
     },
-
+    // 上传成功
     handleSuccess(response, file, fileList) {
       if (response.result) {
         this.$message.success('上传成功');
@@ -306,6 +334,7 @@ export default {
         });
       }
     },
+    // 上传失败
     handleError(err, file, fileList) {
       this.$message({
         type: 'error',

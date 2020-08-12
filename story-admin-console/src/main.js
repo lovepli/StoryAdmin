@@ -27,6 +27,10 @@ Vue.use(ElementUI, { locale })
 Vue.use(authority);
 Vue.config.productionTip = false
 
+// 自定义方法开始,这个是公告会用到
+import { getById } from './utils/common'
+Vue.prototype.$getById = getById
+
 // 创建根vue实例，每个vue组件，都是一个vue实例
 // 创建Vue实例，这个实例其实就是MVVM中的vm调度者
 new Vue({
