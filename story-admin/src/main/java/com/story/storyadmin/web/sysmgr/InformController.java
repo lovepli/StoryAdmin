@@ -83,7 +83,7 @@ public class InformController {
         // 从缓存中获取公告详情
         Inform informBean= informService.get(inform.getId());
         // 判断状态是否已撤销
-        if (Objects.equals(informBean.getStatus(), informService.CANCELED)) {
+        if (Objects.equals(informBean.getStatus(), InformService.CANCELED)) {
             informBean.setContent(null);
         }
         informBean.setOutdateDate(null);
