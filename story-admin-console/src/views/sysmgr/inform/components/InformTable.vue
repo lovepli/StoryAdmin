@@ -119,18 +119,21 @@ export default {
     },
     // 日期格式化
     parseDate(t) { return parseTime(t) },
+    // 置顶
     top(id) {
       topInform(id).then(r => {
         this.$message.success('操作成功')
         this.query()
       }).catch(e => {})
     },
+    // 取消置顶
     untop(id) {
       untopInform(id).then(r => {
         this.$message.success('操作成功')
         this.query()
       }).catch(e => {})
     },
+    // 撤销
     cancel(id, title) {
       this.$confirm(`公告撤销后不可恢复，确定撤销《${title}》？`, '操作提示').then(r => {
         cancelInform(id).then(r => {
@@ -139,6 +142,7 @@ export default {
         }).catch(e => {})
       }).catch(e => {})
     },
+    // 过期
     outdate(id, title) {
       this.$confirm(`公告过期后不可恢复，确定要让《${title}》过期？`, '操作提示').then(r => {
         outdateInform(id).then(r => {

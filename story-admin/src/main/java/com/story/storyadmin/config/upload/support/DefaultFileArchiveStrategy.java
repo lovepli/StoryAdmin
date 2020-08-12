@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class DefaultFileArchiveStrategy implements FileArchiveStrategy {
 
     /**
-     * 
+     * 生成文件路径
      */
     @Override
     public Path createPath(String sourceUri, String originalFilename) {

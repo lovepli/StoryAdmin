@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { search } from '@/utils/common'
 
 // 附件管理接口
 
@@ -17,8 +18,6 @@ export function drop(param) {
     data: param
   })
 }
-
-import { search } from '@/utils/common'
 
 // 上传
 export function uploadFile(file, data) {

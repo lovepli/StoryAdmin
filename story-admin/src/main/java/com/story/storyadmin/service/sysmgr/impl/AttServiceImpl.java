@@ -40,6 +40,11 @@ public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttSe
     @Autowired
     StorageService storageService;
 
+    /**
+     *
+     * @param id 主键
+     * @return
+     */
     @Override
     public boolean removeById(Serializable id){
         Att delAtt= new Att();
@@ -52,11 +57,22 @@ public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttSe
         return this.updateById(delAtt);
     }
 
+    /**
+     *
+     * @param slotId 批次
+     * @return
+     */
     @Override
     public List<Att> findBySlotId(String slotId) {
         return this.findBySlotId(slotId, null);
     }
 
+    /**
+     *
+     * @param slotId 批次
+     * @param category 类别
+     * @return
+     */
     @Override
     public List<Att> findBySlotId(String slotId, String category) {
         QueryWrapper<Att> attWrapper= new QueryWrapper<>();
@@ -80,6 +96,7 @@ public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttSe
     public Att save(String sourceUri, MultipartFile multipartFile, String batchId)
             throws IllegalStateException,IOException {
 
+        // 返回默认字符串
         final String localSlotId = StringUtils.defaultString(batchId, FileSlot.newSlotId());
 
         return this.save(sourceUri, multipartFile, new FileSlot() {
@@ -126,11 +143,11 @@ public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttSe
             fileEntity.setFileCate(((CategorialFileSlot) fileSlot).getSlotFileCategoryOnUploading());
         }
 
-        // 保存文件
+        // 保存文件到服务器
         Path path = storageService.store(sourceUri, multipartFile);
         fileEntity.setPath(path.toString());
 
-        // 保存数据
+        // 保存数据到数据库
         this.save(fileEntity);
         return fileEntity;
     }

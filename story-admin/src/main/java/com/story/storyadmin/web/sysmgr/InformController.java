@@ -111,8 +111,7 @@ public class InformController {
         Assert.notNull(inform.getTitle(), "标题不能为空");
         Assert.notNull(inform.getContent(), "内容不能为空");
         // 获取当前登录用户ID
-       // inform.setCreator(UserContext.getCurrentUser().getUserId());
-        inform.setCreator((long) 1);
+       inform.setCreator(UserContext.getCurrentUser().getUserId());
         //
         List<Long> attachmentIds = inform.getAttachments();
         if (attachmentIds != null) {

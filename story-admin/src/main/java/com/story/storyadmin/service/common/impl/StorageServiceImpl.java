@@ -23,7 +23,7 @@ public class StorageServiceImpl implements StorageService {
 	protected FileArchiveStrategy fileArchiveStrategy;
 
 	/**
-	 * 
+	 * 存储文件
 	 */
 	@Override
 	public Path store(String sourceUri, MultipartFile multipartFile) throws IllegalStateException, IOException {
