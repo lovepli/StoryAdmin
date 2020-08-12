@@ -99,6 +99,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
 
         Inform informBean= assertExistAndNormal(inform.getId());
         informBean.setTop(isTop);
+        baseMapper.updateById(informBean);
         return new Result(true, "公告的置顶状态改变", null, Constants.TOKEN_CHECK_SUCCESS);
     }
 
@@ -113,6 +114,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
         informBean.setCanceler(UserContext.getCurrentUser().getUserId());
         informBean.setCancelDate(currentDate);
         informBean.setTop(false);
+        baseMapper.updateById(informBean);
         return new Result(true, "撤销公告", null, Constants.TOKEN_CHECK_SUCCESS);
     }
 
@@ -127,6 +129,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
         informBean.setOutdateOperator(UserContext.getCurrentUser().getUserId());
         informBean.setOutdateDate(currentDate);
         informBean.setTop(false);
+        baseMapper.updateById(informBean);
         return new Result(true, "公告过期", null, Constants.TOKEN_CHECK_SUCCESS);
     }
 
