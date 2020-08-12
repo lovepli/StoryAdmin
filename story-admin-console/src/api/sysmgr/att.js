@@ -25,7 +25,7 @@ export function uploadFile(file, data) {
   var formData = new FormData()
   formData.append('file', file)
   return request({
-    url: '/file/upload?' + search(data),
+    url: '/sysmgr/att/upload?' + search(data),
     method: 'post',
     data: formData
   })

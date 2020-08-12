@@ -86,6 +86,7 @@
           <el-upload
             ref="upload"
             :action="filePostUrl"
+            :http-request="uploadFile"
             :accept="acceptFileType"
             :limit="1"
             :headers="importHeaders"

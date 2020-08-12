@@ -90,7 +90,7 @@ public class AttController {
      * @return
      */
     @RequiresPermissions("sysmgr.att.upload")
-    @RequestMapping(value="/upload", method = POST)
+    @RequestMapping(value="/upload",method = {RequestMethod.POST})
     public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
         Att att= attService.save(request.getRequestURI(),file,"第一批次");
 
