@@ -10,10 +10,10 @@ export function getInformList(param) {
   })
 }
 
-// 根据Id查询
+// 查看详情
 export function findById(id) {
   return request({
-    url: `/sysmgr/inform/find/${id}`,
+    url: `/inform/find/${id}`,
     method: 'get'
   })
 }

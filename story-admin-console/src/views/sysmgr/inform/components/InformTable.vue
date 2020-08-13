@@ -34,6 +34,10 @@
       </el-table-column>
       <el-table-column align="center" width="360" label="操作">
         <template slot-scope="{row}">
+          <!--router-link的使用 https://www.jianshu.com/p/4b833b23dc4a -->
+          <!-- <router-link class="inlineBlock" to="/sysmgr/inform" + this.$route.params.id >
+            <el-button type="primary" size="mini" >查看详情</el-button>
+          </router-link> -->
           <el-button type="primary" size="mini" @click="showInfo(row.id)">查看详情</el-button>
           <el-button v-if="row.status===1&&!row.top" size="mini" type="danger" icon="el-icon-top" @click="top(row.id)">置顶</el-button>
           <el-button v-if="row.status===1&&row.top" size="mini" type="" icon="el-icon-bottom" @click="untop(row.id)">取消置顶</el-button>
@@ -88,7 +92,17 @@ export default {
       listLoading: false, // 表格加载
       allUsers: [],
       statusLabel: ['已撤销', '有效中', '已过期'],
-      statusType: ['info', 'success', 'warning']
+      statusType: ['info', 'success', 'warning'],
+      redirect: undefined // 重定向
+    }
+  },
+  // 侦听属性
+  watch: {
+    $route: {
+      handler: function(route) {
+        this.redirect = route.query && route.query.redirect;
+      },
+      immediate: true
     }
   },
   created() {
@@ -158,7 +172,9 @@ export default {
     },
     // 进入公告详情页面
     showInfo(id) {
-      this.$router.push({ path: `/sysmgr/inform/${id}` })
+      this.redirect = `/inform/${id}`
+      //  this.$router.push({ path: `/inform/${id}` })
+      this.$router.push({ path: this.redirect || '/inform' }) // 登录成功之后重定向到首页
     }
   }
 }

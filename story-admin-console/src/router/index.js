@@ -43,7 +43,7 @@ export const constantRouterMap = [
     path: '/inform',
     component: Layout,
     hidden: true,
-    redirect: '/sysmgr/inform/:id',
+    redirect: '/inform/:id',
     children: [{
       path: ':id',
       name: 'InformInfo',

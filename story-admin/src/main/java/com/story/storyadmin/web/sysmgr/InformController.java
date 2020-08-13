@@ -31,7 +31,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Api(description = "系统通知")
 @RestController
-@RequestMapping("/sysmgr")
 public class InformController {
 
     private static final Logger logger = LoggerFactory.getLogger(InformController.class);
@@ -48,7 +47,7 @@ public class InformController {
      */
     @ApiOperation(value = "公告" ,  notes="分页查询公告")
     @RequiresPermissions("sysmgr.inform.query")
-    @RequestMapping(value="/inform/list",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value="/sysmgr/inform/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result get(InformDTO inform,
                       @RequestParam(defaultValue = "1") int pageNo,
                       @RequestParam(defaultValue = "10") int limit) {
@@ -71,7 +70,7 @@ public class InformController {
     }
 
     /**
-     * 根据Id查询公告信息 TODO 这里要从缓存中取出来公告信息!!
+     * 查看公告详情 TODO 这里要从缓存中取出来公告信息!!
      * @param id
      * @return
      */
@@ -105,7 +104,7 @@ public class InformController {
      */
     @ApiOperation(value = "公告" ,  notes="新增公告")
     @RequiresPermissions("sysmgr.inform.save")
-    @RequestMapping(value = "/save", method = POST)
+    @RequestMapping(value = "/sysmgr/save", method = POST)
     public Result save(@RequestBody InformVo inform){
         //使用断言校验判断
         Assert.notNull(inform.getTitle(), "标题不能为空");
@@ -129,7 +128,7 @@ public class InformController {
      */
     @ApiOperation(value = "公告" ,  notes="置顶公告")
     @RequiresPermissions("sysmgr.inform.top")
-    @RequestMapping(value = "/inform/{id}/top", method = POST)
+    @RequestMapping(value = "/sysmgr/inform/{id}/top", method = POST)
     public Result top(@PathVariable Long id) {
         return informService.topOrNot(id, true);
     }
@@ -141,7 +140,7 @@ public class InformController {
      */
     @ApiOperation(value = "公告" ,  notes="取消公告的置顶")
     @RequiresPermissions("sysmgr.inform.untop")
-    @RequestMapping(value = "/inform/{id}/untop", method = POST)
+    @RequestMapping(value = "/sysmgr/inform/{id}/untop", method = POST)
     public Result untop(@PathVariable Long id) {
         return informService.topOrNot(id, false);
     }
@@ -153,7 +152,7 @@ public class InformController {
      */
     @ApiOperation(value = "公告" ,  notes="撤销公告")
     @RequiresPermissions("sysmgr.inform.cancel")
-    @RequestMapping(value = "/inform/{id}/cancel", method = POST)
+    @RequestMapping(value = "/sysmgr/inform/{id}/cancel", method = POST)
     public Result cancel(@PathVariable Long id) {
         return informService.cancel(id);
     }
@@ -165,7 +164,7 @@ public class InformController {
      */
     @ApiOperation(value = "公告" ,  notes="使公告过期")
     @RequiresPermissions("sysmgr.inform.outdate")
-    @RequestMapping(value = "/inform/{id}/outdate", method = POST)
+    @RequestMapping(value = "/sysmgr/inform/{id}/outdate", method = POST)
     public Result outdate(@PathVariable Long id) {
         return informService.outdate(id);
     }

@@ -45,7 +45,7 @@ export default {
     }
   },
   computed: {
-    id() { return this.$route.params.id }
+    id() { return this.$route.params.id } // 返回路径参数
   },
   created() {
     this.inform = undefined
