@@ -41,6 +41,13 @@
         </foreach>
     </insert>
 
+    <select id="selectUserNameList" resultType="java.util.List">
+        SELECT
+          u.id,u.name
+        FROM   st_user u
+        where  u.yn_flag='1'
+    </select>
+
 
 
 </mapper>

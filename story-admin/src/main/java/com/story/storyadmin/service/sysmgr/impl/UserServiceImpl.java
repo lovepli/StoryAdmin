@@ -15,6 +15,7 @@ import com.story.storyadmin.domain.entity.sysmgr.LoginLog;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.entity.sysmgr.UserRole;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
 import com.story.storyadmin.domain.vo.sysmgr.UserVo;
@@ -338,6 +339,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     public User selectUserById(Long id){
       return baseMapper.selectById(id);
+    }
+
+    @Override
+    public List<User> selectUserNameList() {
+        return baseMapper.selectUserNameList();
     }
 
 

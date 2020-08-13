@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
-import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
 import com.story.storyadmin.service.sysmgr.UserService;
@@ -21,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Api(description = "用户管理")
 @RestController
@@ -145,5 +147,29 @@ public class UserController {
     @RequestMapping(value="/editpassword",method = {RequestMethod.POST})
     public Result editPassWord(@RequestBody UserPassword userPassword){
         return userService.editPassWord(userPassword);
+    }
+
+    /**
+     * 查询用户名列表
+     * @return
+     */
+    @ApiOperation(value = "用户信息" ,  notes="查询用户名列表")
+    @RequiresPermissions("sysmgr.user.query")
+    @RequestMapping(value="/UserNameList",method = {RequestMethod.POST,RequestMethod.GET})
+    public Result UserNameList(){
+        Result result = new Result();
+        // TODO 这里返回的数据不包含ID
+       // List<User> list=userService.selectUserNameList();
+       // List<User> list=userService.list();
+        // 模拟数据
+        List<UserDo> list=new ArrayList<>();
+        list.add(new UserDo((long) 1,"张三"));
+        list.add(new UserDo((long) 2,"李四"));
+
+        logger.info("查询出的用户信息为:{}",list);
+        result.setData(list);
+        result.setResult(true);
+        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        return result;
     }
 }

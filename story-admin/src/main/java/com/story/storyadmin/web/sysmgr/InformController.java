@@ -38,36 +38,88 @@ public class InformController {
     @Autowired
     InformService informService;
 
-    /**
-     * 分页查询公告
-     * @param
-     * @param pageNo
-     * @param limit
-     * @return
-     */
+//    @RequestMapping(value = "/informs", method = GET)
+//    public Object get(@RequestParam(required = false) Short status,
+//                      @RequestParam(required = false) String title,
+//                      @RequestParam(required = false, value = "creator") Integer creatorId,
+//                      @RequestParam(value = "sd", required = false) Long startDate,
+//                      @RequestParam(value = "ed", required = false) Long endDate,
+//                      @RequestParam(value = "tf", required = false) Boolean topFirst,
+//                      @RequestParam(defaultValue = "1") int page,
+//                      @RequestParam(defaultValue = "10") int limit) {
+//        return responseWrap(() -> {
+//            Date startOfCreate = DateUtil.startOfThisDay(startDate);
+//            Date endOfCreate = DateUtil.startOfNextDay(endDate);
+//            PageHelper.startPage(page, limit);
+//            return new PageInfo<>(informService.querySimpleList(status, title, creatorId, topFirst, startOfCreate, endOfCreate));
+//        });
+//    }
+
     @ApiOperation(value = "公告" ,  notes="分页查询公告")
     @RequiresPermissions("sysmgr.inform.query")
     @RequestMapping(value="/sysmgr/inform/list",method = {RequestMethod.POST,RequestMethod.GET})
-    public Result get(InformDTO inform,
-                      @RequestParam(defaultValue = "1") int pageNo,
+    public Result get(@RequestParam(required = false) Short status,
+                      @RequestParam(required = false) String title,
+                      @RequestParam(value = "creatorId",required = false) Long creatorId,
+                      @RequestParam(value = "startDate", required = false) Long startDate,
+                      @RequestParam(value = "endDate", required = false) Long endDate,
+                      @RequestParam(value = "top", required = false) Boolean topFirst,
+                      @RequestParam(defaultValue = "1") int page,
                       @RequestParam(defaultValue = "10") int limit) {
         Result result = new Result();
-        Page<Inform> page = new Page(pageNo, limit);
+
         // 开始时间和结束时间
-//        Date startOfCreate = DateUtil.startOfThisDay(inform.getStartDate());
-//        Date endOfCreate = DateUtil.startOfNextDay(inform.getEndDate());
-        logger.info("查询出inform信息:[]", inform.toString());
+        Date startOfCreate = DateUtil.startOfThisDay(startDate);
+        Date endOfCreate = DateUtil.startOfNextDay(endDate);
+        Inform inform=new Inform();
+        inform.setStatus(status);
+        inform.setTitle(title);
+        inform.setCreator(creatorId);
+        inform.setTop(topFirst);
+
+        Page<Inform> InformPage = new Page(page, limit);
         QueryWrapper<Inform> eWrapper = new QueryWrapper(inform);
 //        // 设置查询条件 对时间进行判断
-//        eWrapper.gt("create_date",startOfCreate);
-//        eWrapper.lt("create_date",endOfCreate);
-        IPage<Inform> list = informService.page(page, eWrapper);
+        eWrapper.gt("create_date",startOfCreate);
+        eWrapper.lt("create_date",endOfCreate);
+        IPage<Inform> list = informService.page(InformPage, eWrapper);
         logger.info("查询出公告信息:[]", list.toString());
         result.setData(list);
         result.setResult(true);
         result.setCode(Constants.TOKEN_CHECK_SUCCESS);
         return result;
     }
+
+    /**
+     * 分页查询公告 TODO 这里的分页查询有问题
+     * @param
+     * @param pageNo
+     * @param limit
+     * @return
+     */
+//    @ApiOperation(value = "公告" ,  notes="分页查询公告")
+//    @RequiresPermissions("sysmgr.inform.query")
+//    @RequestMapping(value="/sysmgr/inform/list",method = {RequestMethod.POST,RequestMethod.GET})
+//    public Result get(InformDTO inform,
+//                      @RequestParam(defaultValue = "1") int pageNo,
+//                      @RequestParam(defaultValue = "10") int limit) {
+//        Result result = new Result();
+//        Page<Inform> page = new Page(pageNo, limit);
+//        // 开始时间和结束时间
+////        Date startOfCreate = DateUtil.startOfThisDay(inform.getStartDate());
+////        Date endOfCreate = DateUtil.startOfNextDay(inform.getEndDate());
+//        logger.info("查询出inform信息:[]", inform.toString());
+//        QueryWrapper<Inform> eWrapper = new QueryWrapper(inform);
+////        // 设置查询条件 对时间进行判断
+////        eWrapper.gt("create_date",startOfCreate);
+////        eWrapper.lt("create_date",endOfCreate);
+//        IPage<Inform> list = informService.page(page, eWrapper);
+//        logger.info("查询出公告信息:[]", list.toString());
+//        result.setData(list);
+//        result.setResult(true);
+//        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+//        return result;
+//    }
 
     /**
      * 查看公告详情 TODO 这里要从缓存中取出来公告信息!!
@@ -104,7 +156,7 @@ public class InformController {
      */
     @ApiOperation(value = "公告" ,  notes="新增公告")
     @RequiresPermissions("sysmgr.inform.save")
-    @RequestMapping(value = "/sysmgr/save", method = POST)
+    @RequestMapping(value = "/sysmgr/inform/save", method = POST)
     public Result save(@RequestBody InformVo inform){
         //使用断言校验判断
         Assert.notNull(inform.getTitle(), "标题不能为空");

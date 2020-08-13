@@ -5,7 +5,7 @@
     <div v-for="i in dataList" :key="i.id" style="width:100%;padding:10px 10px">
       <el-tag v-if="i.top" size="mini" type="danger" style="margin-right:10px">置顶</el-tag>
       <router-link :to="`inform/${i.id}`">{{ i.title }}</router-link>
-      <a style="float:right;cursor:default;">{{ formatDate(i.create_date) }}</a>
+      <a style="float:right;cursor:default;">{{ formatDate(i.createDate) }}</a>
     </div>
     <div>
       <el-pagination
@@ -15,6 +15,7 @@
         style="float:right;margin:10px 0"
         layout="prev, pager, next"
         small
+        @size-change="query"
         @current-change="query"
       />
     </div>
@@ -40,7 +41,9 @@ export default {
       }
     }
   },
-  created() { this.query() },
+  created() {
+    this.query()
+  },
   methods: {
     query() {
       this.listQuery.pageNo = this.page.num;

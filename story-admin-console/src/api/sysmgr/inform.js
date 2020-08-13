@@ -10,6 +10,27 @@ export function getInformList(param) {
   })
 }
 
+import { search } from '@/utils/common'
+export function queryInform(cond, page) {
+  const params = {
+    status: cond.status,
+    title: cond.title,
+    creatorId: cond.creatorId,
+    top: cond.topFirst,
+    page: page.num,
+    limit: page.size
+  }
+  const { createDate } = cond.createDate
+  if (createDate && createDate.length === 2) {
+    params.startDate = createDate[0].getTime()
+    params.endDate = createDate[1].getTime()
+  }
+  return request({
+    url: `/sysmgr/inform/list?${search(params)}`,
+    method: 'get'
+  })
+}
+
 // 查看详情
 export function findById(id) {
   return request({

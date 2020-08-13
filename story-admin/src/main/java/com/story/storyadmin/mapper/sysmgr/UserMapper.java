@@ -36,4 +36,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     List<Long> selectRoleByUserId(@Param(value = "userId") Long userId);
+
+    List<User> selectUserNameList();
 }

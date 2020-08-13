@@ -101,8 +101,7 @@ public class User extends BaseEntity<User> {
     @TableField("modified_time")
     private Date modifiedTime;
 
-
-    /**
+  /**
      * 实体类继承Model类，必须重写pkVal方法
      * 重写这个方法，return当前类的主键
      * @return

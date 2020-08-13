@@ -46,8 +46,8 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
     @Override
     public Result persist(Inform inform) {
         //当前系统日期
-        Date currentDate = Date.from(Instant.now());
-        inform.setCreateDate(currentDate);
+      //  Date currentDate = Date.from(Instant.now());
+        inform.setCreateDate(new Date());
         inform.setCreator(UserContext.getCurrentUser().getUserId());
         inform.setStatus(NORMAL);
         //新增用户

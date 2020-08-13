@@ -60,3 +60,13 @@ export function editpassword(param) {
     data: param
   })
 }
+
+/**
+ * 查询所有用户名
+ */
+export function findAllUserList() {
+  return request({
+    url: '/sysmgr/user/UserNameList',
+    method: 'get'
+  })
+}
