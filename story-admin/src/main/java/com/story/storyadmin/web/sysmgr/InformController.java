@@ -66,9 +66,6 @@ public class InformController {
                       @RequestParam(value = "top", required = false) Boolean topFirst,
                       @RequestParam(defaultValue = "1") int page,
                       @RequestParam(defaultValue = "10") int limit) {
-
-        System.out.println("###############################"+status);
-        System.out.println("###############################"+status);
         Result result = new Result();
 
         // 开始时间和结束时间
@@ -85,7 +82,7 @@ public class InformController {
 
         Page<Inform> InformPage = new Page(page, limit);
         QueryWrapper<Inform> eWrapper = new QueryWrapper(inform);
-//        // 设置查询条件 对时间进行判断
+//        // 设置查询条件 对时间进行判断  TODO 加了这个条件分页查询就出现问题
 //        eWrapper.gt("create_date",startOfCreate);
 //        eWrapper.lt("create_date",endOfCreate);
         IPage<Inform> list = informService.page(InformPage, eWrapper);

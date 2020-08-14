@@ -88,7 +88,8 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
                     }
                     // 通过操作人的id查询出操作人名称
                     User userBean = UserService.selectUserById(UserContext.getCurrentUser().getUserId());
-                    result.setCreatorName(userBean.getName());
+                   // result.setCreatorName(userBean.getName());
+                    result.setCreatorName("张三"); // TODO 这里要inform表与user表的id进行关联查询
                     return result;
                 }
         );

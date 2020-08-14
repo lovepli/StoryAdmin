@@ -9,7 +9,7 @@
       <keep-alive :include="cachedViews">
         <!-- 路由出口 -->
         <!-- 路由匹配到的组件将渲染在这里 -->
-        <router-view :key="key" />
+        <router-view :key="key" @custom-tag="updateViewTag"/>
       </keep-alive>
     </transition>
   </section>
@@ -28,6 +28,21 @@ export default {
     },
     key() {
       return this.$route.path
+    }
+  },
+  methods: {
+    /**
+     * 自定义tag栏的标题
+     */
+    updateViewTag(customTag) {
+      const visitedViews = this.$store.state.tagsView.visitedViews
+      for (let i = 0; i < visitedViews.length; i++) {
+        const view = visitedViews[i]
+        if (view.path === this.$route.path) {
+          view.title = customTag
+          break
+        }
+      }
     }
   }
 }

@@ -34,7 +34,7 @@ export function queryInform(cond, page) {
 // 查看详情
 export function findById(id) {
   return request({
-    url: `/inform/find/${id}`,
+    url: `/inform/${id}`,
     method: 'get'
   })
 }

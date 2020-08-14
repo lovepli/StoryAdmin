@@ -5,8 +5,8 @@
         <h1>{{ inform.title }}</h1>
       </div>
       <div style="text-align:right;color:#555;margin-bottom:40px;">
-        <a>发布/{{ inform.creator_name }}</a>
-        <a style="margin-left:30px">{{ parseDate(inform.create_date) }}</a>
+        <a>发布/{{ inform.creatorName }}</a>
+        <a style="margin-left:30px">{{ parseDate(inform.createDate) }}</a>
         <el-tag :type="statusType[inform.status]" size="mini" style="margin-left:30px">{{ statusLabel[inform.status] }}</el-tag>
       </div>
       <div v-if="inform&&inform.status!==0">
@@ -50,7 +50,7 @@ export default {
   created() {
     this.inform = undefined
     findById(this.id).then(r => {
-      this.inform = r.result
+      this.inform = r.data
       this.inform.segments = this.inform.content
         ? this.inform.content.split('\n').filter(s => s.length > 0)
         : []

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bird.dao.SystemSequenceMapper">
+<mapper namespace="com.story.storyadmin.mapper.sysmgr.SystemSequenceMapper">
   <resultMap id="BaseResultMap" type="com.story.storyadmin.domain.entity.sysmgr.SystemSequence">
     <id column="table_name" jdbcType="VARCHAR" property="tableName" />
     <id column="column_name" jdbcType="VARCHAR" property="columnName" />
