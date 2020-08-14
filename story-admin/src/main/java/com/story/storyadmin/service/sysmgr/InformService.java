@@ -59,7 +59,7 @@ public interface InformService extends IService<Inform> {
     /**
      * 修改置顶状态
      *
-     * @param inform    公告ID
+     * @param id    公告ID
      * @param isTop 是否置顶
      */
     Result topOrNot(Long id, boolean isTop);

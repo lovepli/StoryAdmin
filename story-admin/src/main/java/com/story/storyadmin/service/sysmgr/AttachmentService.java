@@ -31,7 +31,7 @@ public interface AttachmentService extends IService<Attachment> {
      * @param attachment
      * @return
      */
-    Result persist(Attachment attachment,String sequence);
+    Result persist(Attachment attachment);
 
     /**
      * 修改

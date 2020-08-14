@@ -17,6 +17,9 @@ import com.story.storyadmin.service.sysmgr.AttachmentService;
 import com.story.storyadmin.service.sysmgr.InformService;
 import com.story.storyadmin.service.sysmgr.UserService;
 import com.story.storyadmin.utils.ObjectUtil;
+import com.story.storyadmin.web.sysmgr.InformController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,8 @@ import static org.apache.logging.log4j.util.Strings.trimToNull;
 
 @Service
 public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> implements InformService {
+
+    private static final Logger logger = LoggerFactory.getLogger(InformServiceImpl.class);
 
     // 引入自定义缓存
     private final CacheKeySeed MEM_FLAG_INFORM_INFO = KeySeedManager.get("INFORM_INFO_");
@@ -82,6 +87,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
                         String[] ids = attachment.split(",");
                         // 根据ID获取所有附件名称信息
                         List<String> idList = Arrays.stream(ids).collect(Collectors.toList());
+                        logger.info("从缓存中查询出的附件id为:{}"+idList);
                         // 根据ids
                         List<Attachment> attachments = attachmentService.selectNamesByIds(idList);
                         result.setAttachmentsToShow(attachments);

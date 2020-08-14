@@ -2,20 +2,16 @@ package com.story.storyadmin.domain.entity.sysmgr;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
-import java.io.Serializable;
+import lombok.Data;
+
 import java.util.Date;
-import java.util.List;
+
 
 /**
  * 系统通知表
  */
 @Data
-//@EqualsAndHashCode(callSuper = true)
-//@Accessors(chain = true)
 @TableName("st_inform")
 public class Inform extends BaseEntity {
 

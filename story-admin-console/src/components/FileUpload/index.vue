@@ -75,7 +75,8 @@ export default {
       return valid
     },
     afterLoad(r, file, fileList) {
-      file.id = r.result
+      // 这里上传完成的结果需要处理
+      file.id = r.data.id
       if (file.id) this.fileList.push(file.id)
     },
     clearFiles() { this.$refs['myUpload'].clearFiles() }

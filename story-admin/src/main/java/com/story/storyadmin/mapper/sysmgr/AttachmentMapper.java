@@ -24,20 +24,4 @@ public interface AttachmentMapper extends BaseMapper<Attachment> {
      */
     Attachment selectBySequence(@Param("sequence") String sequence);
 
-    /**
-     * 保存
-     * @param attachment
-     * @return
-     */
-    Result persist(Attachment attachment);
-
-    /**
-     * 修改
-     * @param attachment
-     * @return
-     */
-    Result persist2(Attachment attachment);
-
-    Attachment selectAttachmentById(Long id);
-
 }

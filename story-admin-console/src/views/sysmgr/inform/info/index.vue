@@ -11,10 +11,10 @@
       </div>
       <div v-if="inform&&inform.status!==0">
         <p v-for="(s,i) in inform.segments" :key="i" style="text-indent:2em;font-size:17px;">{{ s }}</p>
-        <el-table :data="inform.attachments_to_show" border highlight-current-row fit style="width: 100%;margin-top:100px">
+        <el-table :data="inform.attachmentsToShow" border highlight-current-row fit style="width: 100%;margin-top:100px">
           <el-table-column label="附件列表" align="center">
             <el-table-column type="index" label="序号" align="center" width="70px" />
-            <el-table-column :formatter="r=>r.file_name" label="名称" align="center" min-width="100px" />
+            <el-table-column :formatter="r=>r.fileName" label="名称" align="center" min-width="100px" />
             <el-table-column :formatter="fileSizeCalc" label="大小" align="center" />
             <el-table-column label="操作" align="center" width="140px">
               <template slot-scope="{row}">
@@ -68,12 +68,12 @@ export default {
         const link = document.createElement('a')
         link.style.display = 'none'
         link.href = url
-        link.setAttribute('download', row.file_name)
+        link.setAttribute('download', row.fileName)
         document.body.appendChild(link)
         link.click()
       }).catch(e => { this.$message.error('下载失败') })
     },
-    fileSizeCalc(row) { return row.file_size ? numberFormat(row.file_size / 1000000, 2) + ' MB' : '——' }
+    fileSizeCalc(row) { return row.fileSize ? numberFormat(row.fileSize / 1000000, 2) + ' MB' : '——' }
   }
 }
 </script>

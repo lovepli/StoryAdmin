@@ -1,7 +1,5 @@
 package com.story.storyadmin.domain.vo.sysmgr;
 
-
-
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.entity.sysmgr.Inform;
 
@@ -53,6 +51,5 @@ public class InformVo extends Inform {
         this.creatorName = creatorName;
         return this;
     }
-
 
 }

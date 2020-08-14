@@ -45,6 +45,7 @@ public class LocalFileServiceImpl implements IFileService {
             throw new SrotyAdminOutException("文件为空，请检查文件以及网络");
         }
         String filename = file.getOriginalFilename();
+        // 生成流水号
         String sequence = sequenceHelper.generate(Attachment.class, "sequence");
         String realFileName = sequence + "_" + filename;
         File target = new File(fileRoot + File.separator + realFileName);
@@ -59,10 +60,8 @@ public class LocalFileServiceImpl implements IFileService {
             attachment.setUploadDate(new Date());
             attachment.setUploader(userId);
             attachment.setFileSize(file.getSize());
-            // 按编号获取文件信息
-            //Long id = attachmentService.selectBySequence(sequence).getId();
-            // 将上面的逻辑合并了
-            return attachmentService.persist(attachment,sequence );
+            // 先保存，再返回ID信息
+            return attachmentService.persist(attachment);
         } catch (IOException e) {
             LOG.error(String.valueOf(e));
             LOG.warn("文件处理失败：" + filename);
@@ -97,6 +96,6 @@ public class LocalFileServiceImpl implements IFileService {
 
     @Override
     public Attachment getById(Long fileId) {
-        return attachmentService.selectAttachmentById(fileId);
+        return attachmentService.getById(fileId);
     }
 }

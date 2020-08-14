@@ -48,7 +48,11 @@ public class FileController  {
     @RequestMapping(value = "/upload", method = POST)
     @FileSlotDisabled
     public Result upload(@RequestParam("file") MultipartFile file) {
-        return fileService.uploadFile(file, UserContext.getCurrentUser().getUserId());
+        // TODO 这里的ID值取不到？
+        Long id= UserContext.getCurrentUser().getUserId();
+        System.out.println("################上传者的id:"+id);
+        Long defaultId=1L; //给一个默认的id
+        return fileService.uploadFile(file, defaultId);
     }
 
     /**

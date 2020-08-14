@@ -38,23 +38,13 @@ public class InformController {
     @Autowired
     InformService informService;
 
-//    @RequestMapping(value = "/informs", method = GET)
-//    public Object get(@RequestParam(required = false) Short status,
-//                      @RequestParam(required = false) String title,
-//                      @RequestParam(required = false, value = "creator") Integer creatorId,
-//                      @RequestParam(value = "sd", required = false) Long startDate,
-//                      @RequestParam(value = "ed", required = false) Long endDate,
-//                      @RequestParam(value = "tf", required = false) Boolean topFirst,
-//                      @RequestParam(defaultValue = "1") int page,
-//                      @RequestParam(defaultValue = "10") int limit) {
-//        return responseWrap(() -> {
-//            Date startOfCreate = DateUtil.startOfThisDay(startDate);
-//            Date endOfCreate = DateUtil.startOfNextDay(endDate);
-//            PageHelper.startPage(page, limit);
-//            return new PageInfo<>(informService.querySimpleList(status, title, creatorId, topFirst, startOfCreate, endOfCreate));
-//        });
-//    }
-
+    /**
+     * 分页查询公告 TODO 这里的分页查询有问题
+     * @param
+     * @param
+     * @param limit
+     * @return
+     */
     @ApiOperation(value = "公告" ,  notes="分页查询公告")
     @RequiresPermissions("sysmgr.inform.query")
     @RequestMapping(value="/sysmgr/inform/list",method = {RequestMethod.POST,RequestMethod.GET})
@@ -92,37 +82,6 @@ public class InformController {
         result.setCode(Constants.TOKEN_CHECK_SUCCESS);
         return result;
     }
-
-    /**
-     * 分页查询公告 TODO 这里的分页查询有问题
-     * @param
-     * @param pageNo
-     * @param limit
-     * @return
-     */
-//    @ApiOperation(value = "公告" ,  notes="分页查询公告")
-//    @RequiresPermissions("sysmgr.inform.query")
-//    @RequestMapping(value="/sysmgr/inform/list",method = {RequestMethod.POST,RequestMethod.GET})
-//    public Result get(InformDTO inform,
-//                      @RequestParam(defaultValue = "1") int pageNo,
-//                      @RequestParam(defaultValue = "10") int limit) {
-//        Result result = new Result();
-//        Page<Inform> page = new Page(pageNo, limit);
-//        // 开始时间和结束时间
-////        Date startOfCreate = DateUtil.startOfThisDay(inform.getStartDate());
-////        Date endOfCreate = DateUtil.startOfNextDay(inform.getEndDate());
-//        logger.info("查询出inform信息:[]", inform.toString());
-//        QueryWrapper<Inform> eWrapper = new QueryWrapper(inform);
-////        // 设置查询条件 对时间进行判断
-////        eWrapper.gt("create_date",startOfCreate);
-////        eWrapper.lt("create_date",endOfCreate);
-//        IPage<Inform> list = informService.page(page, eWrapper);
-//        logger.info("查询出公告信息:[]", list.toString());
-//        result.setData(list);
-//        result.setResult(true);
-//        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
-//        return result;
-//    }
 
     /**
      * 查看公告详情 TODO 这里要从缓存中取出来公告信息!!
@@ -169,8 +128,9 @@ public class InformController {
         //
         List<Long> attachmentIds = inform.getAttachments();
         if (attachmentIds != null) {
-            // 字符串拼接 TODO 这里应该将long转为string存储吧？
+            // 字符串拼接 TODO 这里应该将long转为string存储吧？ 这里不能存储到数据库！
             String idList = attachmentIds.stream().map(String::valueOf).collect(Collectors.joining(","));
+            logger.info("添加的附件id为:{}"+idList);
             inform.setAttchmentList(idList);
         }
         return informService.persist(inform);
