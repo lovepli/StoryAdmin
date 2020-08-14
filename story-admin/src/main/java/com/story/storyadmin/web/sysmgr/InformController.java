@@ -66,22 +66,28 @@ public class InformController {
                       @RequestParam(value = "top", required = false) Boolean topFirst,
                       @RequestParam(defaultValue = "1") int page,
                       @RequestParam(defaultValue = "10") int limit) {
+
+        System.out.println("###############################"+status);
+        System.out.println("###############################"+status);
         Result result = new Result();
 
         // 开始时间和结束时间
         Date startOfCreate = DateUtil.startOfThisDay(startDate);
         Date endOfCreate = DateUtil.startOfNextDay(endDate);
+
         Inform inform=new Inform();
         inform.setStatus(status);
         inform.setTitle(title);
         inform.setCreator(creatorId);
         inform.setTop(topFirst);
 
+        logger.info(inform.toString());
+
         Page<Inform> InformPage = new Page(page, limit);
         QueryWrapper<Inform> eWrapper = new QueryWrapper(inform);
 //        // 设置查询条件 对时间进行判断
-        eWrapper.gt("create_date",startOfCreate);
-        eWrapper.lt("create_date",endOfCreate);
+//        eWrapper.gt("create_date",startOfCreate);
+//        eWrapper.lt("create_date",endOfCreate);
         IPage<Inform> list = informService.page(InformPage, eWrapper);
         logger.info("查询出公告信息:[]", list.toString());
         result.setData(list);

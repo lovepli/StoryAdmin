@@ -78,7 +78,7 @@ export default {
       //   pageNo: '',
       //   limit: ''
       // },
-      queryCond: {
+      listQuery: {
         title: '',
         createDate: [],
         status: undefined,
@@ -120,17 +120,19 @@ export default {
     this.query()
   },
   methods: {
-    dateValid() {
-      console.log(this.queryCond.visitTimeRange);
-      if (this.queryCond.visitTimeRange && this.queryCond.visitTimeRange.length === 2) {
-        this.queryCond.startDate = this.visitTimeRange[0];
-        this.queryCond.endDate = this.visitTimeRange[1];
-      }
-    },
+    // dateValid() {
+    //   console.log(this.listQuery.visitTimeRange);
+    //   if (this.queryCond.visitTimeRange && this.queryCond.visitTimeRange.length === 2) {
+    //     this.queryCond.startDate = this.visitTimeRange[0];
+    //     this.queryCond.endDate = this.visitTimeRange[1];
+    //   }
+    // },
     query() {
       this.listLoading = true
+
       // 点击查询之前进行验证日期
-      this.dateValid()
+      // this.dateValid()
+
       // this.listQuery.pageNo = this.page.num;
       // this.listQuery.limit = this.page.size;
 
@@ -139,7 +141,7 @@ export default {
       //   this.total = r.data.total;
       // }).catch(e => {}).finally(() => { this.listLoading = false })
 
-      queryInform(this.queryCond, this.page).then(r => {
+      queryInform(this.listQuery, this.page).then(r => {
         this.dataList = r.data.records;
         this.total = r.data.total
       }).catch(e => {}).finally(() => { this.listLoading = false })
