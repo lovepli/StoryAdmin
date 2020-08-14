@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 13/08/2020 17:36:33
+ Date: 14/08/2020 16:46:22
 */
 
 SET NAMES utf8mb4;
@@ -31,6 +31,7 @@ CREATE TABLE `ST_SYSTEM_SEQUENCE`  (
 -- ----------------------------
 -- Records of ST_SYSTEM_SEQUENCE
 -- ----------------------------
+INSERT INTO `ST_SYSTEM_SEQUENCE` VALUES ('ATTACHMENT', 'SEQUENCE', 16);
 
 -- ----------------------------
 -- Table structure for st_att
@@ -52,7 +53,7 @@ CREATE TABLE `st_att`  (
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_att
@@ -89,11 +90,17 @@ CREATE TABLE `st_attachment`  (
   `file_size` bigint(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `SYSTEM_FILE_SYSTEM_STAFF_id_fk`(`uploader`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_attachment
 -- ----------------------------
+INSERT INTO `st_attachment` VALUES (5, 'ATS200814000012', '面试问题总结.docx', 'D:\\bird_files\\ATS200814000012_面试问题总结.docx', '2020-08-14 05:12:43', 1, 1, NULL, '2020-08-14 05:12:42', 'ATS200814000012_面试问题总结.docx', 11671);
+INSERT INTO `st_attachment` VALUES (6, 'ATS200814000031', '面试问题总结.docx', 'D:\\bird_files\\ATS200814000031_面试问题总结.docx', '2020-08-14 05:28:45', 1, 1, NULL, '2020-08-14 05:28:45', 'ATS200814000031_面试问题总结.docx', 11671);
+INSERT INTO `st_attachment` VALUES (13, 'ATS200814000103', '图标.png', 'D:\\bird_files\\ATS200814000103_图标.png', '2020-08-14 07:24:31', 1, 1, NULL, '2020-08-14 07:24:31', 'ATS200814000103_图标.png', 25292);
+INSERT INTO `st_attachment` VALUES (14, 'ATS200814000110', '鱼片.png', 'D:\\bird_files\\ATS200814000110_鱼片.png', '2020-08-14 07:24:39', 1, 1, NULL, '2020-08-14 07:24:39', 'ATS200814000110_鱼片.png', 625);
+INSERT INTO `st_attachment` VALUES (18, 'ATS200814000159', 'STORY-ADMIN.pdf', 'D:\\bird_files\\ATS200814000159_STORY-ADMIN.pdf', '2020-08-14 08:00:07', 1, 1, NULL, '2020-08-14 08:00:07', 'ATS200814000159_STORY-ADMIN.pdf', 41025);
+INSERT INTO `st_attachment` VALUES (19, 'ATS200814000161', '各种规格材料说明.docx', 'D:\\bird_files\\ATS200814000161_各种规格材料说明.docx', '2020-08-14 08:32:20', 1, 1, NULL, '2020-08-14 08:32:19', 'ATS200814000161_各种规格材料说明.docx', 11647);
 
 -- ----------------------------
 -- Table structure for st_authority
@@ -113,7 +120,7 @@ CREATE TABLE `st_authority`  (
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 72 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_authority
@@ -174,6 +181,10 @@ INSERT INTO `st_authority` VALUES (64, '附件删除', 'sysmgr.file.delete', '0-
 INSERT INTO `st_authority` VALUES (65, '附件下载', 'sysmgr.file.download', '0-2-62', NULL, 2, 62, '1', 'admin', 'admin', '2020-08-12 06:47:38', '2020-08-12 06:47:38');
 INSERT INTO `st_authority` VALUES (66, '撤销', 'sysmgr.inform.cancel', '0-2-56', NULL, 6, 56, '1', 'admin', 'admin', '2020-08-13 01:13:37', '2020-08-13 01:13:37');
 INSERT INTO `st_authority` VALUES (67, '过期', 'sysmgr.inform.outdate', '0-2-56', NULL, 7, 56, '1', 'admin', 'admin', '2020-08-13 01:14:39', '2020-08-13 01:14:39');
+INSERT INTO `st_authority` VALUES (68, '部门管理', 'sysmgr.dept', '0-2', NULL, 10, 2, '1', 'admin', 'admin', '2020-08-14 08:34:41', '2020-08-14 08:34:41');
+INSERT INTO `st_authority` VALUES (69, '查询权限', 'sysmgr.dept.query', '0-2-68', NULL, 1, 68, '1', 'admin', 'admin', '2020-08-14 08:35:12', '2020-08-14 08:38:03');
+INSERT INTO `st_authority` VALUES (70, '编辑权限', 'sysmgr.dept.save', '0-2-68', NULL, 2, 68, '1', 'admin', 'admin', '2020-08-14 08:35:41', '2020-08-14 08:38:17');
+INSERT INTO `st_authority` VALUES (71, '删除权限', 'sysmgr.dept.delete', '0-2-68', NULL, 3, 68, '1', 'admin', 'admin', '2020-08-14 08:37:32', '2020-08-14 08:38:30');
 
 -- ----------------------------
 -- Table structure for st_backup
@@ -195,7 +206,7 @@ CREATE TABLE `st_backup`  (
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'DB备份表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'DB备份表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_backup
@@ -252,7 +263,7 @@ CREATE TABLE `st_dict`  (
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '字典表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '字典表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_dict
@@ -285,18 +296,17 @@ CREATE TABLE `st_inform`  (
   `create_date` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `creator` bigint(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_inform
 -- ----------------------------
-INSERT INTO `st_inform` VALUES (8, '测试', 1, 1, 'hello world！', '', NULL, NULL, NULL, NULL, '2020-08-12 06:50:18', 1);
-INSERT INTO `st_inform` VALUES (9, '三掐二群1', 1, 1, 'ad发送到', '', NULL, NULL, NULL, NULL, '2020-08-13 06:38:20', 1);
-INSERT INTO `st_inform` VALUES (10, '测试公告', 0, 1, '学习数据结构和算法：https://github.com/liuyubobobo/Play-with-Data-Structures', '', NULL, NULL, NULL, NULL, '2020-08-13 07:51:52', 1);
-INSERT INTO `st_inform` VALUES (11, '测试老大哥', 0, 0, '测试老大哥', '', NULL, '2020-08-13 08:43:43', NULL, NULL, '2020-08-13 08:18:48', NULL);
-INSERT INTO `st_inform` VALUES (12, '测试111', 0, 2, '11111', '', NULL, NULL, NULL, '2020-08-13 08:43:38', '2020-08-13 08:19:09', NULL);
-INSERT INTO `st_inform` VALUES (15, '搬砖', 0, 2, '11111', '', NULL, NULL, NULL, '2020-08-13 08:43:29', '2020-08-13 08:19:30', NULL);
-INSERT INTO `st_inform` VALUES (20, '11', 1, 1, '111', '', NULL, NULL, NULL, NULL, '2020-08-13 09:30:10', NULL);
+INSERT INTO `st_inform` VALUES (8, '测试', 1, 1, 'hello world！', '5,6,13', NULL, NULL, NULL, NULL, '2020-08-12 06:50:18', 1);
+INSERT INTO `st_inform` VALUES (21, '搬砖的一天', 1, 1, '又是搬砖的一天！', '5,6,14', NULL, NULL, NULL, NULL, '2020-08-14 02:33:58', 1);
+INSERT INTO `st_inform` VALUES (24, '上传一张图片', 1, 1, '666', '13,14', NULL, NULL, NULL, NULL, '2020-08-14 07:20:40', 1);
+INSERT INTO `st_inform` VALUES (25, '测试上传二张图片', 1, 1, '23333', '14', NULL, NULL, NULL, NULL, '2020-08-14 07:24:44', 1);
+INSERT INTO `st_inform` VALUES (29, '今天周五', 1, 1, '今天周五', '', NULL, NULL, NULL, NULL, '2020-08-14 08:00:27', NULL);
+INSERT INTO `st_inform` VALUES (30, '666', 1, 1, '666', '', NULL, NULL, NULL, NULL, '2020-08-14 08:32:22', NULL);
 
 -- ----------------------------
 -- Table structure for st_login_log
@@ -313,148 +323,7 @@ CREATE TABLE `st_login_log`  (
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 135 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '登录日志' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of st_login_log
--- ----------------------------
-INSERT INTO `st_login_log` VALUES (1, 'admin', '2019-07-26 05:50:21', '登录成功', '1', 'admin', 'admin', '2019-07-26 05:50:21', '2019-07-26 13:50:55');
-INSERT INTO `st_login_log` VALUES (2, 'admin', '2019-07-26 08:31:30', '登录成功', '1', 'admin', 'admin', '2019-07-26 08:31:30', '2019-07-26 16:31:30');
-INSERT INTO `st_login_log` VALUES (3, 'admin', '2019-07-26 08:58:40', '登录成功', '1', 'admin', 'admin', '2019-07-26 08:58:40', '2019-07-26 16:58:39');
-INSERT INTO `st_login_log` VALUES (4, 'admin', '2019-07-26 09:04:12', '登录成功', '1', 'admin', 'admin', '2019-07-26 09:04:12', '2019-07-26 17:04:12');
-INSERT INTO `st_login_log` VALUES (5, 'admin', '2019-07-26 11:35:11', '登录成功', '1', 'admin', 'admin', '2019-07-26 11:35:11', '2019-07-26 19:35:11');
-INSERT INTO `st_login_log` VALUES (6, 'admin', '2019-07-29 06:06:49', '登录成功', '1', 'admin', 'admin', '2019-07-29 06:06:49', '2019-07-29 14:06:48');
-INSERT INTO `st_login_log` VALUES (7, 'admin', '2019-07-29 06:20:18', '登录成功', '1', 'admin', 'admin', '2019-07-29 06:20:18', '2019-07-29 14:20:18');
-INSERT INTO `st_login_log` VALUES (8, 'admin', '2019-07-29 09:12:12', '登录成功', '1', 'admin', 'admin', '2019-07-29 09:12:12', '2019-07-29 17:12:11');
-INSERT INTO `st_login_log` VALUES (9, 'admin', '2019-07-30 11:36:51', '登录成功', '1', 'admin', 'admin', '2019-07-30 11:36:51', '2019-07-30 19:36:50');
-INSERT INTO `st_login_log` VALUES (10, 'admin', '2019-07-30 11:53:40', '登录成功', '1', 'admin', 'admin', '2019-07-30 11:53:40', '2019-07-30 19:53:39');
-INSERT INTO `st_login_log` VALUES (11, 'admin', '2019-08-01 06:03:23', '登录成功', '1', 'admin', 'admin', '2019-08-01 06:03:23', '2019-08-01 14:03:22');
-INSERT INTO `st_login_log` VALUES (12, 'admin', '2019-08-01 06:34:26', '登录成功', '1', 'admin', 'admin', '2019-08-01 06:34:26', '2019-08-01 14:34:25');
-INSERT INTO `st_login_log` VALUES (13, 'admin', '2019-08-03 12:43:20', '登录成功', '1', 'admin', 'admin', '2019-08-03 12:43:20', '2019-08-03 20:43:20');
-INSERT INTO `st_login_log` VALUES (14, 'admin', '2019-08-05 02:41:57', '登录成功', '1', 'admin', 'admin', '2019-08-05 02:41:57', '2019-08-05 10:41:57');
-INSERT INTO `st_login_log` VALUES (15, 'admin', '2019-08-05 11:45:57', '登录成功', '1', 'admin', 'admin', '2019-08-05 11:45:57', '2019-08-05 19:45:56');
-INSERT INTO `st_login_log` VALUES (16, 'admin', '2019-08-07 02:31:36', '登录成功', '1', 'admin', 'admin', '2019-08-07 02:31:36', '2019-08-07 10:31:35');
-INSERT INTO `st_login_log` VALUES (17, 'admin', '2019-08-12 06:03:37', '登录成功', '1', 'admin', 'admin', '2019-08-12 06:03:37', '2019-08-12 14:03:36');
-INSERT INTO `st_login_log` VALUES (18, 'admin', '2019-08-12 06:24:23', '登录成功', '1', 'admin', 'admin', '2019-08-12 06:24:23', '2019-08-12 14:24:22');
-INSERT INTO `st_login_log` VALUES (19, 'admin', '2019-08-12 06:45:17', '登录成功', '1', 'admin', 'admin', '2019-08-12 06:45:17', '2019-08-12 14:45:16');
-INSERT INTO `st_login_log` VALUES (20, 'admin', '2019-08-12 06:45:58', '登录成功', '1', 'admin', 'admin', '2019-08-12 06:45:58', '2019-08-12 14:45:58');
-INSERT INTO `st_login_log` VALUES (21, 'admin', '2019-08-12 06:46:36', '登录成功', '1', 'admin', 'admin', '2019-08-12 06:46:36', '2019-08-12 14:46:36');
-INSERT INTO `st_login_log` VALUES (22, 'admin', '2019-08-12 07:38:59', '登录成功', '1', 'admin', 'admin', '2019-08-12 07:38:59', '2019-08-12 15:38:58');
-INSERT INTO `st_login_log` VALUES (23, 'admin', '2019-08-12 08:22:30', '登录成功', '1', 'admin', 'admin', '2019-08-12 08:22:30', '2019-08-12 16:22:29');
-INSERT INTO `st_login_log` VALUES (24, 'admin', '2019-08-12 09:40:29', '登录成功', '1', 'admin', 'admin', '2019-08-12 09:40:29', '2019-08-12 17:40:29');
-INSERT INTO `st_login_log` VALUES (25, 'admin', '2019-08-12 10:47:12', '登录成功', '1', 'admin', 'admin', '2019-08-12 10:47:12', '2019-08-12 18:47:12');
-INSERT INTO `st_login_log` VALUES (26, 'admin', '2019-08-13 01:37:26', '登录成功', '1', 'admin', 'admin', '2019-08-13 01:37:26', '2019-08-13 09:37:25');
-INSERT INTO `st_login_log` VALUES (27, 'admin', '2019-08-13 05:48:12', '登录成功', '1', 'admin', 'admin', '2019-08-13 05:48:12', '2019-08-13 13:48:11');
-INSERT INTO `st_login_log` VALUES (28, 'admin', '2019-08-13 07:03:36', '登录成功', '1', 'admin', 'admin', '2019-08-13 07:03:36', '2019-08-13 15:03:35');
-INSERT INTO `st_login_log` VALUES (29, 'admin', '2019-08-13 07:52:05', '登录成功', '1', 'admin', 'admin', '2019-08-13 07:52:05', '2019-08-13 15:52:05');
-INSERT INTO `st_login_log` VALUES (30, 'admin', '2019-08-14 06:04:20', '登录成功', '1', 'admin', 'admin', '2019-08-14 06:04:20', '2019-08-14 14:04:20');
-INSERT INTO `st_login_log` VALUES (31, 'admin', '2019-08-14 09:57:30', '登录成功', '1', 'admin', 'admin', '2019-08-14 09:57:30', '2019-08-14 17:57:30');
-INSERT INTO `st_login_log` VALUES (32, 'admin', '2019-08-15 02:05:58', '登录成功', '1', 'admin', 'admin', '2019-08-15 02:05:58', '2019-08-15 10:05:57');
-INSERT INTO `st_login_log` VALUES (33, 'admin', '2019-08-15 05:54:23', '登录成功', '1', 'admin', 'admin', '2019-08-15 05:54:23', '2019-08-15 13:54:23');
-INSERT INTO `st_login_log` VALUES (34, 'admin', '2019-08-16 04:52:55', '登录成功', '1', 'admin', 'admin', '2019-08-16 04:52:55', '2019-08-16 12:52:55');
-INSERT INTO `st_login_log` VALUES (35, 'admin', '2019-08-16 05:03:52', '登录成功', '1', 'admin', 'admin', '2019-08-16 05:03:52', '2019-08-16 13:03:51');
-INSERT INTO `st_login_log` VALUES (36, 'admin', '2019-08-16 05:06:07', '登录成功', '1', 'admin', 'admin', '2019-08-16 05:06:07', '2019-08-16 13:06:06');
-INSERT INTO `st_login_log` VALUES (37, 'admin', '2019-08-16 06:07:13', '登录成功', '1', 'admin', 'admin', '2019-08-16 06:07:13', '2019-08-16 14:07:12');
-INSERT INTO `st_login_log` VALUES (38, 'admin', '2019-08-16 06:07:46', '登录成功', '1', 'admin', 'admin', '2019-08-16 06:07:46', '2019-08-16 14:07:45');
-INSERT INTO `st_login_log` VALUES (39, 'admin', '2019-08-16 06:08:04', '登录成功', '1', 'admin', 'admin', '2019-08-16 06:08:04', '2019-08-16 14:08:03');
-INSERT INTO `st_login_log` VALUES (40, 'admin', '2019-08-18 12:37:26', '登录成功', '1', 'admin', 'admin', '2019-08-18 12:37:26', '2019-08-18 20:37:26');
-INSERT INTO `st_login_log` VALUES (41, 'admin', '2019-08-19 01:35:08', '登录成功', '1', 'admin', 'admin', '2019-08-19 01:35:08', '2019-08-19 09:35:08');
-INSERT INTO `st_login_log` VALUES (42, 'admin', '2019-08-19 03:02:58', '登录成功', '1', 'admin', 'admin', '2019-08-19 03:02:58', '2019-08-19 11:02:58');
-INSERT INTO `st_login_log` VALUES (43, 'admin', '2019-08-19 03:03:04', '登录成功', '1', 'admin', 'admin', '2019-08-19 03:03:04', '2019-08-19 11:03:04');
-INSERT INTO `st_login_log` VALUES (44, 'admin', '2019-08-19 03:03:07', '登录成功', '1', 'admin', 'admin', '2019-08-19 03:03:07', '2019-08-19 11:03:07');
-INSERT INTO `st_login_log` VALUES (45, 'admin', '2019-08-19 03:04:53', '登录成功', '1', 'admin', 'admin', '2019-08-19 03:04:53', '2019-08-19 11:04:52');
-INSERT INTO `st_login_log` VALUES (46, 'admin', '2019-08-19 03:18:46', '登录成功', '1', 'admin', 'admin', '2019-08-19 03:18:46', '2019-08-19 11:18:45');
-INSERT INTO `st_login_log` VALUES (47, 'admin', '2019-08-19 10:22:09', '登录成功', '1', 'admin', 'admin', '2019-08-19 10:22:09', '2019-08-19 18:22:08');
-INSERT INTO `st_login_log` VALUES (48, 'admin', '2019-08-23 08:42:16', '登录成功', '1', 'admin', 'admin', '2019-08-23 08:42:16', '2019-08-23 16:42:15');
-INSERT INTO `st_login_log` VALUES (49, 'admin', '2019-08-26 11:59:42', '登录成功', '1', 'admin', 'admin', '2019-08-26 11:59:42', '2019-08-26 19:59:41');
-INSERT INTO `st_login_log` VALUES (50, 'admin', '2019-08-28 03:27:06', '登录成功', '1', 'admin', 'admin', '2019-08-28 03:27:06', '2019-08-28 11:27:06');
-INSERT INTO `st_login_log` VALUES (51, 'admin', '2019-08-30 06:05:28', '登录成功', '1', 'admin', 'admin', '2019-08-30 06:05:28', '2019-08-30 14:05:28');
-INSERT INTO `st_login_log` VALUES (52, 'admin', '2019-09-06 02:17:43', '登录成功', '1', 'admin', 'admin', '2019-09-06 02:17:43', '2019-09-06 10:17:43');
-INSERT INTO `st_login_log` VALUES (53, 'admin', '2019-09-06 12:01:25', '登录成功', '1', 'admin', 'admin', '2019-09-06 12:01:25', '2019-09-06 20:01:24');
-INSERT INTO `st_login_log` VALUES (54, 'admin', '2019-09-06 12:02:53', '登录成功', '1', 'admin', 'admin', '2019-09-06 12:02:53', '2019-09-06 20:02:53');
-INSERT INTO `st_login_log` VALUES (55, 'admin', '2019-09-07 12:49:07', '登录成功', '1', 'admin', 'admin', '2019-09-07 12:49:07', '2019-09-07 20:49:06');
-INSERT INTO `st_login_log` VALUES (56, 'admin', '2019-09-07 12:54:26', '登录成功', '1', 'admin', 'admin', '2019-09-07 12:54:26', '2019-09-07 20:54:26');
-INSERT INTO `st_login_log` VALUES (57, 'admin', '2019-09-07 12:55:38', '登录成功', '1', 'admin', 'admin', '2019-09-07 12:55:38', '2019-09-07 20:55:38');
-INSERT INTO `st_login_log` VALUES (58, 'admin', '2019-09-07 12:56:42', '登录成功', '1', 'admin', 'admin', '2019-09-07 12:56:42', '2019-09-07 20:56:41');
-INSERT INTO `st_login_log` VALUES (59, 'admin', '2019-09-07 12:59:28', '登录成功', '1', 'admin', 'admin', '2019-09-07 12:59:28', '2019-09-07 20:59:27');
-INSERT INTO `st_login_log` VALUES (60, 'admin', '2019-09-07 13:05:07', '登录成功', '1', 'admin', 'admin', '2019-09-07 13:05:07', '2019-09-07 21:05:07');
-INSERT INTO `st_login_log` VALUES (61, 'admin', '2019-09-07 13:06:19', '登录成功', '1', 'admin', 'admin', '2019-09-07 13:06:19', '2019-09-07 21:06:19');
-INSERT INTO `st_login_log` VALUES (62, 'admin', '2019-09-07 13:08:12', '登录成功', '1', 'admin', 'admin', '2019-09-07 13:08:12', '2019-09-07 21:08:11');
-INSERT INTO `st_login_log` VALUES (63, 'admin', '2019-09-07 13:10:11', '登录成功', '1', 'admin', 'admin', '2019-09-07 13:10:11', '2019-09-07 21:10:10');
-INSERT INTO `st_login_log` VALUES (64, 'admin', '2019-09-07 13:12:38', '登录成功', '1', 'admin', 'admin', '2019-09-07 13:12:38', '2019-09-07 21:12:38');
-INSERT INTO `st_login_log` VALUES (65, 'admin', '2019-09-07 13:26:07', '登录成功', '1', 'admin', 'admin', '2019-09-07 13:26:07', '2019-09-07 21:26:07');
-INSERT INTO `st_login_log` VALUES (66, 'admin', '2019-09-09 02:32:46', '登录成功', '1', 'admin', 'admin', '2019-09-09 02:32:46', '2019-09-09 10:32:46');
-INSERT INTO `st_login_log` VALUES (67, 'admin', '2019-09-09 06:42:40', '登录成功', '1', 'admin', 'admin', '2019-09-09 06:42:40', '2019-09-09 14:42:39');
-INSERT INTO `st_login_log` VALUES (68, 'admin', '2019-09-10 03:27:06', '登录成功', '1', 'admin', 'admin', '2019-09-10 03:27:06', '2019-09-10 11:27:05');
-INSERT INTO `st_login_log` VALUES (69, 'admin', '2019-09-10 12:09:47', '登录成功', '1', 'admin', 'admin', '2019-09-10 12:09:47', '2019-09-10 20:09:47');
-INSERT INTO `st_login_log` VALUES (70, 'admin', '2019-09-11 02:10:38', '登录成功', '1', 'admin', 'admin', '2019-09-11 02:10:38', '2019-09-11 10:10:38');
-INSERT INTO `st_login_log` VALUES (71, 'admin', '2019-09-12 01:39:31', '登录成功', '1', 'admin', 'admin', '2019-09-12 01:39:31', '2019-09-12 09:39:31');
-INSERT INTO `st_login_log` VALUES (72, 'admin', '2019-09-12 02:02:23', '登录成功', '1', 'admin', 'admin', '2019-09-12 02:02:23', '2019-09-12 10:02:22');
-INSERT INTO `st_login_log` VALUES (73, 'admin', '2019-09-12 07:58:35', '登录成功', '1', 'admin', 'admin', '2019-09-12 07:58:35', '2019-09-12 15:58:34');
-INSERT INTO `st_login_log` VALUES (74, 'admin', '2019-09-12 11:25:01', '登录成功', '1', 'admin', 'admin', '2019-09-12 11:25:01', '2019-09-12 19:25:00');
-INSERT INTO `st_login_log` VALUES (75, 'admin', '2019-09-16 06:15:41', '登录成功', '1', 'admin', 'admin', '2019-09-16 06:15:41', '2019-09-16 14:15:41');
-INSERT INTO `st_login_log` VALUES (76, 'admin', '2019-09-16 07:03:26', '登录成功', '1', 'admin', 'admin', '2019-09-16 07:03:26', '2019-09-16 15:03:26');
-INSERT INTO `st_login_log` VALUES (77, 'admin', '2019-09-17 02:09:06', '登录成功', '1', 'admin', 'admin', '2019-09-17 02:09:06', '2019-09-17 10:09:06');
-INSERT INTO `st_login_log` VALUES (78, 'admin', '2019-09-17 10:09:14', '登录成功', '1', 'admin', 'admin', '2019-09-17 10:09:14', '2019-09-17 18:09:13');
-INSERT INTO `st_login_log` VALUES (79, 'admin', '2019-09-18 06:26:24', '登录成功', '1', 'admin', 'admin', '2019-09-18 06:26:24', '2019-09-18 14:26:24');
-INSERT INTO `st_login_log` VALUES (80, 'admin', '2019-09-19 05:57:54', '登录成功', '1', 'admin', 'admin', '2019-09-19 05:57:54', '2019-09-19 13:57:54');
-INSERT INTO `st_login_log` VALUES (81, 'admin', '2019-09-20 02:49:42', '登录成功', '1', 'admin', 'admin', '2019-09-20 02:49:42', '2019-09-20 10:49:41');
-INSERT INTO `st_login_log` VALUES (82, 'admin', '2019-09-24 02:06:37', '登录成功', '1', 'admin', 'admin', '2019-09-24 02:06:37', '2019-09-24 10:06:37');
-INSERT INTO `st_login_log` VALUES (83, 'admin', '2019-09-25 06:08:16', '登录成功', '1', 'admin', 'admin', '2019-09-25 06:08:16', '2019-09-25 14:08:15');
-INSERT INTO `st_login_log` VALUES (84, 'admin', '2019-09-25 06:22:56', '登录成功', '1', 'admin', 'admin', '2019-09-25 06:22:56', '2019-09-25 14:22:55');
-INSERT INTO `st_login_log` VALUES (85, 'admin', '2019-09-25 07:18:07', '登录成功', '1', 'admin', 'admin', '2019-09-25 07:18:07', '2019-09-25 15:18:07');
-INSERT INTO `st_login_log` VALUES (86, 'admin', '2019-09-25 07:18:25', '登录成功', '1', 'admin', 'admin', '2019-09-25 07:18:25', '2019-09-25 15:18:25');
-INSERT INTO `st_login_log` VALUES (87, 'admin', '2020-08-07 05:52:45', '登录成功', '1', 'admin', 'admin', '2020-08-07 05:52:45', '2020-08-07 05:52:45');
-INSERT INTO `st_login_log` VALUES (88, 'admin', '2020-08-07 06:27:11', '登录成功', '1', 'admin', 'admin', '2020-08-07 06:27:11', '2020-08-07 06:27:10');
-INSERT INTO `st_login_log` VALUES (89, 'admin', '2020-08-10 02:20:43', '登录成功', '1', 'admin', 'admin', '2020-08-10 02:20:43', '2020-08-10 02:20:43');
-INSERT INTO `st_login_log` VALUES (90, 'admin', '2020-08-10 03:14:55', '登录成功', '1', 'admin', 'admin', '2020-08-10 03:14:55', '2020-08-10 03:14:55');
-INSERT INTO `st_login_log` VALUES (91, 'admin', '2020-08-10 03:29:41', '登录成功', '1', 'admin', 'admin', '2020-08-10 03:29:41', '2020-08-10 03:29:40');
-INSERT INTO `st_login_log` VALUES (92, 'admin', '2020-08-10 04:32:38', '登录成功', '1', 'admin', 'admin', '2020-08-10 04:32:38', '2020-08-10 04:32:38');
-INSERT INTO `st_login_log` VALUES (93, 'admin', '2020-08-10 04:40:49', '登录成功', '1', 'admin', 'admin', '2020-08-10 04:40:49', '2020-08-10 04:40:48');
-INSERT INTO `st_login_log` VALUES (94, 'admin', '2020-08-10 04:52:29', '登录成功', '1', 'admin', 'admin', '2020-08-10 04:52:29', '2020-08-10 04:52:28');
-INSERT INTO `st_login_log` VALUES (95, 'admin', '2020-08-10 05:43:50', '登录成功', '1', 'admin', 'admin', '2020-08-10 05:43:50', '2020-08-10 05:43:50');
-INSERT INTO `st_login_log` VALUES (96, 'admin', '2020-08-10 06:03:20', '登录成功', '1', 'admin', 'admin', '2020-08-10 06:03:20', '2020-08-10 06:03:19');
-INSERT INTO `st_login_log` VALUES (97, 'admin', '2020-08-11 08:59:52', '登录成功', '1', 'admin', 'admin', '2020-08-11 08:59:52', '2020-08-11 08:59:51');
-INSERT INTO `st_login_log` VALUES (98, 'admin', '2020-08-12 01:18:05', '登录成功', '1', 'admin', 'admin', '2020-08-12 01:18:05', '2020-08-12 01:18:04');
-INSERT INTO `st_login_log` VALUES (99, 'admin', '2020-08-12 01:18:39', '登录成功', '1', 'admin', 'admin', '2020-08-12 01:18:39', '2020-08-12 01:18:38');
-INSERT INTO `st_login_log` VALUES (100, 'admin', '2020-08-12 01:51:39', '登录成功', '1', 'admin', 'admin', '2020-08-12 01:51:39', '2020-08-12 01:51:38');
-INSERT INTO `st_login_log` VALUES (101, 'admin', '2020-08-12 03:44:33', '登录成功', '1', 'admin', 'admin', '2020-08-12 03:44:33', '2020-08-12 03:44:33');
-INSERT INTO `st_login_log` VALUES (102, 'admin', '2020-08-12 03:52:36', '登录成功', '1', 'admin', 'admin', '2020-08-12 03:52:36', '2020-08-12 03:52:36');
-INSERT INTO `st_login_log` VALUES (103, 'admin', '2020-08-12 04:15:56', '登录成功', '1', 'admin', 'admin', '2020-08-12 04:15:56', '2020-08-12 04:15:56');
-INSERT INTO `st_login_log` VALUES (104, 'admin', '2020-08-12 06:02:12', '登录成功', '1', 'admin', 'admin', '2020-08-12 06:02:12', '2020-08-12 06:02:11');
-INSERT INTO `st_login_log` VALUES (105, 'admin', '2020-08-12 06:49:06', '登录成功', '1', 'admin', 'admin', '2020-08-12 06:49:06', '2020-08-12 06:49:05');
-INSERT INTO `st_login_log` VALUES (106, 'admin', '2020-08-12 06:52:00', '登录成功', '1', 'admin', 'admin', '2020-08-12 06:52:00', '2020-08-12 06:52:00');
-INSERT INTO `st_login_log` VALUES (107, 'admin', '2020-08-12 06:55:36', '登录成功', '1', 'admin', 'admin', '2020-08-12 06:55:36', '2020-08-12 06:55:36');
-INSERT INTO `st_login_log` VALUES (108, 'admin', '2020-08-12 06:56:54', '登录成功', '1', 'admin', 'admin', '2020-08-12 06:56:54', '2020-08-12 06:56:53');
-INSERT INTO `st_login_log` VALUES (109, 'admin', '2020-08-12 07:04:18', '登录成功', '1', 'admin', 'admin', '2020-08-12 07:04:18', '2020-08-12 07:04:18');
-INSERT INTO `st_login_log` VALUES (110, 'admin', '2020-08-12 08:52:28', '登录成功', '1', 'admin', 'admin', '2020-08-12 08:52:28', '2020-08-12 08:52:28');
-INSERT INTO `st_login_log` VALUES (111, 'admin', '2020-08-12 09:07:27', '登录成功', '1', 'admin', 'admin', '2020-08-12 09:07:27', '2020-08-12 09:07:27');
-INSERT INTO `st_login_log` VALUES (112, 'admin', '2020-08-12 09:09:03', '登录成功', '1', 'admin', 'admin', '2020-08-12 09:09:03', '2020-08-12 09:09:03');
-INSERT INTO `st_login_log` VALUES (113, 'admin', '2020-08-12 09:20:09', '登录成功', '1', 'admin', 'admin', '2020-08-12 09:20:09', '2020-08-12 09:20:08');
-INSERT INTO `st_login_log` VALUES (114, 'admin', '2020-08-13 01:09:14', '登录成功', '1', 'admin', 'admin', '2020-08-13 01:09:14', '2020-08-13 01:09:13');
-INSERT INTO `st_login_log` VALUES (115, 'admin', '2020-08-13 01:18:15', '登录成功', '1', 'admin', 'admin', '2020-08-13 01:18:15', '2020-08-13 01:18:15');
-INSERT INTO `st_login_log` VALUES (116, 'admin', '2020-08-13 01:45:28', '登录成功', '1', 'admin', 'admin', '2020-08-13 01:45:28', '2020-08-13 01:45:28');
-INSERT INTO `st_login_log` VALUES (117, 'admin', '2020-08-13 01:50:59', '登录成功', '1', 'admin', 'admin', '2020-08-13 01:50:59', '2020-08-13 01:50:59');
-INSERT INTO `st_login_log` VALUES (118, 'admin', '2020-08-13 02:18:11', '登录成功', '1', 'admin', 'admin', '2020-08-13 02:18:11', '2020-08-13 02:18:10');
-INSERT INTO `st_login_log` VALUES (119, 'admin', '2020-08-13 02:40:58', '登录成功', '1', 'admin', 'admin', '2020-08-13 02:40:58', '2020-08-13 02:40:58');
-INSERT INTO `st_login_log` VALUES (120, 'admin', '2020-08-13 02:47:38', '登录成功', '1', 'admin', 'admin', '2020-08-13 02:47:38', '2020-08-13 02:47:38');
-INSERT INTO `st_login_log` VALUES (121, 'admin', '2020-08-13 03:05:12', '登录成功', '1', 'admin', 'admin', '2020-08-13 03:05:12', '2020-08-13 03:05:12');
-INSERT INTO `st_login_log` VALUES (122, 'admin', '2020-08-13 03:25:56', '登录成功', '1', 'admin', 'admin', '2020-08-13 03:25:56', '2020-08-13 03:25:55');
-INSERT INTO `st_login_log` VALUES (123, 'admin', '2020-08-13 03:35:58', '登录成功', '1', 'admin', 'admin', '2020-08-13 03:35:58', '2020-08-13 03:35:58');
-INSERT INTO `st_login_log` VALUES (124, 'admin', '2020-08-13 04:20:54', '登录成功', '1', 'admin', 'admin', '2020-08-13 04:20:54', '2020-08-13 04:20:53');
-INSERT INTO `st_login_log` VALUES (125, 'admin', '2020-08-13 04:28:37', '登录成功', '1', 'admin', 'admin', '2020-08-13 04:28:37', '2020-08-13 04:28:36');
-INSERT INTO `st_login_log` VALUES (126, 'admin', '2020-08-13 04:29:50', '登录成功', '1', 'admin', 'admin', '2020-08-13 04:29:50', '2020-08-13 04:29:50');
-INSERT INTO `st_login_log` VALUES (127, 'admin', '2020-08-13 06:21:49', '登录成功', '1', 'admin', 'admin', '2020-08-13 06:21:49', '2020-08-13 06:21:48');
-INSERT INTO `st_login_log` VALUES (128, 'admin', '2020-08-13 06:26:39', '登录成功', '1', 'admin', 'admin', '2020-08-13 06:26:39', '2020-08-13 06:26:39');
-INSERT INTO `st_login_log` VALUES (129, 'admin', '2020-08-13 06:29:50', '登录成功', '1', 'admin', 'admin', '2020-08-13 06:29:50', '2020-08-13 06:29:49');
-INSERT INTO `st_login_log` VALUES (130, 'admin', '2020-08-13 06:30:17', '登录成功', '1', 'admin', 'admin', '2020-08-13 06:30:17', '2020-08-13 06:30:17');
-INSERT INTO `st_login_log` VALUES (131, 'admin', '2020-08-13 06:38:34', '登录成功', '1', 'admin', 'admin', '2020-08-13 06:38:34', '2020-08-13 06:38:33');
-INSERT INTO `st_login_log` VALUES (132, 'admin', '2020-08-13 06:40:09', '登录成功', '1', 'admin', 'admin', '2020-08-13 06:40:09', '2020-08-13 06:40:09');
-INSERT INTO `st_login_log` VALUES (133, 'admin', '2020-08-13 06:44:01', '登录成功', '1', 'admin', 'admin', '2020-08-13 06:44:01', '2020-08-13 06:44:01');
-INSERT INTO `st_login_log` VALUES (134, 'admin', '2020-08-13 07:20:39', '登录成功', '1', 'admin', 'admin', '2020-08-13 07:20:39', '2020-08-13 07:20:38');
-INSERT INTO `st_login_log` VALUES (135, 'admin', '2020-08-13 07:50:20', '登录成功', '1', 'admin', 'admin', '2020-08-13 07:50:20', '2020-08-13 07:50:19');
-INSERT INTO `st_login_log` VALUES (136, 'admin', '2020-08-13 09:29:45', '登录成功', '1', 'admin', 'admin', '2020-08-13 09:29:45', '2020-08-13 09:29:45');
-INSERT INTO `st_login_log` VALUES (137, 'admin', '2020-08-13 09:33:16', '登录成功', '1', 'admin', 'admin', '2020-08-13 09:33:16', '2020-08-13 09:33:16');
+) ENGINE = InnoDB AUTO_INCREMENT = 147 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '登录日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for st_resource
@@ -477,14 +346,14 @@ CREATE TABLE `st_resource`  (
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_resource
 -- ----------------------------
 INSERT INTO `st_resource` VALUES (1, '系统管理', '0', 'nested', 30, '/sysmgr', '/layout/Layout', 1, 0, NULL, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-09-25 07:25:47');
 INSERT INTO `st_resource` VALUES (2, '用户管理', '0-1', 'user', 1, 'user', '/sysmgr/user/index', 7, 1, NULL, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-08-19 11:04:38');
-INSERT INTO `st_resource` VALUES (3, '角色管理', '0-1', 'peoples', 3, 'role', '/sysmgr/role/index', 10, 1, NULL, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-08-19 11:04:40');
+INSERT INTO `st_resource` VALUES (3, '角色管理', '0-1', 'peoples', 3, 'role', '/sysmgr/role/index', 10, 1, NULL, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2020-08-14 08:43:05');
 INSERT INTO `st_resource` VALUES (4, '菜单管理', '0-1', 'list', 4, 'menu', '/sysmgr/menu/index', 13, 1, NULL, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-08-19 11:04:42');
 INSERT INTO `st_resource` VALUES (5, '权限管理', '0-1', 'password', 5, 'authority', '/sysmgr/authority/index', 16, 1, NULL, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-08-19 11:04:43');
 INSERT INTO `st_resource` VALUES (6, '基础信息', '0', 'nested', 20, '/baseinfo', '/layout/Layout', 1, 0, NULL, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-09-25 07:25:42');
@@ -497,6 +366,7 @@ INSERT INTO `st_resource` VALUES (12, '定时任务', '0-1', 'guide', 20, 'sched
 INSERT INTO `st_resource` VALUES (13, '个人空间', '0', 'nested', 10, '/tools', '/layout/Layout', 1, 0, '', '1', 'admin', 'admin', '2019-09-25 06:28:53', '2019-09-25 14:30:48');
 INSERT INTO `st_resource` VALUES (14, '待办事项', '0-13', 'table', NULL, 'todolist', '/tools/todolist', 53, 13, NULL, '1', 'admin', 'admin', '2019-09-25 07:09:20', '2019-09-25 07:17:58');
 INSERT INTO `st_resource` VALUES (15, '系统公告', '0-1', 'user', 30, 'InformManagement', '/sysmgr/inform/index', 57, 1, NULL, '1', 'admin', 'admin', '2020-08-11 08:57:20', '2020-08-11 08:57:20');
+INSERT INTO `st_resource` VALUES (16, '部门管理', '0-1', 'peoples', 10, 'dept', '/sysmgr/dept/index', 69, 1, NULL, '1', 'admin', 'admin', '2020-08-14 08:44:03', '2020-08-14 08:44:17');
 
 -- ----------------------------
 -- Table structure for st_role
@@ -535,7 +405,7 @@ CREATE TABLE `st_role_authority`  (
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 496 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '角色权限关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 557 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '角色权限关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_role_authority
@@ -760,63 +630,124 @@ INSERT INTO `st_role_authority` VALUES (435, 1, 62, '0', 'admin', NULL, '2020-08
 INSERT INTO `st_role_authority` VALUES (436, 1, 63, '0', 'admin', NULL, '2020-08-12 06:48:10', '2020-08-13 01:18:09');
 INSERT INTO `st_role_authority` VALUES (437, 1, 64, '0', 'admin', NULL, '2020-08-12 06:48:10', '2020-08-13 01:18:09');
 INSERT INTO `st_role_authority` VALUES (438, 1, 65, '0', 'admin', NULL, '2020-08-12 06:48:10', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (439, 1, 0, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (440, 1, 1, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (441, 1, 2, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (442, 1, 3, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (443, 1, 4, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (444, 1, 5, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (445, 1, 6, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (446, 1, 7, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (447, 1, 8, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (448, 1, 9, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (449, 1, 10, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (450, 1, 11, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (451, 1, 12, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (452, 1, 13, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (453, 1, 14, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (454, 1, 15, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (455, 1, 16, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (456, 1, 17, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (457, 1, 18, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (458, 1, 30, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (459, 1, 31, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (460, 1, 32, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (461, 1, 33, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (462, 1, 34, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (463, 1, 35, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (464, 1, 36, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (465, 1, 37, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (466, 1, 38, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (467, 1, 39, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (468, 1, 40, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (469, 1, 41, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (470, 1, 42, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (471, 1, 43, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (472, 1, 44, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (473, 1, 45, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (474, 1, 46, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (475, 1, 47, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (476, 1, 48, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (477, 1, 49, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (478, 1, 50, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (479, 1, 51, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (480, 1, 52, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (481, 1, 53, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (482, 1, 54, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (483, 1, 55, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (484, 1, 56, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (485, 1, 57, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (486, 1, 58, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (487, 1, 59, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (488, 1, 60, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (489, 1, 61, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (490, 1, 62, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (491, 1, 63, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (492, 1, 64, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (493, 1, 65, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (494, 1, 66, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
-INSERT INTO `st_role_authority` VALUES (495, 1, 67, '1', 'admin', 'admin', '2020-08-13 01:18:09', '2020-08-13 01:18:09');
+INSERT INTO `st_role_authority` VALUES (439, 1, 0, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (440, 1, 1, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (441, 1, 2, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (442, 1, 3, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (443, 1, 4, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (444, 1, 5, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (445, 1, 6, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (446, 1, 7, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (447, 1, 8, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (448, 1, 9, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (449, 1, 10, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (450, 1, 11, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (451, 1, 12, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (452, 1, 13, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (453, 1, 14, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (454, 1, 15, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (455, 1, 16, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (456, 1, 17, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (457, 1, 18, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (458, 1, 30, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (459, 1, 31, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (460, 1, 32, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (461, 1, 33, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (462, 1, 34, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (463, 1, 35, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (464, 1, 36, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (465, 1, 37, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (466, 1, 38, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (467, 1, 39, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (468, 1, 40, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (469, 1, 41, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (470, 1, 42, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (471, 1, 43, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (472, 1, 44, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (473, 1, 45, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (474, 1, 46, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (475, 1, 47, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (476, 1, 48, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (477, 1, 49, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (478, 1, 50, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (479, 1, 51, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (480, 1, 52, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (481, 1, 53, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (482, 1, 54, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (483, 1, 55, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (484, 1, 56, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (485, 1, 57, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (486, 1, 58, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (487, 1, 59, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (488, 1, 60, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (489, 1, 61, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (490, 1, 62, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (491, 1, 63, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (492, 1, 64, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (493, 1, 65, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (494, 1, 66, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (495, 1, 67, '0', 'admin', NULL, '2020-08-13 01:18:09', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (496, 1, 0, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (497, 1, 1, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (498, 1, 2, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (499, 1, 3, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (500, 1, 4, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (501, 1, 5, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (502, 1, 6, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (503, 1, 7, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (504, 1, 8, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (505, 1, 9, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (506, 1, 10, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (507, 1, 11, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (508, 1, 12, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (509, 1, 13, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (510, 1, 14, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (511, 1, 15, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (512, 1, 16, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (513, 1, 17, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (514, 1, 18, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (515, 1, 30, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (516, 1, 31, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (517, 1, 32, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (518, 1, 33, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (519, 1, 34, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (520, 1, 35, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (521, 1, 36, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (522, 1, 37, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (523, 1, 38, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (524, 1, 39, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (525, 1, 40, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (526, 1, 41, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (527, 1, 42, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (528, 1, 43, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (529, 1, 44, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (530, 1, 45, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (531, 1, 46, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (532, 1, 47, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (533, 1, 48, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (534, 1, 49, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (535, 1, 50, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (536, 1, 51, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (537, 1, 52, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (538, 1, 53, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (539, 1, 54, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (540, 1, 55, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (541, 1, 56, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (542, 1, 57, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (543, 1, 58, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (544, 1, 59, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (545, 1, 60, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (546, 1, 61, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (547, 1, 62, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (548, 1, 63, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (549, 1, 64, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (550, 1, 65, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (551, 1, 66, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (552, 1, 67, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (553, 1, 68, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (554, 1, 69, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (555, 1, 70, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
+INSERT INTO `st_role_authority` VALUES (556, 1, 71, '1', 'admin', 'admin', '2020-08-14 08:44:33', '2020-08-14 08:44:33');
 
 -- ----------------------------
 -- Table structure for st_schedule_job
@@ -846,7 +777,7 @@ CREATE TABLE `st_schedule_job`  (
 -- ----------------------------
 -- Records of st_schedule_job
 -- ----------------------------
-INSERT INTO `st_schedule_job` VALUES (1, 'StoryDemoJob', '框架演示任务', '0 0/5 * * * ?', b'1', 'com.story.storyadmin.scheduler.StoryDemoJob', '2019-08-19 06:14:06', '2020-08-13 09:35:00', '2020-08-13 09:30:00', '2020-08-13 09:40:00', '演示，仅此而已', NULL, '1', 'admin', 'admin', '2019-08-19 06:14:20', '2020-08-13 09:35:00');
+INSERT INTO `st_schedule_job` VALUES (1, 'StoryDemoJob', '框架演示任务', '0 0/5 * * * ?', b'1', 'com.story.storyadmin.scheduler.StoryDemoJob', '2019-08-19 06:14:06', '2020-08-14 08:45:00', '2020-08-14 08:40:00', '2020-08-14 08:50:00', '演示，仅此而已', NULL, '1', 'admin', 'admin', '2019-08-19 06:14:20', '2020-08-14 08:45:00');
 INSERT INTO `st_schedule_job` VALUES (2, 'DbBackupJob', '数据库定时备份', '0 0 2 ? * TUE', b'0', 'com.story.storyadmin.scheduler.DbBackupJob', '2019-08-30 07:42:21', '2019-09-10 10:30:00', '2019-09-10 10:29:00', '2019-09-10 10:31:00', NULL, 'org.quartz.core.JobRunShell.run(JobRunShell.java:218)\norg.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)\n', '1', 'admin', 'admin', '2019-08-30 07:42:29', '2019-09-10 19:37:28');
 
 -- ----------------------------
@@ -869,7 +800,7 @@ CREATE TABLE `st_todo`  (
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '待办事项' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '待办事项' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of st_todo
