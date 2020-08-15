@@ -1,9 +1,11 @@
 package com.story.storyadmin.domain.entity.sysmgr;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.story.storyadmin.domain.entity.BaseEntity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -30,6 +32,8 @@ public class Inform extends BaseEntity {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private Date createDate;
 
     /**
@@ -45,7 +49,7 @@ public class Inform extends BaseEntity {
     /**
      * 附件列表ID 的id本来是long类型的
      */
-    private String attchmentList;
+    private String attchmentList; // Long
 
     /**
      * 撤销人ID

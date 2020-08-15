@@ -104,7 +104,7 @@ export default {
     findAllUserList()
       .then(res => {
         console.log(res.data.records);
-        this.allUsers = res.data.records
+        this.allUsers = res.data
       })
     // 查询列表
     this.query()
