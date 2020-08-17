@@ -93,11 +93,11 @@ public class LoginLogController {
 
         Result result = new Result();
         LoginLog loginLog=new LoginLog();
-//        loginLog.setAccount(userAccount);
         Page<LoginLog> page = new Page(pageNum, pageSize);
         QueryWrapper<LoginLog> eWrapper = new QueryWrapper(loginLog);
         eWrapper.eq("account",userAccount);
         eWrapper.eq("yn_flag","1");
+        eWrapper.orderByDesc("login_time");
         IPage<LoginLog> list = loginLogService.page(page, eWrapper);
         result.setData(list);
         result.setResult(true);

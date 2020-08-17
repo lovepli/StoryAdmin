@@ -55,6 +55,7 @@ public class AttController {
         Page<Att> page = new Page(pageNo, limit);
         QueryWrapper<Att> eWrapper = new QueryWrapper(att);
         eWrapper.eq("yn_flag","1");
+        eWrapper.orderByDesc("created_time");
         IPage<Att> list = attService.page(page, eWrapper);
         result.setData(list);
         result.setResult(true);
