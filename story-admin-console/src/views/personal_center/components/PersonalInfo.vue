@@ -27,7 +27,7 @@ export default {
   created() {
     findAllRoleList().then(r => {
       this.roleNameMap = {}
-      r.data.records.forEach(role => {
+      r.data.forEach(role => { // 遍历角色名称
         this.roleNameMap[role.name] = role.name
       })
     }).catch(e => {})
