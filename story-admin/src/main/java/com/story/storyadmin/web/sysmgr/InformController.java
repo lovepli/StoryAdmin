@@ -58,9 +58,12 @@ public class InformController {
                       @RequestParam(defaultValue = "10") int limit) {
         Result result = new Result();
 
-        // 开始时间和结束时间
+        // 开始时间和结束时间 两个日期参数都没有获取到！
         Date startOfCreate = DateUtil.startOfThisDay(startDate);
         Date endOfCreate = DateUtil.startOfNextDay(endDate);
+        logger.info("开始时间:{}",startDate+"#####"+startOfCreate);
+        logger.info("结束时间:{}",endDate+"#####"+endOfCreate);
+
 
         Inform inform=new Inform();
         inform.setStatus(status);
@@ -73,8 +76,12 @@ public class InformController {
         Page<Inform> InformPage = new Page(page, limit);
         QueryWrapper<Inform> eWrapper = new QueryWrapper(inform);
 //        // 设置查询条件 对时间进行判断  TODO 加了这个条件分页查询就出现问题
-//        eWrapper.gt("create_date",startOfCreate);
-//        eWrapper.lt("create_date",endOfCreate);
+//        eWrapper.ge("create_date",startOfCreate);
+//        eWrapper.le("create_date",endOfCreate);
+          // 模拟数据
+          eWrapper.ge("create_date","2020-08-12 06:50:18");
+          eWrapper.le("create_date","2020-08-12 06:50:18");
+
         IPage<Inform> list = informService.page(InformPage, eWrapper);
         logger.info("查询出公告信息:[]", list.toString());
         result.setData(list);
@@ -123,7 +130,7 @@ public class InformController {
         //使用断言校验判断
         Assert.notNull(inform.getTitle(), "标题不能为空");
         Assert.notNull(inform.getContent(), "内容不能为空");
-        // 获取当前登录用户ID
+        // 获取当前登录用户ID  TODO 这里的ID为null??
        inform.setCreator(UserContext.getCurrentUser().getUserId());
         //
         List<Long> attachmentIds = inform.getAttachments();
