@@ -255,6 +255,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return new Result(true, null, auths, Constants.TOKEN_CHECK_SUCCESS);
     }
 
+    @Override
+    public Result findUserRole(String userName){
+        List<String> roleName = baseMapper.selectRoleByAccount(userName);
+        return new Result(true, null, roleName, Constants.TOKEN_CHECK_SUCCESS);
+    }
+
     /**
      * 保存用户角色
      *

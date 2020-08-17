@@ -14,6 +14,15 @@
               and yn_flag='1'
     </select>
 
+    <!--根据用户名名查询所有角色名-->
+    <select id="selectRoleByAccount" resultType="String">
+        SELECT
+         distinct r.name
+        FROM   st_user u,st_role r,st_user_role ur
+        where u.id=ur.user_id and r.id=ur.role_id
+        and u.name=#{userName}
+    </select>
+
     <!--根据UserId删除 这里的删除是进行修改操作的逻辑删除 将yn_flag置为0 无效-->
     <update id="deleteRoleByUserId" parameterType="com.story.storyadmin.domain.entity.sysmgr.UserRole">
       update st_user_role

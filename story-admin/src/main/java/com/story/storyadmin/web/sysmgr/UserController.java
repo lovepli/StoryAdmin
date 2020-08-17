@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.domain.entity.sysmgr.Role;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
@@ -81,6 +82,7 @@ public class UserController {
         return result;
     }
 
+
     /**
      * 保存
      * @param user
@@ -125,6 +127,16 @@ public class UserController {
     @RequestMapping(value="/findUserRole",method = {RequestMethod.POST})
     public Result findUserRole(@RequestBody UserRoleVo user){
         return userService.findUserRole(user.getUserId());
+    }
+
+    /**
+     * 根据用户名查询所有角色
+     * @return
+     */
+    @RequiresPermissions("sysmgr.user.query")
+    @RequestMapping(value="/findRolelistByAccount",method = {RequestMethod.POST,RequestMethod.GET})
+    public Result list(@RequestParam(value = "ua") String userName){
+        return userService.findUserRole(userName);
     }
 
     /**

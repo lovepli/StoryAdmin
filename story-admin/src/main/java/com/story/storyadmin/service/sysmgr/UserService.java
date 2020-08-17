@@ -55,6 +55,13 @@ public interface UserService extends IService<User> {
     Result findUserRole(Long userId);
 
     /**
+     * 根据用户名查询所有角色
+     * @param userName
+     * @return
+     */
+    Result findUserRole(String userName);
+
+    /**
      * 修改用户角色
      * @param userRole
      * @return

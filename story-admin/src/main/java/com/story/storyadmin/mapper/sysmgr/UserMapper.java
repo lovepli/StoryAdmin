@@ -37,5 +37,12 @@ public interface UserMapper extends BaseMapper<User> {
      */
     List<Long> selectRoleByUserId(@Param(value = "userId") Long userId);
 
+    /**
+     * 根据用户名名查询所有角色名
+     * @param userName
+     * @return
+     */
+    List<String> selectRoleByAccount(@Param(value = "userName") String userName);
+
     List<User> selectUserNameList();
 }

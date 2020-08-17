@@ -18,6 +18,11 @@ export function drop(param) {
   })
 }
 
+/**
+ *根据账户名查询登录信息
+ * @param {*} cond
+ * @param {*} page
+ */
 export function queryLog(cond, page) {
   const params = {
     ua: cond.userAccount,

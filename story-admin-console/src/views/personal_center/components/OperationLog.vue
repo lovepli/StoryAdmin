@@ -41,7 +41,7 @@ export default {
       }
       this.logLoading = true
       this.logPage.num++
-      // 根据账户名查询操作日志
+      // 根据账户名查询操作日志,这里的账户名写的固定值
       queryLog({ userAccount: 'admin' }, this.logPage)
         .then(r => {
           this.logTotal = r.data.total

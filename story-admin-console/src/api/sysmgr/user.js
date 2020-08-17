@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 // import md5 from 'js-md5'
+import { search } from '@/utils/common'
 
 // 用户管理
 // 查询用户列表
@@ -41,6 +42,18 @@ export function findUserRole(param) {
     url: '/sysmgr/user/findUserRole',
     method: 'post',
     data: param
+  })
+}
+
+// 根据登录账户获取所有角色
+export function findRoleListByAccount(cond) {
+  const params = {
+    ua: cond.userName
+  }
+  return request({
+    url: '/sysmgr/user/findRolelistByAccount?' + search(params),
+    method: 'post',
+    data: params
   })
 }
 
