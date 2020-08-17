@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-// import { search } from '@/utils/common'
+import { search } from '@/utils/common'
 
 // 列表查询
 export function getInformList(param) {
@@ -10,7 +10,6 @@ export function getInformList(param) {
   })
 }
 
-import { search } from '@/utils/common'
 export function queryInform(cond, page) {
   const params = {
     status: cond.status,

@@ -20,6 +20,11 @@
               首页
             </el-dropdown-item>
           </router-link>
+          <router-link to="/me/index">
+            <el-dropdown-item>
+              个人中心
+            </el-dropdown-item>
+          </router-link>
           <router-link v-if="this.isErp" class="inlineBlock" to="/pwd" >
             <el-dropdown-item >
               修改密码

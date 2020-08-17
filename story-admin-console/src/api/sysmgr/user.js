@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+// import md5 from 'js-md5'
 
 // 用户管理
 // 查询用户列表
@@ -70,3 +71,23 @@ export function findAllUserList() {
     method: 'get'
   })
 }
+
+/**
+ * 修改用户信息
+ * @param {*} temp 
+ */
+// export function updateUserInfo(temp) {
+//   var body = {
+//     account: temp.account,
+//     name: temp.name,
+//     password: md5(temp.password).toUpperCase(),
+//     new_password: temp.new_password ? md5(temp.new_password).toUpperCase() : undefined,
+//     phone: temp.phone
+//   }
+//   return request({
+//     url: '/user',
+//     method: 'put',
+//     data: body
+//   })
+// }
+

@@ -38,6 +38,23 @@ export const constantRouterMap = [
     component: () => import('@/views/login/erpIndex'), // 路由懒加载
     hidden: true
   },
+  // 个人中心
+  {
+    path: '/me',
+    component: Layout,
+    hidden: true,
+    redirect: '/me/index',
+    children: [
+      {
+        path: 'index',
+        name: 'PersonalCenter',
+        component: () => import('@/views/personal_center/index'),
+        meta: {
+          title: '个人中心'
+        }
+      }
+    ]
+  },
   // 进入公告页面
   {
     path: '/inform',
