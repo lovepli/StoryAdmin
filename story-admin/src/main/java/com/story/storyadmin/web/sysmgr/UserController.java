@@ -3,6 +3,7 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Role;
@@ -68,6 +69,7 @@ public class UserController {
      * @param user
      * @return
      */
+    @ApiOperation(value = "用户信息" ,  notes="根据Id查询用户信息")
     @RequiresPermissions("sysmgr.user.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody User user){
@@ -88,7 +90,8 @@ public class UserController {
      * @param user
      * @return
      */
-   // @SysLogAnnotation  //TODO 添加操作日志记录，会出现错误
+    @SysLogAnnotation
+    @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody User user){
@@ -100,6 +103,8 @@ public class UserController {
      * @param user
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "用户信息" ,  notes="删除用户信息")
     @RequiresPermissions("sysmgr.user.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody User user){
@@ -123,6 +128,7 @@ public class UserController {
      * @param user
      * @return
      */
+    @ApiOperation(value = "用户信息" ,  notes="根据用户Id查询角色")
     @RequiresPermissions("sysmgr.user.query")
     @RequestMapping(value="/findUserRole",method = {RequestMethod.POST})
     public Result findUserRole(@RequestBody UserRoleVo user){
@@ -133,6 +139,7 @@ public class UserController {
      * 根据用户名查询所有角色
      * @return
      */
+    @ApiOperation(value = "用户信息" ,  notes="根据用户名查询所有角色")
     @RequiresPermissions("sysmgr.user.query")
     @RequestMapping(value="/findRolelistByAccount",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(@RequestParam(value = "ua") String userName){
@@ -144,6 +151,8 @@ public class UserController {
      * @param userRole
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "用户信息" ,  notes="更改/保存用户角色")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/saveUserRole",method = {RequestMethod.POST})
     public Result saveUserRole(@RequestBody UserRoleVo userRole){
@@ -155,6 +164,8 @@ public class UserController {
      * @param userPassword
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "用户信息" ,  notes="修改密码")
     @RequiresAuthentication
     @RequestMapping(value="/editpassword",method = {RequestMethod.POST})
     public Result editPassWord(@RequestBody UserPassword userPassword){

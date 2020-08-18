@@ -4,6 +4,7 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
 import com.story.storyadmin.domain.vo.Result;
@@ -45,7 +46,7 @@ public class AttController {
      * @param limit
      * @return
      */
-    @ApiOperation(value = "附件" ,  notes="查询附件列表")
+    @ApiOperation(value = "附件管理" ,  notes="查询附件列表")
     @RequiresPermissions("sysmgr.att.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(Att att,
@@ -68,6 +69,8 @@ public class AttController {
      * @param att
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "附件管理" ,  notes="删除附件信息")
     @RequiresPermissions("sysmgr.att.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Att att){
@@ -81,15 +84,12 @@ public class AttController {
     }
 
     /**
-     * 上传文件
-     * @param attVo
-     * @return
-     */
-    /**
-     * 上传文件
+     * 上传附件
      * @param
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "附件管理" ,  notes="上传附件")
     @RequiresPermissions("sysmgr.att.upload")
     @RequestMapping(value="/upload",method = {RequestMethod.POST})
     public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {

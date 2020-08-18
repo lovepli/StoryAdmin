@@ -90,6 +90,7 @@ export default {
     isInitLoad: {// 是否初始化加载
       default: true
     },
+    // 系统日志有用到
     filterStatus: { // 查询条件验证通过状态，在<data-grid></data-grid>组件中对应filter-status下划线命名方式
       default: true,
       type: Boolean

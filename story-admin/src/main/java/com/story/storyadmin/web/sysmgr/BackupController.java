@@ -4,6 +4,7 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Backup;
@@ -64,6 +65,7 @@ public class BackupController {
      * @param backup
      * @return
      */
+    @ApiOperation(value = "系统备份" ,  notes="根据Id查询系统备份信息")
     @RequiresPermissions("sysmgr.backup.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody Backup backup){
@@ -80,6 +82,8 @@ public class BackupController {
      * @param backup
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "系统备份" ,  notes="删除系统备份信息")
     @RequiresPermissions("sysmgr.backup.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Backup backup){

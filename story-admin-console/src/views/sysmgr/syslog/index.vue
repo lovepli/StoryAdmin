@@ -91,9 +91,8 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { getList, findById } from '@/api/sysmgr/syslog';
 
+import { findById } from '@/api/sysmgr/syslog';
 import JsonEditor from '@/components/JsonEditor';
 import DataGrid from '@/components/DataGrid';
 import { parseTime } from '@/utils';
@@ -110,6 +109,7 @@ export default {
       // total: 0,
       // list: null,
       // listLoading: true,
+
       listQuery: {
         pageNo: 1,
         limit: 10,

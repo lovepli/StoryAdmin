@@ -1,6 +1,11 @@
 <template>
   <div class="app-container">
-    <data-grid ref="dataList" url="/sysmgr/att/list" data-name="listQuery" @dataRest="onDataRest">
+    <data-grid
+      ref="dataList"
+      url="/sysmgr/att/list"
+      data-name="listQuery"
+      @dataRest="onDataRest"
+    >
       <template slot="form">
         <el-form-item label="名称">
           <!-- 按键修饰符 @keyup.enter  -->

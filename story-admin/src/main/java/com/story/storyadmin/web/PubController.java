@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * 所有用户都可以访问的首页公共接口
  */
-@Api(description = "天气接口")
+@Api(description = "首页天气接口")
 @RestController
 public class PubController {
 

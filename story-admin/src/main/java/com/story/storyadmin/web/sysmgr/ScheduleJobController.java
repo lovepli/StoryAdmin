@@ -4,6 +4,7 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
@@ -75,6 +76,7 @@ public class ScheduleJobController {
      * @param scheduleJob
      * @return
      */
+    @ApiOperation(value = "定时任务" ,  notes="根据Id查询定时任务信息")
     @RequiresPermissions("sysmgr.schedulejob.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody ScheduleJob scheduleJob){
@@ -92,6 +94,8 @@ public class ScheduleJobController {
      * @param scheduleJob
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "定时任务" ,  notes="保存定时任务信息")
     @RequiresPermissions("sysmgr.schedulejob.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody ScheduleJob scheduleJob){
@@ -133,6 +137,8 @@ public class ScheduleJobController {
      * @param scheduleJob
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "定时任务" ,  notes="删除定时任务信息")
     @RequiresPermissions("sysmgr.schedulejob.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody ScheduleJob scheduleJob){
@@ -157,6 +163,7 @@ public class ScheduleJobController {
      *  TODO 这里要先写好后台的定时任务代码，才能有新的定时任务编号，可以供前端添加到数据库
      * @return
      */
+    @ApiOperation(value = "定时任务" ,  notes="获取定时任务下拉选项信息")
     @RequestMapping(value="/job-options",method = {RequestMethod.POST,RequestMethod.GET})
     public Result getJobCombo() {
         // 返沪任务编号jobId，任务名称jobName，任务类名jobClass
@@ -164,6 +171,12 @@ public class ScheduleJobController {
         return new Result(true, "", jobList ,Constants.TOKEN_CHECK_SUCCESS);
     }
 
+    /**
+     * 检查定时任务是否存在
+     * @param schedule
+     * @return
+     */
+    @ApiOperation(value = "定时任务" ,  notes="检查定时任务是否存在")
     @RequiresPermissions("sysmgr.schedulejob.query")
     @PostMapping("/check_job_exist")
     public boolean checkJobExist(ScheduleJob schedule) {

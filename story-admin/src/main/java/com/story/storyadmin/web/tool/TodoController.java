@@ -1,6 +1,7 @@
 package com.story.storyadmin.web.tool;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
@@ -70,6 +71,7 @@ public class TodoController {
      * @param todo
      * @return
      */
+    @ApiOperation(value = "待办事项" ,  notes="根据Id查询待办事项")
     @RequiresPermissions("tool.todo.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody Todo todo){
@@ -87,6 +89,8 @@ public class TodoController {
      * @param todo
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "待办事项" ,  notes="保存待办事项")
     @RequiresPermissions("tool.todo.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Todo todo){
@@ -109,6 +113,8 @@ public class TodoController {
      * @param todo
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "待办事项" ,  notes="删除待办事项")
     @RequiresPermissions("tool.todo.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Todo todo){

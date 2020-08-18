@@ -1,5 +1,6 @@
 package com.story.storyadmin.web.sysmgr;
 
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Authority;
@@ -30,7 +31,7 @@ public class AuthorityController {
      * 查询所有权限
      * @return
      */
-    @ApiOperation(value = "所有权限" ,  notes="查询所有权限")
+    @ApiOperation(value = "权限管理" ,  notes="查询所有权限")
     @RequiresPermissions("sysmgr.authority.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(){
@@ -49,6 +50,8 @@ public class AuthorityController {
      * @param authority
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "权限管理" ,  notes="保存权限信息")
     @RequiresPermissions("sysmgr.authority.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Authority authority){
@@ -60,6 +63,8 @@ public class AuthorityController {
      * @param authority
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "权限管理" ,  notes="删除权限信息")
     @RequiresPermissions("sysmgr.authority.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Authority authority){

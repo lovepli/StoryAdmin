@@ -4,6 +4,7 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Inform;
@@ -68,6 +69,8 @@ public class LoginLogController {
      * @param user
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "登录日志" ,  notes="删除登录日志列表")
     @RequiresPermissions("sysmgr.loginlog.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody User user){
@@ -85,12 +88,19 @@ public class LoginLogController {
         return result;
     }
 
+    /**
+     * 通过用户名查询登录日志
+     * @param userAccount
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation(value = "登录日志" ,  notes="通过用户名查询登录日志")
     @RequiresPermissions("sysmgr.loginlog.query")
     @RequestMapping(value = "/querylogsByAccount", method = GET)
     public Result list(@RequestParam(value = "ua", required = false) String userAccount,
                        @RequestParam(value = "page", defaultValue = "1") int pageNum,
                        @RequestParam(value = "size", defaultValue = "10") int pageSize) {
-
         Result result = new Result();
         LoginLog loginLog=new LoginLog();
         Page<LoginLog> page = new Page(pageNum, pageSize);
@@ -103,8 +113,6 @@ public class LoginLogController {
         result.setResult(true);
         result.setCode(Constants.TOKEN_CHECK_SUCCESS);
         return result;
-
-
     }
 
 }

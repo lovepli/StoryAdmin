@@ -60,6 +60,7 @@ public class SysLogController {
      * @param sysLog
      * @return
      */
+    @ApiOperation(value = "系统日志" ,  notes="根据Id查询系统日志")
     @RequiresPermissions("sysmgr.syslog.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody SysLog sysLog){

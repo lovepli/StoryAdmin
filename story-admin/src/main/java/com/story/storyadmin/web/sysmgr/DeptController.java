@@ -1,5 +1,6 @@
 package com.story.storyadmin.web.sysmgr;
 
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Dept;
@@ -36,10 +37,10 @@ public class DeptController {
     DeptService deptService;
 
     /**
-     * 查询所有菜单
+     * 查询所有部门
      * @return
      */
-    @ApiOperation(value = "所有菜单" ,  notes="查询所有菜单")
+    @ApiOperation(value = "所有部门" ,  notes="查询所有部门")
     @RequiresPermissions("sysmgr.dept.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(){
@@ -58,6 +59,8 @@ public class DeptController {
      * @param dept
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "所有部门" ,  notes="保存/编辑所有部门")
     @RequiresPermissions("sysmgr.dept.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Dept dept){
@@ -69,6 +72,8 @@ public class DeptController {
      * @param dept 部门对象
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "所有部门" ,  notes="删除部门")
     @RequiresPermissions("sysmgr.dept.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Dept dept){

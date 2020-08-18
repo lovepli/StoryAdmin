@@ -12,6 +12,7 @@ import com.story.storyadmin.service.sysmgr.AuthorityService;
 import com.story.storyadmin.service.sysmgr.ResourceService;
 import com.story.storyadmin.service.sysmgr.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.Logger;
@@ -53,6 +54,7 @@ public class LoginController {
      * @param user
      * @return
      */
+    @ApiOperation(value = "登录接口" ,  notes="登录")
     @ResponseBody
     @RequestMapping(value="/login",method = {RequestMethod.POST})
     public Result login(HttpServletResponse response, @RequestBody UserVo user) {
@@ -63,6 +65,7 @@ public class LoginController {
      * erp登录验证ticket，生成本地token，由本地来管理token生命周期
      * @return
      */
+    @ApiOperation(value = "登录接口" ,  notes="erp登录验证ticket")
     @ResponseBody
     @RequestMapping(value="/valid_erp",method = {RequestMethod.POST,RequestMethod.GET})
     public Result loginErp(HttpServletResponse response) {
@@ -77,6 +80,7 @@ public class LoginController {
      */
     @RequiresAuthentication
     @ResponseBody
+    @ApiOperation(value = "登录接口" ,  notes="获取登录用户基础信息")
     @RequestMapping(value="/info",method = {RequestMethod.POST,RequestMethod.GET})
     public Result info(){
         Result result = new Result();

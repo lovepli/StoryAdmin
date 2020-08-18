@@ -1,6 +1,7 @@
 package com.story.storyadmin.web.sysmgr;
 
 import com.story.storyadmin.common.SrotyAdminOutException;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.config.upload.annotation.FileSlotDisabled;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
@@ -43,6 +44,7 @@ public class FileController  {
      * @param file  文件
      * @return response
      */
+    @SysLogAnnotation
     @ApiOperation(value = "附件" ,  notes="上传文件")
     @RequiresPermissions("sysmgr.file.upload")
     @RequestMapping(value = "/upload", method = POST)
@@ -62,6 +64,7 @@ public class FileController  {
      *
      * @return response
      */
+    @SysLogAnnotation
     @ApiOperation(value = "附件" ,  notes="删除文件")
     @RequiresPermissions("sysmgr.file.delete")
     @RequestMapping(value = "/{id}", method = DELETE)
@@ -75,6 +78,7 @@ public class FileController  {
      * @param response 下载人token
      * @param fileId   文件ID
      */
+    @SysLogAnnotation
     @ApiOperation(value = "附件" ,  notes="下载文件")
     @RequiresPermissions("sysmgr.file.download")
     @RequestMapping(value = "/download/{id}", method = GET)

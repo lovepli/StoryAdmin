@@ -1,5 +1,6 @@
 package com.story.storyadmin.web.sysmgr;
 
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Resource;
@@ -49,6 +50,8 @@ public class ResourceController {
      * @param resource
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "所有菜单" ,  notes="保存/编辑菜单信息")
     @RequiresPermissions("sysmgr.resource.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Resource resource){
@@ -60,6 +63,8 @@ public class ResourceController {
      * @param resource 菜单对象
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "所有菜单" ,  notes="删除菜单信息")
     @RequiresPermissions("sysmgr.resource.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Resource resource){

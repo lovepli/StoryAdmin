@@ -3,6 +3,7 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Role;
@@ -55,6 +56,7 @@ public class RoleColtroller {
      * @param role
      * @return
      */
+    @ApiOperation(value = "角色" ,  notes="根据Id查询用户角色")
     @RequiresPermissions("sysmgr.role.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody Role role){
@@ -71,6 +73,8 @@ public class RoleColtroller {
      * @param role
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "角色" ,  notes="保存/修改角色信息")
     @RequiresPermissions("sysmgr.role.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Role role){
@@ -82,6 +86,8 @@ public class RoleColtroller {
      * @param role
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "角色" ,  notes="删除角色信息")
     @RequiresPermissions("sysmgr.role.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Role role){
@@ -105,6 +111,8 @@ public class RoleColtroller {
      * @param roleAuth
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "角色" ,  notes="授权，对角色进行添加/修改权限")
     @RequiresPermissions("sysmgr.role.save")
     @RequestMapping(value="/modifyAuth",method = {RequestMethod.POST})
     public Result dropById(@RequestBody RoleAuth roleAuth){
@@ -116,6 +124,7 @@ public class RoleColtroller {
      * @param roleAuth
      * @return
      */
+    @ApiOperation(value = "角色" ,  notes="获取角色的权限")
     @RequiresPermissions("sysmgr.role.query")
     @RequestMapping(value="/findRoleAuth",method = {RequestMethod.POST})
     public Result findRoleAuth(@RequestBody RoleAuth roleAuth){
@@ -127,6 +136,7 @@ public class RoleColtroller {
      * 获取所有角色
      * @return
      */
+    @ApiOperation(value = "角色" ,  notes="获取所有角色")
     @RequiresPermissions("sysmgr.role.query")
     @RequestMapping(value="/listall",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(){

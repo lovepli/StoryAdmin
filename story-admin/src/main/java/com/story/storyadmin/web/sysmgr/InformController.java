@@ -3,6 +3,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
@@ -116,6 +117,7 @@ public class InformController {
      * @param inform
      * @return
      */
+    @SysLogAnnotation
     @ApiOperation(value = "公告" ,  notes="新增公告")
     @RequiresPermissions("sysmgr.inform.save")
     @RequestMapping(value = "/sysmgr/inform/save", method = POST)
@@ -141,6 +143,7 @@ public class InformController {
      * @param id
      * @return
      */
+    @SysLogAnnotation
     @ApiOperation(value = "公告" ,  notes="置顶公告")
     @RequiresPermissions("sysmgr.inform.top")
     @RequestMapping(value = "/sysmgr/inform/{id}/top", method = POST)
@@ -153,6 +156,7 @@ public class InformController {
      * @param id
      * @return
      */
+    @SysLogAnnotation
     @ApiOperation(value = "公告" ,  notes="取消公告的置顶")
     @RequiresPermissions("sysmgr.inform.untop")
     @RequestMapping(value = "/sysmgr/inform/{id}/untop", method = POST)
@@ -165,6 +169,7 @@ public class InformController {
      * @param id
      * @return
      */
+    @SysLogAnnotation
     @ApiOperation(value = "公告" ,  notes="撤销公告")
     @RequiresPermissions("sysmgr.inform.cancel")
     @RequestMapping(value = "/sysmgr/inform/{id}/cancel", method = POST)
@@ -177,6 +182,7 @@ public class InformController {
      * @param id
      * @return
      */
+    @SysLogAnnotation
     @ApiOperation(value = "公告" ,  notes="使公告过期")
     @RequiresPermissions("sysmgr.inform.outdate")
     @RequestMapping(value = "/sysmgr/inform/{id}/outdate", method = POST)
