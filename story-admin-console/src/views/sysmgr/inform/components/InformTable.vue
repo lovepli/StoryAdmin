@@ -9,7 +9,7 @@
       <el-select v-model="listQuery.status" class="filter-item" placeholder="状态" clearable @change="query">
         <el-option v-for="(s,i) in statusLabel" :key="i" :value="i" :label="s" />
       </el-select>
-      <date-between :value="listQuery.createDate" class="filter-item" name="发布日期" @keypress.native.enter="query" @change="val=>{listQuery.createDate = val;query()}" />
+      <date-between :value="listQuery.createDate" class="filter-item" start="开始时间" end="结束时间" @keypress.native.enter="query" @change="val=>{listQuery.createDate = val;query()}" />
       <el-button :loading="listLoading" class="filter-item" type="primary" icon="el-icon-search" @click="query">
         搜索
       </el-button>

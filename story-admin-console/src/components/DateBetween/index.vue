@@ -1,13 +1,14 @@
 <template>
   <el-date-picker
     v-model="myValue"
-    :start-placeholder="`${name}`"
+    :start-placeholder="`${start}`"
+    :end-placeholder="`${end}`"
     :picker-options="pickerOptions"
     :class="dateClass"
     type="daterange"
     align="right"
     unlink-panels
-    range-separator="-"
+    range-separator="至"
     style="width:290px"
   />
 </template>
@@ -15,7 +16,11 @@
 export default {
   name: 'DateBetween',
   props: {
-    name: {
+    start: {
+      required: true,
+      type: String
+    },
+    end: {
       required: true,
       type: String
     },
