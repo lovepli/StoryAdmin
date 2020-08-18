@@ -19,10 +19,10 @@ export function queryInform(cond, page) {
     page: page.num,
     limit: page.size
   }
-  const { createDate } = cond.createDate
-  if (createDate && createDate.length === 2) {
-    params.startDate = createDate[0].getTime()
-    params.endDate = createDate[1].getTime()
+  const { requestDate } = cond
+  if (requestDate && requestDate.length === 2) {
+    params.sd = requestDate[0].getTime()
+    params.ed = requestDate[1].getTime()
   }
   return request({
     url: `/sysmgr/inform/list?${search(params)}`,

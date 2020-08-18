@@ -40,7 +40,7 @@ public class InformController {
     InformService informService;
 
     /**
-     * 分页查询公告 TODO 这里的分页查询有问题
+     * 分页查询公告
      * @param
      * @param
      * @param limit
@@ -52,8 +52,8 @@ public class InformController {
     public Result get(@RequestParam(required = false) Short status,
                       @RequestParam(required = false) String title,
                       @RequestParam(value = "creatorId",required = false) Long creatorId,
-                      @RequestParam(value = "startDate", required = false) Long startDate,
-                      @RequestParam(value = "endDate", required = false) Long endDate,
+                      @RequestParam(value = "sd", required = false) Long startDate,
+                      @RequestParam(value = "ed", required = false) Long endDate,
                       @RequestParam(value = "top", required = false) Boolean topFirst,
                       @RequestParam(defaultValue = "1") int page,
                       @RequestParam(defaultValue = "10") int limit) {
@@ -68,15 +68,14 @@ public class InformController {
         inform.setTitle(title);
         inform.setCreator(creatorId);
         inform.setTop(topFirst);
-
         logger.info(inform.toString());
-
         Page<Inform> InformPage = new Page(page, limit);
         QueryWrapper<Inform> eWrapper = new QueryWrapper(inform);
+        // 设置查询条件 对时间进行判断
+        eWrapper.gt("create_date",startOfCreate);
+        eWrapper.lt("create_date",endOfCreate);
         eWrapper.orderByDesc("create_date");
-//        // 设置查询条件 对时间进行判断  TODO 加了这个条件分页查询就出现问题
-//        eWrapper.gt("create_date",startOfCreate);
-//        eWrapper.lt("create_date",endOfCreate);
+
         IPage<Inform> list = informService.page(InformPage, eWrapper);
         logger.info("查询出公告信息:[]", list.toString());
         result.setData(list);
