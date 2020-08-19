@@ -10,11 +10,20 @@ export function getList(params) {
   })
 }
 
+// 删除
 export function drop(param) {
   return request({
     url: '/sysmgr/loginlog/delete',
     method: 'post',
     data: param
+  })
+}
+
+// 批量删除
+export function delLoginLogs(ids) {
+  return request({
+    url: '/sysmgr/loginlog/delete' + ids,
+    method: 'delete'
   })
 }
 

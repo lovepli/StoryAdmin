@@ -89,6 +89,36 @@ public class LoginLogController {
     }
 
     /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @SysLogAnnotation
+    @ApiOperation(value = "登录日志" ,  notes="删除登录日志列表")
+    @RequiresPermissions("sysmgr.loginlog.delete")
+    @RequestMapping(value="/delete/{ids}",method = {RequestMethod.DELETE})
+    public Result dropByIds(@PathVariable Long[] ids){
+        Result result ;
+        // 删除数组集合，直接删除数据库中的数据
+       // loginLogService.deleteLogininforByIds(ids);
+        // 遍历删除
+        if(ids!=null || ids.length >0){
+            LoginLog delLog= null;
+            for (long i=0;i< ids.length;i++){
+                delLog.setId(i);
+                delLog.setYnFlag("0");
+                delLog.setEditor(UserContext.getCurrentUser().getAccount());
+                delLog.setModifiedTime(Date.from(Instant.now()));
+                loginLogService.updateById(delLog);
+            }
+            result=new Result(true,"批量删除成功",null,Constants.TOKEN_CHECK_SUCCESS);
+        }else{
+            result = new Result(false, "批量删除失败", null ,Constants.PARAMETERS_MISSING);
+        }
+        return result;
+    }
+
+    /**
      * 通过用户名查询登录日志
      * @param userAccount
      * @param pageNum

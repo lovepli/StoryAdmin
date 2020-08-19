@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> implements LoginLogService {
 
+    @Override
+    public int deleteLogininforByIds(Long[] ids) {
+        return baseMapper.deleteLogininforByIds(ids);
+    }
 }

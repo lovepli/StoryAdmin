@@ -33,7 +33,7 @@
             icon="el-icon-refresh"
             @click="onReset"
           >重置</el-button>
-          <!-- 自定义slot具名插槽，我们希望把extendOperation组件放在这里 -->
+          <!-- 自定义slot具名插槽，我们希望把extendOperation组件放在这里，extendOperation组件作为扩展功能组件 -->
           <!-- Slot 通俗的理解就是“占坑”，在组件模板中占好了位置，当使用该组件标签时候，组件标签里面的内容就会自动填坑（替换组件模板中slot位置）
        并且可以作为承载分发内容的出口 -->
           <slot name="extendOperation"/>
@@ -53,6 +53,7 @@
       border
       fit
       highlight-current-row
+      @selection-change="handleSelection"
     >
       <!-- 自定义slot具名插槽，我们希望把body表格体组件放在这里 -->
       <slot name="body"/>
@@ -98,13 +99,13 @@ export default {
   },
   data() {
     return {
-      total: 0,
-      list: null,
+      total: 0, // 总数目
+      list: null, // 表格数据
       listLoading: false, // 在数据获取期间展示一个表格loading加载状态，还可以在不同视图间展示不同的loading状态
       // 分页查询参数
       queryedData: {
-        pageNo: 1,
-        limit: 10
+        pageNo: 1, // 第一页
+        limit: 10 // 每页显示的数量
       },
       searchHandlerVisible: true // 是否显示搜索框
     };
@@ -151,6 +152,10 @@ export default {
           that.fetchData();
         }
       }, 100);
+    },
+    // 多选框选中数据
+    handleSelection() {
+      this.$emit('handleSelectionChange', undefined);
     },
     // 请求成功，需要重新刷新列表（不然新数据不能及时的更新到页面上）
     fetchData() {
