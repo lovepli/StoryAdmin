@@ -39,7 +39,8 @@ export default {
   },
   data() {
     return {
-      filePostUrl: process.env.VUE_APP_BASE_API,
+      // filePostUrl: process.env.VUE_APP_BASE_API,
+      filePostUrl: process.env.BASE_API,
       addFiles: []
     }
   },

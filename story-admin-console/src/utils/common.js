@@ -22,8 +22,10 @@ export function search(params) {
  */
 export function getById(arr, id) {
   var ret
-  arr.forEach(element => {
-    if (element.id === id) ret = element
-  })
+  if (arr !== undefined) { // 必须加判断  不然会不识别forEach
+    arr.forEach(element => {
+      if (element.id === id) ret = element
+    });
+  }
   return ret
 }

@@ -15,7 +15,7 @@ export function queryInform(cond, page) {
     status: cond.status,
     title: cond.title,
     creatorId: cond.creatorId,
-    top: cond.topFirst,
+    tf: cond.topFirst,
     page: page.num,
     limit: page.size
   }

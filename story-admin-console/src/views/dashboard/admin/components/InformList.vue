@@ -24,11 +24,11 @@
 </template>
 <script>
 import { parseTime } from '@/utils'
-import { getInformList } from '@/api/sysmgr/inform'
+import { queryInform } from '@/api/sysmgr/inform'
 export default {
   data() {
     return {
-      dataList: null,
+      dataList: [],
       page: {
         num: 1,
         size: 5
@@ -36,9 +36,7 @@ export default {
       total: 0,
       listQuery: {
         status: 1,
-        topFirst: true,
-        pageNo: '',
-        limit: ''
+        topFirst: true
       }
     }
   },
@@ -47,11 +45,9 @@ export default {
   },
   methods: {
     query() {
-      this.listQuery.pageNo = this.page.num;
-      this.listQuery.limit = this.page.size;
-      getInformList(this.listQuery).then(r => {
-        this.dataList = r.data.records;
-        this.total = r.data.total;
+      queryInform(this.listQuery, this.page).then(r => {
+        this.dataList = r.data.records
+        this.total = r.data.total
       }).catch(e => {})
     },
     formatDate(d) { return parseTime(d, '{y}/{m}/{d}') }
