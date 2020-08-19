@@ -60,6 +60,7 @@ export default {
   font: 18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.4em;
   color: #4d4d4d;
+  /* float:left; */
 }
 .titleComment{
   /* 怎么把系统日志标题置左边 */

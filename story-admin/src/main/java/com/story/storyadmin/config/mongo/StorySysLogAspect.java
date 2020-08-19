@@ -53,7 +53,6 @@ public class StorySysLogAspect {
 
   /**
    * @Before - 将函数标记为在切入点覆盖的方法之前执行的通知。 @Before 是一种通知类型，可以确保在方法执行之前运行通知。
-   *
    * @param joinPoint 连接点(JoinPoint)代表您的应用程序中可以插入AOP方面的一个点/位置。 您也可以说，这是应用程序中使用Spring AOP框架执行操作的实际位置
    */
   @Before("storySysLog()")

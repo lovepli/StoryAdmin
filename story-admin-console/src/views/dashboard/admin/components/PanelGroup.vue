@@ -4,9 +4,11 @@
     <el-row :gutter="40" class="panel-group">
 
       <el-col :span="17">
+        <!-- 公告列表 -->
         <inform-list class="dashboard-component" style="padding-bottom:45px" />
       </el-col>
       <el-col :span="7">
+        <!-- 代办列表 -->
         <todo-list class="dashboard-component" />
       </el-col>
 
