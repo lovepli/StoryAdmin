@@ -1,4 +1,5 @@
 <template>
+  <!-- 代码编辑器 CodeMirror -->
   <div class="json-editor">
     <textarea ref="textarea" />
   </div>
