@@ -28,7 +28,7 @@ service.interceptors.request.use(
   },
   error => {
     // 发送请求失败的时候做点什么
-    console.log(error) // for debug
+    // console.log(error) // for debug
     Promise.reject(error)
   }
 )
@@ -90,10 +90,8 @@ service.interceptors.response.use(
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // element-ui的消息弹框,因为这里是单独引入MessageBox，所以调用方式不是this.$confirm()打开消息弹框
         MessageBox.confirm(
-          '你已被登出，可以取消继续留在该页面，或者重新登录',
-          '确定登出',
-          {
-            confirmButtonText: '重新登录',
+          '登录已超时，请重新登录！可以取消继续留在该页面，或者重新登录', '确定登出', {
+            confirmButtonText: '重新登陆',
             cancelButtonText: '取消',
             type: 'warning'
           }
@@ -104,7 +102,7 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject('error')
+      return Promise.reject(new Error(res.msg || '请求错误'))
     } else {
       // console.log('service.interceptors.response return data')
       return response.data // 返回请求成功结果
@@ -112,10 +110,10 @@ service.interceptors.response.use(
   },
   error => {
   // 请求失败的时候做点什么
-    console.log('err' + error) // for debug
+    // console.log('err' + error) // for debug
     // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
     Message({
-      message: error.message,
+      message: (error && error.response && error.response.status) ? error.response.status + '  错误' : '页面超时，请按F5刷新页面',
       type: 'error',
       duration: 5 * 1000
     })

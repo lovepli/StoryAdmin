@@ -1,5 +1,6 @@
 <template>
   <div class="app-container lunarFullCalendar">
+    <!-- vue-lunar-full-calendar日程控件加农历、24节气和中国节假日的功能 -->
     <!-- <full-calendar :events="events" class="test-fc" lang='zh'
             first-day='1' locale="fr"
             @changeMonth="changeMonth"
@@ -73,10 +74,8 @@
   </div>
 </template>
 <script>
-import { LunarFullCalendar } from 'vue-lunar-full-calendar';
+import { LunarFullCalendar } from 'vue-lunar-full-calendar'; // 依赖包
 import { getTodoList, save, findById, drop } from '@/api/tool/todo';
-// eslint-disable-next-line no-unused-vars
-import { parseTime } from '@/utils';
 
 const levelOptions = [
   { key: '工作', value: 1 },

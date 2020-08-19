@@ -163,8 +163,6 @@
 
 <script>
 import {
-  // eslint-disable-next-line no-unused-vars
-  getList,
   findById,
   save,
   drop,

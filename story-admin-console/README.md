@@ -10,6 +10,10 @@ vue-element-admin官方文档：https://panjiachen.gitee.io/vue-element-admin-si
 前端文档食用参考：https://tycoding.cn/2019/05/30/cloud/cloud-template-app/
 https://docs.tumo.tycoding.cn/#/docs/vue/vue-1
 
+## 出现的问题解决方案
+1. vue-cli3 一直运行 http://localhost:8080/sockjs-node/info?t=1462183700002
+解决方案 参考：https://www.cnblogs.com/sichaoyun/p/10178080.html
+
 ## Build Setup
 
 ```bash

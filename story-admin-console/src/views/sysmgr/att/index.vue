@@ -132,8 +132,7 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { getList, drop, uploadFile } from '@/api/sysmgr/att';
+import { drop, uploadFile } from '@/api/sysmgr/att';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';

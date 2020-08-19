@@ -63,9 +63,7 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { getList, drop } from '@/api/sysmgr/backup';
-
+import { drop } from '@/api/sysmgr/backup';
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
 import waves from '@/directive/waves'; // Waves directive

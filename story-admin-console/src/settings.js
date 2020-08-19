@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Story Admin',
+  title: 'STORY-ADMIN 管理系统',
 
   /**
    * @type {boolean} true | false
