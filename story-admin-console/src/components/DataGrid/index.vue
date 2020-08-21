@@ -118,7 +118,7 @@ export default {
   // 因为进入列表页面就需要在列表中显示出数据，那么就需要实现加载页面时自动加载页面方法（包括根据条件是否显示搜索框和初始化查询列表数据的方法）
   // 而之前我们已经知道了，Vue的声明周期中，最早可以操作methods和data中的数据的阶段是：created生命周期函数阶段。
   // 那么在这里调用onSubmit方法即可
-    //      console.log("created=>",this.isInitLoad); // `this` 指向 vm 实例
+  // console.log("created=>",this.isInitLoad); // `this` 指向 vm 实例
     var that = this;
     if (that.searchHandlerVisibleSet === 'false') {
       that.searchHandlerVisible = false;

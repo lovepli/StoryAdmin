@@ -15,7 +15,7 @@
     -->
     <data-grid
       ref="dataList"
-      url="/sysmgr/schedulejob/list"
+      url="/monitor/schedulejob/list"
       data-name="listQuery"
       @dataRest="onDataRest"
     >
@@ -167,7 +167,7 @@ import {
   save,
   drop,
   getJobCombo
-} from '@/api/sysmgr/schedulejob';
+} from '@/api/monitor/schedulejob';
 
 import DataGrid from '@/components/DataGrid'; // 引入子组件
 import { parseTime } from '@/utils'; // 引入parseTime日期格式化的方法，可以当作一个过滤时间的方法，格式化时间

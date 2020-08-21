@@ -187,7 +187,32 @@
 			<artifactId>xmemcached</artifactId>
 			<version>2.4.6</version>
 		</dependency>
+
+		<!--常用工具类 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<!-- 获取系统信息 -->
+		<dependency>
+			<groupId>com.github.oshi</groupId>
+			<artifactId>oshi-core</artifactId>
+			<version>3.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+		</dependency>
     </dependencies>
+
+
 
 
     <repositories>

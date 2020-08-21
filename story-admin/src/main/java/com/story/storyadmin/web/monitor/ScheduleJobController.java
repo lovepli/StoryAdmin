@@ -1,14 +1,14 @@
-package com.story.storyadmin.web.sysmgr;
+package com.story.storyadmin.web.monitor;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.common.StoryServiceException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
-import com.story.storyadmin.common.StoryServiceException;
 import com.story.storyadmin.domain.entity.sysmgr.ScheduleJob;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.scheduler.service.StorySchedulerService;
@@ -36,7 +36,7 @@ import java.util.List;
  */
 @Api(description = "定时任务")
 @RestController
-@RequestMapping("/sysmgr/schedulejob")
+@RequestMapping("/monitor/schedulejob")
 public class ScheduleJobController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -55,7 +55,7 @@ public class ScheduleJobController {
      * @return
      */
     @ApiOperation(value = "定时任务" ,  notes="查询定时任务列表")
-    @RequiresPermissions("sysmgr.schedulejob.query")
+    @RequiresPermissions("monitor.schedulejob.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(ScheduleJob scheduleJob,
                        @RequestParam(defaultValue = "1")int pageNo,
@@ -77,7 +77,7 @@ public class ScheduleJobController {
      * @return
      */
     @ApiOperation(value = "定时任务" ,  notes="根据Id查询定时任务信息")
-    @RequiresPermissions("sysmgr.schedulejob.query")
+    @RequiresPermissions("monitor.schedulejob.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody ScheduleJob scheduleJob){
         ScheduleJob scheduleJobBean= scheduleJobService.getById(scheduleJob.getId());
@@ -96,7 +96,7 @@ public class ScheduleJobController {
      */
     @SysLogAnnotation
     @ApiOperation(value = "定时任务" ,  notes="保存定时任务信息")
-    @RequiresPermissions("sysmgr.schedulejob.save")
+    @RequiresPermissions("monitor.schedulejob.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody ScheduleJob scheduleJob){
         // 任务状态判断
@@ -139,7 +139,7 @@ public class ScheduleJobController {
      */
     @SysLogAnnotation
     @ApiOperation(value = "定时任务" ,  notes="删除定时任务信息")
-    @RequiresPermissions("sysmgr.schedulejob.delete")
+    @RequiresPermissions("monitor.schedulejob.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody ScheduleJob scheduleJob){
         Result result ;
@@ -177,7 +177,7 @@ public class ScheduleJobController {
      * @return
      */
     @ApiOperation(value = "定时任务" ,  notes="检查定时任务是否存在")
-    @RequiresPermissions("sysmgr.schedulejob.query")
+    @RequiresPermissions("monitor.schedulejob.query")
     @PostMapping("/check_job_exist")
     public boolean checkJobExist(ScheduleJob schedule) {
         boolean exist = true;
