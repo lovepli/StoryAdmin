@@ -4,7 +4,30 @@
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />
     <div class="right-menu">
+
+      <template >
+        <!-- 根据输入的目录进行全文检索 -->
+        <!--
+        <search id="header-search" class="right-menu-item" />
+        -->
+        <!-- 外部链接，因为svg-icon不同的项目使用的不同，所以这里我都是使用项目自己的，所以我显示的都是user图像 -->
+        <!--
+        <el-tooltip content="源码地址" effect="dark" placement="bottom">
+          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
+        </el-tooltip>
+        <el-tooltip content="文档地址" effect="dark" placement="bottom">
+          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
+        </el-tooltip>
+        -->
+        <!-- 全屏显示 -->
+        <!--
+        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+         -->
+      </template>
+
+      <!-- 系统登录用户名 -->
       <div class="user_name right-menu-item">{{ name }}</div>
+      <!-- 用户图像 -->
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -43,11 +66,19 @@
 import { mapGetters } from 'vuex' // mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性：
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Screenfull from '@/components/Screenfull'
+// import Search from '@/components/HeaderSearch'
+import RuoYiGit from '@/components/RuoYi/Git'
+import RuoYiDoc from '@/components/RuoYi/Doc'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    Screenfull,
+    // Search,
+    RuoYiGit,
+    RuoYiDoc
   },
   // 官方说明文档：计算属性是基于它们的响应式依赖进行缓存的。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 erp 还没有发生改变，多次访问 isErp 计算属性会立即返回之前的计算结果，而不必再次执行函数。
   computed: { // 动态计算属性，相当于this.$store.getters.name, this.$store.getters.sidebar,
@@ -69,13 +100,19 @@ export default {
       this.$store.dispatch('ToggleSideBar')
     },
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        this.$store.dispatch('FedLogOut').then(() => {
-          if (this.erp == '1') {
-            window.location = process.env.ERP_LOGOUT_HREF
-          } else {
-            location.reload() // 为了重新实例化vue-router对象 避免bug
-          }
+      this.$confirm('确定注销并退出系统吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$store.dispatch('LogOut').then(() => {
+          this.$store.dispatch('FedLogOut').then(() => {
+            if (this.erp == '1') {
+              window.location = process.env.ERP_LOGOUT_HREF
+            } else {
+              location.reload() // 为了重新实例化vue-router对象 避免bug
+            }
+          })
         })
       })
     }
