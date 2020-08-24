@@ -19,11 +19,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerCofing extends WebMvcConfigurationSupport {
+
+    /**
+     * 创建API
+     * @return
+     */
     @Bean
     public Docket apiConfig(){
         return new Docket(DocumentationType.SWAGGER_2)
+                // 设置哪些接口暴露给Swagger展示
                 .select()
-                //过滤的接口
+                //过滤的接口 ,扫描指定包中的swagger注解
                 .apis(RequestHandlerSelectors.basePackage("com.story.storyadmin.web")).paths(PathSelectors.any()).build()
                 //定义分组
                 .groupName("STORY-ADMIN 后端接口文档")
@@ -32,13 +38,20 @@ public class SwaggerCofing extends WebMvcConfigurationSupport {
                 .useDefaultResponseMessages(false);
     }
 
+    /**
+     * 添加摘要信息
+     * @return
+     */
     private ApiInfo apiInfo() {
+        // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
-                .title("STORY-ADMIN API")
-                //详细描述
+                // 设置标题
+                .title("标题：STORY-ADMIN管理系统_接口文档")
+                // 描述
                 .description("STORY-ADMIN's REST API")
+                // 版本
                 .version("1.0")
-                //作者
+                // 作者信息
                 .contact(new Contact("sunnj", "http://www.sundayfine.com", "sunnj87@163.com"))
 //                .license("The Apache License, Version 2.0")//许可证信息
 //                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")//许可证地址
