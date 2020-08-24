@@ -144,7 +144,7 @@ export const constantRouterMap = [
 
 // 定义实例化路由的方法
 const createRouter = () => new Router({
-  mode: 'history', // require service support 后端支持可开启
+  mode: 'history', // 去掉url中的#
   // 对于所有路由导航，简单地让页面滚动到顶部
   scrollBehavior: () => ({ y: 0 }), // 使用前端路由，当切换到新路由时，想要页面滚到顶部，或者是保持原先的滚动位置，就像重新加载页面那样。 vue-router 能做到，而且更好，它让你可以自定义路由切换时页面如何滚动。
   routes: constantRouterMap// 挂载常规路由

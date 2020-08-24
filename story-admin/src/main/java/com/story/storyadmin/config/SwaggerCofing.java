@@ -1,5 +1,6 @@
 package com.story.storyadmin.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,6 +21,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerCofing extends WebMvcConfigurationSupport {
 
+    /** 是否开启swagger */
+    @Value("${swagger.enabled}")
+    private boolean enabled;
+
     /**
      * 创建API
      * @return
@@ -27,13 +32,15 @@ public class SwaggerCofing extends WebMvcConfigurationSupport {
     @Bean
     public Docket apiConfig(){
         return new Docket(DocumentationType.SWAGGER_2)
+                // 是否启用Swagger
+                .enable(enabled)
                 // 设置哪些接口暴露给Swagger展示
                 .select()
                 //过滤的接口 ,扫描指定包中的swagger注解
                 .apis(RequestHandlerSelectors.basePackage("com.story.storyadmin.web")).paths(PathSelectors.any()).build()
                 //定义分组
                 .groupName("STORY-ADMIN 后端接口文档")
-                //展示在文档页面信息内容
+                //用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false);
     }
@@ -58,6 +65,10 @@ public class SwaggerCofing extends WebMvcConfigurationSupport {
                 .build();
     }
 
+    /**
+     * 过滤
+     * @param registry
+     */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");

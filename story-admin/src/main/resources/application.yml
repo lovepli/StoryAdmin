@@ -39,6 +39,7 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
 # token相关
 token:
   #  token有效时间，单位分钟 24*60=1440
@@ -51,6 +52,7 @@ token:
   shiroCacheExpireTime: 120
   #  token加密密钥
   secretKey: story-admin
+
 #动态设置拦截器
 permission-config:
   perms:
@@ -75,7 +77,13 @@ permission-config:
       #除了以上的url,其他所有请求需要自定义的jwt认证
     - key: /**
       value: jwt
+
 #天气API
 weather-config:
   appid: 59274993
   appsecret: YxMhVC2U
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true

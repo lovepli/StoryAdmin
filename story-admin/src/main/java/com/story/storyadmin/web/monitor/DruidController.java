@@ -1,5 +1,4 @@
-package com.story.storyadmin.web.tool;
-
+package com.story.storyadmin.web.monitor;
 
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -7,20 +6,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 /**
- * swagger 接口
- * 
- * @author
+ * 数据监控
+ *
  */
 @Controller
-@RequestMapping("/document/swagger")
-public class SwaggerController {
+@RequestMapping("/monitor/druid")
+public class DruidController {
 
     @RequestMapping(value="/info",method = {RequestMethod.POST,RequestMethod.GET})
-    @RequiresPermissions("document.swagger.query")
+    @RequiresPermissions("monitor.druid.query")
     public String index()
     {
-        return redirect("/swagger-ui.html");
+        return redirect("/druid/index.html");
     }
 
     /**
