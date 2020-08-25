@@ -63,7 +63,7 @@
 
 <script>
 import { isvalidUsername } from '@/utils/validate' // 引入表达验证
-import settings from '@/settings'
+import settings from '@/settings' // 引入配置文件
 
 export default {
   name: 'Login',
@@ -100,7 +100,7 @@ export default {
       title: settings.title
     }
   },
-  // 侦听属性
+  // 侦听属性 路由重定向
   watch: {
     $route: {
       handler: function(route) {
