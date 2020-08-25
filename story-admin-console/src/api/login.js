@@ -41,3 +41,11 @@ export function loginerp(sso_service_ticket) {
   })
 }
 
+// 获取验证码
+export function getCodeImg() {
+  return request({
+    url: '/captchaImage',
+    method: 'get'
+  })
+}
+

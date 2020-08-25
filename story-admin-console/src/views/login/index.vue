@@ -34,8 +34,26 @@
         </el-form-item>
       </el-tooltip>
 
+      <!-- 增加验证码功能 -->
+      <el-form-item prop="code">
+        <el-input
+          v-model="loginForm.code"
+          auto-complete="off"
+          placeholder="验证码"
+          style="width: 63%"
+          @keyup.enter.native="handleLogin"
+        >
+          <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
+        </el-input>
+        <div class="login-code">
+          <img :src="codeUrl" class="login-code-img" @click="getCode">
+        </div>
+      </el-form-item>
+      <!-- 增加记住我功能 -->
+      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+
       <el-row :gutter="20" style="margin-bottom:30px;">
-        <el-col :span="8"> 
+        <el-col :span="8">
           <!-- 事件修饰符 @click.native.prevent -->
           <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">登陆</el-button>
         </el-col>
@@ -65,6 +83,8 @@
 import { isvalidUsername } from '@/utils/validate' // 引入表达验证
 import settings from '@/settings' // 引入配置文件
 
+import { getCodeImg } from '@/api/login'; // 获取验证码
+
 export default {
   name: 'Login',
   data() {
@@ -85,9 +105,18 @@ export default {
       }
     }
     return {
+      codeUrl: '',
       loginForm: {
         username: 'admin',
         password: '111111'
+      },
+      // 验证码和记住我功能
+      loginForm2: {
+        username: 'admin',
+        password: '111111',
+        rememberMe: false,
+        code: '',
+        uuid: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -97,7 +126,7 @@ export default {
       pwdType: 'password',
       capsTooltip: false,
       redirect: undefined, // 重定向
-      title: settings.title
+      title: settings.title // 动态更新标题
     }
   },
   // 侦听属性 路由重定向
@@ -110,6 +139,12 @@ export default {
     }
   },
   methods: {
+    getCode() {
+      getCodeImg().then(res => {
+        this.codeUrl = 'data:image/gif;base64,' + res.img;
+        this.loginForm.uuid = res.uuid;
+      });
+    },
     checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
@@ -251,5 +286,20 @@ $light_gray:#eee;
       }
     }
   }
+
+// 验证码
+  .login-code {
+  width: 33%;
+  height: 38px;
+  float: right;
+  img {
+    cursor: pointer;
+    vertical-align: middle;
+  }
+}
+
+.login-code-img {
+  height: 38px;
+}
 }
 </style>
