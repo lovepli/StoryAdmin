@@ -154,8 +154,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         String verifyKey = CAPTCHA_CODE_KEY + user.getUuid();
         String captcha = jedisUtils.get(verifyKey);
+        logger.info("缓存中的验证码:{}", captcha);
         jedisUtils.delKey(verifyKey);
-        logger.info("删除了缓存中的验证码:{}", captcha);
+        logger.info("删除了缓存中的验证码！");
 //        if (captcha == null) {
 //            return new Result(false, "验证码不能为空", null, Constants.PASSWORD_CHECK_INVALID);
 //
