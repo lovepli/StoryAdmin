@@ -3,6 +3,7 @@ package com.story.storyadmin.service.sysmgr;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.domain.vo.sysmgr.LoginBody;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
 import com.story.storyadmin.domain.vo.sysmgr.UserVo;
@@ -33,6 +34,8 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result login(UserVo user, HttpServletResponse response);
+
+    Result login2(LoginBody user, HttpServletResponse response);
 
     /**
      * ERP登录

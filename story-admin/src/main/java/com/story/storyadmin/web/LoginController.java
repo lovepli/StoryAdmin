@@ -6,6 +6,7 @@ import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.domain.vo.sysmgr.LoginBody;
 import com.story.storyadmin.domain.vo.sysmgr.ResourceNode;
 import com.story.storyadmin.domain.vo.sysmgr.UserVo;
 import com.story.storyadmin.service.sysmgr.AuthorityService;
@@ -59,6 +60,18 @@ public class LoginController {
     @RequestMapping(value="/login",method = {RequestMethod.POST})
     public Result login(HttpServletResponse response, @RequestBody UserVo user) {
         return userService.login(user,response);
+    }
+
+    /**
+     * 验证码登录
+     * @param user
+     * @return
+     */
+    @ApiOperation(value = "登录接口" ,  notes="登录")
+    @ResponseBody
+    @RequestMapping(value="/login2",method = {RequestMethod.POST})
+    public Result login2(HttpServletResponse response, @RequestBody LoginBody user) {
+        return userService.login2(user,response);
     }
 
     /**

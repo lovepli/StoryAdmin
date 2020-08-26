@@ -1,4 +1,4 @@
-import { login, logout, getInfo, loginerp } from '@/api/login'
+import { login, login2, logout, getInfo, loginerp } from '@/api/login'
 // eslint-disable-next-line no-unused-vars
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
@@ -31,15 +31,39 @@ const user = {
   // 在组件中分发Action: 在组件中使用 this.$store.dispatch('xxx') 分发 action，或者使用 mapActions 辅助函数将组件的 methods 映射为 store.dispatch 调用
   actions: {
     // 1、登录后台
+    // Login({ commit }, userInfo) { // commit提交调用mutation；userInfo即为点击后传递过来的参数，此时是 用户登录信息
+    //   const username = userInfo.username.trim()
+    //   const password = userInfo.password
+    //   // Action 通常是异步的，那么如何知道 action 什么时候结束呢？更重要的是，我们如何才能组合多个 action，以处理更加复杂的异步流程？
+    //   // 首先，你需要明白 store.dispatch 可以处理被触发的 action 的处理函数返回的 Promise，并且 store.dispatch 仍旧返回 Promise
+    //   return new Promise((resolve, reject) => {
+    //     // 一旦登录接口响应成功，会将返回的Token信息全局设置再请求头中，这样以后所有的请求中都携带这个请求头信息。
+    //     // 具体可以看：src/utils/request.js中这段代码：config.headers['Authorization'] = getToken()
+    //     // 这是全局配置axios实例，因为所有的API请求都需要经过这个request.js文件，所以其中的配置项对所有的请求都有效。
+    //     login(username, password).then(response => {
+    //       // const data = response.data
+    //       // setToken(data.token)  //登录成功后将token存储在cookie之中，这个方法是定义在auth.js中
+    //       // commit('SET_TOKEN', data.token)
+    //       resolve()
+    //     }).catch(error => {
+    //       reject(error)
+    //     })
+    //   })
+    // },
+
+    // 1、通过验证码登录后台
     Login({ commit }, userInfo) { // commit提交调用mutation；userInfo即为点击后传递过来的参数，此时是 用户登录信息
       const username = userInfo.username.trim()
+      const password = userInfo.password
+      const code = userInfo.code
+      const uuid = userInfo.uuid
       // Action 通常是异步的，那么如何知道 action 什么时候结束呢？更重要的是，我们如何才能组合多个 action，以处理更加复杂的异步流程？
       // 首先，你需要明白 store.dispatch 可以处理被触发的 action 的处理函数返回的 Promise，并且 store.dispatch 仍旧返回 Promise
       return new Promise((resolve, reject) => {
         // 一旦登录接口响应成功，会将返回的Token信息全局设置再请求头中，这样以后所有的请求中都携带这个请求头信息。
         // 具体可以看：src/utils/request.js中这段代码：config.headers['Authorization'] = getToken()
         // 这是全局配置axios实例，因为所有的API请求都需要经过这个request.js文件，所以其中的配置项对所有的请求都有效。
-        login(username, userInfo.password).then(response => {
+        login2(username, password, code, uuid).then(response => {
           // const data = response.data
           // setToken(data.token)  //登录成功后将token存储在cookie之中，这个方法是定义在auth.js中
           // commit('SET_TOKEN', data.token)

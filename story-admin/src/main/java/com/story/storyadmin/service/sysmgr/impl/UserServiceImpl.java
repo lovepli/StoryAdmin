@@ -15,10 +15,7 @@ import com.story.storyadmin.domain.entity.sysmgr.LoginLog;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.entity.sysmgr.UserRole;
 import com.story.storyadmin.domain.vo.Result;
-import com.story.storyadmin.domain.vo.sysmgr.UserDo;
-import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
-import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
-import com.story.storyadmin.domain.vo.sysmgr.UserVo;
+import com.story.storyadmin.domain.vo.sysmgr.*;
 import com.story.storyadmin.mapper.sysmgr.UserMapper;
 import com.story.storyadmin.service.sysmgr.LoginLogService;
 import com.story.storyadmin.service.sysmgr.UserService;
@@ -52,6 +49,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    /**
+     * 验证码 redis key
+     */
+    public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
+
     @Autowired
     JwtProperties jwtProperties;
 
@@ -63,6 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 通过账户名查询用户
+     *
      * @param account
      * @return
      */
@@ -120,11 +123,76 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         //生成token 返回给前端
-        String strToken= this.loginSuccess(userBean.getAccount(), response);
+        String strToken = this.loginSuccess(userBean.getAccount(), response);
 
         Subject subject = SecurityUtils.getSubject();
         //自定义的token
-        AuthenticationToken token= new JwtToken(strToken);
+        AuthenticationToken token = new JwtToken(strToken);
+        subject.login(token);
+
+        //登录成功
+        return new Result(true, "登录成功", null, Constants.TOKEN_CHECK_SUCCESS);
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public Result login2(LoginBody user, HttpServletResponse response) {
+        // TODO 最好养成一个习惯，进行日志输出的时候，判断日志级别再打印出来
+        if (logger.isInfoEnabled()) {
+            logger.info("登录成功！！！");
+        }
+
+        //使用断言校验判断 TODO 这里的断言的作用是什么？没有从日志输出来
+        Assert.notNull(user.getUsername(), "用户名不能为空");
+        Assert.notNull(user.getPassword(), "密码不能为空");
+//        Assert.notNull(user.getCode(), "验证码不能为空");
+
+        String verifyKey = CAPTCHA_CODE_KEY + user.getUuid();
+        String captcha = jedisUtils.get(verifyKey);
+        jedisUtils.delKey(verifyKey);
+        logger.info("删除了缓存中的验证码:{}", captcha);
+//        if (captcha == null) {
+//            return new Result(false, "验证码不能为空", null, Constants.PASSWORD_CHECK_INVALID);
+//
+//        }
+//        if (!user.getCode().equalsIgnoreCase(captcha)) {
+//            return new Result(false, "验证码不正确", null, Constants.PASSWORD_CHECK_INVALID);
+//        }
+
+        // 根据用户名查找用户
+        User userBean = this.findUserByAccount(user.getUsername());
+
+        if (userBean == null) {
+            return new Result(false, "用户不存在", null, Constants.PASSWORD_CHECK_INVALID);
+        }
+
+        //ERP账号直接提示账号不存在
+        if ("1".equals(userBean.getErpFlag())) {
+            return new Result(false, "账号不存在", null, Constants.PASSWORD_CHECK_INVALID);
+        }
+
+        //md5进行密码解码
+        String encodePassword = ShiroKit.md5(user.getPassword(), SecurityConsts.LOGIN_SALT);
+        if (!encodePassword.equals(userBean.getPassword())) {
+            return new Result(false, "用户名或密码错误", null, Constants.PASSWORD_CHECK_INVALID);
+        }
+
+        //账号是否锁定
+        if ("0".equals(userBean.getStatus())) {
+            return new Result(false, "该账号已被锁定", null, Constants.PASSWORD_CHECK_INVALID);
+        }
+
+        //生成token 返回给前端
+        String strToken = this.loginSuccess(userBean.getAccount(), response);
+
+        Subject subject = SecurityUtils.getSubject();
+        //自定义的token
+        AuthenticationToken token = new JwtToken(strToken);
         subject.login(token);
 
         //登录成功
@@ -133,6 +201,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * ERP登录
+     *
      * @return
      */
     @Override
@@ -162,18 +231,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String currentTimeMillis = String.valueOf(System.currentTimeMillis());
 
         //生成token
-       // JSONObject json = new JSONObject();
+        // JSONObject json = new JSONObject();
         String token = JwtUtil.sign(account, currentTimeMillis);
         //json.put("token", token);
 
         // TODO 这里不是将jwt token信息存入到redis中进行缓存，而是在redis中设置一个 key-value存储用户登录的时间戳，并设置多久之后的缓存过期时间
         // 更新refreshTokenKey缓存的时间戳  设置缓存key值
-        String refreshTokenKey= SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account;
+        String refreshTokenKey = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account;
         //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24x60x60分钟）
-        jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime()*60);
+        jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime() * 60);
 
         //记录登录日志
-        LoginLog loginLog= new LoginLog();
+        LoginLog loginLog = new LoginLog();
         loginLog.setAccount(account);
         loginLog.setLoginTime(Date.from(Instant.now()));
         loginLog.setContent("登录成功");
@@ -256,7 +325,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result findUserRole(String userName){
+    public Result findUserRole(String userName) {
         List<String> roleName = baseMapper.selectRoleByAccount(userName);
         return new Result(true, null, roleName, Constants.TOKEN_CHECK_SUCCESS);
     }
@@ -264,7 +333,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 保存用户角色
      *
-     * @param userRole  角色表单对象
+     * @param userRole 角色表单对象
      * @return
      */
     @Override
@@ -343,8 +412,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return new Result(false, "参数不完整", null, Constants.PARAMETERS_MISSING);
     }
 
-    public User selectUserById(Long id){
-      return baseMapper.selectById(id);
+    public User selectUserById(Long id) {
+        return baseMapper.selectById(id);
     }
 
     @Override

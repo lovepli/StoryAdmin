@@ -11,6 +11,21 @@ export function login(username, password) {
     }
   })
 }
+
+// 验证码登录方法
+export function login2(username, password, code, uuid) {
+  const data = {
+    username,
+    password,
+    code,
+    uuid
+  }
+  return request({
+    url: '/user/login2',
+    method: 'post',
+    data: data
+  })
+}
 // 用户信息
 export function getInfo() {
   return request({

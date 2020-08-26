@@ -43,7 +43,8 @@
           style="width: 63%"
           @keyup.enter.native="handleLogin"
         >
-          <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
+          <!-- <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" /> -->
+          <svg-icon slot="prefix" icon-class="eye" class="el-input__icon input-icon" />
         </el-input>
         <div class="login-code">
           <img :src="codeUrl" class="login-code-img" @click="getCode">
@@ -105,22 +106,23 @@ export default {
       }
     }
     return {
-      codeUrl: '',
-      loginForm: {
+      loginForm2: {
         username: 'admin',
         password: '111111'
       },
       // 验证码和记住我功能
-      loginForm2: {
+      loginForm: {
         username: 'admin',
         password: '111111',
         rememberMe: false,
         code: '',
         uuid: ''
       },
+      codeUrl: '',
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePass }]
+        password: [{ required: true, trigger: 'blur', validator: validatePass }],
+        code: [{ required: true, trigger: 'change', message: '验证码不能为空' }]
       },
       loading: false,
       pwdType: 'password',
@@ -138,11 +140,16 @@ export default {
       immediate: true
     }
   },
+  created() {
+    this.getCode();
+  },
   methods: {
     getCode() {
       getCodeImg().then(res => {
-        this.codeUrl = 'data:image/gif;base64,' + res.img;
-        this.loginForm.uuid = res.uuid;
+        console.info('验证码=>', res.data)
+        // 响应结果处理
+        this.codeUrl = 'data:image/gif;base64,' + res.data.img;
+        this.loginForm.uuid = res.data.uuid;
       });
     },
     checkCapslock({ shiftKey, key } = {}) {
@@ -176,6 +183,7 @@ export default {
             this.$router.push({ path: this.redirect || '/' }) // 登录成功之后重定向到首页
           }).catch(() => {
             this.loading = false
+            this.getCode();
             console.log('catch error submit!!') // 登录失败提示错误
           })
         } else {
