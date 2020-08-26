@@ -1,6 +1,5 @@
 project:
   domain: http://localhost:9430
-storyAdmin:
   # 验证码类型 math 数组计算 char 字符验证
   captchaType: math
 

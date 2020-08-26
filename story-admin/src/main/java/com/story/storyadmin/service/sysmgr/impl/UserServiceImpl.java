@@ -123,7 +123,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         //生成token 返回给前端
-        String strToken = this.loginSuccess(userBean.getAccount(), response);
+        String strToken = this.loginSuccess(userBean.getAccount(),false, response);
 
         Subject subject = SecurityUtils.getSubject();
         //自定义的token
@@ -152,6 +152,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Assert.notNull(user.getPassword(), "密码不能为空");
         Assert.notNull(user.getCode(), "验证码不能为空");
 
+        logger.info("是否记住我:{}", user.getRememberMe());
         String verifyKey = CAPTCHA_CODE_KEY + user.getUuid();
         String captcha = jedisUtils.get(verifyKey);
         logger.info("缓存中的验证码:{}", captcha);
@@ -171,25 +172,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (userBean == null) {
             return new Result(false, "用户不存在", null, Constants.PASSWORD_CHECK_INVALID);
         }
-
         //ERP账号直接提示账号不存在
         if ("1".equals(userBean.getErpFlag())) {
             return new Result(false, "账号不存在", null, Constants.PASSWORD_CHECK_INVALID);
         }
-
         //md5进行密码解码
         String encodePassword = ShiroKit.md5(user.getPassword(), SecurityConsts.LOGIN_SALT);
         if (!encodePassword.equals(userBean.getPassword())) {
             return new Result(false, "用户名或密码错误", null, Constants.PASSWORD_CHECK_INVALID);
         }
-
         //账号是否锁定
         if ("0".equals(userBean.getStatus())) {
             return new Result(false, "该账号已被锁定", null, Constants.PASSWORD_CHECK_INVALID);
         }
-
         //生成token 返回给前端
-        String strToken = this.loginSuccess(userBean.getAccount(), response);
+        String strToken = this.loginSuccess(userBean.getAccount(), user.getRememberMe(),response);
 
         Subject subject = SecurityUtils.getSubject();
         //自定义的token
@@ -225,22 +222,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * 登录后更新缓存，生成token，设置响应头部信息
      *
      * @param account
+     * @param rememberMe 是否记住我
      * @param response
      */
-    private String loginSuccess(String account, HttpServletResponse response) {
+    private String loginSuccess(String account,Boolean rememberMe, HttpServletResponse response) {
         //系统当前时间戳
         String currentTimeMillis = String.valueOf(System.currentTimeMillis());
 
         //生成token
         // JSONObject json = new JSONObject();
-        String token = JwtUtil.sign(account, currentTimeMillis);
+        String token = JwtUtil.sign(account, currentTimeMillis,rememberMe);
         //json.put("token", token);
 
         // TODO 这里不是将jwt token信息存入到redis中进行缓存，而是在redis中设置一个 key-value存储用户登录的时间戳，并设置多久之后的缓存过期时间
+        // TODO 如果用户有记住我的选项，则对用户的缓存过期时间加长
         // 更新refreshTokenKey缓存的时间戳  设置缓存key值
         String refreshTokenKey = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account;
-        //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24x60x60分钟）
-        jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime() * 60);
+
+        // 是否记住我
+        if (rememberMe){
+            //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24x60x60分钟）
+            jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime() * 60);
+        }else {
+            //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24*60/60=24分钟）
+            jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime()/60/8); //设置3分钟过期
+        }
 
         //记录登录日志
         LoginLog loginLog = new LoginLog();

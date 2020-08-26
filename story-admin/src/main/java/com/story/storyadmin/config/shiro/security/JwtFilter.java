@@ -117,7 +117,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 //系统当前时间
                 String strCurrentTimeMillis = String.valueOf(currentTimeMillis);
                 //生成新的签名token,n分钟后过期
-                String newToken = JwtUtil.sign(account,strCurrentTimeMillis);
+                String newToken = JwtUtil.sign(account,strCurrentTimeMillis,false);
 
                 //更新缓存中的token时间戳，TODO 主要更新的是currentTimeMillis系统当前时间戳数据，过期时间在程序里是写死的
                 //将数据存入缓存（并设置失效时间）

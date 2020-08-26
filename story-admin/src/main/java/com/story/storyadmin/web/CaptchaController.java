@@ -53,7 +53,7 @@ public class CaptchaController {
     private Producer captchaProducerMath;
 
     // 验证码类型
-    @Value("${storyAdmin.captchaType}")
+    @Value("${project.captchaType}")
     private String captchaType;
 
     /**

@@ -13,12 +13,13 @@ import request from '@/utils/request'
 // }
 
 // 验证码登录方法
-export function login(username, password, code, uuid) {
+export function login(username, password, code, uuid, rememberMe) {
   const data = {
     username,
     password,
     code,
-    uuid
+    uuid,
+    rememberMe
   }
   return request({
     url: '/user/login',

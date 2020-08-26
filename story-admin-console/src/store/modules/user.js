@@ -36,13 +36,14 @@ const user = {
       const password = userInfo.password
       const code = userInfo.code
       const uuid = userInfo.uuid
+      const rememberMe = userInfo.rememberMe
       // Action 通常是异步的，那么如何知道 action 什么时候结束呢？更重要的是，我们如何才能组合多个 action，以处理更加复杂的异步流程？
       // 首先，你需要明白 store.dispatch 可以处理被触发的 action 的处理函数返回的 Promise，并且 store.dispatch 仍旧返回 Promise
       return new Promise((resolve, reject) => {
         // 一旦登录接口响应成功，会将返回的Token信息全局设置再请求头中，这样以后所有的请求中都携带这个请求头信息。
         // 具体可以看：src/utils/request.js中这段代码：config.headers['Authorization'] = getToken()
         // 这是全局配置axios实例，因为所有的API请求都需要经过这个request.js文件，所以其中的配置项对所有的请求都有效。
-        login(username, password, code, uuid).then(response => {
+        login(username, password, code, uuid, rememberMe).then(response => {
           // const data = response.data
           // setToken(data.token)  //登录成功后将token存储在cookie之中，这个方法是定义在auth.js中
           // commit('SET_TOKEN', data.token)

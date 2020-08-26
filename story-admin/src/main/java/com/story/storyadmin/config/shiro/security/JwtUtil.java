@@ -70,11 +70,19 @@ public class JwtUtil {
      * @param currentTimeMillis
      * @return
      */
-    public static String sign(String account, String currentTimeMillis) {
+    public static String sign(String account, String currentTimeMillis,Boolean rememberMe) {
         // secret密钥：通过帐号加JWT私钥加密
         String secret = account + jwtUtil.jwtProperties.getSecretKey();
-        // date是jwt_token过期时间，单位：毫秒  TODO 注意：这里设置的过期时间必须与登录时设置的refreshTokenKey缓存时间相等
-        Date date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60*1000L);
+        Date date =null;
+        // 是否记住我
+        if (rememberMe){
+            // date是jwt_token过期时间，单位：毫秒  TODO 注意：这里设置的过期时间必须与登录时设置的refreshTokenKey缓存时间相等
+            // Date date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60*1000L);
+            date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60);
+        }else {
+            date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()/60/8);
+        }
+
         //HMAC256签名算法产生签名    secret是密钥
         Algorithm algorithm = Algorithm.HMAC256(secret);
 

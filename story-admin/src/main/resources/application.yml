@@ -44,7 +44,7 @@ mybatis-plus:
 token:
   #  token有效时间，单位分钟 24*60=1440
   tokenExpireTime: 1440
-  # 更新令牌时间 2*60=120
+  # 更新令牌时间 单位分钟 2*60=120
   refreshCheckTime: 120
   #  #  RefreshToken过期时间，单位：分钟, 24*60=1440
   #  refreshTokenExpireTime: 1440
