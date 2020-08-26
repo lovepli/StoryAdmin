@@ -77,8 +77,8 @@ public class JwtUtil {
         // 是否记住我
         if (rememberMe){
             // date是jwt_token过期时间，单位：毫秒  TODO 注意：这里设置的过期时间必须与登录时设置的refreshTokenKey缓存时间相等
-            // Date date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60*1000L);
-            date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60);
+            date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60*1000L);
+           // date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60);
         }else {
             date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()/60/8);
         }
