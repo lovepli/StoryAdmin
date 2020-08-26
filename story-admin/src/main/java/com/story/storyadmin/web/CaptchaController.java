@@ -7,6 +7,8 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.utils.JedisUtils;
 import com.story.storyadmin.utils.ruoyiutils.sign.Base64;
 import com.story.storyadmin.utils.ruoyiutils.uuid.IdUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import java.io.IOException;
  *
  * @author ruoyi
  */
+@Api(description = "验证码接口")
 @Controller
 public class CaptchaController {
 
@@ -56,6 +59,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
+    @ApiOperation(value = "验证码接口" ,  notes="生成验证码")
     @ResponseBody
     @RequestMapping(value = "/captchaImage", method = {RequestMethod.GET})
     public Result getCode() {
@@ -100,7 +104,7 @@ public class CaptchaController {
         json.put("uuid", uuid);
         json.put("img", Base64.encode(os.toByteArray()));
         result.setData(json);
-        logger.info("传递给前端的验证码数据为:{}", result);
+        //logger.info("传递给前端的验证码数据为:{}", result);
         return result;
     }
 }

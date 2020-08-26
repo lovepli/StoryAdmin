@@ -55,12 +55,12 @@ public class LoginController {
      * @param user
      * @return
      */
-    @ApiOperation(value = "登录接口" ,  notes="登录")
-    @ResponseBody
-    @RequestMapping(value="/login",method = {RequestMethod.POST})
-    public Result login(HttpServletResponse response, @RequestBody UserVo user) {
-        return userService.login(user,response);
-    }
+//    @ApiOperation(value = "登录接口" ,  notes="登录")
+//    @ResponseBody
+//    @RequestMapping(value="/login",method = {RequestMethod.POST})
+//    public Result login(HttpServletResponse response, @RequestBody UserVo user) {
+//        return userService.login(user,response);
+//    }
 
     /**
      * 验证码登录
@@ -69,8 +69,8 @@ public class LoginController {
      */
     @ApiOperation(value = "登录接口" ,  notes="登录")
     @ResponseBody
-    @RequestMapping(value="/login2",method = {RequestMethod.POST})
-    public Result login2(HttpServletResponse response, @RequestBody LoginBody user) {
+    @RequestMapping(value="/login",method = {RequestMethod.POST})
+    public Result login(HttpServletResponse response, @RequestBody LoginBody user) {
         return userService.login2(user,response);
     }
 

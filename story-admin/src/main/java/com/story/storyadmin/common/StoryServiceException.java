@@ -1,7 +1,7 @@
 package com.story.storyadmin.common;
 
 /**
- * 统一Rest API异常类
+ * 统一Rest API异常类  TODO 新增公告功能，添加的
  * 
  * @author 
  *

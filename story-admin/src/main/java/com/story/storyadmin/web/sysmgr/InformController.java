@@ -74,6 +74,7 @@ public class InformController {
             eWrapper.gt("create_date", startOfCreate);
             eWrapper.lt("create_date", endOfCreate);
         }
+        // 创建时间倒序排序
         eWrapper.orderByDesc("create_date");
         IPage<Inform> list = informService.page(InformPage, eWrapper);
         logger.info("查询出公告信息:[]", list.toString());
@@ -85,7 +86,6 @@ public class InformController {
 
     /**
      * 查看公告详情 TODO 这里要从缓存中取出来公告信息!!
-     *
      * @param id
      * @return
      */

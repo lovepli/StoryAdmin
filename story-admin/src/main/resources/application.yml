@@ -61,8 +61,6 @@ permission-config:
       value: anon
     - key: /user/login
       value: anon
-    - key: /user/login2
-      value: anon
     - key: /captchaImage
       value: anon
       #logout退出登录时需要自定义的logout认证
@@ -77,6 +75,10 @@ permission-config:
     - key: /webjars/**
       value: anon
     - key: /druid/**
+      value: anon
+    - key: /mongoDBTest/**
+      value: anon
+    - key: /redisCacheTest/**
       value: anon
       #除了以上的url,其他所有请求需要自定义的jwt认证
     - key: /**

@@ -18,8 +18,9 @@ import java.util.Map;
  * @description: 测试MongoTemplate https://blog.csdn.net/larger5/article/details/79760317
  */
 @RestController
-@RequestMapping("/webjars")
+@RequestMapping("/mongoDBTest")
 public class MongoDBTestController {
+
     private static final Logger logger = LoggerFactory.getLogger(MongoDBTestController.class);
 
     @Autowired

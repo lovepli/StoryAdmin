@@ -1,19 +1,19 @@
 import request from '@/utils/request'
 
 // 登录接口
-export function login(username, password) {
-  return request({
-    url: '/user/login',
-    method: 'post',
-    data: {
-      username,
-      password
-    }
-  })
-}
+// export function login(username, password) {
+//   return request({
+//     url: '/user/login',
+//     method: 'post',
+//     data: {
+//       username,
+//       password
+//     }
+//   })
+// }
 
 // 验证码登录方法
-export function login2(username, password, code, uuid) {
+export function login(username, password, code, uuid) {
   const data = {
     username,
     password,
@@ -21,7 +21,7 @@ export function login2(username, password, code, uuid) {
     uuid
   }
   return request({
-    url: '/user/login2',
+    url: '/user/login',
     method: 'post',
     data: data
   })

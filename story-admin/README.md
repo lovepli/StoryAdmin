@@ -21,10 +21,6 @@
 4. Axios
 5. Es6
 
-包含
-1. 代码生成器
-2. 文档swagger2, 启动项目访问http://localhost:9430/swagger-ui.html
-3. 配置druid数据监控 ,启动项目访问http://localhost:9430/druid/index.html
 作者的博客：https://www.sundayfine.com/
 
 使用jwt采用token有效期内刷新机制更新Token。
@@ -42,11 +38,15 @@
    -- 系统首页公告，置顶，取消置顶，过期
    -- 附件文件上传、下载
    -- 表格文件导出PDF格式
+   -- 表格文件的导入，导出功能(暂时未开发)
    -- 登录日志
    -- 操作日志，操作日志缓存到MongoDB
    -- 邮件功能
    -- 定时任务
    -- 天气详情，调用第三方接口
+   -- 数据源druid监控
+   -- Tomcat服务器监控
+   -- swaggerAPI文档查看
 
    
 

@@ -93,7 +93,7 @@ public class PubController {
                 logger.info("天气详情：{}",weatherVo.toString());
             }
 
-            //缓存  将首页查询出来的天气信息，存入到redis中进行缓存并设置失效时间为3个小时，就不需要每次回到首页都调用一次接口进行查询
+            //缓存  将首页查询出来的天气信息，存入到redis中进行缓存并设置失效时间为3个小时，就不需要每次回到首页都调用一次接口进行查询,这样查询的效率会大大提高
             jedisUtils.saveObject(weatherCacheKey, weatherVo, Constants.ExpireTime.THREE_HOURS);
         }
         Result result = new Result(true,weatherVo);

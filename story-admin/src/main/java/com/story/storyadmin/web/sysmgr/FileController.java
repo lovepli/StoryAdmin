@@ -30,7 +30,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  *
  * @author zhyyy
  **/
-@Api(description = "附件")
+@Api(description = "系统公告附件")
 @RestController
 @RequestMapping("/sysmgr/file")
 public class FileController  {
@@ -45,7 +45,7 @@ public class FileController  {
      * @return response
      */
     @SysLogAnnotation
-    @ApiOperation(value = "附件" ,  notes="上传文件")
+    @ApiOperation(value = "系统公告附件" ,  notes="上传文件")
     @RequiresPermissions("sysmgr.file.upload")
     @RequestMapping(value = "/upload", method = POST)
     @FileSlotDisabled
@@ -65,7 +65,7 @@ public class FileController  {
      * @return response
      */
     @SysLogAnnotation
-    @ApiOperation(value = "附件" ,  notes="删除文件")
+    @ApiOperation(value = "系统公告附件" ,  notes="删除文件")
     @RequiresPermissions("sysmgr.file.delete")
     @RequestMapping(value = "/{id}", method = DELETE)
     public Result delete(@PathVariable("id") Long fileId) {
@@ -79,7 +79,7 @@ public class FileController  {
      * @param fileId   文件ID
      */
     @SysLogAnnotation
-    @ApiOperation(value = "附件" ,  notes="下载文件")
+    @ApiOperation(value = "系统公告附件" ,  notes="下载文件")
     @RequiresPermissions("sysmgr.file.download")
     @RequestMapping(value = "/download/{id}", method = GET)
     public void downloadFile(HttpServletResponse response, @PathVariable("id") Long fileId) {

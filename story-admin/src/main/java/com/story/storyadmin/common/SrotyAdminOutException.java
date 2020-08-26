@@ -1,7 +1,7 @@
 package com.story.storyadmin.common;
 
 /**
- * 向前端传递的异常信息
+ * 向前端传递的异常信息  TODO 新增公告功能，添加的
  *
  * @author zhyyy
  **/

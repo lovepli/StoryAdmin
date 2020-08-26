@@ -1,7 +1,5 @@
 package com.story.storyadmin.web.cacheTest;
 
-import com.story.storyadmin.utils.JedisUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +18,7 @@ import java.util.stream.IntStream;
  * 参考：SpringBoot整合Redis做缓存，实战分享 https://mp.weixin.qq.com/s/c0y2XXVK-PKVQfMOK545UQ
  */
 @RestController
-@RequestMapping(value="/webjars")
+@RequestMapping(value="/redisCacheTest")
 public class RedisCacheTestController {
 
     /** 引入RedisTemplate模版类 */

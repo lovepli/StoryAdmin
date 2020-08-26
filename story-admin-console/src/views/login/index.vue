@@ -146,8 +146,7 @@ export default {
   methods: {
     getCode() {
       getCodeImg().then(res => {
-       // console.info('验证码=>', res.data)
-        // 响应结果处理
+      // console.info('验证码=>', res.data)
         this.codeUrl = 'data:image/gif;base64,' + res.data.img;
         this.loginForm.uuid = res.data.uuid;
       });
