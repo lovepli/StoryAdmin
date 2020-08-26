@@ -150,7 +150,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //使用断言校验判断 TODO 这里的断言的作用是什么？没有从日志输出来
         Assert.notNull(user.getUsername(), "用户名不能为空");
         Assert.notNull(user.getPassword(), "密码不能为空");
-//        Assert.notNull(user.getCode(), "验证码不能为空");
+        Assert.notNull(user.getCode(), "验证码不能为空");
 
         String verifyKey = CAPTCHA_CODE_KEY + user.getUuid();
         String captcha = jedisUtils.get(verifyKey);
@@ -161,9 +161,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //            return new Result(false, "验证码不能为空", null, Constants.PASSWORD_CHECK_INVALID);
 //
 //        }
-//        if (!user.getCode().equalsIgnoreCase(captcha)) {
-//            return new Result(false, "验证码不正确", null, Constants.PASSWORD_CHECK_INVALID);
-//        }
+        if (!user.getCode().equalsIgnoreCase(captcha)) {
+            return new Result(false, "验证码不正确", null, Constants.PASSWORD_CHECK_INVALID);
+        }
 
         // 根据用户名查找用户
         User userBean = this.findUserByAccount(user.getUsername());

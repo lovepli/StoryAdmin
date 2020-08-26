@@ -81,7 +81,8 @@ public class CaptchaController {
         }
 
         // 将验证码存入缓存中
-        jedisUtils.saveString(verifyKey, code, CAPTCHA_EXPIRATION);
+        // jedisUtils.saveString(verifyKey, code, CAPTCHA_EXPIRATION);
+        jedisUtils.saveString(verifyKey, code);
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
