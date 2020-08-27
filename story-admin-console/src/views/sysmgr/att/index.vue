@@ -124,7 +124,7 @@
         <el-button size="mini" @click="uploadVisible=false">取消</el-button>
       </span>
     </el-dialog>
-    <!-- 下载文件 -->
+    <!-- 导出文件 -->
     <el-dialog :visible.sync="showDownloadDialog" width="695px" title="请选择打印内容">
       <file-export :data="list" :cols="downloadColomns" table-name="用户附件管理数据导出" file-name="附件管理数据" />
     </el-dialog>

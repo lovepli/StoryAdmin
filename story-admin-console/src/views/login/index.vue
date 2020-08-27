@@ -36,7 +36,6 @@
 
       <!-- 增加验证码功能 -->
       <el-form-item prop="code">
-        <!-- <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" /> -->
         <span class="svg-container">
           <svg-icon icon-class="validCode"/>
         </span>

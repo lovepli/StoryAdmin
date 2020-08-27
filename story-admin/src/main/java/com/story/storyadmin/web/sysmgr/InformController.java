@@ -127,9 +127,16 @@ public class InformController {
         Assert.notNull(inform.getTitle(), "标题不能为空");
         Assert.notNull(inform.getContent(), "内容不能为空");
         // 获取当前登录用户ID
-        inform.setCreator(UserContext.getCurrentUser().getUserId());
-        //
+        Long id= UserContext.getCurrentUser().getUserId();
+        // TODO 这里取不到ID
+        System.out.println("################上传者的id:"+id);
+        inform.setCreator(id);
+
         List<Long> attachmentIds = inform.getAttachments();
+        System.out.println("数组长度为："+attachmentIds.size()); // TODO 数组的长度为0？？
+        for (Long idd:attachmentIds){
+            logger.info("#############添加的附件id为:{}" + idd);
+        }
         if (attachmentIds != null) {
             // 字符串拼接 TODO 这里应该将long转为string存储吧？ 这里不能存储到数据库！
             String idList = attachmentIds.stream().map(String::valueOf).collect(Collectors.joining(","));

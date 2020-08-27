@@ -80,7 +80,7 @@ public class StorySysLogAspect {
         //获取方法参数数组
         final Object[] args = joinPoint.getArgs();
         // TODO 记录返回方法返回值待开发
-        //将参数数组转换为json字符串
+        //使用Alibaba的fastJson工具将参数数组转换为json字符串
         final String params = JSONObject.toJSONString(args);
         //记录 系统日志信息，recordLog方法是一个异步方法
         sysLogService.recordLog(new SysLog(logId.get(), account, ip, method, url, uri, clazz, methodName, DateUtils.currentDate(),

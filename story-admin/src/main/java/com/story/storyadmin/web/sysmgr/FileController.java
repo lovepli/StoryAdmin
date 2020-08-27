@@ -44,7 +44,7 @@ public class FileController  {
      * @param file  文件
      * @return response
      */
-    @SysLogAnnotation
+    //@SysLogAnnotation  // TODO aop日志记录中不能解析文件参数，会导致fastJson解析异常
     @ApiOperation(value = "系统公告附件" ,  notes="上传文件")
     @RequiresPermissions("sysmgr.file.upload")
     @RequestMapping(value = "/upload", method = POST)
