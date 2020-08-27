@@ -35,6 +35,7 @@ public final class Constants {
      * 静态内部类
 	 */
 	public static class ExpireTime {
+		// 私有构造函数
 		private ExpireTime() {
 		}
 		public static final int TEN_SEC =  10;//10s

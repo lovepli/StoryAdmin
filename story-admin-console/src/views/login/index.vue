@@ -106,10 +106,10 @@ export default {
       }
     }
     return {
-      loginForm2: {
-        username: 'admin',
-        password: '111111'
-      },
+      // loginForm2: {
+      //   username: 'admin',
+      //   password: '111111'
+      // },
       // 验证码和记住我功能
       loginForm: {
         username: 'admin',
@@ -186,7 +186,7 @@ export default {
             console.log('catch error submit!!') // 登录失败提示错误
           })
         } else {
-          console.log('error submit!!') // 验证失败的提示信息
+          console.log('错误提交！！，请重新提交！') // 验证失败的提示信息
           return false
         }
       })

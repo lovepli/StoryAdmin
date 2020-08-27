@@ -84,7 +84,7 @@ public class CaptchaController {
             image = captchaProducer.createImage(capStr);
         }
 
-        // 将验证码存入缓存中
+        // 将验证码存入缓存中，并设置验证码过期时间
         // jedisUtils.saveString(verifyKey, code, CAPTCHA_EXPIRATION);
         jedisUtils.saveString(verifyKey, code);
         // 转换流信息写出

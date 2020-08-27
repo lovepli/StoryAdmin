@@ -21,7 +21,7 @@ public class UserContext implements AutoCloseable {
      * @param user
      */
     public UserContext(LoginUser user) {
-        //将LoginUser 设置为线程内部属性
+        //将LoginUser 设置为线程内部属性，方便其他线程获取
         current.set(user);
     }
 

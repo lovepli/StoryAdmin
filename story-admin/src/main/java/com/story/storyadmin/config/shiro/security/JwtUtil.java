@@ -80,7 +80,8 @@ public class JwtUtil {
             date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60*1000L);
            // date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60);
         }else {
-            date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()/60/8);
+            // 请求头中的token过期或者不存在，则报401错，需要重新跳转到登录页
+            date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()/60); // 设置24分钟过期
         }
 
         //HMAC256签名算法产生签名    secret是密钥

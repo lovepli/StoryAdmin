@@ -113,7 +113,9 @@ service.interceptors.response.use(
     // console.log('err' + error) // for debug
     // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
     Message({
-      message: (error && error.response && error.response.status) ? error.response.status + '  错误' : '页面超时，请按F5刷新页面',
+      // http错误状态码 401 表示需要重新刷新登录
+      // eslint-disable-next-line no-undef
+      message: (error && error.response && error.response.status) ? error.response.status + '  错误!' : '页面超时，请按F5刷新页面',
       type: 'error',
       duration: 5 * 1000
     })

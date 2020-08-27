@@ -28,7 +28,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /** jwt设置参数 */
+    /** jwt设置参数 构造器注入bean对象*/
     JwtProperties jwtProperties;
     ISyncCacheService syncCacheService;
     JedisUtils jedisUtils;
@@ -72,8 +72,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         //绑定上下文获取账号
         String account = JwtUtil.getClaim(authorization, SecurityConsts.ACCOUNT);
 
-//        //绑定上下文
-//        new UserContext(new LoginUser(account));
+        //绑定上下文, 将LoginUser 设置为线程内部属性，方便其他线程获取
+        new UserContext(new LoginUser(account));
 
         //检查是否需要更换token，需要则重新颁发
         this.refreshTokenIfNeed(account, authorization, response);
@@ -83,7 +83,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 检查是否需要,若需要则校验时间戳，刷新Token，并更新时间戳
+     * 检查是否需要更换token,若需要则校验时间戳，刷新Token，并更新时间戳
      * @param account
      * @param authorization
      * @param response
@@ -116,11 +116,11 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 logger.info(String.format("为账户%s颁发新的令牌", account));
                 //系统当前时间
                 String strCurrentTimeMillis = String.valueOf(currentTimeMillis);
-                //生成新的签名token,n分钟后过期
+                //生成新的签名token,n分钟后过期  TODO  1、这里要考虑到记住我功能，不能直接写false！！
                 String newToken = JwtUtil.sign(account,strCurrentTimeMillis,false);
 
                 //更新缓存中的token时间戳，TODO 主要更新的是currentTimeMillis系统当前时间戳数据，过期时间在程序里是写死的
-                //将数据存入缓存（并设置失效时间）
+                //将数据存入缓存（并设置失效时间） TODO  2、这里要考虑到记住我功能，所以失效时间要改变！！
                 jedisUtils.saveString(refreshTokenKey, strCurrentTimeMillis, jwtProperties.getTokenExpireTime()*60);
 
                 //设置httpServletResponse响应头将新的token返回给前端
@@ -143,7 +143,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     private boolean refreshCheck(String authorization, Long currentTimeMillis) {
         String tokenMillis = JwtUtil.getClaim(authorization, SecurityConsts.CURRENT_TIME_MILLIS);
-        //当前时间戳-token中的时间戳 大于更新令牌时间
+        //当前时间戳-token中的时间戳 大于更新令牌时间 TODO  3、这里要考虑到记住我功能，所以更新令牌时间也要改变！！
         if (currentTimeMillis - Long.parseLong(tokenMillis) > (jwtProperties.refreshCheckTime * 60 * 1000L)) {
             return true;
         }
@@ -215,8 +215,9 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
             Result result = new Result();
             result.setResult(false);
-            result.setCode(Constants.PASSWORD_CHECK_INVALID);
+            result.setCode(Constants.TOKEN_CHECK_STALE_DATED);
             result.setMessage(msg);
+            // 将结果响应给前端
             out.append(JSON.toJSONString(result));
         } catch (IOException e) {
             logger.error("返回Response信息出现IOException异常:" + e.getMessage());

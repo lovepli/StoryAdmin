@@ -158,10 +158,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         logger.info("缓存中的验证码:{}", captcha);
         jedisUtils.delKey(verifyKey);
         logger.info("删除了缓存中的验证码！");
-//        if (captcha == null) {
-//            return new Result(false, "验证码不能为空", null, Constants.PASSWORD_CHECK_INVALID);
-//
-//        }
+
         if (!user.getCode().equalsIgnoreCase(captcha)) {
             return new Result(false, "验证码不正确", null, Constants.PASSWORD_CHECK_INVALID);
         }
@@ -245,7 +242,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime() * 60);
         }else {
             //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24*60/60=24分钟）
-            jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime()/60/8); //设置3分钟过期
+            jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime()/60); //设置24分钟token过期
         }
 
         //记录登录日志
