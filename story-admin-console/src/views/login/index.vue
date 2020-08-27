@@ -36,22 +36,25 @@
 
       <!-- 增加验证码功能 -->
       <el-form-item prop="code">
+        <!-- <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" /> -->
+        <span class="svg-container">
+          <svg-icon icon-class="user"/>
+        </span>
         <el-input
           v-model="loginForm.code"
           auto-complete="off"
-          placeholder="验证码"
-          style="width: 63%"
+          placeholder="请输入验证码"
+          style="width: 70%"
           @keyup.enter.native="handleLogin"
-        >
-          <!-- <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" /> -->
-          <svg-icon slot="prefix" icon-class="eye" class="el-input__icon input-icon" />
-        </el-input>
+        />
         <div class="login-code">
           <img :src="codeUrl" class="login-code-img" @click="getCode">
         </div>
       </el-form-item>
       <!-- 增加记住我功能 -->
-      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+      <el-row>
+        <el-checkbox v-model="loginForm.rememberMe" style="float:right;margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+      </el-row>
 
       <el-row :gutter="20" style="margin-bottom:30px;">
         <el-col :span="8">
@@ -186,7 +189,7 @@ export default {
             console.log('catch error submit!!') // 登录失败提示错误
           })
         } else {
-          console.log('错误提交！！，请重新提交！') // 验证失败的提示信息
+          console.log('错误提交，请重新提交！') // 验证失败的提示信息
           return false
         }
       })
@@ -296,7 +299,7 @@ $light_gray:#eee;
 
 // 验证码
   .login-code {
-  width: 33%;
+  // width: 33%;
   height: 38px;
   float: right;
   img {
