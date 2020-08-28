@@ -108,15 +108,11 @@ export default {
       }
     }
     return {
-      // loginForm2: {
-      //   username: 'admin',
-      //   password: '111111'
-      // },
       // 验证码和记住我功能
       loginForm: {
         username: 'admin',
         password: '111111',
-        rememberMe: false,
+        rememberMe: true, // 默认为记住我
         code: '',
         uuid: ''
       },
