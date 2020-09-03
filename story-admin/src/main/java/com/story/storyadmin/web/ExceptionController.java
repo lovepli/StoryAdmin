@@ -31,18 +31,18 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ShiroException.class)
     public Result handle401(ShiroException e) {
-        logger.error("ShiroException", e);
+        logger.error("ShiroException:{}", e);
         return new Result<String>(false, e.getMessage(), null);
     }
 
     /**
-     * 捕捉UnauthorizedException
+     * 捕捉UnauthorizedException权限异常
      * @param ex
      * @return
      */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
-    public Result handle401(UnauthorizedException ex) {
+    public Result authorityException(UnauthorizedException ex) {
         logger.error("UnauthorizedException", ex);
         String msg= ex.getMessage();
         String pattern = "\\[(.*?)\\]";
@@ -83,13 +83,7 @@ public class ExceptionController {
         return HttpStatus.valueOf(statusCode);
     }
 
-    // 捕捉权限异常
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    @ExceptionHandler(UnauthorizedException.class)
-//    public Result authorityException(HttpServletRequest request, Throwable ex) {
-//        logger.error("Exception:{}", ex);
-//        return new Result<String>(false, ex.getMessage(), null);
-//    }
+
 
 //    // 捕捉业务异常
 //    @ExceptionHandler(BizException.class)

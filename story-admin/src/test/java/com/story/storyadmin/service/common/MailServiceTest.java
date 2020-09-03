@@ -20,7 +20,7 @@ public class MailServiceTest {
     private MailService mailService;
 
     //收件人邮箱
-    private String sendTo = "lovepli@126.com";
+    private String sendTo = "1171205514@qq.com";
     /**
      * 测试简单邮件
      */
