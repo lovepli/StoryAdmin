@@ -42,10 +42,10 @@ spring:
       database: story_admin_log
 # 邮件服务 这里的配置我们定义了SMTP服务地址，发件人的邮箱账号信息
   mail:
-    host: smtp.126.com
-    mailFrom: lovepli@126.com
+    host: smtp.126.com # 这里选择的是126邮箱作为邮件发送服务端
+    mailFrom: lovepli@126.com  # 发件人邮箱
     username: lovepli
-    password: Abc199401092512
+    password: RGKGTFRYZGZFNLOY # 你网页端邮箱设置中SMTP开启的时候的开启的授权码
     default-encoding: UTF-8
     properties:
       mail:
