@@ -40,13 +40,13 @@ spring:
       host: localhost #不设置用户名和密码
       port: 27017
       database: story_admin_log
-
-
+# 邮件服务 这里的配置我们定义了SMTP服务地址，发件人的邮箱账号信息
   mail:
     host: smtp.126.com
-    mailFrom: abcd@126.com
-    username: abcd
-    password: abcd
+    mailFrom: lovepli@126.com
+    username: lovepli
+    password: Abc199401092512
+    default-encoding: UTF-8
     properties:
       mail:
         smtp:

@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 测试发送邮件功能
+ * 在系统中我们发送邮件时还需要记录发送的日志，包括发送的时间，邮件内容，状态，以及失败原因等等，这些可以自己加。
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MailServiceTest {

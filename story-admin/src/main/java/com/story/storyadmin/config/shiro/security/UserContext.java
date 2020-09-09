@@ -13,6 +13,12 @@ import com.story.storyadmin.config.shiro.LoginUser;
  */
 public class UserContext implements AutoCloseable {
 
+    /**
+     * 绑定当前上下文用户:
+     * 用户登录后，在业务里想要获取当前登录用户信息，一是可以在登录时缓存用户信息，二是少量信息从token里拿，这里当每次验证请求成功后，
+     * 我们都将当前用户信息绑定到当前的上下文中，这里我只提取了账号account。
+     */
+
     //ThreadLocal线程内部属性
     static final ThreadLocal<LoginUser> current = new ThreadLocal<>();
 

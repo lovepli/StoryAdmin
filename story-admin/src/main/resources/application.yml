@@ -42,13 +42,11 @@ mybatis-plus:
 
 # token相关
 token:
-  #  token有效时间，单位分钟 24*60=1440
+  # token有效时间，单位分钟 24*60=1440 即24小时
   tokenExpireTime: 1440
-  # 更新令牌时间 单位分钟 2*60=120
+  # 更新令牌时间 单位分钟 2*60=120 即2小时
   refreshCheckTime: 120
-  #  #  RefreshToken过期时间，单位：分钟, 24*60=1440
-  #  refreshTokenExpireTime: 1440
-  #  shiro缓存有效期，单位分钟,2*60=120
+  #  shiro缓存有效期，单位分钟,2*60=120 即2小时
   shiroCacheExpireTime: 120
   #  token加密密钥
   secretKey: story-admin

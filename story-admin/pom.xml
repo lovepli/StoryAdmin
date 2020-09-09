@@ -45,6 +45,7 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
         <!-- mail-->
+        <!-- 发送一些固定模板的邮件，就会用到模板引擎，我们可以选择thymeleaf或者freemarker，这里我使用了后者。-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>

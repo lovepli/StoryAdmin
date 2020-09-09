@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 /**
  * 登录用户信息
- *
  * @author sunnj
  */
 @Data

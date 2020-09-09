@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 邮件配置类
+ * https://www.sundayfine.com/springboot-mail/
  */
 @Data
 @Component

@@ -25,6 +25,10 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 由于业务上我们并不需要关注邮件的发送结果，因此设计上我们直接使用异步方式发送邮件。这里我采用最简单的方式，
+ * 使用@Async注解来使得实现类中的方法异步执行。当然如果你不需要，直接去掉注解就可以了。
+ */
 @Async
 @Service
 public class MailServiceImpl implements MailService {
@@ -35,6 +39,8 @@ public class MailServiceImpl implements MailService {
 	private EmailConfig emailConfig;
 	@Autowired
 	private JavaMailSender mailSender;
+//	@Autowired
+//	private TemplateEngine templateEngine;
 
 	/**
 	 * 发送简单邮件 

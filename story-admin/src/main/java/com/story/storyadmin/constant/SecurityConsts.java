@@ -17,11 +17,13 @@ public class SecurityConsts {
 
     /**
      * JWT-account
+     * 账户名
      */
     public static final String ACCOUNT = "account";
 
     /**
      * JWT-currentTimeMillis
+     * 当前时间戳
      */
     public final static String CURRENT_TIME_MILLIS = "currentTimeMillis";
 
@@ -43,6 +45,7 @@ public class SecurityConsts {
     public final static String PREFIX_SHIRO_REFRESH_TOKEN = "story-admin:refresh_token:";
 
     /**
+     * 定义检查Token刷新的redis Key。
      * redis-key-前缀 story-admin:refresh_check:
      */
     public final static String PREFIX_SHIRO_REFRESH_CHECK = "story:refresh_check:";

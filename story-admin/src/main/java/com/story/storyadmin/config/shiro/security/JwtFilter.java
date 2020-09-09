@@ -52,6 +52,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     /**
      * 登录验证
+     * 当前请求executeLogin验证成功后，调用refreshTokenIfNeed检查请求中携带的Token是否已经生效2小时，如果是就重新颁发
      * @param request
      * @param response
      * @return
@@ -69,11 +70,12 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(token);
 
-        //绑定上下文获取账号
+        //TODO 绑定上下文 获取账号
         String account = JwtUtil.getClaim(authorization, SecurityConsts.ACCOUNT);
-
-        // TODO 绑定上下文, 将LoginUser 设置为线程内部属性，方便其他线程获取
-        new UserContext(new LoginUser(account));
+        // 将LoginUser 设置为线程内部属性，方便其他线程获取
+        // UserContext userContext= new UserContext(new LoginUser(account));
+           new UserContext(new LoginUser(account));
+           // 当我们在业务中需要访问上下文用户时，可以这样获取：UserContext.getCurrentUser().getAccount()
 
         //检查是否需要更换token，需要则重新颁发
         this.refreshTokenIfNeed(account, authorization, response);
@@ -83,7 +85,10 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 检查是否需要更换token,若需要则校验时间戳，刷新Token，并更新时间戳
+     * 加入Token验证通过后定时刷新Token的逻辑
+     * 解决Token过期后刷新的逻辑，那么我们需要增加Token过期前更新的逻辑,
+     * 将原来设计的Token到期后刷新，重新修改为Token在有效期内刷新，使得Token一旦到期，则直接跳转到登录页，保证了同一个用户，并发的请求只会更换一次令牌
+     * 检查是否需要刷新token,若需要则校验时间戳，刷新Token，并更新时间戳
      * @param account
      * @param authorization
      * @param response
@@ -136,7 +141,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     /**
      * 检查是否需要更新Token
-     *
      * @param authorization
      * @param currentTimeMillis
      * @return
@@ -203,6 +207,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      * 401非法请求
      * @param resp
      * @param msg
+     * 说明：当请求验证Token时抛出TokenExpiredException异常后，校验缓存中的RefreshToken的时间戳是否与当前请求Token时间戳一致，倘若一致，则重新生成Token，以当前时间戳更新缓存中的RefreshToken时间戳；倘若不一致，则以Json格式直接响应401未登录错误。
+     * 采用前后端分离的方式，我们的401就需要直接返回JSON格式的响应。
      */
     private void response401(ServletResponse resp, String msg) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) resp;

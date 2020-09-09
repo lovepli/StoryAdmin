@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 异步缓存
+ * 采用JWT有效期内刷新Token方案，解决并发请求问题:
+ * 解决方案：
+ * 1.当然实现的方式可以有多种，如我们现在Token过期后刷新再加synchronized生成Token策略
+ * 2.或者前端定时去调用服务端API刷新Token，
+ * 3.再如这里即将采用的Token在有效期内定时更新的方式。
  */
 @Service
 public class SyncCacheServiceImpl implements ISyncCacheService {
