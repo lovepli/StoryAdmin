@@ -135,7 +135,7 @@ public class JedisUtils {
   }
 
   /**
-   * 将数据存入缓存（并设置失效时间）
+   * 将数据存入缓存（并设置失效时间 单位: SECONDS分钟）
    * @param key
    * @param val
    * @param seconds

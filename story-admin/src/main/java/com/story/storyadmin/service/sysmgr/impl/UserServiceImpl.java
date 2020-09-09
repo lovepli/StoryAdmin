@@ -233,16 +233,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // TODO 这里不是将jwt token信息存入到redis中进行缓存，而是在redis中设置一个 key-value存储用户登录的时间戳，并设置多久之后的缓存过期时间
         // TODO 如果用户有记住我的选项，则对用户的缓存过期时间加长
-        // 更新refreshTokenKey缓存的时间戳  设置缓存key值
+        // 更新refreshTokenKey缓存的时间戳  设置缓存key值  记住我
         String refreshTokenKey = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account;
+        // 没有记住我
+        String refreshTokenKeyNoRemeberMe = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account + "rememberMe";
 
         // 是否记住我
         if (rememberMe){
             //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24x60x60分钟）
             jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime() * 60);
         }else {
-            //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24*60/60=24分钟）
-            jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime()/60); //设置24分钟token过期
+            //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24*60分钟）
+            jedisUtils.saveString(refreshTokenKeyNoRemeberMe, currentTimeMillis, jwtProperties.getTokenExpireTime());
         }
 
         //记录登录日志

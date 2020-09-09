@@ -9,6 +9,7 @@ import com.story.storyadmin.constant.SecurityConsts;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.common.ISyncCacheService;
 import com.story.storyadmin.utils.JedisUtils;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,9 +106,15 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             if (b) {
                 //b为true获取到锁
                 // refreshTokenKey是登录的时候设置的缓存时间戳
+                // TODO 这个是记住我缓存key
                 String refreshTokenKey= SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account;
+                // TODO 这个是没有记住我缓存key
+                String refreshTokenKeyNoRemeberMe = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account + "rememberMe";
+                Boolean rememberMe = null;
                 //判断redis是否缓存了数据
                 if(jedisUtils.exists(refreshTokenKey)){
+                    // 记住我
+                    rememberMe = true; 
                     //获取缓存中的时间戳
                     String tokenTimeStamp = jedisUtils.get(refreshTokenKey);
                     //获取token中时间戳
@@ -116,17 +123,37 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                     if(!tokenMillis.equals(tokenTimeStamp)){
                         throw new TokenExpiredException(String.format("账户%s的令牌无效", account));
                     }
+                } else if(jedisUtils.exists(refreshTokenKeyNoRemeberMe)){
+                    rememberMe = false;
+                    //获取缓存中的时间戳
+                    String tokenTimeStamp = jedisUtils.get(refreshTokenKeyNoRemeberMe);
+                    //获取token中时间戳
+                    String tokenMillis= JwtUtil.getClaim(authorization,SecurityConsts.CURRENT_TIME_MILLIS);
+                    //检查redis中的时间戳与token的时间戳是否一致
+                    if(!tokenMillis.equals(tokenTimeStamp)){
+                        throw new TokenExpiredException(String.format("账户%s的令牌无效", account));
+                    }
                 }
+
                 //时间戳一致，则颁发新的令牌
                 logger.info(String.format("为账户%s颁发新的令牌", account));
                 //系统当前时间
                 String strCurrentTimeMillis = String.valueOf(currentTimeMillis);
-                //生成新的签名token,n分钟后过期  TODO  1、这里要考虑到记住我功能，不能直接写false！！
+                if(rememberMe){
+                    //生成新的签名token,n分钟后过期  TODO  1、这里要考虑到记住我功能，不能直接写false！！
+                    String newToken = JwtUtil.sign(account,strCurrentTimeMillis,true);
+
+                    //更新缓存中的token时间戳，TODO 主要更新的是currentTimeMillis系统当前时间戳数据，过期时间在程序里是写死的
+                    //将数据存入缓存（并设置失效时间） TODO  2、这里要考虑到记住我功能，所以失效时间要改变！！
+                    jedisUtils.saveString(refreshTokenKey, strCurrentTimeMillis, jwtProperties.getTokenExpireTime()*60);
+                }
+                //生成新的签名token,n分钟后过期
                 String newToken = JwtUtil.sign(account,strCurrentTimeMillis,false);
 
-                //更新缓存中的token时间戳，TODO 主要更新的是currentTimeMillis系统当前时间戳数据，过期时间在程序里是写死的
-                //将数据存入缓存（并设置失效时间） TODO  2、这里要考虑到记住我功能，所以失效时间要改变！！
-                jedisUtils.saveString(refreshTokenKey, strCurrentTimeMillis, jwtProperties.getTokenExpireTime()*60);
+                //更新缓存中的token时间戳，
+                //将数据存入缓存（并设置失效时间）
+                jedisUtils.saveString(refreshTokenKeyNoRemeberMe, strCurrentTimeMillis, jwtProperties.getTokenExpireTime());
+
 
                 //设置httpServletResponse响应头将新的token返回给前端
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;

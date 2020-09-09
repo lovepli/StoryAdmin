@@ -55,12 +55,14 @@ public class LoginController {
      * @param user
      * @return
      */
-//    @ApiOperation(value = "登录接口" ,  notes="登录")
-//    @ResponseBody
-//    @RequestMapping(value="/login",method = {RequestMethod.POST})
-//    public Result login(HttpServletResponse response, @RequestBody UserVo user) {
-//        return userService.login(user,response);
-//    }
+    /**
+    @ApiOperation(value = "登录接口" ,  notes="登录")
+    @ResponseBody
+    @RequestMapping(value="/login",method = {RequestMethod.POST})
+    public Result login(HttpServletResponse response, @RequestBody UserVo user) {
+        return userService.login(user,response);
+    }
+    */
 
     /**
      * 验证码登录

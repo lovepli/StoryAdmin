@@ -65,7 +65,7 @@ public class JwtUtil {
     }
 
     /**
-     * 生成签名,n分钟后过期
+     * 生成签名token,n分钟后过期
      * @param account
      * @param currentTimeMillis
      * @return
@@ -76,12 +76,11 @@ public class JwtUtil {
         Date date =null;
         // 是否记住我
         if (rememberMe){
-            // date是jwt_token过期时间，单位：毫秒  TODO 注意：这里设置的过期时间必须与登录时设置的refreshTokenKey缓存时间相等
+            // date是jwt_token过期时间，单位：毫秒  TODO 注意：这里设置的过期时间必须与登录时设置的refreshTokenKey缓存时间相等，这里单位是秒
             date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60*1000L);
-           // date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*60);
         }else {
             // 请求头中的token过期或者不存在，则报401错，需要重新跳转到登录页
-            date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()/60); // 设置24分钟过期
+            date = new Date(System.currentTimeMillis() + jwtUtil.jwtProperties.getTokenExpireTime()*1000L);
         }
 
         //HMAC256签名算法产生签名    secret是密钥
