@@ -152,26 +152,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Assert.notNull(user.getPassword(), "密码不能为空");
         Assert.notNull(user.getCode(), "验证码不能为空");
 
-        logger.info("是否记住我:{}", user.getRememberMe());
+       // logger.info("是否记住我:{}", user.getRememberMe());
         String verifyKey = CAPTCHA_CODE_KEY + user.getUuid();
         String captcha = jedisUtils.get(verifyKey);
-        logger.info("缓存中的验证码:{}", captcha);
+       // logger.info("缓存中的验证码:{}", captcha);
         jedisUtils.delKey(verifyKey);
-        logger.info("删除了缓存中的验证码！");
+        //logger.info("删除了缓存中的验证码！");
 
         if (!user.getCode().equalsIgnoreCase(captcha)) {
-            return new Result(false, "验证码不正确", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "验证码不正确", null, Constants.CAPTCHA_CHECK_INVALID);
         }
 
         // 根据用户名查找用户
         User userBean = this.findUserByAccount(user.getUsername());
 
         if (userBean == null) {
-            return new Result(false, "用户不存在", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "用户不存在", null, Constants.USER_CHECK_INVALID);
         }
         //ERP账号直接提示账号不存在
         if ("1".equals(userBean.getErpFlag())) {
-            return new Result(false, "账号不存在", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "账号不存在", null, Constants.ACCOUNT_CHECK_INVALID);
         }
         //md5进行密码解码
         String encodePassword = ShiroKit.md5(user.getPassword(), SecurityConsts.LOGIN_SALT);
@@ -180,7 +180,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         //账号是否锁定
         if ("0".equals(userBean.getStatus())) {
-            return new Result(false, "该账号已被锁定", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "该账号已被锁定", null, Constants.ACCOUNT_LOCK_INVALID);
         }
         //生成token 返回给前端
         String strToken = this.loginSuccess(userBean.getAccount(), user.getRememberMe(),response);
@@ -235,12 +235,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // TODO 如果用户有记住我的选项，则对用户的缓存过期时间加长
         // 更新refreshTokenKey缓存的时间戳  设置缓存key值  记住我
         String refreshTokenKey = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account;
-        // 没有记住我
+        // 没有记住我的KEY
         String refreshTokenKeyNoRemeberMe = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account + "rememberMe";
 
         // 是否记住我
         if (rememberMe){
-            //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24x60x60分钟）
+            //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间，单位秒 24x60x60x7秒，即7天，这里我们设置的是24小时即一天的过期时间策略）
             jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime() * 60);
         }else {
             //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24*60分钟）

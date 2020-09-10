@@ -2,7 +2,8 @@ server:
   port: 9430
 spring:
   profiles:
-    active: mac
+    active: dev
+    # freemarker模板引擎
   freemarker:
     cache: false
     charset: UTF-8
@@ -42,12 +43,12 @@ mybatis-plus:
 
 # token相关
 token:
-  # token有效时间，单位分钟 24*60=1440 即24小时
+  # token有效时间，单位秒 24*60=1440 即24分钟
   tokenExpireTime: 1440
-  # 更新令牌时间 单位分钟 2*60=120 即2小时
+  # 更新令牌时间 单位秒 2*60=120 即2分钟
   refreshCheckTime: 120
-  #  shiro缓存有效期，单位分钟,2*60=120 即2小时
-  shiroCacheExpireTime: 120
+  #  shiro缓存有效期，单位秒 24*60=1440 即24分钟
+  shiroCacheExpireTime: 1440
   #  token加密密钥
   secretKey: story-admin
 

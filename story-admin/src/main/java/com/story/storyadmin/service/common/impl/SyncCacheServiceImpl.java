@@ -56,7 +56,7 @@ public class SyncCacheServiceImpl implements ISyncCacheService {
     }
 
     /**
-     * 释放锁，直接删除key(直接删除会导致任务重复执行，所以释放锁机制设为超时30s)
+     * 释放锁，直接删除key(直接删除会导致任务重复执行，所以释放锁机制设为超时10s)
      * @param lockName
      * @return
      */

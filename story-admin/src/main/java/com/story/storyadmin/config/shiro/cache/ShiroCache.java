@@ -60,8 +60,8 @@ public class ShiroCache<K,V> implements Cache<K,V> {
     @Override
     public Object put(Object key, Object value) throws CacheException {
         String tempKey= this.getKey(key);
-        //保存tokenKey值为story-admin:cache:account 的用户缓存信息，并设置缓存过期时间
-            jedisUtils.saveObject(tempKey, value,jwtProperties.getTokenExpireTime()*60);
+        //保存tokenKey值为story-admin:cache:account 的用户缓存信息，并设置缓存过期时间为24小时 单位秒
+            jedisUtils.saveObject(tempKey, value,jwtProperties.getShiroCacheExpireTime()*60);
             return value;
     }
 
