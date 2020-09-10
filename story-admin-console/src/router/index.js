@@ -153,7 +153,7 @@ const createRouter = () => new Router({
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-// 定义实重置路由的方法
+// 定义重置路由的方法
 // export function resetRouter() {
 //   const newRouter = createRouter()
 //   router.matcher = newRouter.matcher // reset router

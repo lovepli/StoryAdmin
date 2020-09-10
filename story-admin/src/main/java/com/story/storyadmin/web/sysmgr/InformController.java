@@ -62,7 +62,7 @@ public class InformController {
         inform.setTitle(title);
         inform.setCreator(creatorId);
         inform.setTop(topFirst);
-        logger.info(inform.toString());
+        //logger.info(inform.toString());
         Page<Inform> InformPage = new Page(page, limit);
         QueryWrapper<Inform> eWrapper = new QueryWrapper(inform);
         // 公告列表条件查询
@@ -77,7 +77,7 @@ public class InformController {
         // 创建时间倒序排序
         eWrapper.orderByDesc("create_date");
         IPage<Inform> list = informService.page(InformPage, eWrapper);
-        logger.info("查询出公告信息:[]", list.toString());
+        // logger.info("查询出公告信息:[]", list.toString());
         result.setData(list);
         result.setResult(true);
         result.setCode(Constants.TOKEN_CHECK_SUCCESS);

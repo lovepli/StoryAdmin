@@ -223,6 +223,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param response
      */
     private String loginSuccess(String account,Boolean rememberMe, HttpServletResponse response) {
+
         //系统当前时间戳
         String currentTimeMillis = String.valueOf(System.currentTimeMillis());
 
@@ -237,13 +238,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String refreshTokenKey = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account;
         // 没有记住我的KEY
         String refreshTokenKeyNoRemeberMe = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account + "rememberMe";
-
-        // 是否记住我
+        // 如果记住我了，并且缓存中同时还存在之前没有记住我状态的没有过期的token，则根据key删除这个token值
+        // 如果是没有记住我，并且缓存中同时还存在之前记住我状态的没有过期的token，则根据key删除这个token值
         if (rememberMe){
+            if (jedisUtils.exists(refreshTokenKeyNoRemeberMe)){
+                jedisUtils.delKey(refreshTokenKeyNoRemeberMe);
+            }
             //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间，单位秒 24x60x60x7秒，即7天，这里我们设置的是24小时即一天的过期时间策略）
             jedisUtils.saveString(refreshTokenKey, currentTimeMillis, jwtProperties.getTokenExpireTime() * 60);
         }else {
-            //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24*60分钟）
+            if (jedisUtils.exists(refreshTokenKey)){
+                jedisUtils.delKey(refreshTokenKey);
+            }
+            //将系统当前时间戳currentTimeMillis存入redis缓存（并设置失效时间 24*60秒，即24分钟）
             jedisUtils.saveString(refreshTokenKeyNoRemeberMe, currentTimeMillis, jwtProperties.getTokenExpireTime());
         }
 

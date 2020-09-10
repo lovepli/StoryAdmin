@@ -115,7 +115,7 @@ service.interceptors.response.use(
     Message({
       // http错误状态码 401 表示需要重新刷新登录
       // eslint-disable-next-line no-undef
-      message: (error && error.response && error.response.status) ? error.response.status + '  错误!' : '页面超时，请按F5刷新页面',
+      message: (error && error.response && error.response.status) ? error.response.status + error.response.msg + '  错误!' : '页面超时，请按F5刷新页面',
       type: 'error',
       duration: 5 * 1000
     })

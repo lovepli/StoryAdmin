@@ -139,17 +139,16 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 logger.info(String.format("为账户%s颁发新的令牌", account));
                 //系统当前时间
                 String strCurrentTimeMillis = String.valueOf(currentTimeMillis);
+                String newToken = null;
                 if(rememberMe){
                     //生成新的签名token,n分钟后过期
-                    String newToken = JwtUtil.sign(account,strCurrentTimeMillis,true);
-
+                   newToken = JwtUtil.sign(account,strCurrentTimeMillis,true);
                     //更新缓存中的token时间戳，TODO 主要更新的是currentTimeMillis系统当前时间戳数据，过期时间在程序里是写死的
                     //将数据存入缓存（并设置失效时间为24小时）
                     jedisUtils.saveString(refreshTokenKey, strCurrentTimeMillis, jwtProperties.getTokenExpireTime()*60);
                 }
                 //生成新的签名token,n分钟后过期
-                String newToken = JwtUtil.sign(account,strCurrentTimeMillis,false);
-
+                  newToken = JwtUtil.sign(account,strCurrentTimeMillis,false);
                 //更新缓存中的token时间戳，
                 //将数据存入缓存（并设置失效时间为24分钟）
                 jedisUtils.saveString(refreshTokenKeyNoRemeberMe, strCurrentTimeMillis, jwtProperties.getTokenExpireTime());
@@ -167,7 +166,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     /**
      * 检查是否需要更新Token
-     * 这里的refreshCheckTime表示自Token颁发后，超过2个小时，就为请求更新一次Token，同时，
+     * 这里的refreshCheckTime表示自Token颁发后，超过20分钟，就为请求更新一次Token，同时，
      * 我们的refreshCheckTime时间应当小于令牌的有效期tokenExpireTime，即我们是要令牌在有效期内进行更新。
      * @param authorization
      * @param currentTimeMillis
@@ -177,8 +176,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         String tokenMillis = JwtUtil.getClaim(authorization, SecurityConsts.CURRENT_TIME_MILLIS);
        // TODO  3、这里要考虑到记住我功能，所以更新令牌时间也要改变！！ 错误更正：记没记住我和令牌刷新时间没有必然关系，只要令牌刷新时间refreshCheckTime在
         // TODO 令牌有效期tokenExpireTime之内，就都可以刷新，这里我们把记住我和没有记住我分别分配了两个key存入到Redis中，key的过期时间也设置的不同
-        //当前时间戳-token中的时间戳 大于2小时(即设置的更新令牌时间为2小时)
-        if (currentTimeMillis - Long.parseLong(tokenMillis) > (jwtProperties.refreshCheckTime * 60 * 1000L)) {
+        //当前时间戳-token中的时间戳 大于20分钟(即设置的更新令牌时间为20分钟)
+        if (currentTimeMillis - Long.parseLong(tokenMillis) > (jwtProperties.refreshCheckTime * 10 * 1000L)) {
             return true;
         }
         return false;
@@ -234,7 +233,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 401非法请求
+     * 401非法请求 （token过期）
      * @param resp
      * @param msg
      * 说明：当请求验证Token时抛出TokenExpiredException异常后，校验缓存中的RefreshToken的时间戳是否与当前请求Token时间戳一致，倘若一致，则重新生成Token，以当前时间戳更新缓存中的RefreshToken时间戳；倘若不一致，则以Json格式直接响应401未登录错误。
