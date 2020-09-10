@@ -57,6 +57,8 @@
     1.登录采用一张静态的图片做背景，并在其上增加了一些动态的效果，使得视觉效果更佳。当然图片什么的可以随意发挥。
     2.采用shiro做安全框架，使用jwt替换了以前常用的session+cookie。应用token有效期内自动刷新的方案，使用户无感知永久登录。
       文章链接：https://www.sundayfine.com/shiro-jwt/ 和 https://www.sundayfine.com/jwt-refresh-token/
+      Shiro + JWT + Spring Boot Restful 简易教程 https://www.jianshu.com/p/f37f8c295057
+      SpringBoot + Shiro + JWT集成Redis缓存(Jedis) https://blog.csdn.net/wang926454/article/details/82978632
     3.菜单与权限一样，都可以动态的方式配置。菜单与权限绑定，没有权限即无法看到菜单。权限可以控制到按钮级别，没有设计数据权限，
       开发者可以根据实际的业务场景来处理。
     4.使用mybatis-plus替换原来的mybatis，因为他提供了很多现成的基础功能，如代码生成，条件构造，分页插件，租户等功能，简化了

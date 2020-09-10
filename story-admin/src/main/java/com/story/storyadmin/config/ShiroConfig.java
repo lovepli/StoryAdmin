@@ -35,26 +35,7 @@ public class ShiroConfig {
 //    @Autowired
 //    ShiroFilterProperties shiroFilterProperties;
 
-    @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
 
-    @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
-    public static DefaultAdvisorAutoProxyCreator getLifecycleBeanPostProcessor() {
-        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-        // 强制使用cglib
-        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
-        return defaultAdvisorAutoProxyCreator;
-    }
-
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
-        return advisor;
-    }
 
     @Bean
     public DefaultWebSecurityManager  securityManager(ShiroRealm shiroRealm, ShiroCacheManager shiroCacheManager){
@@ -94,7 +75,7 @@ public class ShiroConfig {
         // Shiro的核心安全接口,这个属性是必须的
         shiroFilter.setSecurityManager(securityManager);
 
-        //1、自定义过滤器
+        //1、添加自己的过滤器并且取名为jwt和logout
         // 添加jwt过滤器和logout过滤器
         Map<String, Filter> filterMap = new HashMap<>();
         //这里没有使用@Bean注册JwtFilter对象到spring容器中，而是直接new对象
@@ -102,7 +83,7 @@ public class ShiroConfig {
         filterMap.put("logout", new SystemLogoutFilter(jedisUtils));
         shiroFilter.setFilters(filterMap);
 
-        //2、url过滤
+        //2、自定义url过滤规则
         //动态配置拦截器注入
         Map<String, String> filterRuleMap = new HashMap<>(16);
         //从配置文件加载用户的接口API权限
@@ -133,6 +114,34 @@ public class ShiroConfig {
         //注册应用上下文filter
         bean.setFilter(new UserContextFilter());
         return bean;
+    }
+
+
+
+    /**
+     * 下面的代码是添加注解支持
+     * @return
+     */
+    @Bean
+    @DependsOn("lifecycleBeanPostProcessor")
+    public static DefaultAdvisorAutoProxyCreator getLifecycleBeanPostProcessor() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        // 强制使用cglib，防止重复代理和可能引起代理出错的问题
+        // https://zhuanlan.zhihu.com/p/29161098
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
+
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
     }
 
 }

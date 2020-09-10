@@ -32,7 +32,7 @@ public class ExceptionController {
     @ExceptionHandler(ShiroException.class)
     public Result handle401(ShiroException e) {
         logger.error("ShiroException:{}", e);
-        return new Result<String>(false, e.getMessage(), null);
+        return new Result<String>(false, e.getMessage(), null,401);
     }
 
     /**
@@ -51,9 +51,9 @@ public class ExceptionController {
         String funcCode;
         if (m.find()) {
             funcCode= m.group(1);
-            return new Result<String>(false, String.format("操作失败，权限不足，权限码：%s",funcCode), null);
+            return new Result<String>(false, String.format("操作失败，权限不足，权限码：%s",funcCode), null,401);
         }else{
-            return new Result<String>(false, "操作失败，权限不足，请联系管理员", null);
+            return new Result<String>(false, "操作失败，权限不足，请联系管理员", null,401);
         }
     }
 
@@ -67,7 +67,7 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result globalException(HttpServletRequest request, Throwable ex) {
         logger.error("Exception:{}", ex);
-        return new Result<String>(false, "系统异常，请稍后重试", null);
+        return new Result<String>(false, "系统异常，请稍后重试", null, getStatus(request).value());
     }
 
     /**

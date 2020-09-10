@@ -87,7 +87,7 @@ service.interceptors.response.use(
 
       // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
       // 如果是token过期的状况，退出登录重定向到登陆页
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      if (res.code === 50008 || res.code === 50012 || res.code === 50014 || res.code === 401) {
         // element-ui的消息弹框,因为这里是单独引入MessageBox，所以调用方式不是this.$confirm()打开消息弹框
         MessageBox.confirm(
           '登录状态已过期，您可以继续留在改页面，或者重新登录！', '系统提示', {
