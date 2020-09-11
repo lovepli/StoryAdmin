@@ -63,13 +63,15 @@ file:
     autoSaveEnabled: true
     baseDir: D:/upload/ # 文件上传存放的位置
     #baseDir: /Users/lipan/Desktop/
-# 备份
+# 数据备份
 dbbackup:
   servername: 127.0.0.1
   dbname: story_admin
   username: root
   password: 123456
+  # 这里进行数据备份的数据库是本地安装的MySQL的安装目录
   installPath: ${file.upload:D:/Development/mysql-8.0.13-winx64}
+  # 数据备份存放的路径
   backupPath: ${file.export:D:/Backup}
 
 # 日志相关
@@ -88,7 +90,7 @@ logging:
 # memcached服务器地址及端口，使用xmemcache库进行链接。集群地址之间使用一个空格分隔
 memcache:
   addresses: "localhost:11211"
-# 上传的文件存放的路径
+# 公告上传的文件存放的路径
 upload-file:
   # path: /etc/files/
   path: D:\bird_files

@@ -74,6 +74,7 @@ public class FileController  {
 
     /**
      * 下载文件
+     * 使用axios下载附件 https://www.sundayfine.com/axios_qa/
      *
      * @param response 下载人token
      * @param fileId   文件ID

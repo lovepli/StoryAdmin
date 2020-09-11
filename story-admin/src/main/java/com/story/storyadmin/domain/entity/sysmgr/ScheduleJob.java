@@ -15,6 +15,8 @@ import java.util.Date;
  *
  * @author sunnj
  * @since 2019-08-18
+ * 动态增删变更任务
+ * 既然要动态的变更任务，那我们就将任务保存在数据库中，没此项目启动，就不用再次配置。定义我们的PO类，上面的用到的ScheduleJob便是出自这里：
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

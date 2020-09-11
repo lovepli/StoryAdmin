@@ -72,11 +72,12 @@
         <el-table-column
           label="操作"
           align="center"
-          width="120"
+          width="230"
           class-name="small-padding fixed-width"
         >
           <template slot-scope="scope">
             <el-button type="danger" size="mini" @click="dropRow(scope.row)">删除</el-button>
+            <el-button type="primary" size="mini" @click="downloadRow(scope.row)">下载</el-button>
           </template>
         </el-table-column>
       </template>
@@ -87,7 +88,8 @@
         <el-col :span="24">
           <!-- 通过 slot 你可以传入自定义的上传按钮类型和文字提示。
           可通过设置limit和on-exceed来限制上传文件的个数和定义超出限制时的行为。
-          可通过设置before-remove来阻止文件移除操作。 -->
+          可通过设置before-remove来阻止文件移除操作。
+          Upload组件:http-request属性覆盖默认的上传行为，可以自定义上传的实现。-->
           <el-upload
             ref="upload"
             :action="filePostUrl"
@@ -132,7 +134,7 @@
 </template>
 
 <script>
-import { drop, uploadFile } from '@/api/sysmgr/att';
+import { drop, uploadFile, downloadFile } from '@/api/sysmgr/att';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
@@ -237,6 +239,13 @@ export default {
           });
         });
     },
+    // 下载接口
+    downloadRow(row) {
+      downloadFile(row.id).then(r => {
+        // this.$refs.dataList.fetchData();
+      }).catch(e => { this.$message.error('下载失败') })
+    },
+
     // 上传
     showUploadForm() {
       this.uploadVisible = true;

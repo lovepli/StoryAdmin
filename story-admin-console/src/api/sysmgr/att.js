@@ -30,3 +30,11 @@ export function uploadFile(file, data) {
   })
 }
 
+export function downloadFile(id) {
+  return request({
+    url: '/sysmgr/att/download/' + id,
+    method: 'get',
+    responseType: 'blob'
+  })
+}
+

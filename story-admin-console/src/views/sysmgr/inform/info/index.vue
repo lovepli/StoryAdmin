@@ -61,6 +61,7 @@ export default {
     parseDate(d) {
       return parseTime(d, '{y}年{m}月{d}日{h}:{i}:{s}')
     },
+    // 下载文件
     download(row) {
       downloadFile(row.id).then(r => {
         if (!r) return

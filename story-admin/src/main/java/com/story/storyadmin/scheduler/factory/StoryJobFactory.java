@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 让Quartz的Job使用Spring注入的Bean 参考：https://blog.csdn.net/a67474506/article/details/38402059
+ * SpringBoot集成Quartz使用工厂Bean生成Bean的方式。https://www.sundayfine.com/springboot-quartz/
+ * 首先需要配置工厂Bean，负责生成实现了Job接口的类的实例对象Bean。
  */
 @Component("storyJobFactory")
 public class StoryJobFactory extends SpringBeanJobFactory implements ApplicationContextAware {

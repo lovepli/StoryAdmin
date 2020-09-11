@@ -20,6 +20,10 @@ import java.util.List;
  * Spring Boot 提供了两种解决方案：CommandLineRunner 和 ApplicationRunner。二者使用方式大体一致，差别主要体现在参数上。
  * ApplicationRunner 接口和 CommandLineRunner 类似，在 Spring 容器启动完成时，继承 ApplicationRunner 接口的类的 run 方法会被自动执行（前提是这个类被Spring 管理）
  * 参考: https://www.letianbiji.com/spring-boot/spring-boot-applicationrunner.html
+ *
+ * 这里我们在容器启动完成后，立即启动我们的计划任务。
+ * 可以看到，所有的Job都是我们从数据库中检索出的任务，自动添加到执行计划中。
+ * ApplicationRunner 接口是spring boot提供给我们的一个接口，能够在容器启动完成之后，执行我们自定义的任务，例如这里我们启动所有的Job。
  */
 @Component
 public class ScheduleJobStarter implements ApplicationRunner {

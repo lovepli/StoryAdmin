@@ -47,8 +47,9 @@ service.interceptors.response.use(
       store.commit('SET_TOKEN', token); // store.commit 方法触发状态变更,这里是变更全局存储的token状态,第一个参数为事件类型,第二个参数为载荷，这里是token
     }
 
-    // eslint-disable-next-line eqeqeq
-    if (response.config && response.config.responseType == 'blob') {
+    // 响应的拦截器中加入判断是否是附件，主要判断responseType是否是blob。
+    // 判断响应类型是否是附件
+    if (response.config && response.config.responseType === 'blob') {
       const blob = new Blob([response.data], { type: 'application/octet-stream;charset=utf-8' }); // application/vnd.openxmlformats-officedocument.spreadsheetml.sheet这里表示xlsx类型
       const filename = decodeURI(response.headers['filename']);
       if ('download' in document.createElement('a')) {

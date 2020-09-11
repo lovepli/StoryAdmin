@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 自定义任务监听器
+ * 自定义任务监听器StoryJobListener
  * Quartz  Scheduler 可以对Job(任务)建立一个监听器，分别对任务执行  《之前， 之后， 取消》 3个阶段进行监听。
  * 实现监听器需要实现JobListener接口，然后注册到Scheduler上就可以了
  */
