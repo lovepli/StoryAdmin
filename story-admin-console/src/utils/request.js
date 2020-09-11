@@ -8,7 +8,7 @@ import { setToken, getToken } from '@/utils/auth'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api的base_url 读取config配置文件
+  baseURL: process.env.BASE_API, //   // axios中请求配置有baseURL选项，表示请求URL公共部分 ，这里是从config配置文件中读取
   timeout: 20000, // 请求超时时间
   withCredentials: true // 使用Axios默认是不带cookie的，倘若需要，则需要在添加withCredentials: true属性。
 })
@@ -22,18 +22,18 @@ service.interceptors.request.use(
     if (store.getters.token) { // 判断toke是否为null
     // 在此处设置请求头参数
     // 让每个请求携带自定义token--['Authorization']为自定义key 请根据实际情况自行修改
-      config.headers['Authorization'] = getToken() // 从Cookies中获取token
+      config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改 ，这里的getToken()方法是从Cookies中获取token
     }
     return config
   },
   error => {
     // 发送请求失败的时候做点什么
-    // console.log(error) // for debug
+    console.log(error) // for debug
     Promise.reject(error)
   }
 )
 
-// axios response 拦截器，请求接口得到相应后，需要进行一些预处理
+// axios response 响应拦截器，请求接口得到相应后，需要进行一些预处理
 service.interceptors.response.use(
   response => {
     // 在响应请求之前做点什么
@@ -109,14 +109,36 @@ service.interceptors.response.use(
       return response.data // 返回请求成功结果
     }
   },
+  // error => {
+  // // 请求失败的时候做点什么
+  //   console.log('err' + error) // for debug
+  //   // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
+  //   let { message } = error;
+  //   if (message.response.status === 401) {
+  //     message = '请重新登录';
+  //   }
+
+  //   Message({
+  //     // http错误状态码 401 表示需要重新刷新登录
+  //     message: message,
+  //     type: 'error',
+  //     duration: 5 * 1000
+  //   })
+  //   return Promise.reject(error)
+  // }
+
   error => {
-  // 请求失败的时候做点什么
-    // console.log('err' + error) // for debug
-    // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
+    console.log('err' + error)
+    let { message } = error;
+    if (message === 'Network Error') {
+      message = '后端接口连接异常';
+    } else if (message.includes('timeout')) {
+      message = '系统接口请求超时';
+    } else if (message.includes('Request failed with status code')) {
+      message = '系统接口' + message.substr(message.length - 3) + '异常';
+    }
     Message({
-      // http错误状态码 401 表示需要重新刷新登录
-      // eslint-disable-next-line no-undef
-      message: (error && error.response && error.response.status) ? error.response.status + error.response.msg + '  错误!' : '页面超时，请按F5刷新页面',
+      message: message,
       type: 'error',
       duration: 5 * 1000
     })

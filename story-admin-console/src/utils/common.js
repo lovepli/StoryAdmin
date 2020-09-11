@@ -29,3 +29,10 @@ export function getById(arr, id) {
   }
   return ret
 }
+
+// const baseURL = process.env.BASE_API
+// // 通用下载方法
+// export function download(fileName) {
+//   window.location.href = baseURL + '/common/download?fileName=' + encodeURI(fileName) + '&delete=' + true;
+// }
+

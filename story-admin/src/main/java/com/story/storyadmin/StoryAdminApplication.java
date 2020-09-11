@@ -13,6 +13,7 @@ public class StoryAdminApplication {
      */
     public static void main(String[] args) {
         SpringApplication.run(StoryAdminApplication.class, args);
+        System.out.println("(♥◠‿◠)ﾉﾞ  StoryAdmin启动成功   ლ(´ڡ`ლ)ﾞ  ");
     }
 
 }

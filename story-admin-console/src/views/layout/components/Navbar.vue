@@ -107,7 +107,7 @@ export default {
       }).then(() => {
         this.$store.dispatch('LogOut').then(() => {
           this.$store.dispatch('FedLogOut').then(() => {
-            if (this.erp == '1') {
+            if (this.erp === '1') {
               window.location = process.env.ERP_LOGOUT_HREF
             } else {
               location.reload() // 为了重新实例化vue-router对象 避免bug
