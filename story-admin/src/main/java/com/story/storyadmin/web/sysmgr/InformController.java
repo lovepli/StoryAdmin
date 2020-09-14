@@ -139,6 +139,7 @@ public class InformController {
         }
         if (attachmentIds != null) {
             // 字符串拼接 TODO 这里应该将long转为string存储吧？ 这里不能存储到数据库！
+            // //获取所有选中行的id组成的字符串，以逗号分隔 前端的处理方式：https://www.jb51.net/article/135616.htm
             String idList = attachmentIds.stream().map(String::valueOf).collect(Collectors.joining(","));
             logger.info("添加的附件id为:{}" + idList);
             inform.setAttchmentList(idList);

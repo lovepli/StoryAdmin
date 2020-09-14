@@ -96,8 +96,8 @@ public class LoginLogController {
     @SysLogAnnotation
     @ApiOperation(value = "登录日志" ,  notes="删除登录日志列表")
     @RequiresPermissions("sysmgr.loginlog.delete")
-    @RequestMapping(value="/delete/{ids}",method = {RequestMethod.DELETE})
-    public Result dropByIds(@PathVariable Long[] ids){
+    @RequestMapping(value="/delete",method = {RequestMethod.POST})
+    public Result dropByIds( @RequestParam(value = "ids", required = false)  Long[] ids){
         Result result ;
         // 删除数组集合，直接删除数据库中的数据
        // loginLogService.deleteLogininforByIds(ids);

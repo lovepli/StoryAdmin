@@ -37,7 +37,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // 在响应请求之前做点什么
-    console.log('service.interceptors.response res=' + JSON.stringify(response.data))
+    // console.log('service.interceptors.response res=' + JSON.stringify(response.data))
 
     // token 过期，获取刷新后的access-token
     var token = response.headers['authorization'];
@@ -47,35 +47,10 @@ service.interceptors.response.use(
       store.commit('SET_TOKEN', token); // store.commit 方法触发状态变更,这里是变更全局存储的token状态,第一个参数为事件类型,第二个参数为载荷，这里是token
     }
 
+    const res = response.data
     // 响应的拦截器中加入判断是否是附件，主要判断responseType是否是blob。
     // 判断响应类型是否是附件
     // 由于下载的是文件流，所以请求的方法配置参数需要把返回类型设置为blob，eg：responseType: 'blob'，另外注意axios的get和post方法的传参顺序问题。get方法第一个参数是url+ur后面的参数，第二个参数是请求配置参数；post：有三个参数，第一个是url，第二个是请求参数，第三个是请求的配置数据。
-    // if (response.config && response.config.responseType === 'blob') {
-    //   const blob = new Blob([response.data], { type: 'application/octet-stream;charset=utf-8' }); // application/vnd.openxmlformats-officedocument.spreadsheetml.sheet这里表示xlsx类型
-    //   const filename = decodeURI(response.headers['filename']);
-    //   if ('download' in document.createElement('a')) {
-    //     const downloadElement = document.createElement('a');
-    //     let href = '';
-    //     if (window.URL) href = window.URL.createObjectURL(blob);
-    //     else href = window.webkitURL.createObjectURL(blob);
-    //     downloadElement.href = href;
-    //     downloadElement.download = filename;
-    //     document.body.appendChild(downloadElement);
-    //     // 点击下载
-    //     downloadElement.click();
-    //     // 释放掉blob对象
-    //     if (window.URL) window.URL.revokeObjectURL(href);
-    //     else window.webkitURL.revokeObjectURL(href);
-    //     // 下载完成移除元素
-    //     document.body.removeChild(downloadElement);
-    //   } else {
-    //     navigator.msSaveBlob(blob, filename);
-    //   }
-    //   return;
-    // }
-
-    const res = response.data
-
     // // judge is Blog response for file download
     if (res && res.constructor && res.constructor.toString()) {
       const constructorName = res.constructor.name
@@ -128,26 +103,11 @@ service.interceptors.response.use(
       return res // 返回请求成功结果
     }
   },
-  // error => {
-  // // 请求失败的时候做点什么
-  //   console.log('err' + error) // for debug
-  //   // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
-  //   let { message } = error;
-  //   if (message.response.status === 401) {
-  //     message = '请重新登录';
-  //   }
-
-  //   Message({
-  //     // http错误状态码 401 表示需要重新刷新登录
-  //     message: message,
-  //     type: 'error',
-  //     duration: 5 * 1000
-  //   })
-  //   return Promise.reject(error)
-  // }
 
   error => {
+    // 请求失败的时候做点什么
     console.log('err' + error)
+    // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
     let { message } = error;
     if (message === 'Network Error') {
       message = '后端接口连接异常';

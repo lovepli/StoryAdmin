@@ -7,6 +7,7 @@
       data-name="listQuery"
       @dataRest="onDataRest"
       @handleSelectionChange="handleSelectionRowChange"
+      @handleCurrent ="handleCurrentChange2"
     >
       <template slot="form">
         <el-form-item label="账号">
@@ -22,6 +23,7 @@
       <!--extendOperation 扩展功能-->
       <template slot="extendOperation">
         <el-button
+          :disabled="this.ids.length === 0"
           type="danger"
           icon="el-icon-delete"
           size="mini"
@@ -76,10 +78,6 @@ export default {
   },
   data() {
     return {
-      // tableKey: 0,
-      // total: 0,
-      // list: null,
-      // listLoading: true,
       listQuery: {
         pageNo: 1,
         limit: 10,
@@ -87,7 +85,7 @@ export default {
         account: null
       },
       // 选中数组
-      ids: []
+      sels: []
     };
   },
   methods: {
@@ -98,14 +96,26 @@ export default {
       this.$refs.dataList.fetchData();
     },
 
-    // 多选框选中数据
-    handleSelectionRowChange(selection) {
-      // debugger // 这里的map说是没有定义
-      this.ids = selection.map(item => item.id);
-      // this.ids = selection
+    handleCurrentChange2(row, event, column) {
+      this.$refs.dataList.toggleRowSelection(row)
+    },
+
+    // 多选框选中数据  https://www.jb51.net/article/135616.htm
+    // debugger
+    handleSelectionRowChange(sels) {
+      this.sels = sels
+      // eslint-disable-next-line no-unused-vars
+      var ids = this.sels.map(item => item.id).join()
+
+      // this.ids = []
+      // if (selection !== undefined) { // 必须加判断  不然会不识别forEach
+      //   // selection.forEach(element => {
+      //   //   this.ids.push(element.id)
+      //   // });
+      //   this.ids = selection.map(item => item.id);
+      //   // this.ids = selection
+      // }
       console.log('多选框的数据=>' + this.ids)
-      // this.single = selection.length !== 1
-      // this.multiple = !selection.length
     },
 
     /** 删除按钮操作 */

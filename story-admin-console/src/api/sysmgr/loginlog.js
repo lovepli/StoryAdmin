@@ -21,9 +21,13 @@ export function drop(param) {
 
 // 批量删除
 export function delLoginLogs(ids) {
+  const params = {
+    ids: ids
+  }
   return request({
-    url: '/sysmgr/loginlog/delete' + ids,
-    method: 'delete'
+    url: '/sysmgr/loginlog/delete',
+    method: 'post',
+    data: params
   })
 }
 
