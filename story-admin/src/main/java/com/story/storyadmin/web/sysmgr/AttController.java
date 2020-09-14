@@ -15,7 +15,10 @@ import com.story.storyadmin.service.sysmgr.AttService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +42,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RestController
 @RequestMapping("/sysmgr/att")
 public class AttController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AttController.class);
+
+    @Value("${file.multipart.baseDir}")
+    private String baseDir;
 
     @Autowired
     AttService attService;
@@ -105,28 +113,28 @@ public class AttController {
     }
 
     //@SysLogAnnotation
-    @ApiOperation(value = "附件管理" ,  notes="下载附件")
-    @RequiresPermissions("sysmgr.att.download")
-    @RequestMapping(value = "/download/{id}", method = GET)
-    public void downloadFile(HttpServletResponse response, @PathVariable("id") Long fileId) throws UnsupportedEncodingException {
-        Att att = attService.getById(fileId);
-        if (att == null) {
-            response.setStatus(404);
-            return;
-        }
-        String filePath = att.getPath();
-        String fileName = att.getName();
-        File file = new File(filePath);
-        String newFileName = att.getName();
-        if (file.exists()) {
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(newFileName, "UTF-8"));
-            response.setHeader("Content-Length", String.valueOf(att.getFileSize()));
-            //将允许浏览器访问的头放入白名单
-            response.setHeader("Access-Control-Expose-Headers", "FileName");
-            //FileName 为自定义头
-            response.setHeader("FileName", URLEncoder.encode(newFileName, "UTF-8"));
+//    @ApiOperation(value = "附件管理" ,  notes="下载附件")
+//    @RequiresPermissions("sysmgr.att.download")
+//    @RequestMapping(value = "/download/{id}", method = GET)
+//    public void downloadFile(HttpServletResponse response, @PathVariable("id") Long fileId) throws UnsupportedEncodingException {
+//        Att att = attService.getById(fileId);
+//        if (att == null) {
+//            response.setStatus(404);
+//            return;
+//        }
+//        String filePath = att.getPath();
+//        String fileName = att.getName();
+//        File file = new File(filePath);
+//        String newFileName = att.getName();
+//        if (file.exists()) {
+//            response.setCharacterEncoding("utf-8");
+//            response.setContentType("application/octet-stream");
+//            response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(newFileName, "UTF-8"));
+//            response.setHeader("Content-Length", String.valueOf(att.getFileSize()));
+//            //将允许浏览器访问的头放入白名单
+//            response.setHeader("Access-Control-Expose-Headers", "FileName");
+//            //FileName 为自定义头
+//            response.setHeader("FileName", URLEncoder.encode(newFileName, "UTF-8"));
 
             // 强制设置下载而不是打开
 //            response.setContentType("application/force-download");
@@ -148,6 +156,46 @@ public class AttController {
 //            }
 //        } else {
 //            response.setStatus(404);
-       }
+ //      }
+//    }
+
+    @ApiOperation(value = "附件管理" ,  notes="下载附件")
+    @RequiresPermissions("sysmgr.att.download")
+    @RequestMapping(value = "/download/{id}", method = GET)
+    public void downloadFile(HttpServletResponse response, @PathVariable("id") Long fileId) {
+        Att attachment = attService.getById(fileId);
+        if (attachment == null) {
+            response.setStatus(404);
+            return;
+        }
+        String filePath = baseDir + attachment.getPath();
+        String fileName = attachment.getName();
+        logger.info("文件路径:{}",filePath);
+        logger.info("文件名:{}",fileName);
+        File file = new File(filePath);
+        if (file.exists()) {
+            // 下载逻辑:
+            // 强制设置下载而不是打开
+            response.setContentType("application/force-download");
+            // 设置文件名，fileName是下载的文件名
+            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            byte[] buffer = new byte[1024];
+            try (
+                    FileInputStream fis = new FileInputStream(file);
+                    BufferedInputStream bis = new BufferedInputStream(fis)
+            ) {
+                OutputStream outputStream = response.getOutputStream();
+                int i = bis.read(buffer);
+                while (i != -1) {
+                    outputStream.write(buffer, 0, i);
+                    i = bis.read(buffer);
+                }
+            } catch (Exception e) {
+                response.setStatus(404);
+                throw new SrotyAdminOutException("下载失败");
+            }
+        } else {
+            response.setStatus(404);
+        }
     }
 }

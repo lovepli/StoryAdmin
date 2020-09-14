@@ -50,7 +50,7 @@
       <template slot="body">
         <el-table-column align="center" prop="id" label="ID" width="100px"/>
         <!-- <el-table-column align="center" prop="name" label="名称" ></el-table-column> -->
-        <el-table-column align="center" prop="originName" label="源文件名" />
+        <el-table-column :formatter="r=>r.originName" align="center" prop="originName" label="源文件名" />
         <el-table-column :show-overflow-tooltip="true" align="center" prop="slotId" label="批次" />
         <!-- <el-table-column align="center" prop="fileCate" label="分类" ></el-table-column> -->
         <el-table-column align="center" prop="type" label="类型" />
@@ -120,6 +120,11 @@
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-col>
+      </el-row>
+      <el-row>
+        <a style="color: red;" href="http://localhost:9430/data/contest_templates.xlsx" download="contest_templates.xlsx" title="excel模板下载">
+          Excel模板下载
+        </a>
       </el-row>
       <span slot="footer" class="dialog-footer">
         <el-button :loading="uploadLoading" type="primary" size="mini" @click="submitUpload">确定上传</el-button>
@@ -240,9 +245,23 @@ export default {
         });
     },
     // 下载接口
+    // downloadRow(row) {
+    //   downloadFile(row.id).then(r => {
+    //     // this.$refs.dataList.fetchData();
+    //   }).catch(e => { this.$message.error('下载失败') })
+    // },
+
+    // 下载文件
     downloadRow(row) {
       downloadFile(row.id).then(r => {
-        // this.$refs.dataList.fetchData();
+        if (!r) return
+        const url = window.URL.createObjectURL(new Blob([r]))
+        const link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', row.originName)
+        document.body.appendChild(link)
+        link.click()
       }).catch(e => { this.$message.error('下载失败') })
     },
 

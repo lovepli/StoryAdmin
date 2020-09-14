@@ -17,8 +17,9 @@ public class CorsConfig {
         corsConfiguration.addAllowedOrigin("*");
         // 允许任何头
         corsConfiguration.addAllowedHeader("*");
-        // 允许任何方法（post、get等）
+        // 允许任何方法（post、get等） //允许何种方式访问，默认简单方式，即：GET，HEAD，POST
         corsConfiguration.addAllowedMethod("*");
+        // 是否浏览器应该发送credentials，例如cookies Access-Control-Allow-Credentials
         corsConfiguration.setAllowCredentials(true);
         return corsConfiguration;
     }

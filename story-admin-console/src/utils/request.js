@@ -37,7 +37,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // 在响应请求之前做点什么
-    // console.log('service.interceptors.response res=' + JSON.stringify(response.data))
+    console.log('service.interceptors.response res=' + JSON.stringify(response.data))
 
     // token 过期，获取刷新后的access-token
     var token = response.headers['authorization'];
@@ -49,41 +49,60 @@ service.interceptors.response.use(
 
     // 响应的拦截器中加入判断是否是附件，主要判断responseType是否是blob。
     // 判断响应类型是否是附件
-    if (response.config && response.config.responseType === 'blob') {
-      const blob = new Blob([response.data], { type: 'application/octet-stream;charset=utf-8' }); // application/vnd.openxmlformats-officedocument.spreadsheetml.sheet这里表示xlsx类型
-      const filename = decodeURI(response.headers['filename']);
-      if ('download' in document.createElement('a')) {
-        const downloadElement = document.createElement('a');
-        let href = '';
-        if (window.URL) href = window.URL.createObjectURL(blob);
-        else href = window.webkitURL.createObjectURL(blob);
-        downloadElement.href = href;
-        downloadElement.download = filename;
-        document.body.appendChild(downloadElement);
-        downloadElement.click();
-        if (window.URL) window.URL.revokeObjectURL(href);
-        else window.webkitURL.revokeObjectURL(href);
-        document.body.removeChild(downloadElement);
+    // 由于下载的是文件流，所以请求的方法配置参数需要把返回类型设置为blob，eg：responseType: 'blob'，另外注意axios的get和post方法的传参顺序问题。get方法第一个参数是url+ur后面的参数，第二个参数是请求配置参数；post：有三个参数，第一个是url，第二个是请求参数，第三个是请求的配置数据。
+    // if (response.config && response.config.responseType === 'blob') {
+    //   const blob = new Blob([response.data], { type: 'application/octet-stream;charset=utf-8' }); // application/vnd.openxmlformats-officedocument.spreadsheetml.sheet这里表示xlsx类型
+    //   const filename = decodeURI(response.headers['filename']);
+    //   if ('download' in document.createElement('a')) {
+    //     const downloadElement = document.createElement('a');
+    //     let href = '';
+    //     if (window.URL) href = window.URL.createObjectURL(blob);
+    //     else href = window.webkitURL.createObjectURL(blob);
+    //     downloadElement.href = href;
+    //     downloadElement.download = filename;
+    //     document.body.appendChild(downloadElement);
+    //     // 点击下载
+    //     downloadElement.click();
+    //     // 释放掉blob对象
+    //     if (window.URL) window.URL.revokeObjectURL(href);
+    //     else window.webkitURL.revokeObjectURL(href);
+    //     // 下载完成移除元素
+    //     document.body.removeChild(downloadElement);
+    //   } else {
+    //     navigator.msSaveBlob(blob, filename);
+    //   }
+    //   return;
+    // }
+
+    const res = response.data
+
+    // // judge is Blog response for file download
+    if (res && res.constructor && res.constructor.toString()) {
+      const constructorName = res.constructor.name
+      if (constructorName && constructorName === 'Blob') { return res }
+      const str = res.constructor.toString()
+      let arr
+      if (str.charAt(0) === '[') {
+        arr = str.match(/\w+\s∗(\w+)\w+\s∗(\w+)/)
       } else {
-        navigator.msSaveBlob(blob, filename);
+        arr = str.match(/function\s*(\w+)/)
       }
-      return;
+      if (arr && arr.length === 2 && arr[1] === 'Blob') return res
     }
 
     // 下面的代码为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
     /**
      * code为非20000是抛错
      */
-    const res = response.data
-    // console.log('service.interceptors.response res code=' + res.code)
+    console.log('service.interceptors.response res code=' + res.code)
     // 成功返回结果的逻辑。根据接口定义的数据返回格式 修改判断条件
-    if (res.code !== 20000) {
+    if (res.code !== undefined && res.code !== null && res.code !== 20000) {
       // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
       // 可以在vm实例中通过this.$message(options)方法来调用出message，也可以通过在文件中单独引入Message,通过Message(options)来调用
       Message({
-        message: res.message,
+        message: res.msg ? res.msg : '请求错误',
         type: 'error',
-        duration: 5 * 1000 // 持续事件后主动关闭消息弹框
+        duration: 3 * 1000 // 持续事件后主动关闭消息弹框
       })
 
       // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
@@ -106,7 +125,7 @@ service.interceptors.response.use(
       return Promise.reject(new Error(res.msg || '请求错误'))
     } else {
       // console.log('service.interceptors.response return data')
-      return response.data // 返回请求成功结果
+      return res // 返回请求成功结果
     }
   },
   // error => {
