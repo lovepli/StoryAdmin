@@ -53,8 +53,7 @@
       border
       fit
       highlight-current-row
-      @selection-change="handleSelection"
-      @row-click="handleCurrentChange"
+      @selection-change="handleSelectionChange"
     >
       <!-- 自定义slot具名插槽，我们希望把body表格体组件放在这里 -->
       <slot name="body"/>
@@ -155,11 +154,8 @@ export default {
       }, 100);
     },
     // 多选框选中数据
-    handleSelection() {
-      this.$emit('handleSelectionChange', undefined);
-    },
-    handleCurrentChange() {
-      this.$emit('handleCurrent', undefined);
+    handleSelectionChange(rows) {
+      this.$emit('handleSelection', rows);
     },
     // 请求成功，需要重新刷新列表（不然新数据不能及时的更新到页面上）
     fetchData() {

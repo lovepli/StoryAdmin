@@ -1,13 +1,13 @@
 <template>
   <div class="app-container">
-    <!-- handleSelectionChange 为表格的批量删除方法 -->
+    <!-- handleSelectionChange 为表格的批量删除方法
+         @handleCurrent ="handleCurrentChange2" -->
     <data-grid
       ref="dataList"
       url="/sysmgr/loginlog/list"
       data-name="listQuery"
       @dataRest="onDataRest"
-      @handleSelectionChange="handleSelectionRowChange"
-      @handleCurrent ="handleCurrentChange2"
+      @handleSelection="handleSelectionRowChange"
     >
       <template slot="form">
         <el-form-item label="账号">
@@ -23,11 +23,11 @@
       <!--extendOperation 扩展功能-->
       <template slot="extendOperation">
         <el-button
-          :disabled="this.ids.length === 0"
+          :disabled="this.multipleSelection.length === 0"
           type="danger"
           icon="el-icon-delete"
           size="mini"
-          @click="handleDelete"
+          @click="handleDelete()"
         >批量删除</el-button>
       </template>
 
@@ -84,8 +84,8 @@ export default {
         id: null,
         account: null
       },
-      // 选中数组
-      sels: []
+      // 勾选中的数据
+      multipleSelection: []
     };
   },
   methods: {
@@ -96,31 +96,18 @@ export default {
       this.$refs.dataList.fetchData();
     },
 
-    handleCurrentChange2(row, event, column) {
-      this.$refs.dataList.toggleRowSelection(row)
-    },
-
-    // 多选框选中数据  https://www.jb51.net/article/135616.htm
-    // debugger
-    handleSelectionRowChange(sels) {
-      this.sels = sels
-      // eslint-disable-next-line no-unused-vars
-      var ids = this.sels.map(item => item.id).join()
-
-      // this.ids = []
-      // if (selection !== undefined) { // 必须加判断  不然会不识别forEach
-      //   // selection.forEach(element => {
-      //   //   this.ids.push(element.id)
-      //   // });
-      //   this.ids = selection.map(item => item.id);
-      //   // this.ids = selection
-      // }
-      console.log('多选框的数据=>' + this.ids)
+    handleSelectionRowChange(rows) {
+      // debugger
+      this.multipleSelection = [];
+      rows.forEach(row => {
+        this.multipleSelection.push(row.id)
+      });
+      console.log('多选框的数据=>' + this.multipleSelection)
     },
 
     /** 删除按钮操作 */
     handleDelete() {
-      const ids = this.ids;
+      const ids = this.multipleSelection;
       this.$confirm('是否确认删除编号为"' + ids + '"的数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -129,8 +116,16 @@ export default {
         return delLoginLogs(ids);
       }).then(() => {
         this.$refs.dataList.fetchData();
-        this.msgSuccess('删除成功');
-      }).catch(function() {});
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(function() {
+        this.$message({
+          type: 'info',
+          message: '删除失败！'
+        });
+      });
     },
 
     // 删除单行数据

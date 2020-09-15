@@ -16,6 +16,8 @@ import com.story.storyadmin.utils.DateUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +38,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 @RequestMapping("/sysmgr/loginlog")
 public class LoginLogController {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginLogController.class);
 
     @Autowired
     LoginLogService loginLogService;
@@ -94,18 +98,19 @@ public class LoginLogController {
      * @return
      */
     @SysLogAnnotation
-    @ApiOperation(value = "登录日志" ,  notes="删除登录日志列表")
+    @ApiOperation(value = "登录日志" ,  notes="批量删除登录日志列表")
     @RequiresPermissions("sysmgr.loginlog.delete")
-    @RequestMapping(value="/delete",method = {RequestMethod.POST})
-    public Result dropByIds( @RequestParam(value = "ids", required = false)  Long[] ids){
+    @DeleteMapping(value="/deletes/{ids}")
+    public Result dropByIds(@PathVariable Long[] ids){
         Result result ;
         // 删除数组集合，直接删除数据库中的数据
-       // loginLogService.deleteLogininforByIds(ids);
+        // loginLogService.deleteLogininforByIds(ids);
+        LoginLog delLog= null;
         // 遍历删除
         if(ids!=null || ids.length >0){
-            LoginLog delLog= null;
-            for (long i=0;i< ids.length;i++){
-                delLog.setId(i);
+            for (Long id:ids){
+                delLog= new LoginLog();
+                delLog.setId(id);
                 delLog.setYnFlag("0");
                 delLog.setEditor(UserContext.getCurrentUser().getAccount());
                 delLog.setModifiedTime(Date.from(Instant.now()));
@@ -117,7 +122,6 @@ public class LoginLogController {
         }
         return result;
     }
-
     /**
      * 通过用户名查询登录日志
      * @param userAccount
