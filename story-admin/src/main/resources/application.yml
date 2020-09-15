@@ -75,6 +75,10 @@ permission-config:
       value: anon
     - key: /druid/**
       value: anon
+    - key: /common/download**
+      value: anon
+    - key: /common/download/resource**
+      value: anon
     - key: /mongoDBTest/**
       value: anon
     - key: /redisCacheTest/**

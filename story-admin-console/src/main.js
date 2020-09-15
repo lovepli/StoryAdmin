@@ -18,6 +18,7 @@ import '@/permission' // permission control权限控制
 import authority from './utils/authority'
 import './utils/constant.js'
 import LunarFullCalendar from 'vue-lunar-full-calendar'
+import { getById, download } from './utils/common'
 
 // 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成
 Vue.use(LunarFullCalendar)
@@ -27,9 +28,9 @@ Vue.use(ElementUI, { locale })
 Vue.use(authority);
 Vue.config.productionTip = false
 
-// 自定义方法开始,这个是公告会用到
-import { getById } from './utils/common'
+// 全局方法挂载
 Vue.prototype.$getById = getById
+Vue.prototype.download = download
 
 // 创建根vue实例，每个vue组件，都是一个vue实例
 // 创建Vue实例，这个实例其实就是MVVM中的vm调度者

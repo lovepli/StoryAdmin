@@ -146,6 +146,7 @@ public class AttController {
                 }
             } catch (Exception e) {
                 response.setStatus(404);
+                // 业务异常
                 throw new SrotyAdminOutException("下载失败");
             }
         } else {

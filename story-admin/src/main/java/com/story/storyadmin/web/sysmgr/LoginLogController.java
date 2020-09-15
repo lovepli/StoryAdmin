@@ -13,6 +13,7 @@ import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.LoginLogService;
 import com.story.storyadmin.utils.DateUtil;
+import com.story.storyadmin.utils.ruoyiutils.reflect.ExcelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -62,6 +64,7 @@ public class LoginLogController {
         QueryWrapper<LoginLog> eWrapper = new QueryWrapper(loginLog);
         eWrapper.eq("yn_flag","1");
         IPage<LoginLog> list = loginLogService.page(page, eWrapper);
+        logger.info("",list.getRecords());
         result.setData(list);
         result.setResult(true);
         result.setCode(Constants.TOKEN_CHECK_SUCCESS);
@@ -147,6 +150,24 @@ public class LoginLogController {
         result.setResult(true);
         result.setCode(Constants.TOKEN_CHECK_SUCCESS);
         return result;
+    }
+
+//    @Log(title = "登陆日志", businessType = BusinessType.EXPORT)
+//    @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")
+    @GetMapping("/export")
+    public Result export(LoginLog loginLog,
+                         @RequestParam(defaultValue = "1")int pageNo,
+                         @RequestParam(defaultValue = "10")int limit)
+    {
+
+        Page<LoginLog> page = new Page(pageNo, limit);
+        QueryWrapper<LoginLog> eWrapper = new QueryWrapper(loginLog);
+        eWrapper.eq("yn_flag","1");
+        IPage<LoginLog> list = loginLogService.page(page, eWrapper);
+        List<LoginLog> list2=list.getRecords();
+        ExcelUtil<LoginLog> util = new ExcelUtil<LoginLog>(LoginLog.class);
+
+        return util.exportExcel(list2, "登陆日志");
     }
 
 }

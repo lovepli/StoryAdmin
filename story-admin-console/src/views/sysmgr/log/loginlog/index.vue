@@ -29,6 +29,12 @@
           size="mini"
           @click="handleDelete()"
         >批量删除</el-button>
+        <el-button
+          type="warning"
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+        >导出</el-button>
       </template>
 
       <!--body-->
@@ -64,7 +70,7 @@
 </template>
 
 <script>
-import { drop, delLoginLogs } from '@/api/sysmgr/loginlog';
+import { drop, delLoginLogs, exportLogininfor } from '@/api/sysmgr/loginlog';
 import DataGrid from '@/components/DataGrid';
 import { parseTime } from '@/utils';
 import waves from '@/directive/waves'; // Waves directive
@@ -126,6 +132,20 @@ export default {
           message: '删除失败！'
         });
       });
+    },
+
+    /** 导出按钮操作 */
+    handleExport() {
+      const queryParams = this.listQuery;
+      this.$confirm('是否确认导出所有操作日志数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportLogininfor(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      }).catch(function() {});
     },
 
     // 删除单行数据

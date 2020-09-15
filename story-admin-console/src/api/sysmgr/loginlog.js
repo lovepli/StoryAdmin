@@ -44,3 +44,12 @@ export function queryLog(cond, page) {
   })
 }
 
+// 导出登录日志
+export function exportLogininfor(query) {
+  return request({
+    url: '/sysmgr/loginlog/export',
+    method: 'get',
+    params: query
+  })
+}
+
