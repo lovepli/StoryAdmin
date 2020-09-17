@@ -144,7 +144,8 @@ export default {
       }).then(function() {
         return exportLogininfor(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        console.log('返回的文件名=>' + response.message)
+        this.download(response.message);
       }).catch(function() {});
     },
 

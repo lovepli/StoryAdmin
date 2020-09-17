@@ -154,6 +154,7 @@ public class LoginLogController {
 
 //    @Log(title = "登陆日志", businessType = BusinessType.EXPORT)
 //    @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")
+    @RequiresPermissions("sysmgr.loginlog.query")
     @GetMapping("/export")
     public Result export(LoginLog loginLog,
                          @RequestParam(defaultValue = "1")int pageNo,
@@ -166,7 +167,7 @@ public class LoginLogController {
         IPage<LoginLog> list = loginLogService.page(page, eWrapper);
         List<LoginLog> list2=list.getRecords();
         ExcelUtil<LoginLog> util = new ExcelUtil<LoginLog>(LoginLog.class);
-
+       logger.info("返回的结果为：{}",util.exportExcel(list2, "登陆日志").getMessage());
         return util.exportExcel(list2, "登陆日志");
     }
 

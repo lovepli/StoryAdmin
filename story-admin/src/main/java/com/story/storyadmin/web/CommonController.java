@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  * 通用请求处理
  */
 @RestController
+//@RequestMapping("/common")
+@RequestMapping("/mongoDBTest")
 public class CommonController {
 
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
@@ -31,9 +34,11 @@ public class CommonController {
      * @param fileName 文件名称
      * @param delete 是否删除
      */
-    @GetMapping("common/download")
+    @GetMapping("/download")
     public void fileDownload(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request)
     {
+        log.info("文件名称：{}",fileName);
+        log.info("是否删除：{}",delete);
         try
         {
             if (!FileUtils.isValidFilename(fileName))
@@ -42,7 +47,7 @@ public class CommonController {
             }
             String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
             // 下载文件存放的地方
-            String filePath = baseDir + "/download/"+ fileName;
+            String filePath = baseDir + "download/"+ fileName;
 
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");

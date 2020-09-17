@@ -2,6 +2,7 @@ package com.story.storyadmin.domain.entity.sysmgr;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.story.storyadmin.common.annotation.Excel;
 import com.story.storyadmin.domain.entity.BaseEntity;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -30,21 +31,25 @@ public class LoginLog extends BaseEntity {
     /**
      * 用户名
      */
+    @Excel(name = "用户名")
     private String account;
 
     /**
      * 访问时间
      */
+    @Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date loginTime;
 
     /**
      * 内容
      */
+    @Excel(name = "内容")
     private String content;
 
     /**
      * 有效标志
      */
+    @Excel(name = "有效标志", readConverterExp = "0=无效,1=有效")
     private String ynFlag;
 
     /**

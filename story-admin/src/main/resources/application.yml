@@ -2,7 +2,7 @@ server:
   port: 9430
 spring:
   profiles:
-    active: dev
+    active: mac2
     # freemarker模板引擎
   freemarker:
     cache: false
@@ -75,10 +75,8 @@ permission-config:
       value: anon
     - key: /druid/**
       value: anon
-    - key: /common/download**
-      value: anon
-    - key: /common/download/resource**
-      value: anon
+#    - key: /common/download**
+#      value: anon
     - key: /mongoDBTest/**
       value: anon
     - key: /redisCacheTest/**
