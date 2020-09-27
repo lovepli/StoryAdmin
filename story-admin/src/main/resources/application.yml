@@ -2,7 +2,7 @@ server:
   port: 9430
 spring:
   profiles:
-    active: mac2
+    active: dev
     # freemarker模板引擎
   freemarker:
     cache: false
