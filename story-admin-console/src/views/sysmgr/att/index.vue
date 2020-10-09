@@ -363,7 +363,7 @@ export default {
           type: 'error',
           showClose: true,
           duration: 60000,
-          message: response.message
+          message: response.message // 后台传过来的响应结果
         });
       }
     },

@@ -14,7 +14,7 @@
               and yn_flag='1'
     </select>
 
-    <!--根据用户名名查询所有角色名-->
+    <!--根据用户名名查询所有角色名 distinct 不重复的-->
     <select id="selectRoleByAccount" resultType="String">
         SELECT
          distinct r.name

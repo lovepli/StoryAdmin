@@ -48,6 +48,11 @@ public class User extends BaseEntity<User> {
     private String name;
 
     /**
+    * 头像
+    */
+    private String avatar;
+
+    /**
      * 密码
      */
     private String password;

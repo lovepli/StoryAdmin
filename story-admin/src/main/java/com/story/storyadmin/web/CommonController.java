@@ -48,11 +48,9 @@ public class CommonController {
             String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
             // 下载文件存放的地方
             String filePath = baseDir + "download/"+ fileName;
-
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
-            response.setHeader("Content-Disposition",
-                    "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
+            response.setHeader("Content-Disposition", "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
             FileUtils.writeBytes(filePath, response.getOutputStream());
             if (delete)
             {

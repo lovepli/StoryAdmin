@@ -49,11 +49,16 @@
         >新增</el-button>
       </template>
       <!--body-->
-      <!-- 使用自定义表格组件data-grid组件中的自定义插槽 body-->
+      <!-- 使用自定义表格组件data-grid组件中的自定义插槽 body， sortable排序-->
       <template slot="body">
-        <el-table-column align="center" prop="id" label="ID" width="100px"/>
+        <el-table-column align="center" prop="id" label="ID" width="100px" sortable />
         <el-table-column align="center" prop="account" label="账号"/>
         <el-table-column align="center" prop="name" label="姓名"/>
+        <el-table-column align="center" prop="avatar" label="用户头像">
+          <template slot-scope="scope">
+            <img v-if="scope.row.avatar" :src="scope.row.avatar" width="40">
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="email" label="邮箱" />
         <el-table-column label="状态" align="center">
           <!-- 作用域插槽/带数据的插槽 -->
@@ -110,6 +115,19 @@
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="userForm.password" type="password" placeholder="请输入密码"/>
+        </el-form-item>
+        <el-form-item label="用户头像" prop="avatar">
+          <el-upload
+            :headers="importHeaders"
+            :action="filePostUrl"
+            :show-file-list="false"
+            :on-success="uploadAvatar"
+            class="avatar-uploader"
+            accept=".jpg,.jpeg,.png,.gif"
+          >
+            <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
+          </el-upload>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="userForm.email" placeholder="请输入邮箱"/>
@@ -177,6 +195,32 @@
   </div>
 </template>
 
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #20a0ff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+}
+.avatar {
+  width: 145px;
+  height: 145px;
+  display: block;
+}
+</style>
+
 <script>
 import {
   findById,
@@ -187,6 +231,7 @@ import {
 } from '@/api/sysmgr/user';
 
 import { findAllRoleList } from '@/api/sysmgr/role';
+import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 // import Pagination from "@/components/Pagination";
 import DataGrid from '@/components/DataGrid'; // 引入表格子组件
 import { parseTime } from '@/utils'; // 引入util中的格式化方法
@@ -256,7 +301,8 @@ export default {
       // total: 0,
       // list: null,
       // listLoading: true,
-
+      importHeaders: { Authorization: getToken() },
+      filePostUrl: process.env.BASE_API,
       // 查询参数对象
       listQuery: {
         pageNo: 1,
@@ -271,6 +317,7 @@ export default {
       userForm: {
         account: '', // 账号
         name: '', // 姓名
+        avatar: '',
         password: '', // 密码
         email: '', // 邮箱
         status: '', // 状态
@@ -349,11 +396,16 @@ export default {
         this.userForm.id = null;
         this.userForm.account = null;
         this.userForm.name = null;
+        this.userForm.avatar = null;
         this.userForm.password = null;
         this.userForm.email = null;
         this.userForm.status = '1'; // 状态默认值为1
         this.userForm.erpFlag = '0'; // erp标识默认值为0
       }
+    },
+    // 上传图像 返回结果的URL地址
+    uploadAvatar: function(response) {
+      this.userForm.avatar = response.data.avatar
     },
     // 保存(添加/修改)-提交按钮
     submitForm() {
