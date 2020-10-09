@@ -119,6 +119,7 @@ public class AttController {
     public void downloadFile(HttpServletResponse response, @PathVariable("id") Long fileId) {
         Att attachment = attService.getById(fileId);
         if (attachment == null) {
+            logger.info("404文件找不到！");
             response.setStatus(404);
             return;
         }

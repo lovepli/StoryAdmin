@@ -156,10 +156,6 @@ export default {
   },
   data() {
     return {
-      // tableKey: 0,
-      // total: 0,
-      // list: null,
-      // listLoading: true,
       listQuery: {
         pageNo: 1,
         limit: 10,
@@ -268,6 +264,7 @@ export default {
     // 上传
     showUploadForm() {
       this.uploadVisible = true;
+      // this.fileList = null;
     },
     // 导出当前页数据
     showDownloadForm() {
