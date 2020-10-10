@@ -1,16 +1,23 @@
 package com.story.storyadmin.web;
 
+import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
 import com.story.storyadmin.utils.ruoyiutils.file.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 通用请求处理
@@ -25,9 +32,14 @@ public class CommonController {
     @Value("${file.multipart.baseDir}")
     private String baseDir;
 
+    @Autowired
+    ImageFileService imageFileService;
+
     /**
-     * 本地资源通用下载
+     * 图片访问的URL地址
      */
+    private String  url;
+
     /**
      * 通用下载请求
      *
@@ -61,6 +73,71 @@ public class CommonController {
         {
             log.error("下载文件失败", e);
         }
+    }
+
+
+    /**
+     * 上传用户图像
+     * @param file
+     * @return
+     */
+    // @RequestMapping(value="/uploadFile",produces="application/json;charset=UTF-8")
+    @RequestMapping(value="/uploadImageFile")
+    public Result uploadFile(@RequestParam("file") MultipartFile file) throws IOException{
+
+        Result result ;
+        System.out.print("上传文件==="+"\n");
+        //判断文件是否为空
+        if (file.isEmpty()) {
+            result = new Result(false, "上传文件不可为空", null ,Constants.PARAMETERS_MISSING);
+        }
+
+
+        // 获取文件名
+        String fileName = file.getOriginalFilename();
+//        System.out.print("上传的文件名为: "+fileName+"\n");
+
+        fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        System.out.print("（加个时间戳，尽量避免文件名称重复）保存的文件名为: "+fileName+"\n");
+
+
+        //加个时间戳，尽量避免文件名称重复
+        String path = "D:/fileUpload/" +fileName;
+        //String path = "D:/fileUpload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        //文件绝对路径
+        System.out.print("保存文件绝对路径"+path+"\n");
+
+        //创建文件路径
+        File dest = new File(path);
+
+        //判断文件是否已经存在
+        if (dest.exists()) {
+            result = new Result(false, "文件已经存在", null ,Constants.PARAMETERS_MISSING);
+        }
+
+        //判断文件父目录是否存在
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdir();
+        }
+
+        try {
+            //上传文件
+            file.transferTo(dest); //保存文件
+            System.out.print("保存文件路径"+path+"\n");
+            url="http://localhost:9430/images/"+fileName;
+            // 保存文件名，路径，访问URL
+            int jieguo= imageFileService.insertUrl(fileName,path,url);
+            System.out.print("插入结果"+jieguo+"\n");
+            System.out.print("保存的完整url===="+url+"\n");
+
+        } catch (IOException e) {
+            result = new Result(false, "上传失败", null ,Constants.PARAMETERS_MISSING);
+            log.error("上传失败", e);
+
+        }
+        System.out.println("上传成功,文件url=="+url);
+        result = new Result(true, "上传成功", url ,Constants.TOKEN_CHECK_SUCCESS);
+        return result;
     }
 
 }

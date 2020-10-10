@@ -67,6 +67,7 @@ public class SwaggerCofing extends WebMvcConfigurationSupport {
 
     /**
      * 过滤
+     * springboot中配置addResourceHandler和addResourceLocations，使得可以从磁盘中读取图片、视频、音频等
      * @param registry
      */
     @Override

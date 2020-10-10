@@ -232,7 +232,7 @@ import {
 
 import { findAllRoleList } from '@/api/sysmgr/role';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
-// import Pagination from "@/components/Pagination";
+// import Pagination from "@/components/Pagination"; // 分页组件
 import DataGrid from '@/components/DataGrid'; // 引入表格子组件
 import { parseTime } from '@/utils'; // 引入util中的格式化方法
 // import { Message, MessageBox } from 'element-ui'; // 单独引入element-ui的Message消息提示, MessageBox弹框
@@ -302,7 +302,7 @@ export default {
       // list: null,
       // listLoading: true,
       importHeaders: { Authorization: getToken() },
-      filePostUrl: process.env.BASE_API,
+      filePostUrl: process.env.BASE_API + '/mongoDBTest/uploadImageFile',
       // 查询参数对象
       listQuery: {
         pageNo: 1,
@@ -403,9 +403,9 @@ export default {
         this.userForm.erpFlag = '0'; // erp标识默认值为0
       }
     },
-    // 上传图像 返回结果的URL地址
+    // 上传图像 返回图片的URL地址
     uploadAvatar: function(response) {
-      this.userForm.avatar = response.data.avatar
+      this.userForm.avatar = response.data.url
     },
     // 保存(添加/修改)-提交按钮
     submitForm() {

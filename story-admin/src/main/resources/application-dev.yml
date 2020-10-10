@@ -95,3 +95,7 @@ upload-file:
   # path: /etc/files/
   path: D:\bird_files
  # path: /Users/lipan/Desktop/
+
+#配置外部访问文件
+cbs:
+  imagesPath: file:/D:/fileUpload/
