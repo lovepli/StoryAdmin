@@ -296,13 +296,9 @@ export default {
       }
     };
     return {
-      // 这几个属性好像没有用？
-      // tableKey: 0,
-      // total: 0,
-      // list: null,
-      // listLoading: true,
       importHeaders: { Authorization: getToken() },
-      filePostUrl: process.env.BASE_API + '/mongoDBTest/uploadImageFile',
+      // 上传图片的接口
+      filePostUrl: process.env.BASE_API + '/common/uploadImageFile',
       // 查询参数对象
       listQuery: {
         pageNo: 1,
@@ -405,6 +401,7 @@ export default {
     },
     // 上传图像 返回图片的URL地址
     uploadAvatar: function(response) {
+      debugger
       this.userForm.avatar = response.data.url
     },
     // 保存(添加/修改)-提交按钮

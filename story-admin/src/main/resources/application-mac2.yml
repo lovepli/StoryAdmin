@@ -90,8 +90,11 @@ logging:
 # memcached服务器地址及端口，使用xmemcache库进行链接。集群地址之间使用一个空格分隔
 memcache:
   addresses: "localhost:11211"
-# 公告上传的文件存放的路径
+# 配置外部访问文件，公告上传的文件存放的路径
 upload-file:
-  # path: /etc/files/
  # path: D:\bird_files
   path: /Users/lipan/Desktop/
+
+#配置外部访问文件
+cbs:
+  imagesPath: /Users/lipan/Desktop/fileUpload/

@@ -23,14 +23,22 @@ import java.util.Date;
  * 通用请求处理
  */
 @RestController
-//@RequestMapping("/common")
-@RequestMapping("/mongoDBTest")
+@RequestMapping("/common")
 public class CommonController {
 
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
+    /**
+     * 文件保存路径
+     */
     @Value("${file.multipart.baseDir}")
     private String baseDir;
+
+    /**
+     * 文件保存路径
+     */
+    @Value("${cbs.imagesPath}")
+    private String mImagesPath;
 
     @Autowired
     ImageFileService imageFileService;
@@ -81,7 +89,6 @@ public class CommonController {
      * @param file
      * @return
      */
-    // @RequestMapping(value="/uploadFile",produces="application/json;charset=UTF-8")
     @RequestMapping(value="/uploadImageFile")
     public Result uploadFile(@RequestParam("file") MultipartFile file) throws IOException{
 
@@ -92,18 +99,17 @@ public class CommonController {
             result = new Result(false, "上传文件不可为空", null ,Constants.PARAMETERS_MISSING);
         }
 
-
         // 获取文件名
         String fileName = file.getOriginalFilename();
-//        System.out.print("上传的文件名为: "+fileName+"\n");
+        // System.out.print("上传的文件名为: "+fileName+"\n");
 
         fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
         System.out.print("（加个时间戳，尽量避免文件名称重复）保存的文件名为: "+fileName+"\n");
 
-
         //加个时间戳，尽量避免文件名称重复
-        String path = "D:/fileUpload/" +fileName;
+        //String path = "D:/fileUpload/" +fileName;
         //String path = "D:/fileUpload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        String path = mImagesPath +fileName;
         //文件绝对路径
         System.out.print("保存文件绝对路径"+path+"\n");
 
@@ -121,11 +127,11 @@ public class CommonController {
         }
 
         try {
-            //上传文件
-            file.transferTo(dest); //保存文件
+            //上传文件 保存文件
+            file.transferTo(dest);
             System.out.print("保存文件路径"+path+"\n");
             url="http://localhost:9430/images/"+fileName;
-            // 保存文件名，路径，访问URL
+            // 保存文件名，路径，访问URL到数据库
             int jieguo= imageFileService.insertUrl(fileName,path,url);
             System.out.print("插入结果"+jieguo+"\n");
             System.out.print("保存的完整url===="+url+"\n");
