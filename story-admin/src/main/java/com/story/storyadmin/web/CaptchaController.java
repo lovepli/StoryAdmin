@@ -51,7 +51,7 @@ public class CaptchaController {
     @Resource(name = "captchaProducerMath")
     private Producer captchaProducerMath;
 
-    // 验证码类型
+    /** 验证码类型 **/
     @Value("${project.captchaType}")
     private String captchaType;
 
@@ -84,8 +84,8 @@ public class CaptchaController {
         }
 
         // 将验证码存入缓存中，并设置验证码过期时间
-        // jedisUtils.saveString(verifyKey, code, CAPTCHA_EXPIRATION);
-        jedisUtils.saveString(verifyKey, code);
+        jedisUtils.saveString(verifyKey, code, CAPTCHA_EXPIRATION);
+        //jedisUtils.saveString(verifyKey, code);
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
@@ -93,7 +93,8 @@ public class CaptchaController {
         } catch (IOException e) {
             result.setResult(false);
             result.setMessage(e.getMessage());
-            result.setCode(Constants.SERVER_ERROR); //io异常
+            //io异常
+            result.setCode(Constants.SERVER_ERROR);
             return result;
         }
 
@@ -103,7 +104,7 @@ public class CaptchaController {
         json.put("uuid", uuid);
         json.put("img", Base64.encode(os.toByteArray()));
         result.setData(json);
-        //logger.info("传递给前端的验证码数据为:{}", result);
+        // logger.info("传递给前端的验证码数据为:{}", result);
         return result;
     }
 }

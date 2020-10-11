@@ -112,7 +112,7 @@ export default {
       loginForm: {
         username: 'admin',
         password: '111111',
-        rememberMe: true, // 默认为记住我
+        rememberMe: true, // true 默认为记住我
         code: '',
         uuid: ''
       },
