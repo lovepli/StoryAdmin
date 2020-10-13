@@ -2,7 +2,7 @@ server:
   port: 9430
 spring:
   profiles:
-    active: mac2
+    active: dev
     # freemarker模板引擎
   freemarker:
     cache: false
@@ -58,9 +58,9 @@ permission-config:
     #配置不会被拦截的链接 需要anon认证
     - key: /
       value: anon
-    - key: /user/login
-      value: anon
     - key: /captchaImage
+      value: anon
+    - key: /user/login
       value: anon
       #logout退出登录时需要自定义的logout认证
     - key: /logout
@@ -69,18 +69,22 @@ permission-config:
       value: anon
     - key: /swagger-resources/**
       value: anon
+    - key: /images/**
+      value: anon
+    - key: /v2/api-docs/**
+      value: anon
     - key: /webjars/**
       value: anon
     - key: /druid/**
       value: anon
-    - key: /images/**
-      value: anon
-    - key: /common/**
-      value: anon
+#    - key: /common/download**
+#      value: anon
     - key: /mongoDBTest/**
       value: anon
     - key: /redisCacheTest/**
       value: anon
+#    - key: /data/**
+#      value: anon
       #除了以上的url,其他所有请求需要自定义的jwt认证
     - key: /**
       value: jwt

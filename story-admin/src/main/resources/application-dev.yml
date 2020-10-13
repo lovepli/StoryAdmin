@@ -4,6 +4,7 @@ project:
   captchaType: math
 
 spring:
+  # 配置数据源
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -23,6 +24,7 @@ spring:
     testOnReturn: false
     filters: stat,wall,log4j
     logSlowSql: true
+  # 配置Redis数据源
   redis:
     database: 3     # Redis默认情况下有16个分片，这里配置具体使用的分片。默认是索引为0的分片
     host: localhost
@@ -33,7 +35,7 @@ spring:
       pool:
         min-idle: 10    #连接池中的最小空闲连接，默认值是0
         max-idle: 50    #连接池中的最大空闲连接，默认值也是8
-        max-active: 200 #如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+        max-active: 200 #连接池最大阻塞等待时间（使用负值表示没有限制）；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
         max-wait: 3000  # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出
   data:
     mongodb:
@@ -90,8 +92,9 @@ logging:
 # memcached服务器地址及端口，使用xmemcache库进行链接。集群地址之间使用一个空格分隔
 memcache:
   addresses: "localhost:11211"
-# 配置外部访问文件，公告上传的文件存放的路径
+# 公告上传的文件存放的路径
 upload-file:
+  # path: /etc/files/
   path: D:\bird_files
  # path: /Users/lipan/Desktop/
 

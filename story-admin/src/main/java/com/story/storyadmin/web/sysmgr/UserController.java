@@ -90,7 +90,7 @@ public class UserController {
      * @param user
      * @return
      */
-    // @SysLogAnnotation
+    @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})

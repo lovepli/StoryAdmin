@@ -23,6 +23,7 @@ import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,11 +85,29 @@ public class ShiroConfig {
         shiroFilter.setFilters(filterMap);
 
         //2、自定义url过滤规则
+        /**
+         *
         //动态配置拦截器注入
         Map<String, String> filterRuleMap = new HashMap<>(16);
-        //从配置文件加载用户的接口API权限
+        //从yml配置文件加载用户的接口API权限
         List<Map<String, String>> perms = this.getShiroFilterProperties().getPerms();
         perms.forEach(perm -> filterRuleMap.put(perm.get("key"), perm.get("value")));
+         */
+        Map<String, String> filterRuleMap = new LinkedHashMap<>();
+        filterRuleMap.put("/", "anon");
+        filterRuleMap.put("/captchaImage", "anon");
+        filterRuleMap.put("/user/login", "anon");
+        filterRuleMap.put("/logout", "logout");
+        filterRuleMap.put("/swagger-ui.html", "anon");
+        filterRuleMap.put("/logout", "logout");
+        filterRuleMap.put("/swagger-resources/**", "anon");
+        filterRuleMap.put("/images/**", "anon");
+        filterRuleMap.put("/v2/api-docs/**", "anon");
+        filterRuleMap.put("/webjars/**", "anon");
+        filterRuleMap.put("/druid/**", "anon");
+        filterRuleMap.put("/mongoDBTest/**", "anon");
+        filterRuleMap.put("/redisCacheTest/**", "anon");
+        filterRuleMap.put("/**", "jwt");
 
         shiroFilter.setFilterChainDefinitionMap(filterRuleMap);
 

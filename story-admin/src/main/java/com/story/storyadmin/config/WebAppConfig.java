@@ -30,10 +30,6 @@
 //        return factory.createMultipartConfig();
 //    }
 //
-//    /**
-//     * springboot中配置addResourceHandler和addResourceLocations，使得可以从磁盘中读取图片、视频、音频等
-//     * @param registry
-//     */
 //    @Override
 //    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        if(mImagesPath.equals("") || mImagesPath.equals("${cbs.imagesPath}")){
@@ -49,12 +45,10 @@
 //        }
 //        System.out.print("imagesPath============="+mImagesPath+"\n");
 //        //LoggerFactory.getLogger(WebAppConfig.class).info("imagesPath============="+mImagesPath+"\n");
-//        registry.addResourceHandler("/images/**").addResourceLocations("file:" + mImagesPath);
+//        registry.addResourceHandler("/images/**").addResourceLocations(mImagesPath);
 //        // TODO Auto-generated method stub
 //        System.out.print("2.上传配置类mImagesPath=="+mImagesPath+"\n");
 //        super.addResourceHandlers(registry);
 //    }
 //
 //}
-//
-//

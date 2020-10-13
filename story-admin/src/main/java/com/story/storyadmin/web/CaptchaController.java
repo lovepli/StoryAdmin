@@ -83,9 +83,9 @@ public class CaptchaController {
             image = captchaProducer.createImage(capStr);
         }
 
-        // 将验证码存入缓存中，并设置验证码过期时间
-        jedisUtils.saveString(verifyKey, code, CAPTCHA_EXPIRATION);
-        //jedisUtils.saveString(verifyKey, code);
+        // 将验证码存入缓存中，并设置验证码过期时间 TODO 这里给验证码设置过期时间会出现登录不进去
+        // jedisUtils.saveString(verifyKey, code, CAPTCHA_EXPIRATION);
+        jedisUtils.saveString(verifyKey, code);
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {

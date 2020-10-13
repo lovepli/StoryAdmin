@@ -69,21 +69,16 @@ public class SwaggerCofing extends WebMvcConfigurationSupport {
     }
 
     /**
-     *
-     * 自定义的静态资源映射地址 https://www.cnblogs.com/sxdcgaq8080/p/7833400.html
-     *
-     * 1、项目相对目录:classpath:
-     * 2、本地绝对目录:file:
+     * 过滤
+     * springboot中配置addResourceHandler和addResourceLocations，使得可以从磁盘中读取图片、视频、音频等
      * @param registry
      */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-        // swagger2页面
         registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        // 图片访问路径
-        registry.addResourceHandler("/images/**").addResourceLocations("file:" + mImagesPath);
+        registry.addResourceHandler("/images/**").addResourceLocations("file:"+mImagesPath);
 
     }
 }
