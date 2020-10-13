@@ -5,4 +5,8 @@
     <insert id="insertUrl">
         insert into st_image_file (name,lujing,url) values (#{name},#{lujing},#{url})
     </insert>
+
+    <delete id="deleteImage">
+        delete from st_image_file where url = #{url,jdbcType=VARCHAR}
+    </delete>
 </mapper>

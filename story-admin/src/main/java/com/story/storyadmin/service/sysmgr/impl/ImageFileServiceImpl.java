@@ -13,4 +13,9 @@ public class ImageFileServiceImpl extends ServiceImpl<ImageFileMapper, ImageFile
     public int insertUrl(String name, String lujing, String url) {
         return baseMapper.insertUrl(name,lujing,url);
     }
+
+    @Override
+    public void deleteImage(String url) {
+       baseMapper.deleteImage(url);
+    }
 }

@@ -12,6 +12,7 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
+import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.service.sysmgr.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +21,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -36,6 +38,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ImageFileService imageFileService;
 
     /**
      * 分页查询 用户列表信息
@@ -103,6 +108,7 @@ public class UserController {
      * @param user
      * @return
      */
+    @Transactional
     @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="删除用户信息")
     @RequiresPermissions("sysmgr.user.delete")
@@ -116,6 +122,8 @@ public class UserController {
             delUser.setYnFlag("0");
             delUser.setEditor(UserContext.getCurrentUser().getAccount());
             delUser.setModifiedTime(Date.from(Instant.now()));
+            // 根据用户名删除用户图片记录
+            imageFileService.deleteImage(user.getAvatar());
             result=new Result(userService.updateById(delUser),"删除成功",null,Constants.TOKEN_CHECK_SUCCESS);
         }else{
             result = new Result(false, "删除失败", null ,Constants.PARAMETERS_MISSING);

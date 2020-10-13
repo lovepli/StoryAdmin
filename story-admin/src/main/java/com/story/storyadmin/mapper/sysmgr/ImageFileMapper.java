@@ -6,5 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 
 public interface ImageFileMapper  extends BaseMapper<ImageFile> {
+
     public int insertUrl(@Param("name")String name, @Param("lujing")String lujing, @Param("url")String url);
+
+    public void deleteImage(String url);
 }

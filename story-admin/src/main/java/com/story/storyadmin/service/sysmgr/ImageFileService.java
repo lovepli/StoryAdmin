@@ -7,4 +7,6 @@ public interface ImageFileService extends IService<ImageFile> {
 
     public int insertUrl(String name,String lujing,String url);
 
+    public void deleteImage(String url);
+
 }

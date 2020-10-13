@@ -24,7 +24,6 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/common")
-//@RequestMapping("/mongoDBTest")
 public class CommonController {
 
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
