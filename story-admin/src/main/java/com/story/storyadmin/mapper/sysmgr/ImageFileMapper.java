@@ -9,5 +9,5 @@ public interface ImageFileMapper  extends BaseMapper<ImageFile> {
 
     public int insertUrl(@Param("name")String name, @Param("lujing")String lujing, @Param("url")String url);
 
-    public void deleteImage(String url);
+    public void deleteImage(@Param("url")String url);
 }

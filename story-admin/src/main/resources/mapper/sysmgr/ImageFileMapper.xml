@@ -7,6 +7,6 @@
     </insert>
 
     <delete id="deleteImage">
-        delete from st_image_file where url = #{url,jdbcType=VARCHAR}
+        delete from st_image_file where url =#{url,jdbcType=VARCHAR}
     </delete>
 </mapper>

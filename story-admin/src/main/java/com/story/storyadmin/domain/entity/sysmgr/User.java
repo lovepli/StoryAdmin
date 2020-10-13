@@ -48,7 +48,7 @@ public class User extends BaseEntity<User> {
     private String name;
 
     /**
-    * 头像
+    * 头像对应图片的URL
     */
     private String avatar;
 
