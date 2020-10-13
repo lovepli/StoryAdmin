@@ -33,6 +33,6 @@ export function getById(arr, id) {
 const baseURL = process.env.BASE_API
 // 通用导出方法
 export function download(fileName) {
-  window.location.href = baseURL + '/mongoDBTest/download?fileName=' + encodeURI(fileName) + '&delete=' + true;
+  window.location.href = baseURL + '/common/download?fileName=' + encodeURI(fileName) + '&delete=' + true;
 }
 

@@ -1,23 +1,39 @@
 package com.story.storyadmin.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
- * 开启 mvc支持，设置 static 目录为类路径
+ * 开启 mvc支持
  */
-//@Configuration
-//public class WebMvcConfig implements WebMvcConfigurer {
-//
-//    // 得到 classpath 的根路径， resources 目录下的所以路径都可以得到
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry
-//                .addResourceHandler("/static/**")
-//                .addResourceLocations("classpath:/static/");
-//    }
-//}
+@Configuration
+public class WebMvcConfig extends WebMvcConfigurationSupport {
+
+    /**
+     * 本地文件存储路径
+     */
+    @Value("${cbs.imagesPath}")
+    private String mImagesPath;
+
+    /**
+     * 过滤
+     * springboot中配置addResourceHandler和addResourceLocations，使得可以从磁盘中读取图片、视频、音频等
+     * 访问路径：
+     * 1.本地相对路径：classpath:
+     * 2.本地绝对路径：file:
+     * @param registry
+     */
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        // 存放用户图像地址
+        registry.addResourceHandler("/images/**").addResourceLocations("file:"+mImagesPath);
+    }
+}
 
 /**
  * https://blog.csdn.net/caidewei121/article/details/107646525

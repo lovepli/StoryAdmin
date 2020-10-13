@@ -19,14 +19,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @EnableSwagger2
 @Configuration
-public class SwaggerCofing extends WebMvcConfigurationSupport {
+public class SwaggerCofing {
 
     /** 是否开启swagger */
     @Value("${swagger.enabled}")
     private boolean enabled;
-
-    @Value("${cbs.imagesPath}")
-    private String mImagesPath;
 
     /**
      * 创建API
@@ -59,6 +56,7 @@ public class SwaggerCofing extends WebMvcConfigurationSupport {
                 .title("标题：STORY-ADMIN管理系统_接口文档")
                 // 描述
                 .description("STORY-ADMIN's REST API")
+                //.termsOfServiceUrl("http://localhost:9430/swagger-ui.html")
                 // 版本
                 .version("1.0")
                 // 作者信息
@@ -68,17 +66,4 @@ public class SwaggerCofing extends WebMvcConfigurationSupport {
                 .build();
     }
 
-    /**
-     * 过滤
-     * springboot中配置addResourceHandler和addResourceLocations，使得可以从磁盘中读取图片、视频、音频等
-     * @param registry
-     */
-    @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/images/**").addResourceLocations("file:"+mImagesPath);
-
-    }
 }

@@ -105,6 +105,7 @@ public class ShiroConfig {
         filterRuleMap.put("/v2/api-docs/**", "anon");
         filterRuleMap.put("/webjars/**", "anon");
         filterRuleMap.put("/druid/**", "anon");
+        filterRuleMap.put("/common/**", "anon");
         filterRuleMap.put("/mongoDBTest/**", "anon");
         filterRuleMap.put("/redisCacheTest/**", "anon");
         filterRuleMap.put("/**", "jwt");

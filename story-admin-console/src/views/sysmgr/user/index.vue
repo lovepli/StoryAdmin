@@ -302,7 +302,8 @@ export default {
       // list: null,
       // listLoading: true,
       importHeaders: { Authorization: getToken() },
-      filePostUrl: process.env.BASE_API + '/mongoDBTest/uploadImageFile',
+      // 上传图片接口
+      filePostUrl: process.env.BASE_API + '/common/uploadImageFile',
       // 查询参数对象
       listQuery: {
         pageNo: 1,

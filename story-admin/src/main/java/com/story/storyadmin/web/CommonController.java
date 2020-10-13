@@ -23,8 +23,8 @@ import java.util.Date;
  * 通用请求处理
  */
 @RestController
-//@RequestMapping("/common")
-@RequestMapping("/mongoDBTest")
+@RequestMapping("/common")
+//@RequestMapping("/mongoDBTest")
 public class CommonController {
 
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
@@ -84,7 +84,6 @@ public class CommonController {
      * @param file
      * @return
      */
-    // @RequestMapping(value="/uploadFile",produces="application/json;charset=UTF-8")
     @RequestMapping(value="/uploadImageFile")
     public Result uploadFile(@RequestParam("file") MultipartFile file) throws IOException{
 
