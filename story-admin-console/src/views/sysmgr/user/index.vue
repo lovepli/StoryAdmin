@@ -296,11 +296,6 @@ export default {
       }
     };
     return {
-      // 这几个属性好像没有用？
-      // tableKey: 0,
-      // total: 0,
-      // list: null,
-      // listLoading: true,
       importHeaders: { Authorization: getToken() },
       // 上传图片接口
       filePostUrl: process.env.BASE_API + '/common/uploadImageFile',
@@ -406,7 +401,10 @@ export default {
     },
     // 上传图像 返回图片的URL地址
     uploadAvatar: function(response) {
-      this.userForm.avatar = response.data.url
+      // console.log(response)
+      this.userForm.avatar = response.data
+      // console.log(response.data)
+      this.$message.success('图片上传成功')
     },
     // 保存(添加/修改)-提交按钮
     submitForm() {

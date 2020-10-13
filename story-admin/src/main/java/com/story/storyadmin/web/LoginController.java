@@ -109,7 +109,8 @@ public class LoginController {
         json.put("name", user.getName());
         json.put("erp", user.getErpFlag());
         //用户图像信息， TODO 这个可以开发一个添加用户的时候支持上传用户图像，然后从数据库中查询出用户图像信息
-        json.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+       // json.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        json.put("avatar",user.getAvatar());
         //角色信息
         json.put("roles",new String[]{"admin"});
 

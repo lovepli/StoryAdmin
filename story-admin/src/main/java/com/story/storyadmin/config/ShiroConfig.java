@@ -102,7 +102,6 @@ public class ShiroConfig {
         filterRuleMap.put("/logout", "logout");
         filterRuleMap.put("/swagger-resources/**", "anon");
         filterRuleMap.put("/images/**", "anon");
-        filterRuleMap.put("/v2/api-docs/**", "anon");
         filterRuleMap.put("/webjars/**", "anon");
         filterRuleMap.put("/druid/**", "anon");
         filterRuleMap.put("/common/**", "anon");
