@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 自定义Realm鉴权
+ * 自定义Realm鉴权 身份验证器
  */
 @Service
 public class ShiroRealm extends AuthorizingRealm {
@@ -54,6 +54,7 @@ public class ShiroRealm extends AuthorizingRealm {
 	}
 
 	/**
+	 * 身份认证
 	 * 默认使用此方法进行用户名正确与否验证，错误抛出异常即可。
      * 获取认证信息，里面包括了校验密码，用户是否锁定，即如果正常返回了AuthenticationInfo，那么用户就是认证通过的
 	 * @param auth
@@ -73,12 +74,16 @@ public class ShiroRealm extends AuthorizingRealm {
 		}
         //校验token是否正确
 		if (JwtUtil.verify(token)) {
+			// TODO 可以补充逻辑：校验成功开始踢人(清除缓存和Session这里是token)
+			//  ShiroUtils.deleteCache(username,true);
 			return new SimpleAuthenticationInfo(token, token, "shiroRealm");
 		}
 		throw new AuthenticationException("Token expired or incorrect.");
 	}
 
 	/**
+	 * 授权权限
+	 * 用户进行权限验证时候Shiro会去缓存中找,如果查不到数据,会执行这个方法去查权限,并放入缓存中
 	 * 只有当需要检测用户权限的时候才会调用此方法，例如checkRole,checkPermission之类的
 	 * @param principals
 	 * @return

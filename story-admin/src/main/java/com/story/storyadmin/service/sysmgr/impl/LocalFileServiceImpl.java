@@ -1,11 +1,10 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
-import com.story.storyadmin.common.SrotyAdminOutException;
+import com.story.storyadmin.common.ApiException;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.helper.SequenceHelper;
-import com.story.storyadmin.mapper.sysmgr.AttachmentMapper;
 import com.story.storyadmin.service.sysmgr.AttachmentService;
 import com.story.storyadmin.service.sysmgr.IFileService;
 
@@ -42,7 +41,7 @@ public class LocalFileServiceImpl implements IFileService {
     @Transactional(rollbackFor = Throwable.class)
     public Result uploadFile(MultipartFile file, Long userId) {
         if (file.isEmpty()) {
-            throw new SrotyAdminOutException("文件为空，请检查文件以及网络");
+            throw new ApiException("文件为空，请检查文件以及网络");
         }
         String filename = file.getOriginalFilename();
         // 生成流水号
@@ -65,7 +64,7 @@ public class LocalFileServiceImpl implements IFileService {
         } catch (IOException e) {
             LOG.error(String.valueOf(e));
             LOG.warn("文件处理失败：" + filename);
-            throw new SrotyAdminOutException("文件处理失败");
+            throw new ApiException("文件处理失败");
         }
     }
     @Override
@@ -73,10 +72,10 @@ public class LocalFileServiceImpl implements IFileService {
         Attachment systemFile = attachmentService.selectAttachmentById(fileId);
 
         if (systemFile == null) {
-            throw new SrotyAdminOutException("文件不存在");
+            throw new ApiException("文件不存在");
         }
         if (FILE_DELETED_ON_DISK.equals(systemFile.getStatus())) {
-            throw new SrotyAdminOutException("文件不已被删除");
+            throw new ApiException("文件不已被删除");
         }
         systemFile.setDeleteDate(new Date());
         systemFile.setDeleter(userId);
@@ -87,7 +86,7 @@ public class LocalFileServiceImpl implements IFileService {
         File file = new File(systemFile.getRealFileName());
         if (file.exists()) {
             if (!file.delete()) {
-                throw new SrotyAdminOutException("删除失败");
+                throw new ApiException("删除失败");
             }
         }
         LOG.info("删除文件成功：" + systemFile.getFilePath());

@@ -1,6 +1,6 @@
 package com.story.storyadmin.web.sysmgr;
 
-import com.story.storyadmin.common.SrotyAdminOutException;
+import com.story.storyadmin.common.ApiException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.config.upload.annotation.FileSlotDisabled;
@@ -117,7 +117,7 @@ public class FileController  {
                 }
             } catch (Exception e) {
                 response.setStatus(404);
-                throw new SrotyAdminOutException("下载失败");
+                throw new ApiException("下载失败");
             }
         } else {
             response.setStatus(404);

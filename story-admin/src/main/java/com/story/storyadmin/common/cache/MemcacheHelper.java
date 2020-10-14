@@ -1,6 +1,6 @@
 package com.story.storyadmin.common.cache;
 
-import com.story.storyadmin.common.SrotyAdminOutException;
+import com.story.storyadmin.common.ApiException;
 import com.story.storyadmin.config.props.MemcacheConfig;
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.MemcachedClientBuilder;
@@ -49,7 +49,7 @@ public class MemcacheHelper implements SimpleKvCache {
             return last;
         } catch (TimeoutException | InterruptedException | MemcachedException e) {
             e.printStackTrace();
-            throw new SrotyAdminOutException("缓存失败:" + key + "=" + val);
+            throw new ApiException("缓存失败:" + key + "=" + val);
         }
     }
 

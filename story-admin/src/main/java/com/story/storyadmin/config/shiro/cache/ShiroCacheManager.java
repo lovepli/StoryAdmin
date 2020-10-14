@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * 自定义shiro缓存管理器
+ *  配置Cache管理器
+ *  用于往Redis存储权限和角色标识，JedisUtils使用的是shiro-redis开源插件
  */
 @Service
 public class ShiroCacheManager implements CacheManager {

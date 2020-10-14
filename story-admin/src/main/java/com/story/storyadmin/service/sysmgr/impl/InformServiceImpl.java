@@ -1,12 +1,13 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.story.storyadmin.Exception.FaileIdException;
+import com.story.storyadmin.Exception.StatusErrorException;
 import com.story.storyadmin.common.cache.CacheKeySeed;
 import com.story.storyadmin.common.cache.KeySeedManager;
 import com.story.storyadmin.common.cache.SimpleKvCache;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
-import com.story.storyadmin.common.SrotyAdminException;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.entity.sysmgr.Inform;
 import com.story.storyadmin.domain.entity.sysmgr.User;
@@ -17,7 +18,6 @@ import com.story.storyadmin.service.sysmgr.AttachmentService;
 import com.story.storyadmin.service.sysmgr.InformService;
 import com.story.storyadmin.service.sysmgr.UserService;
 import com.story.storyadmin.utils.ObjectUtil;
-import com.story.storyadmin.web.sysmgr.InformController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +78,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
                 () -> {
                     Inform inform = baseMapper.selectById(id);
                     if (inform == null) {
-                        throw new SrotyAdminException("ID非法");
+                        throw new FaileIdException("非法ID");
                     }
                     // 对象克隆的方法
                     InformVo result = ObjectUtil.generateSubclass(inform, InformVo.class);
@@ -150,10 +150,10 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
     private Inform assertExistAndNormal(Long id) {
         Inform toCheck = baseMapper.selectById(id);
         if (toCheck == null) {
-            throw new SrotyAdminException("非法ID");
+            throw new FaileIdException("非法ID");
         }
         if (toCheck.getStatus() != NORMAL) {
-            throw new SrotyAdminException("状态错误");
+            throw new StatusErrorException("状态错误");
         }
         return toCheck;
     }

@@ -1,7 +1,7 @@
 package com.story.storyadmin.utils;
 
-import com.story.storyadmin.common.SrotyAdminException;
-import com.story.storyadmin.common.SrotyAdminOutException;
+import com.story.storyadmin.common.CustomException;
+import com.story.storyadmin.common.ApiException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -20,14 +20,14 @@ public class ObjectUtil {
      * @param subClass 子类
      * @return 子类实例
      */
-    public static <T, R extends T> R generateSubclass(T source, Class<R> subClass) throws SrotyAdminOutException {
+    public static <T, R extends T> R generateSubclass(T source, Class<R> subClass) throws ApiException {
         Field[] parentFields = source.getClass().getDeclaredFields();
         R r;
         try {
             r = subClass.getConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
-            throw new SrotyAdminException("构造子类实例失败:" + subClass.getName());
+            throw new CustomException("构造子类实例失败:" + subClass.getName());
         }
         Arrays.stream(parentFields)
                 // 跳过serialVersionId

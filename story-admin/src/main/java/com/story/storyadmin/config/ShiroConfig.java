@@ -37,14 +37,20 @@ public class ShiroConfig {
 //    ShiroFilterProperties shiroFilterProperties;
 
 
-
+    /**
+     * 安全管理器
+     * @param shiroRealm
+     * @param shiroCacheManager
+     * @return
+     */
     @Bean
     public DefaultWebSecurityManager  securityManager(ShiroRealm shiroRealm, ShiroCacheManager shiroCacheManager){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
         //这里的shiroRealm为自定义的AuthorizingRealm
+        //1、自定义Realm验证
         securityManager.setRealm(shiroRealm);
 
-        //关闭shiro自带的session
+        //2、关闭shiro自带的session
         DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
         DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
         defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
@@ -52,6 +58,7 @@ public class ShiroConfig {
         securityManager.setSubjectDAO(subjectDAO);
 
         //这里的shiroCacheManager为自定义shiro缓存，重写了CacheManager接口的方法，实现了redis作为缓存Manager
+        //3、自定义Cache实现
         securityManager.setCacheManager(shiroCacheManager);
         return securityManager;
     }
@@ -93,16 +100,17 @@ public class ShiroConfig {
         List<Map<String, String>> perms = this.getShiroFilterProperties().getPerms();
         perms.forEach(perm -> filterRuleMap.put(perm.get("key"), perm.get("value")));
          */
+        // 配置过滤:不会被拦截的链接，ShiroConfig类存放了不会被拦截的链接，更合理的做法是把他放到配置文件中进行管理。
         Map<String, String> filterRuleMap = new LinkedHashMap<>();
         filterRuleMap.put("/", "anon");
         filterRuleMap.put("/captchaImage", "anon");
         filterRuleMap.put("/user/login", "anon");
         filterRuleMap.put("/logout", "logout");
         filterRuleMap.put("/swagger-ui.html", "anon");
-        filterRuleMap.put("/logout", "logout");
         filterRuleMap.put("/swagger-resources/**", "anon");
-        filterRuleMap.put("/images/**", "anon");
+        filterRuleMap.put("/v2/api-docs/**", "anon");
         filterRuleMap.put("/webjars/**", "anon");
+        filterRuleMap.put("/images/**", "anon");
         filterRuleMap.put("/druid/**", "anon");
         filterRuleMap.put("/common/**", "anon");
         filterRuleMap.put("/mongoDBTest/**", "anon");

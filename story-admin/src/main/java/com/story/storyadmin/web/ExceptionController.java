@@ -1,5 +1,7 @@
 package com.story.storyadmin.web;
 
+import com.story.storyadmin.common.ApiException;
+import com.story.storyadmin.common.CustomException;
 import com.story.storyadmin.domain.vo.Result;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -11,11 +13,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * 全局异常处理
+ * @ControllerAdvice，这是spring MVC提供的一个特殊的切面处理。
  * @author
  */
 @RestControllerAdvice
@@ -71,6 +75,27 @@ public class ExceptionController {
     }
 
     /**
+     * 捕捉其他所有异常
+     * Handle exceptions thrown by handlers.
+     */
+//    @ExceptionHandler(value = Exception.class)
+//    public Result exception(Exception exception, HttpServletResponse response) {
+//
+//        Result result =new Result();
+//        if(exception instanceof ApiException){//api异常
+//            ApiException apiException = (ApiException)exception;
+//            result.setCode(apiException.getErrorCode());
+//        }else{//未知异常
+//            result.setCode(0);
+//        }
+//        result.setMessage(exception.getMessage());
+//        // 设置响应状态码
+//       // result.setCode(HttpStatus.valueOf(response.getStatus()));
+//        return result;
+//    }
+
+
+    /**
      * 获取http状态码
      * @param request
      * @return
@@ -84,12 +109,18 @@ public class ExceptionController {
     }
 
 
+    /**
+     * 捕捉业务异常
+     * @param request
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(CustomException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Result bizException(HttpServletRequest request, Throwable ex) {
+        logger.error("Exception:{}", ex);
+        return new Result<String>(false, ex.getMessage(), null);
+    }
 
-//    // 捕捉业务异常
-//    @ExceptionHandler(BizException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public Result bizException(HttpServletRequest request, Throwable ex) {
-//        logger.error("Exception:{}", ex);
-//        return new Result<String>(false, ex.getMessage(), null);
-//    }
+
 }

@@ -30,7 +30,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        // 存放用户图像地址
+        // 存放用户图像地址  图片放到/D:/fileUpload/后，从磁盘读取的图片数据scr将会变成images/picturename.jpg的格式
         registry.addResourceHandler("/images/**").addResourceLocations("file:"+mImagesPath);
     }
 }

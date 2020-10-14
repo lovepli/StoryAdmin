@@ -4,13 +4,11 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.story.storyadmin.common.SrotyAdminOutException;
+import com.story.storyadmin.common.ApiException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
-import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.vo.Result;
-import com.story.storyadmin.domain.vo.sysmgr.AttVo;
 import com.story.storyadmin.service.sysmgr.AttService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,10 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLEncoder;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * <p>
@@ -148,7 +144,7 @@ public class AttController {
             } catch (Exception e) {
                 response.setStatus(404);
                 // 业务异常
-                throw new SrotyAdminOutException("下载失败");
+                throw new ApiException("下载失败");
             }
         } else {
             response.setStatus(404);
