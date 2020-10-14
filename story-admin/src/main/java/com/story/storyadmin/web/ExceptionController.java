@@ -117,7 +117,7 @@ public class ExceptionController {
      */
     @ExceptionHandler(CustomException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Result bizException(HttpServletRequest request, Throwable ex) {
+    public Result CustomException(HttpServletRequest request, Throwable ex) {
         logger.error("Exception:{}", ex);
         return new Result<String>(false, ex.getMessage(), null);
     }
