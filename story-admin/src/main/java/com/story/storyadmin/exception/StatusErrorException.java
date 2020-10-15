@@ -1,6 +1,6 @@
-package com.story.storyadmin.Exception;
+package com.story.storyadmin.exception;
 
-import com.story.storyadmin.common.ApiException;
+import com.story.storyadmin.common.exception.ApiException;
 import com.story.storyadmin.constant.InformErrorCode;
 
 public class StatusErrorException extends ApiException {

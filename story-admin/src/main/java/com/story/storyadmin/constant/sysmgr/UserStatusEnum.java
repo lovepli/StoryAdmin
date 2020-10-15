@@ -2,6 +2,7 @@ package com.story.storyadmin.constant.sysmgr;
 
 /**
  * 用户状态
+ * @author lipan
  */
 public enum UserStatusEnum {
 

@@ -1,8 +1,8 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.story.storyadmin.Exception.FaileIdException;
-import com.story.storyadmin.Exception.StatusErrorException;
+import com.story.storyadmin.exception.FaileIdException;
+import com.story.storyadmin.exception.StatusErrorException;
 import com.story.storyadmin.common.cache.CacheKeySeed;
 import com.story.storyadmin.common.cache.KeySeedManager;
 import com.story.storyadmin.common.cache.SimpleKvCache;

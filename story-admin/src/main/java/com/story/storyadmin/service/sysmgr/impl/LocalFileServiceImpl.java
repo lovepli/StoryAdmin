@@ -1,6 +1,6 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
-import com.story.storyadmin.common.ApiException;
+import com.story.storyadmin.common.exception.ApiException;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.vo.Result;

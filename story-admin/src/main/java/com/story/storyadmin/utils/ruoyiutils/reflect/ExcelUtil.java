@@ -1,6 +1,6 @@
 package com.story.storyadmin.utils.ruoyiutils.reflect;
 
-import com.story.storyadmin.common.CustomException;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.utils.ruoyiutils.DateUtils;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;

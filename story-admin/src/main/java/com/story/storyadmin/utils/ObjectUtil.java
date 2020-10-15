@@ -1,7 +1,7 @@
 package com.story.storyadmin.utils;
 
-import com.story.storyadmin.common.CustomException;
-import com.story.storyadmin.common.ApiException;
+import com.story.storyadmin.common.exception.CustomException;
+import com.story.storyadmin.common.exception.ApiException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

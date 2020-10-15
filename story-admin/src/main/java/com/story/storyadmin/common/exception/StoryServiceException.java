@@ -1,7 +1,7 @@
-package com.story.storyadmin.common;
+package com.story.storyadmin.common.exception;
 
 /**
- * 统一Rest API异常类
+ * 统一Rest API异常类 继承Exception受检查异常
  * 
  * @author 
  *

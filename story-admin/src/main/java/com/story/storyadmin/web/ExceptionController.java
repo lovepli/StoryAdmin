@@ -1,7 +1,7 @@
 package com.story.storyadmin.web;
 
-import com.story.storyadmin.common.ApiException;
-import com.story.storyadmin.common.CustomException;
+import com.story.storyadmin.common.exception.ApiException;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.domain.vo.Result;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -61,39 +61,32 @@ public class ExceptionController {
         }
     }
 
-    /**
-     * 捕捉其他所有异常
-     * @param request
-     * @param ex
-     * @return
-     */
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Result globalException(HttpServletRequest request, Throwable ex) {
-        logger.error("Exception:{}", ex);
-        return new Result<String>(false, "系统异常，请稍后重试", null, getStatus(request).value());
-    }
+
 
     /**
      * 捕捉其他所有异常
      * Handle exceptions thrown by handlers.
      */
-//    @ExceptionHandler(value = Exception.class)
-//    public Result exception(Exception exception, HttpServletResponse response) {
-//
-//        Result result =new Result();
-//        if(exception instanceof ApiException){//api异常
-//            ApiException apiException = (ApiException)exception;
-//            result.setCode(apiException.getErrorCode());
-//        }else{//未知异常
-//            result.setCode(0);
-//        }
-//        result.setMessage(exception.getMessage());
-//        // 设置响应状态码
-//       // result.setCode(HttpStatus.valueOf(response.getStatus()));
-//        return result;
-//    }
+    @ExceptionHandler(Exception.class)
+    public Result exception(Exception e, HttpServletRequest request) {
 
+        Result result =new Result();
+         // 如果是自定义的异常
+        if(e instanceof ApiException){
+            logger.error("【自定义异常】:{}",e);
+            ApiException apiException = (ApiException)e;
+            result.setCode(apiException.getErrorCode());
+            result.setMessage(apiException.getMessage());
+        }else{
+            //未知异常
+            //如果是系统的异常，比如空指针这些异常
+            logger.error("【系统异常】:{}",e);
+            // 设置响应状态码
+            result.setCode(getStatus(request).value());
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
 
     /**
      * 获取http状态码
@@ -118,9 +111,23 @@ public class ExceptionController {
     @ExceptionHandler(CustomException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result CustomException(HttpServletRequest request, Throwable ex) {
-        logger.error("Exception:{}", ex);
+        logger.error("业务异常Exception:{}", ex);
         return new Result<String>(false, ex.getMessage(), null);
     }
 
+
+    /**
+     * 捕捉其他所有异常
+     * @param request
+     * @param ex
+     * @return
+
+     @ExceptionHandler(Exception.class)
+     @ResponseStatus(HttpStatus.BAD_REQUEST)
+     public Result globalException(HttpServletRequest request, Throwable ex) {
+     logger.error("Exception:{}", ex);
+     return new Result<String>(false, "系统异常，请稍后重试", null, getStatus(request).value());
+     }
+     */
 
 }

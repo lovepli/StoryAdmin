@@ -1,6 +1,6 @@
 package com.story.storyadmin.web.sysmgr;
 
-import com.story.storyadmin.common.ApiException;
+import com.story.storyadmin.common.exception.ApiException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.config.upload.annotation.FileSlotDisabled;

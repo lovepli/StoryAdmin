@@ -130,11 +130,9 @@ public class CommonController {
             int jieguo= imageFileService.insertUrl(fileName,path,url);
             System.out.print("插入结果"+jieguo+"\n");
             System.out.print("保存的完整url===="+url+"\n");
-
-        } catch (IOException e) {
-            result = new Result(false, "上传失败", null ,Constants.PARAMETERS_MISSING);
+        } catch (IOException e) { //受检查异常，不是throw Eexception()这样处理
             log.error("上传失败", e);
-
+            result = new Result(false, "上传失败", null ,Constants.PARAMETERS_MISSING);
         }
         System.out.println("上传成功,文件url=="+url);
         result = new Result(true, "上传成功", url ,Constants.TOKEN_CHECK_SUCCESS);

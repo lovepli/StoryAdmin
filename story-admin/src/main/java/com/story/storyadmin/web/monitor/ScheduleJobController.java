@@ -4,7 +4,7 @@ package com.story.storyadmin.web.monitor;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.story.storyadmin.common.StoryServiceException;
+import com.story.storyadmin.common.exception.StoryServiceException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;

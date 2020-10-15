@@ -1,6 +1,6 @@
 package com.story.storyadmin.service.sysmgr;
 
-import com.story.storyadmin.common.StoryServiceException;
+import com.story.storyadmin.common.exception.StoryServiceException;
 import com.story.storyadmin.domain.entity.sysmgr.ScheduleJob;
 import com.baomidou.mybatisplus.extension.service.IService;
 

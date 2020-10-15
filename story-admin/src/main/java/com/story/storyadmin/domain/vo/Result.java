@@ -15,8 +15,11 @@ public class Result<T> implements java.io.Serializable {
     public static final Integer SUCCESS_CODE = 20000;
 
     private boolean result = true;
+    /**返回码 */
     private Integer code = SUCCESS_CODE;
+    /**返回消息 */
     private String message;
+    /**返回数据 */
     private T data;
 
     public Result() {

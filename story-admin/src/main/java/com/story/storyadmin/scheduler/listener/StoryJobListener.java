@@ -1,6 +1,6 @@
 package com.story.storyadmin.scheduler.listener;
 
-import com.story.storyadmin.common.StoryServiceException;
+import com.story.storyadmin.common.exception.StoryServiceException;
 import com.story.storyadmin.service.sysmgr.ScheduleJobService;
 import com.story.storyadmin.utils.ExceptionUtils;
 import org.quartz.JobExecutionContext;

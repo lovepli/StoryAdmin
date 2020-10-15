@@ -1,7 +1,8 @@
 package com.story.storyadmin.constant;
 
 /**
- * auth相关的常量
+ * auth相关的全局常量
+ * @author lipan
  */
 public class SecurityConsts {
 

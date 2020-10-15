@@ -1,6 +1,6 @@
 package com.story.storyadmin.common.cache;
 
-import com.story.storyadmin.common.ApiException;
+import com.story.storyadmin.common.exception.ApiException;
 import com.story.storyadmin.config.props.MemcacheConfig;
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.MemcachedClientBuilder;

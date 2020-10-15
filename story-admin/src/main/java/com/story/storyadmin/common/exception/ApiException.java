@@ -1,4 +1,4 @@
-package com.story.storyadmin.common;
+package com.story.storyadmin.common.exception;
 
 /**
  * 向前端传递的异常信息
@@ -11,6 +11,13 @@ public class ApiException extends RuntimeException {
     /** 错误信息*/
     protected Object data;
 
+    /**
+     * 构造器重载，主要是自己考虑某些异常自定义一些返回码
+     * @param errorCode
+     * @param message
+     * @param data
+     * @param e
+     */
     public ApiException(Integer errorCode, String message, Object data, Throwable e) {
         super(message, e);
         this.errorCode = errorCode;

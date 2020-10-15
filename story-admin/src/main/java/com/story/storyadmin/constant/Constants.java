@@ -42,6 +42,8 @@ public final class Constants {
 	public static final String ERP_ROLE_BL = "jr_scm_bl";
 	//获取组织的角色标识
 	public static final String ERP_ROLE_ORG = "jr_scm_org";
+
+
 	/**********************通用代码 end***********************/
 
 	/**
