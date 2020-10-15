@@ -33,10 +33,13 @@ spring:
       host: localhost
       port: 27017
       database: story_admin_log
+  # 邮件服务 这里的配置我们定义了SMTP服务地址，发件人的邮箱账号信息
   mail:
-    host: smtp.163.com
-    username: aaaa@163.com
-    password: 111111
+    host: smtp.126.com # 这里选择的是126邮箱作为邮件发送服务端
+    mailFrom: lovepli@126.com  # 发件人邮箱
+    username: lovepli
+    password: RGKGTFRYZGZFNLOY # 你网页端邮箱设置中SMTP开启的时候的开启的授权码
+    default-encoding: UTF-8
     properties:
       mail:
         smtp:
@@ -47,7 +50,7 @@ file:
   multipart:
     #文件上传
     autoSaveEnabled: true
-    baseDir: D:/upload/
+    baseDir: /etc/files/
 # 备份
 dbbackup:
   servername: 127.0.0.1
@@ -63,10 +66,25 @@ logging:
   level:
     com:
       story:
-        storyadmin: error #设置日志数据级别
+        storyadmin: error #生产环境设置日志数据级别为error
   pattern: #输出的日志格式
     console: '%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:%5p})
       %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} [%15.15X{username}]
       [%15.15X{ip}] %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}'
 
+# 自定义属性
+# memcached服务器地址及端口，使用xmemcache库进行链接。集群地址之间使用一个空格分隔
+memcache:
+  addresses: "localhost:11211"
+# 公告上传的文件存放的路径
+upload-file:
+  path: /etc/files/
 
+#配置外部访问文件
+cbs:
+  imagesPath: /etc/files/
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: false

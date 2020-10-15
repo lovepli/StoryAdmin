@@ -47,9 +47,9 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
     # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
-    call-setters-on-nulls: true
+    # call-setters-on-nulls: true
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # token相关
 token:
@@ -102,7 +102,3 @@ weather-config:
   appid: 59274993
   appsecret: YxMhVC2U
 
-# Swagger配置
-swagger:
-  # 是否开启swagger
-  enabled: true

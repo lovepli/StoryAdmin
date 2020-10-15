@@ -24,11 +24,11 @@ spring:
     filters: stat,wall,log4j
     logSlowSql: true
   redis:
-    database: 1     # Redis默认情况下有16个分片，这里配置具体使用的分片。默认是索引为0的分片
+    database: 4     # Redis默认情况下有16个分片，这里配置具体使用的分片。默认是索引为0的分片
     host: localhost
     port: 6379
     password:      # Redis服务器连接密码（默认为空）
-#   timeout: 2000s # 连接超时时间（毫秒）
+    timeout: 2000s # 连接超时时间（毫秒）
     jedis:
       pool:
         min-idle: 10    #连接池中的最小空闲连接，默认值是0
@@ -40,11 +40,13 @@ spring:
       host: localhost #不设置用户名和密码
       port: 27017
       database: story_admin_log
+  # 邮件服务 这里的配置我们定义了SMTP服务地址，发件人的邮箱账号信息
   mail:
-    host: smtp.126.com
-    mailFrom: abcd@126.com
-    username: abcd
-    password: abcd
+    host: smtp.126.com # 这里选择的是126邮箱作为邮件发送服务端
+    mailFrom: lovepli@126.com  # 发件人邮箱
+    username: lovepli
+    password: RGKGTFRYZGZFNLOY # 你网页端邮箱设置中SMTP开启的时候的开启的授权码
+    default-encoding: UTF-8
     properties:
       mail:
         smtp:
@@ -59,15 +61,16 @@ file:
   multipart:
     #文件上传
     autoSaveEnabled: true
-    #baseDir: D:/upload/ # 文件上传存放的位置
     baseDir: /Users/lipan/Desktop/
-# 备份
+# 数据备份
 dbbackup:
   servername: 127.0.0.1
   dbname: story_admin
   username: root
   password: 123456
+  # 这里进行数据备份的数据库是本地安装的MySQL的安装目录
   installPath: ${file.upload:D:/Development/mysql-8.0.13-winx64}
+  # 数据备份存放的路径
   backupPath: ${file.export:D:/Backup}
 
 # 日志相关
@@ -86,11 +89,15 @@ logging:
 # memcached服务器地址及端口，使用xmemcache库进行链接。集群地址之间使用一个空格分隔
 memcache:
   addresses: "localhost:11211"
-# 上传的文件存放的路径
+# 公告上传的文件存放的路径
 upload-file:
-  #path: D:\bird_files
   path: /Users/lipan/Desktop/
 
 #配置外部访问文件
 cbs:
   imagesPath: /Users/lipan/Desktop/fileUpload/
+
+# Swagger配置，只在开发环境和测试环境启用，生产环境不启用
+swagger:
+  # 是否开启swagger
+  enabled: true
