@@ -1,7 +1,8 @@
 package com.story.storyadmin.web;
 
-import com.story.storyadmin.common.exception.ApiException;
 import com.story.storyadmin.common.exception.CustomException;
+import com.story.storyadmin.common.exception.BusinessException;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,28 +65,27 @@ public class ExceptionController {
 
 
     /**
-     * 捕捉其他所有异常
+     * 自定义异常
      * Handle exceptions thrown by handlers.
      */
     @ExceptionHandler(Exception.class)
     public Result exception(Exception e, HttpServletRequest request) {
 
-        Result result =new Result();
          // 如果是自定义的异常
-        if(e instanceof ApiException){
+        if(e instanceof CustomException){
             logger.error("【自定义异常】:{}",e);
-            ApiException apiException = (ApiException)e;
-            result.setCode(apiException.getErrorCode());
-            result.setMessage(apiException.getMessage());
+            CustomException customException = (CustomException)e;
+//            result.setCode(customException.getErrorCode());
+//            result.setMessage(customException.getMessage());
+            logger.error("位置:{} -> 错误信息:{}", customException.getMethod() ,e.getLocalizedMessage());
+            return new Result().error(Objects.requireNonNull(ResultEnum.getByCode(customException.getErrorCode())));
         }else{
             //未知异常
             //如果是系统的异常，比如空指针这些异常
             logger.error("【系统异常】:{}",e);
             // 设置响应状态码
-            result.setCode(getStatus(request).value());
-            result.setMessage(e.getMessage());
+            return new Result<String>(false, "系统异常，请稍后重试", null, getStatus(request).value());
         }
-        return result;
     }
 
     /**
@@ -108,12 +108,12 @@ public class ExceptionController {
      * @param ex
      * @return
      */
-    @ExceptionHandler(CustomException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Result CustomException(HttpServletRequest request, Throwable ex) {
-        logger.error("业务异常Exception:{}", ex);
-        return new Result<String>(false, ex.getMessage(), null);
-    }
+//    @ExceptionHandler(BusinessException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public Result BusinessException(HttpServletRequest request, Throwable ex) {
+//        logger.error("业务异常Exception:{}", ex);
+//        return new Result<String>(false, ex.getMessage(), null);
+//    }
 
 
     /**
@@ -121,13 +121,13 @@ public class ExceptionController {
      * @param request
      * @param ex
      * @return
-
-     @ExceptionHandler(Exception.class)
-     @ResponseStatus(HttpStatus.BAD_REQUEST)
-     public Result globalException(HttpServletRequest request, Throwable ex) {
-     logger.error("Exception:{}", ex);
-     return new Result<String>(false, "系统异常，请稍后重试", null, getStatus(request).value());
-     }
      */
+//     @ExceptionHandler(Exception.class)
+//     @ResponseStatus(HttpStatus.BAD_REQUEST)
+//     public Result globalException(HttpServletRequest request, Throwable ex) {
+//     logger.error("Exception:{}", ex);
+//     return new Result<String>(false, "系统异常，请稍后重试", null, getStatus(request).value());
+//     }
+
 
 }

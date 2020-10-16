@@ -1,13 +1,15 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
-import com.story.storyadmin.common.exception.ApiException;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.helper.SequenceHelper;
 import com.story.storyadmin.service.sysmgr.AttachmentService;
 import com.story.storyadmin.service.sysmgr.IFileService;
 
+import com.story.storyadmin.utils.MethodUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,8 @@ public class LocalFileServiceImpl implements IFileService {
     @Transactional(rollbackFor = Throwable.class)
     public Result uploadFile(MultipartFile file, Long userId) {
         if (file.isEmpty()) {
-            throw new ApiException("文件为空，请检查文件以及网络");
+          //  throw new CustomException("文件为空，请检查文件以及网络");
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "文件为空，请检查文件以及网络", MethodUtil.getLineInfo());
         }
         String filename = file.getOriginalFilename();
         // 生成流水号
@@ -64,7 +67,8 @@ public class LocalFileServiceImpl implements IFileService {
         } catch (IOException e) {
             LOG.error(String.valueOf(e));
             LOG.warn("文件处理失败：" + filename);
-            throw new ApiException("文件处理失败");
+           // throw new CustomException("文件处理失败");
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "文件处理失败" ,MethodUtil.getLineInfo());
         }
     }
     @Override
@@ -72,10 +76,12 @@ public class LocalFileServiceImpl implements IFileService {
         Attachment systemFile = attachmentService.selectAttachmentById(fileId);
 
         if (systemFile == null) {
-            throw new ApiException("文件不存在");
+           // throw new CustomException("文件不存在");
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "文件不存在" ,MethodUtil.getLineInfo());
         }
         if (FILE_DELETED_ON_DISK.equals(systemFile.getStatus())) {
-            throw new ApiException("文件不已被删除");
+          //  throw new CustomException("文件不已被删除");
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "文件不已被删除" ,MethodUtil.getLineInfo());
         }
         systemFile.setDeleteDate(new Date());
         systemFile.setDeleter(userId);
@@ -86,7 +92,8 @@ public class LocalFileServiceImpl implements IFileService {
         File file = new File(systemFile.getRealFileName());
         if (file.exists()) {
             if (!file.delete()) {
-                throw new ApiException("删除失败");
+              //  throw new CustomException("删除失败");
+                throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "删除失败" ,MethodUtil.getLineInfo());
             }
         }
         LOG.info("删除文件成功：" + systemFile.getFilePath());

@@ -1,7 +1,9 @@
 package com.story.storyadmin.common.cache;
 
-import com.story.storyadmin.common.exception.ApiException;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.props.MemcacheConfig;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
+import com.story.storyadmin.utils.MethodUtil;
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.MemcachedClientBuilder;
 import net.rubyeye.xmemcached.XMemcachedClientBuilder;
@@ -49,7 +51,8 @@ public class MemcacheHelper implements SimpleKvCache {
             return last;
         } catch (TimeoutException | InterruptedException | MemcachedException e) {
             e.printStackTrace();
-            throw new ApiException("缓存失败:" + key + "=" + val);
+          //  throw new CustomException("缓存失败:" + key + "=" + val);
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "缓存失败:" + key + "=" + val, MethodUtil.getLineInfo());
         }
     }
 

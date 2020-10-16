@@ -1,8 +1,8 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.story.storyadmin.exception.FaileIdException;
-import com.story.storyadmin.exception.StatusErrorException;
+import com.story.storyadmin.common.exception.CustomException;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.common.cache.CacheKeySeed;
 import com.story.storyadmin.common.cache.KeySeedManager;
 import com.story.storyadmin.common.cache.SimpleKvCache;
@@ -17,6 +17,7 @@ import com.story.storyadmin.mapper.sysmgr.InformMapper;
 import com.story.storyadmin.service.sysmgr.AttachmentService;
 import com.story.storyadmin.service.sysmgr.InformService;
 import com.story.storyadmin.service.sysmgr.UserService;
+import com.story.storyadmin.utils.MethodUtil;
 import com.story.storyadmin.utils.ObjectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +79,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
                 () -> {
                     Inform inform = baseMapper.selectById(id);
                     if (inform == null) {
-                        throw new FaileIdException("非法ID");
+                        throw new CustomException(ResultEnum.FAILE_Id_EXCEPTION, MethodUtil.getLineInfo());
                     }
                     // 对象克隆的方法
                     InformVo result = ObjectUtil.generateSubclass(inform, InformVo.class);
@@ -150,10 +151,10 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
     private Inform assertExistAndNormal(Long id) {
         Inform toCheck = baseMapper.selectById(id);
         if (toCheck == null) {
-            throw new FaileIdException("非法ID");
+            throw new CustomException(ResultEnum.FAILE_Id_EXCEPTION,MethodUtil.getLineInfo());
         }
         if (toCheck.getStatus() != NORMAL) {
-            throw new StatusErrorException("状态错误");
+            throw new CustomException(ResultEnum.STATUS_ERROR_EXCEPTION,  MethodUtil.getLineInfo());
         }
         return toCheck;
     }

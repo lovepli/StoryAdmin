@@ -4,12 +4,14 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.story.storyadmin.common.exception.ApiException;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.AttService;
+import com.story.storyadmin.utils.MethodUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -144,7 +146,8 @@ public class AttController {
             } catch (Exception e) {
                 response.setStatus(404);
                 // 业务异常
-                throw new ApiException("下载失败");
+              //  throw new CustomException("下载失败");
+                throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "下载失败", MethodUtil.getLineInfo());
             }
         } else {
             response.setStatus(404);

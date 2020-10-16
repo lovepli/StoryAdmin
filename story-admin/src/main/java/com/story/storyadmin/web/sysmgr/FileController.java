@@ -1,12 +1,14 @@
 package com.story.storyadmin.web.sysmgr;
 
-import com.story.storyadmin.common.exception.ApiException;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.config.upload.annotation.FileSlotDisabled;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.IFileService;
+import com.story.storyadmin.utils.MethodUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -117,7 +119,8 @@ public class FileController  {
                 }
             } catch (Exception e) {
                 response.setStatus(404);
-                throw new ApiException("下载失败");
+               // throw new CustomException("下载失败");
+                throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "下载失败", MethodUtil.getLineInfo());
             }
         } else {
             response.setStatus(404);

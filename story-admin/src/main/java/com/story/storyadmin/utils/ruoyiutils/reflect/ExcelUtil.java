@@ -1,7 +1,10 @@
 package com.story.storyadmin.utils.ruoyiutils.reflect;
 
+import com.story.storyadmin.common.exception.BusinessException;
 import com.story.storyadmin.common.exception.CustomException;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.utils.MethodUtil;
 import com.story.storyadmin.utils.ruoyiutils.DateUtils;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
 import com.story.storyadmin.utils.ruoyiutils.text.Convert;
@@ -273,7 +276,8 @@ public class ExcelUtil<T> {
             return new Result(true,filename,null);
         } catch (Exception e) {
             log.error("导出Excel异常{}", e.getMessage());
-            throw new CustomException("导出Excel失败，请联系网站管理员！");
+           // throw new BusinessException("导出Excel失败，请联系网站管理员！");
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "导出Excel失败，请联系网站管理员！" , MethodUtil.getLineInfo());
         } finally {
             if (wb != null) {
                 try {

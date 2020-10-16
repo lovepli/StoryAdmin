@@ -1,7 +1,8 @@
 package com.story.storyadmin.utils;
 
+import com.story.storyadmin.common.exception.BusinessException;
 import com.story.storyadmin.common.exception.CustomException;
-import com.story.storyadmin.common.exception.ApiException;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -20,14 +21,15 @@ public class ObjectUtil {
      * @param subClass 子类
      * @return 子类实例
      */
-    public static <T, R extends T> R generateSubclass(T source, Class<R> subClass) throws ApiException {
+    public static <T, R extends T> R generateSubclass(T source, Class<R> subClass) throws CustomException {
         Field[] parentFields = source.getClass().getDeclaredFields();
         R r;
         try {
             r = subClass.getConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
-            throw new CustomException("构造子类实例失败:" + subClass.getName());
+           // throw new BusinessException("构造子类实例失败:" + subClass.getName());
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "构造子类实例失败:" + subClass.getName(),MethodUtil.getLineInfo());
         }
         Arrays.stream(parentFields)
                 // 跳过serialVersionId
