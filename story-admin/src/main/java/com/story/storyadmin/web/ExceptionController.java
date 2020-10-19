@@ -75,16 +75,14 @@ public class ExceptionController {
         if(e instanceof CustomException){
             logger.error("【自定义异常】:{}",e);
             CustomException customException = (CustomException)e;
-//            result.setCode(customException.getErrorCode());
-//            result.setMessage(customException.getMessage());
             logger.error("位置:{} -> 错误信息:{}", customException.getMethod() ,e.getLocalizedMessage());
-            return new Result().error(Objects.requireNonNull(ResultEnum.getByCode(customException.getErrorCode())));
+            return Result.error(Objects.requireNonNull(ResultEnum.getByCode(customException.getErrorCode())));
         }else{
             //未知异常
             //如果是系统的异常，比如空指针这些异常
             logger.error("【系统异常】:{}",e);
             // 设置响应状态码
-            return new Result<String>(false, "系统异常，请稍后重试", null, getStatus(request).value());
+            return new Result<String>(false, "系统异常，请稍后重试", e.getMessage(), getStatus(request).value());
         }
     }
 

@@ -1,33 +1,29 @@
 package com.story.storyadmin.common.exception;
 
 import com.story.storyadmin.constant.enumtype.ResultEnum;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 自定义异常,继承RuntimeException非受检查异常
  * @author zhyyy
  **/
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class CustomException extends RuntimeException {
     /** 错误码*/
     protected Integer errorCode;
     /** 错误信息*/
     protected Object data;
-
     /**
      * 方法名称 出现错误的类的第几行
      */
     protected  String method;
 
-    public String getMethod() {
-        return method;
-    }
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
 
     /**
      * 自定义异常
-     *
      * @param resultEnum 返回枚举对象
      * @param method     方法
      */
@@ -113,19 +109,4 @@ public class CustomException extends RuntimeException {
         super(e);
     }
 
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
 }
