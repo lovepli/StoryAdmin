@@ -6,37 +6,8 @@ package com.story.storyadmin.constant;
 public final class Constants {
 
 	/**********************通用代码 start***********************/
-	//验证成功
-	public static final Integer TOKEN_CHECK_SUCCESS = 20000;
-
-	//密码错误
-	public static final Integer PASSWORD_CHECK_INVALID = 40001;
-
-    //验证码不正确
-	public static final Integer CAPTCHA_CHECK_INVALID = 40002;
-
-	//用户不存在
-	public static final Integer USER_CHECK_INVALID = 40003;
-
-	//账号不存在
-	public static final Integer ACCOUNT_CHECK_INVALID = 40004;
-
-	//该账号已被锁定
-	public static final Integer ACCOUNT_LOCK_INVALID = 40005;
-
-	//服务端错误
-	public static final Integer SERVER_ERROR = 50000;
-	//参数不完整
-	public static final Integer PARAMETERS_MISSING = 50002;
-
-	//非法token
-	public static final Integer TOKEN_CHECK_ILLEFALITY_ERROR = 50008;
-
-	//其他客户端登录
-	public static final Integer TOKEN_CHECK_OTHER_LOGIN = 50012;
-
-	//token 过期
-	public static final Integer TOKEN_CHECK_STALE_DATED = 50014;
+	//接口验证成功
+//	public static final Integer TOKEN_CHECK_SUCCESS = 20000;
 
 	//获取条线的角色标识
 	public static final String ERP_ROLE_BL = "jr_scm_bl";

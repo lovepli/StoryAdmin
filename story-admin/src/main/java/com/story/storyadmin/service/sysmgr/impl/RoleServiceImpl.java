@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Role;
 import com.story.storyadmin.domain.entity.sysmgr.RoleAuthority;
 import com.story.storyadmin.domain.entity.sysmgr.UserRole;
@@ -72,7 +73,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             role.setModifiedTime(currentDate);
             baseMapper.insert(role);
         }
-        return new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
@@ -106,7 +107,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         //批量插入角色权限关系到数据库表
         roleAuthorityService.batchInsert(authList);
 
-        return new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
@@ -118,7 +119,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public Result selectAuthByRoleId(Long roleId) {
         //获取权限ID集
         List<Long> auths= roleAuthorityService.selectAuthByRoleId(roleId);
-        return new Result(true,null,auths, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true,null,auths, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
 

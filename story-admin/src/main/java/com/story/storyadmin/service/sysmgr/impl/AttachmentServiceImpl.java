@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
@@ -41,7 +42,7 @@ public class AttachmentServiceImpl extends ServiceImpl<AttachmentMapper, Attachm
         Long id= AttachmentMapper.selectById(attachment).getId();
         System.out.println("文件上传的数据的id"+id);
 
-        return new Result(true, "文件上成功", id, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "文件上成功", id, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
 
     }
 

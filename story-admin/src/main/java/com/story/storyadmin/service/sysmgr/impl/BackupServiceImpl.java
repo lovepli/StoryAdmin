@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.config.props.DbBackupProperties;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Backup;
 import com.story.storyadmin.domain.vo.Result;
@@ -54,7 +55,7 @@ public class BackupServiceImpl extends ServiceImpl<BackupMapper, Backup> impleme
         }
         entity.setRuntime((endTime - startTime)/1000);
         this.persist(entity);
-        return new Result(true, "备份成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "备份成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     @Override
@@ -78,6 +79,6 @@ public class BackupServiceImpl extends ServiceImpl<BackupMapper, Backup> impleme
             //更新
             baseMapper.updateById(backup);
         }
-        return new Result(true, "修改成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 }

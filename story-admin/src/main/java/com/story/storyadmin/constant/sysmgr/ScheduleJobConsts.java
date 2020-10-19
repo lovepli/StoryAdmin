@@ -5,16 +5,18 @@ package com.story.storyadmin.constant.sysmgr;
  */
 public final class ScheduleJobConsts {
 
-    /**
+	/**
+	 * 定时任务Job所在包
+	 */
+	public final static String JOB_PKG = "com.story.storyadmin.scheduler";
+
+
+	/**
      * 私有构造方法
      */
 	private ScheduleJobConsts() {
 		throw new IllegalAccessError("ScheduleJobConsts 常量类，不能实例化！");
 	}
 	
-	/**
-	 * 定时任务Job所在包
-	 */
-	public final static String JOB_PKG = "com.story.storyadmin.scheduler";
-	
+
 }

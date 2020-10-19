@@ -3,6 +3,7 @@ package com.story.storyadmin.config.shiro.security;
 import com.alibaba.fastjson.JSON;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.utils.JedisUtils;
 import org.apache.shiro.subject.Subject;
@@ -69,7 +70,7 @@ public class SystemLogoutFilter extends LogoutFilter {
         PrintWriter out = null;
         try {
             out = response.getWriter();
-            Result result = new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+            Result result = new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
             out.append(JSON.toJSONString(result));
         } catch (IOException e) {
             logger.error("返回Response信息出现IOException异常:" + e.getMessage());

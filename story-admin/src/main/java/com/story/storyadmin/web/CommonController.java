@@ -1,6 +1,7 @@
 package com.story.storyadmin.web;
 
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
@@ -90,7 +91,7 @@ public class CommonController {
         System.out.print("上传文件==="+"\n");
         //判断文件是否为空
         if (file.isEmpty()) {
-            result = new Result(false, "上传文件不可为空", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "上传文件不可为空", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
 
 
@@ -113,7 +114,7 @@ public class CommonController {
 
         //判断文件是否已经存在
         if (dest.exists()) {
-            result = new Result(false, "文件已经存在", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "文件已经存在", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }
 
         //判断文件父目录是否存在
@@ -132,10 +133,10 @@ public class CommonController {
             System.out.print("保存的完整url===="+url+"\n");
         } catch (IOException e) { //受检查异常，不是throw Eexception()这样处理
             log.error("上传失败", e);
-            result = new Result(false, "上传失败", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "上传失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }
         System.out.println("上传成功,文件url=="+url);
-        result = new Result(true, "上传成功", url ,Constants.TOKEN_CHECK_SUCCESS);
+        result = new Result(true, "上传成功", url ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 

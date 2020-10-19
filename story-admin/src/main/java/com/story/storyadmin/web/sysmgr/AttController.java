@@ -70,7 +70,7 @@ public class AttController {
         IPage<Att> list = attService.page(page, eWrapper);
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -86,9 +86,9 @@ public class AttController {
     public Result dropById(@RequestBody Att att){
         Result result ;
         if(att.getId()!=null){
-            result=new Result(attService.removeById(att.getId()),null,null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(attService.removeById(att.getId()),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -106,7 +106,7 @@ public class AttController {
     public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
         Att att= attService.save(request.getRequestURI(),file,"第一批次");
 
-        Result result = new Result(true,"上传成功",att,Constants.TOKEN_CHECK_SUCCESS);
+        Result result = new Result(true,"上传成功",att,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 

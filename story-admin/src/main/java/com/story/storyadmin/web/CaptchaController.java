@@ -2,7 +2,7 @@ package com.story.storyadmin.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.Producer;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.utils.JedisUtils;
 import com.story.storyadmin.utils.ruoyiutils.sign.Base64;
@@ -94,12 +94,12 @@ public class CaptchaController {
             result.setResult(false);
             result.setMessage(e.getMessage());
             //io异常
-            result.setCode(Constants.SERVER_ERROR);
+            result.setCode(ResultEnum.SERVER_ERROR.getCode());
             return result;
         }
 
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         JSONObject json = new JSONObject();
         json.put("uuid", uuid);
         json.put("img", Base64.encode(os.toByteArray()));

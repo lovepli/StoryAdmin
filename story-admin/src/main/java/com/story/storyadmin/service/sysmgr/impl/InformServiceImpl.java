@@ -59,7 +59,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
         inform.setStatus(NORMAL);
         //新增用户
         baseMapper.insert(inform);
-        return new Result(true, "新增公告", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "新增公告", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     @Override
@@ -109,7 +109,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
         Inform informBean= assertExistAndNormal(id);
         informBean.setTop(isTop);
         baseMapper.updateById(informBean);
-        return new Result(true, "公告的置顶状态改变", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "公告的置顶状态改变", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     @Override
@@ -124,7 +124,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
         informBean.setCancelDate(currentDate);
         informBean.setTop(false);
         baseMapper.updateById(informBean);
-        return new Result(true, "撤销公告", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "撤销公告", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     @Override
@@ -139,7 +139,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
         informBean.setOutdateDate(currentDate);
         informBean.setTop(false);
         baseMapper.updateById(informBean);
-        return new Result(true, "公告过期", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "公告过期", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**

@@ -3,6 +3,7 @@ package com.story.storyadmin.web.sysmgr;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Authority;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.AuthorityNode;
@@ -41,7 +42,7 @@ public class AuthorityController {
         Result result = new Result();
         result.setData(trees);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -76,9 +77,9 @@ public class AuthorityController {
             delAuth.setYnFlag("0");
             delAuth.setEditor(UserContext.getCurrentUser().getAccount());
             delAuth.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(authorityService.updateById(delAuth),"删除成功",null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(authorityService.updateById(delAuth),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "删除失败", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

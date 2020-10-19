@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Inform;
 import com.story.storyadmin.domain.entity.sysmgr.LoginLog;
 import com.story.storyadmin.domain.entity.sysmgr.User;
@@ -67,7 +68,7 @@ public class LoginLogController {
         logger.info("",list.getRecords());
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -88,9 +89,9 @@ public class LoginLogController {
             delLog.setYnFlag("0");
             delLog.setEditor(UserContext.getCurrentUser().getAccount());
             delLog.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(loginLogService.updateById(delLog),null,null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(loginLogService.updateById(delLog),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -119,9 +120,9 @@ public class LoginLogController {
                 delLog.setModifiedTime(Date.from(Instant.now()));
                 loginLogService.updateById(delLog);
             }
-            result=new Result(true,"批量删除成功",null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(true,"批量删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "批量删除失败", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "批量删除失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -148,7 +149,7 @@ public class LoginLogController {
         IPage<LoginLog> list = loginLogService.page(page, eWrapper);
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 

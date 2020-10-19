@@ -97,7 +97,7 @@ public class LocalFileServiceImpl implements IFileService {
             }
         }
         LOG.info("删除文件成功：" + systemFile.getFilePath());
-        return new Result(true, "删除文件成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "删除文件成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     @Override

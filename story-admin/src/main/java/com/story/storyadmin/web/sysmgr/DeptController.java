@@ -3,6 +3,7 @@ package com.story.storyadmin.web.sysmgr;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Dept;
 import com.story.storyadmin.domain.entity.sysmgr.Resource;
 import com.story.storyadmin.domain.vo.Result;
@@ -50,7 +51,7 @@ public class DeptController {
         Result result = new Result();
         result.setData(trees);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -85,9 +86,9 @@ public class DeptController {
             delRes.setYnFlag("0");
             delRes.setEditor(UserContext.getCurrentUser().getAccount());
             delRes.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(deptService.updateById(delRes),null,null, Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(deptService.updateById(delRes),null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Dept;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.DeptNode;
@@ -106,7 +107,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             dept.setModifiedTime(currentDate);
             baseMapper.insert(dept);
         }
-        return new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
 }

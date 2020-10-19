@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Resource;
 import com.story.storyadmin.domain.entity.sysmgr.RoleAuthority;
 import com.story.storyadmin.domain.vo.Result;
@@ -191,6 +192,6 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             resource.setModifiedTime(currentDate);
             baseMapper.insert(resource);
         }
-        return new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 }

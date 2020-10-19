@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Role;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
@@ -64,7 +65,7 @@ public class UserController {
         logger.info("查询出用户信息:[]",list.toString());
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -85,7 +86,7 @@ public class UserController {
         Result result = new Result();
         result.setData(userBean);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -124,9 +125,9 @@ public class UserController {
             delUser.setModifiedTime(Date.from(Instant.now()));
             // 根据用户名删除用户图片记录
             imageFileService.deleteImage(user.getAvatar());
-            result=new Result(userService.updateById(delUser),"删除成功",null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(userService.updateById(delUser),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "删除失败", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "删除失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -200,7 +201,7 @@ public class UserController {
         logger.info("查询出的用户信息为:{}",list);
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.story.storyadmin.config.shiro.security.JwtUtil;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.LoginBody;
@@ -100,7 +101,7 @@ public class LoginController {
     public Result info(){
         Result result = new Result();
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         JSONObject json = new JSONObject();
 
         User user;

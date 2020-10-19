@@ -10,6 +10,7 @@ import com.story.storyadmin.config.shiro.security.JwtUtil;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.sysmgr.LoginLog;
 import com.story.storyadmin.domain.entity.sysmgr.User;
@@ -103,23 +104,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User userBean = this.findUserByAccount(user.getUsername());
 
         if (userBean == null) {
-            return new Result(false, "用户不存在", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "用户不存在", null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
         }
 
         //ERP账号直接提示账号不存在
         if ("1".equals(userBean.getErpFlag())) {
-            return new Result(false, "账号不存在", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "账号不存在", null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
         }
 
         //md5进行密码解码
         String encodePassword = ShiroKit.md5(user.getPassword(), SecurityConsts.LOGIN_SALT);
         if (!encodePassword.equals(userBean.getPassword())) {
-            return new Result(false, "用户名或密码错误", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "用户名或密码错误", null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
         }
 
         //账号是否锁定
         if ("0".equals(userBean.getStatus())) {
-            return new Result(false, "该账号已被锁定", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "该账号已被锁定", null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
         }
 
         //生成token 返回给前端
@@ -131,7 +132,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         subject.login(token);
 
         //登录成功
-        return new Result(true, "登录成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "登录成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
@@ -160,27 +161,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //logger.info("删除了缓存中的验证码！");
 
         if (!user.getCode().equalsIgnoreCase(captcha)) {
-            return new Result(false, "验证码不正确", null, Constants.CAPTCHA_CHECK_INVALID);
+            return new Result(false, "验证码不正确", null, ResultEnum.CAPTCHA_CHECK_INVALID.getCode());
         }
 
         // 根据用户名查找用户
         User userBean = this.findUserByAccount(user.getUsername());
 
         if (userBean == null) {
-            return new Result(false, "用户不存在", null, Constants.USER_CHECK_INVALID);
+            return new Result(false, "用户不存在", null,  ResultEnum.USER_CHECK_INVALID.getCode());
         }
         //ERP账号直接提示账号不存在
         if ("1".equals(userBean.getErpFlag())) {
-            return new Result(false, "账号不存在", null, Constants.ACCOUNT_CHECK_INVALID);
+            return new Result(false, "账号不存在", null, ResultEnum.ACCOUNT_CHECK_INVALID.getCode());
         }
         //md5进行密码解码
         String encodePassword = ShiroKit.md5(user.getPassword(), SecurityConsts.LOGIN_SALT);
         if (!encodePassword.equals(userBean.getPassword())) {
-            return new Result(false, "用户名或密码错误", null, Constants.PASSWORD_CHECK_INVALID);
+            return new Result(false, "用户名或密码错误", null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
         }
         //账号是否锁定
         if ("0".equals(userBean.getStatus())) {
-            return new Result(false, "该账号已被锁定", null, Constants.ACCOUNT_LOCK_INVALID);
+            return new Result(false, "该账号已被锁定", null, ResultEnum.ACCOUNT_LOCK_INVALID.getCode());
         }
         //生成token 返回给前端
         String strToken = this.loginSuccess(userBean.getAccount(), user.getRememberMe(),response);
@@ -191,7 +192,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         subject.login(token);
 
         //登录成功
-        return new Result(true, "登录成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "登录成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
@@ -212,7 +213,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //        if ("0".equals(userBean.getStatus())) {
 //            return new Result(false, "该账号已被锁定", null, Constants.PASSWORD_CHECK_INVALID);
 //        }
-        return new Result(true, "登录成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "登录成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
@@ -289,7 +290,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             User existUser = this.findUserByAccount(user.getAccount());
             if (existUser != null) {
                 //账号已存在
-                return new Result(false, "账号已经存在");
+                return new Result(false, ResultEnum.ACCOUNT_CHECK_USERED.getMsg(), null, ResultEnum.ACCOUNT_CHECK_USERED.getCode());
             } else {
                 //保存密码
                 if (!StringUtils.isEmpty(user.getPassword())) {
@@ -325,22 +326,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 //更新用户
                 baseMapper.updateById(user);
             } else {
-                return new Result(false, "账号不能修改", null, Constants.PARAMETERS_MISSING);
+                return new Result(false, ResultEnum.ACCOUNT_CANNOT_UPDATE.getMsg(), null, ResultEnum.ACCOUNT_CANNOT_UPDATE.getCode());
             }
         }
-        return new Result(true, "修改成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     @Override
     public Result findUserRole(Long userId) {
         List<Long> auths = baseMapper.selectRoleByUserId(userId);
-        return new Result(true, null, auths, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, null, auths, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     @Override
     public Result findUserRole(String userName) {
         List<String> roleName = baseMapper.selectRoleByAccount(userName);
-        return new Result(true, null, roleName, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, null, roleName, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
@@ -376,7 +377,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //批量插入用户角色关系表
         baseMapper.batchInsertUserRole(authList);
 
-        return new Result(true, null, null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, null, null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
@@ -413,16 +414,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     //修改用户信息 TODO 根据条件查询并修改用户信息
                     baseMapper.update(entity, wrapper);
 
-                    return new Result(true, "修改成功", null, Constants.TOKEN_CHECK_SUCCESS);
+                    return new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
                 } else {
                     //原始密码错误，是你输入的原始密码自己记错了
-                    return new Result(false, "原密码错误", null, Constants.PASSWORD_CHECK_INVALID);
+                    return new Result(false, ResultEnum.PASSWORD_CHECK_INVALID.getMsg(), null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
                 }
             } else {
-                return new Result(false, "参数不完整", null, Constants.PARAMETERS_MISSING);
+                return new Result(false, ResultEnum.PARAMETERS_MISSING.getMsg(), null, ResultEnum.PARAMETERS_MISSING.getCode());
             }
         }
-        return new Result(false, "参数不完整", null, Constants.PARAMETERS_MISSING);
+        return new Result(false, ResultEnum.PARAMETERS_MISSING.getMsg(), null, ResultEnum.PARAMETERS_MISSING.getCode());
     }
 
     public User selectUserById(Long id) {

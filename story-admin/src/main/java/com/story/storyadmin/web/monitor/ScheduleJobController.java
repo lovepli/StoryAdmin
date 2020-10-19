@@ -8,6 +8,7 @@ import com.story.storyadmin.common.exception.StoryServiceException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.sysmgr.ScheduleJob;
 import com.story.storyadmin.domain.vo.Result;
@@ -68,7 +69,7 @@ public class ScheduleJobController {
         IPage<ScheduleJob> list = scheduleJobService.page(page, eWrapper);
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -86,7 +87,7 @@ public class ScheduleJobController {
         Result result = new Result();
         result.setData(scheduleJobBean);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -130,7 +131,7 @@ public class ScheduleJobController {
             // 新增定时任务
             storySchedulerService.addJob(scheduleJob.getJobId(), scheduleJob.getJobClass(), scheduleJob.getCron(), scheduleJob.getStartTime(), startJob);
         }
-        return new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
@@ -150,11 +151,11 @@ public class ScheduleJobController {
             delScheduleJob.setYnFlag("0");
             delScheduleJob.setEditor(UserContext.getCurrentUser().getAccount());
             delScheduleJob.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(scheduleJobService.updateById(delScheduleJob),null,null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(scheduleJobService.updateById(delScheduleJob),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
 
             storySchedulerService.removeJob(scheduleJob.getJobId());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -169,7 +170,7 @@ public class ScheduleJobController {
     public Result getJobCombo() {
         // 返沪任务编号jobId，任务名称jobName，任务类名jobClass
         List<ScheduleJob> jobList= scheduleJobService.findScheduleJobCombo();
-        return new Result(true, "", jobList ,Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "", jobList ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**

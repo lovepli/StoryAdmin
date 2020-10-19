@@ -12,8 +12,7 @@ import lombok.Getter;
 public enum ResultEnum {
 
     //验证成功
-   // public static final Integer TOKEN_CHECK_SUCCESS = 20000;
-
+    TOKEN_CHECK_SUCCESS(20000,"接口验证成功"),
 
     /**********************校验相关***********************/
     PASSWORD_CHECK_INVALID(30001,"密码错误"),
@@ -28,6 +27,8 @@ public enum ResultEnum {
     USER_CHECK_INVALID(40001,"用户不存在"),
     ACCOUNT_CHECK_INVALID(40002,"账号不存在"),
     ACCOUNT_LOCK_INVALID(40003,"账号已被锁定"),
+    ACCOUNT_CHECK_USERED(40004,"账号已经存在"),
+    ACCOUNT_CANNOT_UPDATE(40005,"账号不能修改"),
 
     /**********************token相关***********************/
     TOKEN_CHECK_ILLEFALITY_ERROR(60001,"非法token"),

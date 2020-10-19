@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.story.storyadmin.config.shiro.LoginUser;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.common.ISyncCacheService;
 import com.story.storyadmin.utils.JedisUtils;
@@ -250,7 +251,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
             Result result = new Result();
             result.setResult(false);
-            result.setCode(Constants.TOKEN_CHECK_STALE_DATED);
+            result.setCode(ResultEnum.TOKEN_CHECK_STALE_DATED.getCode());
             result.setMessage(msg);
             // 将结果响应给前端
             out.append(JSON.toJSONString(result));
