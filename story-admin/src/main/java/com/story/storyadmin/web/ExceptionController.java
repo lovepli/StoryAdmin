@@ -71,7 +71,7 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     public Result exception(Exception e, HttpServletRequest request) {
 
-         // 如果是自定义的异常
+         // 如果是自定义的异常 业务异常
         if(e instanceof CustomException){
             logger.error("【自定义异常】:{}",e);
             CustomException customException = (CustomException)e;
