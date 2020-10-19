@@ -416,8 +416,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
                     return new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
                 } else {
-                    //原始密码错误，是你输入的原始密码自己记错了
-                    return new Result(false, ResultEnum.PASSWORD_CHECK_INVALID.getMsg(), null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
+                    //原始密码错误，是你输入的原始密码自己记错了 TODO 后台返回的逻辑错误提示和前台写死的展示错误提示信息，什么情况用哪个，怎么区别？
+                    return new Result(false, "原密码错误!", null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
                 }
             } else {
                 return new Result(false, ResultEnum.PARAMETERS_MISSING.getMsg(), null, ResultEnum.PARAMETERS_MISSING.getCode());
@@ -426,6 +426,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return new Result(false, ResultEnum.PARAMETERS_MISSING.getMsg(), null, ResultEnum.PARAMETERS_MISSING.getCode());
     }
 
+    @Override
     public User selectUserById(Long id) {
         return baseMapper.selectById(id);
     }

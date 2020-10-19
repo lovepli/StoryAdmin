@@ -62,7 +62,7 @@ public class UserController {
         QueryWrapper<User> eWrapper = new QueryWrapper(user);
         eWrapper.eq("yn_flag", "1");
         IPage<User> list = userService.page(page, eWrapper);
-        logger.info("查询出用户信息:[]",list.toString());
+        logger.info("查询出用户信息:{}",list);
         result.setData(list);
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
@@ -96,7 +96,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @SysLogAnnotation
+    //@SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
@@ -110,7 +110,7 @@ public class UserController {
      * @return
      */
     @Transactional
-    @SysLogAnnotation
+   // @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="删除用户信息")
     @RequiresPermissions("sysmgr.user.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
@@ -125,6 +125,7 @@ public class UserController {
             delUser.setModifiedTime(Date.from(Instant.now()));
             // 根据用户名删除用户图片记录
             imageFileService.deleteImage(user.getAvatar());
+            // TODO 为什么这个"删除成功"没有在前端显示出来？？
             result=new Result(userService.updateById(delUser),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
             result = new Result(false, "删除失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
@@ -173,7 +174,7 @@ public class UserController {
      * @param userPassword
      * @return
      */
-    @SysLogAnnotation
+    //@SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="修改密码")
     @RequiresAuthentication
     @RequestMapping(value="/editpassword",method = {RequestMethod.POST})
