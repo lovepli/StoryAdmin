@@ -75,7 +75,7 @@ service.interceptors.response.use(
       // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
       // 可以在vm实例中通过this.$message(options)方法来调用出message，也可以通过在文件中单独引入Message,通过Message(options)来调用
       Message({
-        message: res.msg ? res.msg : '请求错误',
+        message: res.message ? res.message : '请求错误',
         type: 'error',
         duration: 3 * 1000 // 持续事件后主动关闭消息弹框
       })
@@ -97,7 +97,7 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.msg || '请求错误'))
+      return Promise.reject(new Error(res.message || '请求错误'))
     } else {
       // console.log('service.interceptors.response return data')
       return res // 返回请求成功结果
