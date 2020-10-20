@@ -226,11 +226,6 @@ export default {
               this.$refs.dataList.fetchData();
             });
           }
-          // 删除成功的提示信息
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
         })
         .catch(() => {
           // 删除失败的提示信息

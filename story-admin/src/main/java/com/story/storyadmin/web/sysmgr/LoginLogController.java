@@ -89,9 +89,9 @@ public class LoginLogController {
             delLog.setYnFlag("0");
             delLog.setEditor(UserContext.getCurrentUser().getAccount());
             delLog.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(loginLogService.updateById(delLog),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            result=new Result(loginLogService.updateById(delLog),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -153,8 +153,7 @@ public class LoginLogController {
         return result;
     }
 
-//    @Log(title = "登陆日志", businessType = BusinessType.EXPORT)
-//    @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")
+    @ApiOperation(value = "登录日志" ,  notes="导出登录日志")
     @RequiresPermissions("sysmgr.loginlog.query")
     @GetMapping("/export")
     public Result export(LoginLog loginLog,

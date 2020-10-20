@@ -122,14 +122,10 @@ export default {
         return delLoginLogs(ids);
       }).then(() => {
         this.$refs.dataList.fetchData();
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
       }).catch(function() {
         this.$message({
           type: 'info',
-          message: '删除失败！'
+          message: '已取消删除'
         });
       });
     },
@@ -164,11 +160,6 @@ export default {
               this.$refs.dataList.fetchData();
             });
           }
-          // 删除成功的提示信息
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
         })
         .catch(() => {
           // 删除失败的提示信息

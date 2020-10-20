@@ -169,6 +169,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
      */
     @Override
     public Result persist(Resource resource) {
+        Result result = null;
         Date currentDate= Date.from(Instant.now());
         //fullId
         if(resource.getPid()!=null && resource.getPid()>0){
@@ -184,6 +185,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             resource.setEditor(UserContext.getCurrentUser().getAccount());
             resource.setModifiedTime(currentDate);
             baseMapper.updateById(resource);
+            result= new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
             resource.setYnFlag("1");
             resource.setEditor(UserContext.getCurrentUser().getAccount());
@@ -191,7 +193,8 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             resource.setCreatedTime(currentDate);
             resource.setModifiedTime(currentDate);
             baseMapper.insert(resource);
+            result= new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
-        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
     }
 }

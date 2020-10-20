@@ -76,11 +76,9 @@ public class LocalFileServiceImpl implements IFileService {
         Attachment systemFile = attachmentService.selectAttachmentById(fileId);
 
         if (systemFile == null) {
-           // throw new CustomException("文件不存在");
             throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "文件不存在" ,MethodUtil.getLineInfo());
         }
         if (FILE_DELETED_ON_DISK.equals(systemFile.getStatus())) {
-          //  throw new CustomException("文件不已被删除");
             throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "文件不已被删除" ,MethodUtil.getLineInfo());
         }
         systemFile.setDeleteDate(new Date());
@@ -92,7 +90,6 @@ public class LocalFileServiceImpl implements IFileService {
         File file = new File(systemFile.getRealFileName());
         if (file.exists()) {
             if (!file.delete()) {
-              //  throw new CustomException("删除失败");
                 throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "删除失败" ,MethodUtil.getLineInfo());
             }
         }

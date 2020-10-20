@@ -100,9 +100,14 @@ public class RoleColtroller {
             delRole.setYnFlag("0");
             delRole.setEditor(UserContext.getCurrentUser().getAccount());
             delRole.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(roleService.updateById(delRole),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            Role userRole= roleService.getById(role.getId());
+            if (userRole.getName().equals("admin")){
+                result = new Result(false, "管理员账号不能修改!", null , ResultEnum.ACCOUNT_CANNOT_UPDATE.getCode());
+            }else{
+                result=new Result(roleService.updateById(delRole),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            }
         }else{
-            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

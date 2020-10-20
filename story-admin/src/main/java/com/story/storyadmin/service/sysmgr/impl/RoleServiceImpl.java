@@ -59,12 +59,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public Result persist(Role role) {
+        Result result ;
         Date currentDate= Date.from(Instant.now());
         //修改
         if(role.getId() != null){
             role.setEditor(UserContext.getCurrentUser().getAccount());
             role.setModifiedTime(currentDate);
             baseMapper.updateById(role);
+            result= new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
             role.setYnFlag("1");
             role.setEditor(UserContext.getCurrentUser().getAccount());
@@ -72,8 +74,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             role.setCreatedTime(currentDate);
             role.setModifiedTime(currentDate);
             baseMapper.insert(role);
+            result= new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
-        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
     }
 
     /**
@@ -107,7 +110,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         //批量插入角色权限关系到数据库表
         roleAuthorityService.batchInsert(authList);
 
-        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return new Result(true,"修改权限成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     /**
