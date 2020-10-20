@@ -89,10 +89,12 @@ public class DictController {
     @RequiresPermissions("baseinfo.dict.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Dict dict){
+        Result result ;
         if(dict.getId()!= null){
             dict.setModifiedTime(Date.from(Instant.now()));
             dict.setEditor(UserContext.getCurrentUser().getAccount());
             dictService.updateById(dict);
+            result= new Result(true, "修改成功", dict, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
             //父编码设置为空
             dict.setParentCode("");
@@ -102,10 +104,8 @@ public class DictController {
             dict.setCreatedTime(Date.from(Instant.now()));
             dict.setCreator(UserContext.getCurrentUser().getAccount());
             dictService.save(dict);
+            result= new Result(true, "添加成功", dict, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
-        Result result = new Result();
-        result.setData(dict);
-        result.setResult(true);
         return result;
     }
 
@@ -127,9 +127,9 @@ public class DictController {
             delDict.setYnFlag("0");
             delDict.setEditor(UserContext.getCurrentUser().getAccount());
             delDict.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(dictService.updateById(delDict),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            result=new Result(dictService.updateById(delDict),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -148,6 +148,7 @@ public class DictController {
         Result result = new Result();
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         result.setResult(true);
+        result.setMessage("批量保存成功");
         return result;
     }
 }

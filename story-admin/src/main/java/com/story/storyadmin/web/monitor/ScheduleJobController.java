@@ -101,6 +101,7 @@ public class ScheduleJobController {
     @RequiresPermissions("monitor.schedulejob.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody ScheduleJob scheduleJob){
+        Result result = null;
         // 任务状态判断
         boolean startJob = scheduleJob.getStartJob() != null ? scheduleJob.getStartJob().booleanValue() : false;
 
@@ -121,7 +122,7 @@ public class ScheduleJobController {
                 // 暂停指定jobId的定时任务
                 storySchedulerService.pauseJob(scheduleJob.getJobId());
             }
-
+            result= new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
             scheduleJob.setCreator(UserContext.getCurrentUser().getAccount());
             scheduleJob.setCreatedTime(currentDate);
@@ -130,8 +131,9 @@ public class ScheduleJobController {
             scheduleJobService.save(scheduleJob);
             // 新增定时任务
             storySchedulerService.addJob(scheduleJob.getJobId(), scheduleJob.getJobClass(), scheduleJob.getCron(), scheduleJob.getStartTime(), startJob);
+            result= new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
-        return new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
     }
 
     /**
@@ -151,11 +153,10 @@ public class ScheduleJobController {
             delScheduleJob.setYnFlag("0");
             delScheduleJob.setEditor(UserContext.getCurrentUser().getAccount());
             delScheduleJob.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(scheduleJobService.updateById(delScheduleJob),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-
             storySchedulerService.removeJob(scheduleJob.getJobId());
+            result=new Result(scheduleJobService.updateById(delScheduleJob),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

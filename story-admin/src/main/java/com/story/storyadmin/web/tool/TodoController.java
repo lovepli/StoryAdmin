@@ -105,6 +105,7 @@ public class TodoController {
             todoService.save(todo);
         }
         result.setResult(true);
+        result.setMessage("保存成功");
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
@@ -126,9 +127,9 @@ public class TodoController {
             delTodo.setYnFlag("0");
             delTodo.setEditor(UserContext.getCurrentUser().getAccount());
             delTodo.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(todoService.updateById(delTodo),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            result=new Result(todoService.updateById(delTodo),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

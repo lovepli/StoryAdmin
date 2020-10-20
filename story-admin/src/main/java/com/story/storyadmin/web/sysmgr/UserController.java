@@ -181,7 +181,7 @@ public class UserController {
      * @param userPassword
      * @return
      */
-    //@SysLogAnnotation
+    @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="修改密码")
     @RequiresAuthentication
     @RequestMapping(value="/editpassword",method = {RequestMethod.POST})

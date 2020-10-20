@@ -70,7 +70,9 @@ public class SystemLogoutFilter extends LogoutFilter {
         PrintWriter out = null;
         try {
             out = response.getWriter();
-            Result result = new Result(true,null,null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            // TODO message显示出现中文乱码
+           // Result result = new Result(true,"退出登录成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            Result result = new Result(true,"login out",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
             out.append(JSON.toJSONString(result));
         } catch (IOException e) {
             logger.error("返回Response信息出现IOException异常:" + e.getMessage());

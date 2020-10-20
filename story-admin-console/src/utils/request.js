@@ -101,7 +101,7 @@ service.interceptors.response.use(
     } else {
       // console.log('service.interceptors.response return data')
       // 将后台接口调用的message结果响应显示在前端页面 ,result可以要也可以不要，result表示接口调用结果，true为成功，false为失败
-      // if (res.message !== null && res.result === true) {
+      // if (res.message !== null) {
       if (res.message !== null && res.result === true) {
         Message({
           message: res.message,
