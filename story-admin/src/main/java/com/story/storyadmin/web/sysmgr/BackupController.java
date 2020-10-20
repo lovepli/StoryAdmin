@@ -94,9 +94,9 @@ public class BackupController {
             delBackup.setYnFlag("0");
             delBackup.setEditor(UserContext.getCurrentUser().getAccount());
             delBackup.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(backupService.updateById(delBackup),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            result=new Result(backupService.updateById(delBackup),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null , ResultEnum.PARAMETERS_MISSING.getCode());
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

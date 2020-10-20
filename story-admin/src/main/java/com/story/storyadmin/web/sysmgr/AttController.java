@@ -86,9 +86,9 @@ public class AttController {
     public Result dropById(@RequestBody Att att){
         Result result ;
         if(att.getId()!=null){
-            result=new Result(attService.removeById(att.getId()),null,null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            result=new Result(attService.removeById(att.getId()),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,ResultEnum.PARAMETERS_MISSING.getCode());
+            result = new Result(false, "删除失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -105,9 +105,7 @@ public class AttController {
     @RequestMapping(value="/upload",method = {RequestMethod.POST})
     public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
         Att att= attService.save(request.getRequestURI(),file,"第一批次");
-
-        Result result = new Result(true,"上传成功",att,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        return result;
+        return new Result(true,"上传成功",att,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
 

@@ -70,7 +70,7 @@ service.interceptors.response.use(
      * code为非20000是抛错
      */
     console.log('service.interceptors.response res code=' + res.code)
-    // 成功返回结果的逻辑。根据接口定义的数据返回格式 修改判断条件
+    // 成功返回结果的逻辑。根据接口定义的数据返回格式 状态码不是20000的返回的message都是错误提示信息
     if (res.code !== undefined && res.code !== null && res.code !== 20000) {
       // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
       // 可以在vm实例中通过this.$message(options)方法来调用出message，也可以通过在文件中单独引入Message,通过Message(options)来调用
@@ -100,6 +100,15 @@ service.interceptors.response.use(
       return Promise.reject(new Error(res.message || '请求错误'))
     } else {
       // console.log('service.interceptors.response return data')
+      // 将后台接口调用的message结果响应显示在前端页面 ,result可以要也可以不要，result表示接口调用结果，true为成功，false为失败
+      // if (res.message !== null && res.result === true) {
+      if (res.message !== null && res.result === true) {
+        Message({
+          message: res.message,
+          type: 'success',
+          duration: 3 * 1000 // 持续事件主动关闭消息弹框
+        })
+      }
       return res // 返回请求成功结果
     }
   },

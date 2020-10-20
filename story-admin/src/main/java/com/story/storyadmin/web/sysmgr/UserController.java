@@ -98,7 +98,7 @@ public class UserController {
      * @param user
      * @return
      */
-    //@SysLogAnnotation
+    @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
@@ -112,7 +112,7 @@ public class UserController {
      * @return
      */
     @Transactional
-   // @SysLogAnnotation
+    @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="删除用户信息")
     @RequiresPermissions("sysmgr.user.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
@@ -125,10 +125,15 @@ public class UserController {
             delUser.setYnFlag("0");
             delUser.setEditor(UserContext.getCurrentUser().getAccount());
             delUser.setModifiedTime(Date.from(Instant.now()));
-            // 根据用户名删除用户图片记录
-            imageFileService.deleteImage(user.getAvatar());
-            // TODO 为什么这个"删除成功"没有在前端显示出来？？
-            result=new Result(userService.updateById(delUser),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            // 根据ID查找用户
+            User userInfo=userService.selectUserById(user.getId());
+            if (userInfo.getAccount().equals("admin")){
+                result = new Result(false, "管理员账号不能修改!", null ,ResultEnum.ACCOUNT_CANNOT_UPDATE.getCode());
+            }else {
+                // 根据用户名删除用户图片记录
+                imageFileService.deleteImage(user.getAvatar());
+                result=new Result(userService.updateById(delUser),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            }
         }else{
             result = new Result(false, "删除失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }

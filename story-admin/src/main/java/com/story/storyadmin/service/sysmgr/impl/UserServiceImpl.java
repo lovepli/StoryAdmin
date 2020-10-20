@@ -282,7 +282,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public Result persist(User user) {
-
+        Result result = null;
         //当前系统日期
         Date currentDate = Date.from(Instant.now());
         //添加
@@ -290,7 +290,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             User existUser = this.findUserByAccount(user.getAccount());
             if (existUser != null) {
                 //账号已存在
-                return new Result(false, ResultEnum.ACCOUNT_CHECK_USERED.getMsg(), null, ResultEnum.ACCOUNT_CHECK_USERED.getCode());
+                result = new Result(false, ResultEnum.ACCOUNT_CHECK_USERED.getMsg(), null, ResultEnum.ACCOUNT_CHECK_USERED.getCode());
             } else {
                 //保存密码
                 if (!StringUtils.isEmpty(user.getPassword())) {
@@ -308,6 +308,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 user.setModifiedTime(currentDate);
                 //新增用户
                 baseMapper.insert(user);
+                result= new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
             }
         } else { //修改
             User userBean = baseMapper.selectById(user.getId());
@@ -325,11 +326,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 user.setModifiedTime(currentDate);
                 //更新用户
                 baseMapper.updateById(user);
+                result= new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
             } else {
-                return new Result(false, ResultEnum.ACCOUNT_CANNOT_UPDATE.getMsg(), null, ResultEnum.ACCOUNT_CANNOT_UPDATE.getCode());
+                result= new Result(false, ResultEnum.ACCOUNT_CANNOT_UPDATE.getMsg(), null, ResultEnum.ACCOUNT_CANNOT_UPDATE.getCode());
             }
         }
-        return new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
     }
 
     @Override

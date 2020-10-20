@@ -448,12 +448,12 @@ export default {
               this.$refs.dataList.fetchData();
             });
           }
-          // 删除成功的提示信息
+          // 删除成功的提示信息,这里是前端写死的接口调用成功的返回信息，我们要做的是接口调用成功返回的结果交由后台传递的数据来展示
           // 使用全局的Message
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+          // this.$message({
+          //   type: 'success',
+          //   message: '删除成功!'
+          // });
         })
         .catch(() => {
           // 删除失败的提示信息
