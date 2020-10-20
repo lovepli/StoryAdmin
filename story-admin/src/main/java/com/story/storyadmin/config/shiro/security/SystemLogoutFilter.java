@@ -1,7 +1,6 @@
 package com.story.storyadmin.config.shiro.security;
 
 import com.alibaba.fastjson.JSON;
-import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;

@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * 代码生成器
+ * mybatis-plus代码生成器
+ * @author sunnj
+ *
  */
 public class CodeGenerator {
     /**

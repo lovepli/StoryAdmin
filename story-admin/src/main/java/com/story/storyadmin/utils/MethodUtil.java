@@ -17,6 +17,10 @@ public class MethodUtil {
     private MethodUtil() {
     }
 
+    /**
+     * 获取报错的异常所在的行数
+     * @return
+     */
     public static String getLineInfo() {
         StackTraceElement ste = new Throwable().getStackTrace()[1];
         return ste.getFileName() + " -> " + ste.getLineNumber() + "行";

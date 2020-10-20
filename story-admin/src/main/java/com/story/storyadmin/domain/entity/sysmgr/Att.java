@@ -2,7 +2,6 @@ package com.story.storyadmin.domain.entity.sysmgr;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;

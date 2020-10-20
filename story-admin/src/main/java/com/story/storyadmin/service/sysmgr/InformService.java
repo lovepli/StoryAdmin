@@ -2,7 +2,6 @@ package com.story.storyadmin.service.sysmgr;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.story.storyadmin.domain.entity.sysmgr.Inform;
-import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 
 import java.util.Date;

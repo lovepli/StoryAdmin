@@ -2,7 +2,6 @@ package com.story.storyadmin.mapper.sysmgr;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.story.storyadmin.domain.entity.sysmgr.Attachment;
-import com.story.storyadmin.domain.vo.Result;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

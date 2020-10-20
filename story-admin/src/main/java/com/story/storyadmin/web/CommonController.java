@@ -1,6 +1,5 @@
 package com.story.storyadmin.web;
 
-import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.ImageFileService;

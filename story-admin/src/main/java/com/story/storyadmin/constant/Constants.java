@@ -6,8 +6,6 @@ package com.story.storyadmin.constant;
 public final class Constants {
 
 	/**********************通用代码 start***********************/
-	//接口验证成功
-//	public static final Integer TOKEN_CHECK_SUCCESS = 20000;
 
 	//获取条线的角色标识
 	public static final String ERP_ROLE_BL = "jr_scm_bl";

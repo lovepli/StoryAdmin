@@ -8,7 +8,6 @@ import com.story.storyadmin.config.shiro.security.JwtProperties;
 import com.story.storyadmin.config.shiro.security.JwtToken;
 import com.story.storyadmin.config.shiro.security.JwtUtil;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;

@@ -2,15 +2,11 @@ package com.story.storyadmin.web.sysmgr;
 
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Dept;
-import com.story.storyadmin.domain.entity.sysmgr.Resource;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.DeptNode;
-import com.story.storyadmin.domain.vo.sysmgr.ResourceNode;
 import com.story.storyadmin.service.sysmgr.DeptService;
-import com.story.storyadmin.service.sysmgr.ResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

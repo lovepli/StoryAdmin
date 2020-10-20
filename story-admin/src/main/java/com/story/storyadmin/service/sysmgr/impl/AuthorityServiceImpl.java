@@ -1,11 +1,8 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Authority;
 import com.story.storyadmin.domain.entity.sysmgr.RoleAuthority;

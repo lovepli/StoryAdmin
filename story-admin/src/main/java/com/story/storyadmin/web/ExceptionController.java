@@ -1,7 +1,6 @@
 package com.story.storyadmin.web;
 
 import com.story.storyadmin.common.exception.CustomException;
-import com.story.storyadmin.common.exception.BusinessException;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import org.apache.shiro.ShiroException;

@@ -1,12 +1,9 @@
 package com.story.storyadmin.domain.entity.baseinfo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.story.storyadmin.domain.entity.BaseEntity;
-import java.time.LocalDateTime;
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

@@ -1,13 +1,9 @@
 package com.story.storyadmin.web.sysmgr;
 
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.SysLog;
-import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.SysLogService;
 import io.swagger.annotations.Api;
@@ -15,8 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.Instant;
 
 /**
  * <p>

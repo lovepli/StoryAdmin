@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.config.upload.entity.CategorialFileSlot;
 import com.story.storyadmin.config.upload.entity.FileSlot;
-import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
-import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.mapper.sysmgr.AttMapper;
 import com.story.storyadmin.service.common.StorageService;
 import com.story.storyadmin.service.sysmgr.AttService;
@@ -15,7 +13,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.utils.DateUtils;
 import com.story.storyadmin.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

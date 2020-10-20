@@ -1,6 +1,5 @@
 package com.story.storyadmin.utils;
 
-import com.story.storyadmin.common.exception.BusinessException;
 import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 
