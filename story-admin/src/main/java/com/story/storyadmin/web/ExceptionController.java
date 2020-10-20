@@ -71,14 +71,13 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     public Result exception(Exception e, HttpServletRequest request) {
 
-         // 如果是自定义的异常 业务异常
+         // 如果是自定义的业务异常
         if(e instanceof CustomException){
             logger.error("【自定义异常】:{}",e);
             CustomException customException = (CustomException)e;
             logger.error("位置:{} -> 错误信息:{}", customException.getMethod() ,e.getLocalizedMessage());
             return Result.error(Objects.requireNonNull(ResultEnum.getByCode(customException.getErrorCode())));
         }else{
-            //未知异常
             //如果是系统的异常，比如空指针这些异常
             logger.error("【系统异常】:{}",e);
             // 设置响应状态码
