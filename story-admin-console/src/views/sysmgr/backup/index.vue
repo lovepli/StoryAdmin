@@ -93,10 +93,6 @@ export default {
   },
   data() {
     return {
-      // tableKey: 0,
-      // total: 0,
-      // list: null,
-      // listLoading: true,
       listQuery: {
         pageNo: 1,
         limit: 10,

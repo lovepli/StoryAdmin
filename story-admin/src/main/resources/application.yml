@@ -33,15 +33,13 @@ mybatis-plus:
     #数据库大写下划线转换
     #capital-mode: true
     #逻辑删除配置（下面3个配置）
-    #    logic-delete-value: 0
-    #    logic-not-delete-value: 1
-    #自定义SQL注入器
-    #sql-injector: com.baomidou.springboot.xxx
-    logic-delete-value: 1
-    logic-not-delete-value: 0
-    #    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    logic-delete-value: 1 #默认0
+    logic-not-delete-value: 0 #默认1
     # SQL 解析缓存，开启后多租户 @SqlParser 注解生效
     #sql-parser-cache: true
+    #自定义SQL注入器
+    #sql-injector: com.baomidou.springboot.xxx
+    #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
   configuration:
     # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
     map-underscore-to-camel-case: true

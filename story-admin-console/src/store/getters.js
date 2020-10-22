@@ -17,11 +17,16 @@ const getters = {
   roles: state => state.user.roles, // 用户角色
   permission_routers: state => state.permission.routers, // 权限路由
   addRouters: state => state.permission.addRouters, // 添加路由
-  btns: state => state.permission.btns // 权限按钮？
+  btns: state => state.permission.btns, // 权限按钮？
   // 也可以写成下面这样，上面的写法是es6语法糖
   // btns:(state)=>{
   //   state.permission.btns;
   // }
+  // 数据字典
+  dicts: state => state.dict.dicts,
+  pageArray: state => state.dict.pageArray,
+  defaultPageSize: state => state.dict.defaultPageSize
+
 }
 export default getters
 
