@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { fetchDictGroupList, createDictGroup, deleteDictGroup, updateDictGroup } from '@/api/dictGroup'
+import { fetchDictGroupList, createDictGroup, deleteDictGroup } from '@/api/dictGroup'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -192,7 +192,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          updateDictGroup(tempData).then((response) => {
+          createDictGroup(tempData).then((response) => {
             const data = response.data
             if (data.code === 0) {
               this.dialogFormVisible = false

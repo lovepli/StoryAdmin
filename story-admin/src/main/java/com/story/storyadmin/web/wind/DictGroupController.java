@@ -3,12 +3,15 @@ package com.story.storyadmin.web.wind;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.wind.DictGroup;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.WDictDto;
 import com.story.storyadmin.service.wind.IDictGroupService;
+import com.story.storyadmin.utils.MethodUtil;
+import com.story.storyadmin.utils.wind.DictUtils;
 import com.story.storyadmin.utils.wind.StringUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,7 +25,7 @@ import java.util.Date;
 
 @Api(description = "W字典组管理")
 @RestController
-@RequestMapping("/sys/dict/group")
+@RequestMapping(value="/sys/dict/group")
 public class DictGroupController {
 
     private static final Logger logger = LoggerFactory.getLogger(DictGroupController.class);
@@ -37,8 +40,8 @@ public class DictGroupController {
      * @param wDictDto
      * @throws IOException
      */
-    @GetMapping(value = "list")
-    @RequiresPermissions("sys:dict:group:list")
+    @RequiresPermissions("sys.dict.group.query")
+    @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(WDictDto wDictDto,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit){
@@ -62,8 +65,8 @@ public class DictGroupController {
         return result;
     }
 
-    @PostMapping("add")
-    @RequiresPermissions("sys:dict:group:add")
+    @RequiresPermissions("sys.dict.group.save")
+    @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody DictGroup dictGroup){
         Result result ;
         if(dictGroup.getId()!= null){
@@ -85,8 +88,8 @@ public class DictGroupController {
         return result;
     }
 
-    @RequiresPermissions("sys:dict:group:delete")
-    @PostMapping("/delete")
+    @RequiresPermissions("sys.dict.group.delete")
+    @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody DictGroup dictGroup){
         Result result ;
         if(dictGroup.getId()!=null){
@@ -102,17 +105,18 @@ public class DictGroupController {
         return result;
     }
 
-//    @RequestMapping(value = "/forceRefresh", method = RequestMethod.POST)
-//    @ResponseBody
-//    @RequiresPermissions("sys:dict:force:refresh")
-//    public String forceRefresh(HttpServletRequest request, HttpServletResponse response) {
-//        try {
-//            // DictUtils.clear();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return Response.error("字典刷新失败" + e.getMessage());
-//        }
-//        return Response.ok("字典刷新成功");
-//    }
 
+    @RequiresPermissions("sys.dict.force.refresh")
+    @RequestMapping(value = "/forceRefresh", method = RequestMethod.POST)
+    public Result forceRefresh() {
+        Result result ;
+        try {
+            DictUtils.clear();
+            result= new Result(true, "字典刷新成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "字典刷新失败", MethodUtil.getLineInfo());
+        }
+        return result;
+    }
 }

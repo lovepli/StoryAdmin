@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { fetchDictList, createDict, deleteDict, updateDict } from '@/api/dict'
+import { fetchDictList, createDict, deleteDict } from '@/api/dict'
 import waves from '@/directive/waves' // 水波纹指令
 import store from '@/store'
 
@@ -100,6 +100,7 @@ export default {
         type: undefined
       },
       showReviewer: false,
+      // 临时对象
       temp: {
         id: undefined,
         label: '',
@@ -181,9 +182,10 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          // 添加
           createDict(this.temp).then((response) => {
             const data = response.data
-            if (data.code === 0) {
+            if (data.code === 20000) {
               store.dispatch('dict/GetDicts').then(() => {
                 console.log('数据字典加载成功...')
               })
@@ -192,7 +194,28 @@ export default {
               this.$message.success('创建成功')
               this.getList()
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(data.message)
+            }
+          })
+        }
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          // 修改
+          createDict(tempData).then((response) => {
+            const data = response.data
+            if (data.code === 20000) {
+              store.dispatch('dict/GetDicts').then(() => {
+                console.log('数据字典加载成功...')
+              })
+              this.dialogFormVisible = false
+              this.$message.success('更新成功')
+              this.getList()
+            } else {
+              this.$message.error(data.message)
             }
           })
         }
@@ -206,26 +229,7 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    updateData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          updateDict(tempData).then((response) => {
-            const data = response.data
-            if (data.code === 0) {
-              store.dispatch('dict/GetDicts').then(() => {
-                console.log('数据字典加载成功...')
-              })
-              this.dialogFormVisible = false
-              this.$message.success('更新成功')
-              this.getList()
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
-        }
-      })
-    },
+
     handleDelete(row) {
       this.$confirm('确定删除该数据吗?', '提示', {
         confirmButtonText: '确定',

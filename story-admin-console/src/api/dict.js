@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// 取出字典
 export function fetchDicts() {
   return request({
     url: '/sys/dict',
@@ -7,41 +8,30 @@ export function fetchDicts() {
   })
 }
 
-export function fetchDictList(query) {
+// 查看列表
+export function fetchDictList(params) {
   return request({
     url: '/sys/dict/list',
     method: 'get',
-    params: query
+    params
   })
 }
 
-export function fetchDict() {
+// 保存
+export function createDict(param) {
   return request({
-    url: '/sys/dict/detail',
-    method: 'get'
-  })
-}
-
-export function createDict(data) {
-  return request({
-    url: '/sys/dict/add',
+    url: '/sys/dict/save',
     method: 'post',
-    data
+    data: param
   })
 }
 
-export function updateDict(data) {
+// 删除
+export function deleteDict(param) {
   return request({
-    url: '/sys/dict/update',
+    url: '/sys/dict/delete',
     method: 'post',
-    data
-  })
-}
-
-export function deleteDict(id) {
-  return request({
-    url: '/sys/dict/delete/' + id,
-    method: 'post'
+    data: param
   })
 }
 

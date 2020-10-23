@@ -3,9 +3,12 @@ package com.story.storyadmin.web.wind;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.wind.WDict;
+import com.story.storyadmin.utils.MethodUtil;
+import com.story.storyadmin.utils.wind.DictUtils;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.WDictDto;
 import com.story.storyadmin.service.wind.IDictService;
@@ -23,10 +26,10 @@ import java.util.Date;
 
 @Api(description = "W字典管理")
 @RestController
-@RequestMapping("/sys/dict")
-public class DictController{
+@RequestMapping(value="/sys/dict")
+public class WDictController {
 
-    private static final Logger logger = LoggerFactory.getLogger(DictController.class);
+    private static final Logger logger = LoggerFactory.getLogger(WDictController.class);
 
     @Autowired
     private IDictService dictService;
@@ -36,16 +39,20 @@ public class DictController{
      *
      * @return
      */
-//    @GetMapping(value = "")
-//    public String get() {
-//        try {
-//            //放入数据字典
-//            return Response.successJson(DictUtils.getDict());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return Response.error("获取失败");
-//        }
-//    }
+    @RequiresPermissions("sys.dict.query")
+    @GetMapping(value = "")
+    public Result get() {
+        Result result ;
+        try {
+            System.out.println("############"+DictUtils.getDict());
+            //放入数据字典
+            result= new Result(true, "获取成功", DictUtils.getDict(), ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "获取失败", MethodUtil.getLineInfo());
+        }
+        return result;
+    }
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
@@ -54,8 +61,8 @@ public class DictController{
      * @throws IOException
      */
     @ApiOperation(value = "字典信息" ,  notes="查询字典列表信息")
-    @GetMapping(value = "list")
-    @RequiresPermissions("sys:dict:list")
+    @RequiresPermissions("sys.dict.query")
+    @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(WDictDto wDictDto,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit){
@@ -88,8 +95,8 @@ public class DictController{
      * @param wDict
      * @return
      */
-    @PostMapping("add")
-    @RequiresPermissions("sys:dict:add")
+    @RequiresPermissions("sys.dict.save")
+    @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody WDict wDict){
         Result result ;
         if(wDict.getId()!= null){
@@ -112,9 +119,8 @@ public class DictController{
     }
 
 
-
-    @PostMapping("delete")
-    @RequiresPermissions("sys:dict:delete")
+    @RequiresPermissions("sys.dict.delete")
+    @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody WDict wDict){
         Result result ;
         if(wDict.getId()!=null){
@@ -130,8 +136,13 @@ public class DictController{
         return result;
     }
 
-    @PostMapping("batch/delete")
-    @RequiresPermissions("sys:dict:delete")
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequiresPermissions("sys.dict.delete")
+    @PostMapping("/batch/delete")
     public Result dropByIds(@RequestParam("ids") Long[] ids){
         Result result ;
         // 删除数组集合，直接删除数据库中的数据

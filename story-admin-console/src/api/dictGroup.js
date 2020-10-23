@@ -1,40 +1,26 @@
 import request from '@/utils/request'
 
-export function fetchDictGroupList(query) {
+export function fetchDictGroupList(params) {
   return request({
     url: '/sys/dict/group/list',
     method: 'get',
-    params: query
+    params
   })
 }
 
-export function fetchDictGroup() {
+export function createDictGroup(param) {
   return request({
-    url: '/sys/dict/group/detail',
-    method: 'get'
-  })
-}
-
-export function createDictGroup(data) {
-  return request({
-    url: '/sys/dict/group/add',
+    url: '/sys/dict/group/save',
     method: 'post',
-    data
+    data: param
   })
 }
 
-export function updateDictGroup(data) {
+export function deleteDictGroup(param) {
   return request({
-    url: '/sys/dict/group/update',
+    url: '/sys/dict/group/delete/' + param,
     method: 'post',
-    data
-  })
-}
-
-export function deleteDictGroup(id) {
-  return request({
-    url: '/sys/dict/group/delete/' + id,
-    method: 'post'
+    data: param
   })
 }
 

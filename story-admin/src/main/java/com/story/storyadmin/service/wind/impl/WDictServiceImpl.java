@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DictServiceImpl extends ServiceImpl<WDictMapper, WDict> implements IDictService {
+public class WDictServiceImpl extends ServiceImpl<WDictMapper, WDict> implements IDictService {
     @Override
     public List<WDict> selectDictList() {
         return  baseMapper.selectDictList();

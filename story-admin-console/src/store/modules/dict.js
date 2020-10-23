@@ -2,8 +2,8 @@ import { fetchDicts } from '@/api/dict'
 
 const state = {
   dicts: [],
-  pageArray: [25, 50, 100, 150],
-  defaultPageSize: 25
+  pageArray: [10, 20, 30, 50, 100],
+  defaultPageSize: 10
 }
 
 const mutations = {

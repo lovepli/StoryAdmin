@@ -39,6 +39,7 @@ export default {
     }
   },
   methods: {
+    // 字典刷新
     onRefreshDicts: function(row) {
       this.dictGroupName = row.name
       this.$refs.dict.refreshGroupDict(row)
