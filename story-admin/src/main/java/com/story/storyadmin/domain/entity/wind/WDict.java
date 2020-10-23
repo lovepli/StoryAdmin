@@ -1,19 +1,47 @@
 package com.story.storyadmin.domain.entity.wind;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.*;
+import com.story.storyadmin.domain.entity.BaseEntity;
+import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 数据Entity类
- *
- * @param <ID> 主键类型
- * @version 2016-12-03
- */
-public abstract class DataEntity<ID> extends AbstractEntity<ID> {
+
+@Data
+@TableName("sys_dict")
+public class WDict extends BaseEntity<WDict> {
 
     private static final long serialVersionUID = 1L;
+
+
+    /**
+     * 分组ID
+     */
+    @TableField(value = "gid")
+    private Long gid;
+    /**
+     * 键值名称
+     */
+    @TableField(value = "label")
+    private String label;
+    /**
+     * 值
+     */
+    @TableField(value = "value")
+    private String value;
+
+    /**
+     * 排序
+     */
+    @TableField(value = "sort")
+    private Integer sort;
+    /**
+     * 分组code
+     */
+    @TableField(exist = false)
+    private String code;
+
 
     @TableField(value = "remarks")
     protected String remarks; // 备注
@@ -33,8 +61,9 @@ public abstract class DataEntity<ID> extends AbstractEntity<ID> {
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
     protected String delFlag = "0"; // 删除标记（0：正常；1：删除 ）
 
-    public DataEntity() {
-        super();
-        this.delFlag = DataBaseConstant.DEL_FLAG_NORMAL;
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
     }
+
 }

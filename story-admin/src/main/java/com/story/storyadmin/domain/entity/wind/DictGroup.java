@@ -1,19 +1,21 @@
 package com.story.storyadmin.domain.entity.wind;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.story.storyadmin.domain.entity.BaseEntity;
+import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
+
+@Data
 @TableName("sys_dict_group")
-@SuppressWarnings("serial")
-public class DictGroup extends DataEntity<String> {
+public class DictGroup extends BaseEntity<DictGroup> {
 
-    /**
-     * 主键
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private static final long serialVersionUID = 1L;
+
     /**
      * 分组名称
      */
@@ -26,62 +28,27 @@ public class DictGroup extends DataEntity<String> {
     @TableField(value = "code")
     private String code;
 
+    @TableField(value = "remarks")
+    private String remarks; // 备注
 
-    /**
-     * 获取 code
-     *
-     * @return: String 分组编码
-     */
-    public String getCode() {
-        return this.code;
-    }
+    @TableField(value = "create_by", fill = FieldFill.INSERT)
+    private String createBy; // 创建者
 
-    /**
-     * 设置 code
-     *
-     * @param: code
-     * 分组编码
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+    @TableField(value = "create_date", fill = FieldFill.INSERT)
+    private Date createDate; // 创建日期
 
-    /**
-     * 获取 id
-     *
-     * @return: String 主键
-     */
-    public Long getId() {
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
+    private String updateBy; // 更新者
+
+    @TableField(value = "update_date", fill = FieldFill.UPDATE)
+    private Date updateDate; // 更新日期
+
+    @TableField(value = "del_flag", fill = FieldFill.INSERT)
+    private String delFlag = "0"; // 删除标记（0：正常；1：删除 ）
+
+    @Override
+    protected Serializable pkVal() {
         return this.id;
-    }
-
-    /**
-     * 设置 id
-     *
-     * @param: id
-     * 主键
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * 获取 name
-     *
-     * @return: String 分组名称
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * 设置 name
-     *
-     * @param: name
-     * 分组名称
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
 }

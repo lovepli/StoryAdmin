@@ -109,6 +109,7 @@ public class User extends BaseEntity<User> {
   /**
      * 实体类继承Model类，必须重写pkVal方法
      * 重写这个方法，return当前类的主键
+     * peotected 访问修饰符
      * @return
      */
     @Override
