@@ -116,7 +116,7 @@ public class RoleColtroller {
      * @param roleAuth
      * @return
      */
-    @SysLogAnnotation
+    //@SysLogAnnotation
     @ApiOperation(value = "角色" ,  notes="授权，对角色进行添加/修改权限")
     @RequiresPermissions("sysmgr.role.save")
     @RequestMapping(value="/modifyAuth",method = {RequestMethod.POST})

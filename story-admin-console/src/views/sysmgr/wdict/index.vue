@@ -31,7 +31,7 @@ import dictGroup from './components/dictGroup'
 import dict from './components/dict'
 
 export default {
-  name: 'SysDictList',
+  name: 'wdict',
   components: { dictGroup, dict },
   data() {
     return {

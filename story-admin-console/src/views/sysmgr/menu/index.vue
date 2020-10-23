@@ -375,11 +375,6 @@ export default {
           param.authorityId = this.auth_path[this.auth_path.length - 1]; // 参数为权限id
           save(param).then(res => {
             this.modifyVisible = false;
-            Message({
-              message: '保存成功',
-              type: 'success',
-              duration: 5 * 1000
-            });
             // 刷新左侧菜单树
             this.loadData();
           });

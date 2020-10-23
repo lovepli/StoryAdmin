@@ -40,7 +40,7 @@ public class DictGroupController {
      * @param wDictDto
      * @throws IOException
      */
-    @RequiresPermissions("sys.dict.group.query")
+    @RequiresPermissions("sysmgr.dict.group.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(WDictDto wDictDto,
                        @RequestParam(defaultValue = "1")int pageNo,
@@ -65,7 +65,7 @@ public class DictGroupController {
         return result;
     }
 
-    @RequiresPermissions("sys.dict.group.save")
+    @RequiresPermissions("sysmgr.dict.group.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody DictGroup dictGroup){
         Result result ;
@@ -88,7 +88,7 @@ public class DictGroupController {
         return result;
     }
 
-    @RequiresPermissions("sys.dict.group.delete")
+    @RequiresPermissions("sysmgr.dict.group.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody DictGroup dictGroup){
         Result result ;
@@ -106,7 +106,7 @@ public class DictGroupController {
     }
 
 
-    @RequiresPermissions("sys.dict.force.refresh")
+    @RequiresPermissions("sysmgr.dict.force.refresh")
     @RequestMapping(value = "/forceRefresh", method = RequestMethod.POST)
     public Result forceRefresh() {
         Result result ;

@@ -39,7 +39,7 @@ public class WDictController {
      *
      * @return
      */
-    @RequiresPermissions("sys.dict.query")
+    @RequiresPermissions("sysmgr.dict.query")
     @GetMapping(value = "")
     public Result get() {
         Result result ;
@@ -61,7 +61,7 @@ public class WDictController {
      * @throws IOException
      */
     @ApiOperation(value = "字典信息" ,  notes="查询字典列表信息")
-    @RequiresPermissions("sys.dict.query")
+    @RequiresPermissions("sysmgr.dict.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(WDictDto wDictDto,
                        @RequestParam(defaultValue = "1")int pageNo,
@@ -95,7 +95,7 @@ public class WDictController {
      * @param wDict
      * @return
      */
-    @RequiresPermissions("sys.dict.save")
+    @RequiresPermissions("sysmgr.dict.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody WDict wDict){
         Result result ;
@@ -141,7 +141,7 @@ public class WDictController {
      * @param ids
      * @return
      */
-    @RequiresPermissions("sys.dict.delete")
+    @RequiresPermissions("sysmgr.dict.delete")
     @PostMapping("/batch/delete")
     public Result dropByIds(@RequestParam("ids") Long[] ids){
         Result result ;
