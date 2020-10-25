@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchDictGroupList(params) {
   return request({
-    url: '/sys/dict/group/list',
+    url: '/sysmgr/dict/group/list',
     method: 'get',
     params
   })
@@ -10,7 +10,7 @@ export function fetchDictGroupList(params) {
 
 export function createDictGroup(param) {
   return request({
-    url: '/sys/dict/group/save',
+    url: '/sysmgr/dict/group/save',
     method: 'post',
     data: param
   })
@@ -18,7 +18,7 @@ export function createDictGroup(param) {
 
 export function deleteDictGroup(param) {
   return request({
-    url: '/sys/dict/group/delete/' + param,
+    url: '/sysmgr/dict/group/delete/',
     method: 'post',
     data: param
   })

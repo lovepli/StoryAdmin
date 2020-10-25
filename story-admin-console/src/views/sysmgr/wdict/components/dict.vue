@@ -39,7 +39,7 @@
       <div class="pagination-container">
         <el-pagination
           :current-page.sync="listQuery.page"
-          :page-sizes="pageArray"
+          :page-sizes="[10,20,30,50,100,300,500,1000]"
           :page-size="listQuery.limit"
           :total="total"
           background
@@ -77,7 +77,6 @@
 <script>
 import { fetchDictList, createDict, deleteDict } from '@/api/dict'
 import waves from '@/directive/waves' // 水波纹指令
-import store from '@/store'
 
 export default {
   name: 'SysDictComponent',
@@ -91,10 +90,9 @@ export default {
       list: null,
       total: null,
       listLoading: false,
-      pageArray: this.$store.getters.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize,
+        limit: 10,
         importance: undefined,
         title: undefined,
         type: undefined
@@ -122,12 +120,16 @@ export default {
       downloadLoading: false
     }
   },
+  created() {
+    // 查询列表
+    this.getList()
+  },
   methods: {
     getList() {
       this.listLoading = true
-      fetchDictList(this.listQuery).then(response => {
-        this.list = response.data
-        this.total = response.data.total
+      fetchDictList(this.listQuery).then(res => {
+        this.list = res.data
+        this.total = res.data.total
         this.listLoading = false
       })
     },
@@ -160,6 +162,7 @@ export default {
         gid: this.dictGroup.id
       }
     },
+    // 刷新字典
     refreshGroupDict(row) {
       this.listQuery.gid = row.id
       this.listQuery.page = 1
@@ -180,49 +183,36 @@ export default {
       }
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          // 添加
-          createDict(this.temp).then((response) => {
-            const data = response.data
-            if (data.code === 20000) {
-              store.dispatch('dict/GetDicts').then(() => {
-                console.log('数据字典加载成功...')
-              })
-
-              this.dialogFormVisible = false
-              this.$message.success('创建成功')
-              this.getList()
-            } else {
-              this.$message.error(data.message)
-            }
-          })
+          // 添加 保存
+          createDict(this.temp).then(res => {
+            this.dialogFormVisible = false;
+            this.getList();
+          });
+        } else {
+          return false;
         }
-      })
+      });
     },
+
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
+          // copy obj
           const tempData = Object.assign({}, this.temp)
-          // 修改
-          createDict(tempData).then((response) => {
-            const data = response.data
-            if (data.code === 20000) {
-              store.dispatch('dict/GetDicts').then(() => {
-                console.log('数据字典加载成功...')
-              })
-              this.dialogFormVisible = false
-              this.$message.success('更新成功')
-              this.getList()
-            } else {
-              this.$message.error(data.message)
-            }
-          })
+          // 保存
+          createDict(tempData).then(res => {
+            this.dialogFormVisible = false;
+            this.getList();
+          });
+        } else {
+          return false;
         }
-      })
+      });
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
+      this.temp = Object.assign({}, row)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -236,19 +226,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteDict(row.id).then((response) => {
-          const data = response.data
-          if (data.code === 0) {
-            store.dispatch('dict/GetDicts').then(() => {
-              console.log('数据字典加载成功...')
-            })
-
-            this.dialogFormVisible = false
-            this.$message.success('删除成功')
-            this.getList()
-          } else {
-            this.$message.error(data.message)
-          }
+        deleteDict(row.id).then(res => {
+          this.dialogFormVisible = false;
+          this.getList();
         })
       })
     }

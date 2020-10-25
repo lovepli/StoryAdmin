@@ -22,10 +22,6 @@ const getters = {
   // btns:(state)=>{
   //   state.permission.btns;
   // }
-  // 数据字典
-  dicts: state => state.dict.dicts,
-  pageArray: state => state.dict.pageArray,
-  defaultPageSize: state => state.dict.defaultPageSize
 
 }
 export default getters

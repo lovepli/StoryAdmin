@@ -26,7 +26,7 @@ import java.util.Date;
 
 @Api(description = "W字典管理")
 @RestController
-@RequestMapping(value="/sys/dict")
+@RequestMapping(value="/sysmgr/dict")
 public class WDictController {
 
     private static final Logger logger = LoggerFactory.getLogger(WDictController.class);

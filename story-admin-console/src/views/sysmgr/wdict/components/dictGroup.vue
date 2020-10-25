@@ -40,7 +40,7 @@
       <div class="pagination-container">
         <el-pagination
           :current-page.sync="listQuery.page"
-          :page-sizes="pageArray"
+          :page-sizes="[10,20,30,50,100,300,500,1000]"
           :page-size="listQuery.limit"
           :total="total"
           background
@@ -87,10 +87,9 @@ export default {
       list: null,
       total: null,
       listLoading: true,
-      pageArray: this.$store.getters.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize,
+        limit: 10,
         importance: undefined,
         title: undefined,
         type: undefined
@@ -165,18 +164,14 @@ export default {
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          createDictGroup(this.temp).then((response) => {
-            const data = response.data
-            if (data.code === 0) {
-              this.dialogFormVisible = false
-              this.$message.success('创建成功')
-              this.getList()
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
+          createDictGroup(this.temp).then(res => {
+            this.dialogFormVisible = false;
+            this.getList();
+          });
+        } else {
+          return false;
         }
       })
     },
@@ -189,19 +184,15 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          createDictGroup(tempData).then((response) => {
-            const data = response.data
-            if (data.code === 0) {
-              this.dialogFormVisible = false
-              this.$message.success('更新成功')
-              this.getList()
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
+          createDictGroup(tempData).then(res => {
+            this.dialogFormVisible = false;
+            this.getList();
+          });
+        } else {
+          return false;
         }
       })
     },
@@ -211,15 +202,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteDictGroup(row.id).then((response) => {
-          const data = response.data
-          if (data.code === 0) {
-            this.dialogFormVisible = false
-            this.$message.success('删除成功')
-            this.getList()
-          } else {
-            this.$message.error(data.msg)
-          }
+        deleteDictGroup(row.id).then(res => {
+          this.dialogFormVisible = false;
+          this.getList();
         })
       })
     }

@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 取出字典
 export function fetchDicts() {
   return request({
-    url: '/sys/dict',
+    url: '/sysmgr/dict',
     method: 'get'
   })
 }
@@ -11,7 +11,7 @@ export function fetchDicts() {
 // 查看列表
 export function fetchDictList(params) {
   return request({
-    url: '/sys/dict/list',
+    url: '/sysmgr/dict/list',
     method: 'get',
     params
   })
@@ -20,7 +20,7 @@ export function fetchDictList(params) {
 // 保存
 export function createDict(param) {
   return request({
-    url: '/sys/dict/save',
+    url: '/sysmgr/dict/save',
     method: 'post',
     data: param
   })
@@ -29,7 +29,7 @@ export function createDict(param) {
 // 删除
 export function deleteDict(param) {
   return request({
-    url: '/sys/dict/delete',
+    url: '/sysmgr/dict/delete',
     method: 'post',
     data: param
   })

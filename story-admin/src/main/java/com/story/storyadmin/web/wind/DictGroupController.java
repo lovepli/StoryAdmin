@@ -25,7 +25,7 @@ import java.util.Date;
 
 @Api(description = "W字典组管理")
 @RestController
-@RequestMapping(value="/sys/dict/group")
+@RequestMapping(value="/sysmgr/dict/group")
 public class DictGroupController {
 
     private static final Logger logger = LoggerFactory.getLogger(DictGroupController.class);

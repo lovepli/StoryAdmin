@@ -29,6 +29,7 @@
 <script>
 import dictGroup from './components/dictGroup'
 import dict from './components/dict'
+import { fetchDicts } from '@/api/dict'
 
 export default {
   name: 'wdict',
@@ -37,6 +38,13 @@ export default {
     return {
       dictGroupName: '未选择'
     }
+  },
+  created() {
+    // 查询所有用户名
+    // debugger
+    fetchDicts().then(res => {
+      console.log(res.data.records);
+    })
   },
   methods: {
     // 字典刷新
