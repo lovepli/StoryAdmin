@@ -16,7 +16,7 @@
         from test_table a
         <include refid="tableJoins"/>
         <if test="ew.sqlSegment != '' and ew.sqlSegment != null">
-                ${ew.sqlSegment}
+            #{ew.sqlSegment}
         </if>
     </select>
 </mapper>
