@@ -3,6 +3,7 @@ package com.story.storyadmin.web.wind;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
@@ -12,6 +13,7 @@ import com.story.storyadmin.utils.wind.DictUtils;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.WDictDto;
 import com.story.storyadmin.service.wind.IDictService;
+import com.story.storyadmin.utils.wind.SpringContextHolder;
 import com.story.storyadmin.utils.wind.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Api(description = "W字典管理")
 @RestController
@@ -44,14 +49,34 @@ public class WDictController {
     public Result get() {
         Result result ;
         try {
-            System.out.println("############"+DictUtils.getDict());
-            //放入数据字典
-            result= new Result(true, "获取成功", DictUtils.getDict(), ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            System.out.println("############"+this.getDictInfo());
+            result= new Result(true, "获取成功", this.getDictInfo(), ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+           // System.out.println("############"+DictUtils.getDict());
+           // result= new Result(true, "获取成功", DictUtils.getDict(), ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "获取失败", MethodUtil.getLineInfo());
         }
         return result;
+    }
+
+    /**
+     * 查询出字典信息
+     * @return
+     */
+    private  Map<String, List<DictUtils.WDict>> getDictInfo() {
+        Map<String, List<DictUtils.WDict>> WDictMap = new HashMap<String, List<DictUtils.WDict>>();
+        // 查询数据字典列表并遍历
+        for (com.story.storyadmin.domain.entity.wind.WDict WDict : SpringContextHolder.getBean(IDictService.class).selectDictList()) {
+            List<DictUtils.WDict> WDictList = WDictMap.get(WDict.getCode());
+            if (WDictList != null) {
+                WDictList.add(new DictUtils.WDict(WDict.getLabel(), WDict.getValue()));
+            } else {
+                WDictMap.put(WDict.getCode(),
+                        Lists.newArrayList(new DictUtils.WDict(WDict.getLabel(), WDict.getValue())));
+            }
+        }
+        return WDictMap;
     }
 
     /**
@@ -161,6 +186,25 @@ public class WDictController {
             result=new Result(true,"批量删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
             result = new Result(false, "批量删除失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
+        }
+        return result;
+    }
+
+    /**
+     * 强制刷新Redis缓存
+     * @return
+     */
+    @RequiresPermissions("sysmgr.dict.force.refresh")
+    @RequestMapping(value = "/forceRefresh", method = RequestMethod.POST)
+    public Result forceRefresh() {
+        Result result ;
+        try {
+            // 从缓存中删除
+           // DictUtils.clear();
+            result= new Result(true, "字典刷新成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "字典刷新失败", MethodUtil.getLineInfo());
         }
         return result;
     }

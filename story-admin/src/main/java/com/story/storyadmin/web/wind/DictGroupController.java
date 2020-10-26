@@ -104,19 +104,4 @@ public class DictGroupController {
         }
         return result;
     }
-
-
-    @RequiresPermissions("sysmgr.dict.force.refresh")
-    @RequestMapping(value = "/forceRefresh", method = RequestMethod.POST)
-    public Result forceRefresh() {
-        Result result ;
-        try {
-            DictUtils.clear();
-            result= new Result(true, "字典刷新成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "字典刷新失败", MethodUtil.getLineInfo());
-        }
-        return result;
-    }
 }

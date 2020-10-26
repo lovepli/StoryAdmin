@@ -23,12 +23,18 @@ public class DictUtils {
     public static String WDict_CACHE_KEY = "WDict_CACHE_KEY";
     protected final static String WDict_CACHE_NAME = "WDictCache";
 
+    /**
+     * 获取数据字典
+     * @return
+     */
     public static Map<String, List<WDict>> getDict() {
-        //数据字典
+        //从缓存中查询数据字典
         if (CacheUtils.get(WDict_CACHE_NAME, WDict_CACHE_KEY) == null) {
+            //初始化数据字典
             initDict();
         }
         initDict();
+        // 存缓存中取出数据字典并返回
         return (Map<String, List<WDict>>) CacheUtils.get(WDict_CACHE_NAME, WDict_CACHE_KEY);
     }
 
@@ -39,6 +45,7 @@ public class DictUtils {
      */
     public static Map<String, List<WDict>> initDict() {
         Map<String, List<WDict>> WDictMap = new HashMap<String, List<WDict>>();
+        // 查询数据字典列表并遍历
         for (com.story.storyadmin.domain.entity.wind.WDict WDict : SpringContextHolder.getBean(IDictService.class).selectDictList()) {
             List<WDict> WDictList = WDictMap.get(WDict.getCode());
             if (WDictList != null) {
@@ -48,15 +55,23 @@ public class DictUtils {
                         Lists.newArrayList(new WDict(WDict.getLabel(), WDict.getValue())));
             }
         }
+        // 数据字典列表放入缓存redis中
         putDict(WDictMap);
         return WDictMap;
     }
 
+    /**
+     * 获取数据字典列表
+     * @param code
+     * @return
+     */
     public static List<WDict> getDictList(String code) {
         //数据字典
         if (CacheUtils.get(WDict_CACHE_NAME, WDict_CACHE_KEY) == null) {
+            // 数据字典初始化
             initDict();
         }
+        //从缓存获取数据字典
         Map<String, List<WDict>> WDictMap = (Map<String, List<WDict>>) CacheUtils.get(WDict_CACHE_NAME, WDict_CACHE_KEY);
         List<WDict> WDictList = WDictMap.get(code);
         if (WDictList == null) {
@@ -108,7 +123,7 @@ public class DictUtils {
     }
 
     /*
-     * 清除换成
+     * 清除缓存
      */
     public static void clear() {
         CacheUtils.remove(WDict_CACHE_NAME, WDict_CACHE_KEY);
