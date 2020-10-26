@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { createCar, updateCar, getCar } from '@/api/demo/car'
+import { save, findById } from '@/api/demo/car'
 
 export default {
   name: 'CarForm',
@@ -67,22 +67,21 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
+
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          createCar(this.temp).then((response) => {
-            const data = response.data
-            if (data.code === 0) {
-              this.dialogFormVisible = false
-              this.$message.success('创建成功')
-              this.getList()
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
+          // 添加 保存
+          save(this.temp).then(res => {
+            this.dialogFormVisible = false;
+            this.getList();
+          });
+        } else {
+          return false;
         }
-      })
+      });
     },
+
     handleUpdate(id) {
       this.resetTemp()
       this.dialogStatus = 'update'
@@ -90,7 +89,7 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
-      getCar(id).then(response => {
+      findById(id).then(response => {
         if (response.data.code === 0) {
           this.temp = response.data.data
         } else {
@@ -100,22 +99,21 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
+          // copy obj
           const tempData = Object.assign({}, this.temp)
-          updateCar(tempData).then((response) => {
-            const data = response.data
-            if (data.code === 0) {
-              this.dialogFormVisible = false
-              this.$message.success('更新成功')
-              this.getList()
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
+          // 保存
+          save(tempData).then(res => {
+            this.dialogFormVisible = false;
+            this.getList();
+          });
+        } else {
+          return false;
         }
-      })
+      });
     }
+
   }
 
 }

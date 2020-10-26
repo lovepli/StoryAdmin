@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { fetchDictList, createDict, deleteDict } from '@/api/dict'
+import { getList, save, drop } from '@/api/dict'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -127,8 +127,8 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchDictList(this.listQuery).then(res => {
-        this.list = res.data
+      getList(this.listQuery).then(res => {
+        this.list = res.data.records
         this.total = res.data.total
         this.listLoading = false
       })
@@ -186,7 +186,7 @@ export default {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           // 添加 保存
-          createDict(this.temp).then(res => {
+          save(this.temp).then(res => {
             this.dialogFormVisible = false;
             this.getList();
           });
@@ -202,7 +202,7 @@ export default {
           // copy obj
           const tempData = Object.assign({}, this.temp)
           // 保存
-          createDict(tempData).then(res => {
+          save(tempData).then(res => {
             this.dialogFormVisible = false;
             this.getList();
           });
@@ -226,7 +226,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteDict(row.id).then(res => {
+        drop(row.id).then(res => {
           this.dialogFormVisible = false;
           this.getList();
         })

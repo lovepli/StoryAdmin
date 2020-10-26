@@ -1,40 +1,34 @@
 import request from '@/utils/request'
 
-export function fetchCarModelList(data) {
+export function getList(data) {
   return request({
-    url: '/test/twotable/carmodel/list',
+    url: '/sysmgr/carmodel/list',
     method: 'post',
     data
   })
 }
 
-export function getCarModel(id) {
+export function findById(param) {
   return request({
-    url: '/test/twotable/carmodel/detail/' + id,
-    method: 'get'
-  })
-}
-
-export function createCarModel(data) {
-  return request({
-    url: '/test/twotable/carmodel/add',
+    url: '/sysmgr/carmodel/find',
     method: 'post',
-    data
+    data: param
   })
 }
 
-export function updateCarModel(data) {
+export function save(param) {
   return request({
-    url: '/test/twotable/carmodel/update',
+    url: '/sysmgr/carmodel/save',
     method: 'post',
-    data
+    data: param
   })
 }
 
-export function deleteCarModel(id) {
+export function drop(param) {
   return request({
-    url: '/test/twotable/carmodel/delete/' + id,
-    method: 'post'
+    url: '/sysmgr/carmodel/delete',
+    method: 'post',
+    data: param
   })
 }
 

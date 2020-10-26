@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { fetchDictGroupList, createDictGroup, deleteDictGroup } from '@/api/dictGroup'
+import { getList, save, drop } from '@/api/dictGroup'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -122,7 +122,7 @@ export default {
     },
     getList() {
       this.listLoading = true
-      fetchDictGroupList(this.listQuery).then(response => {
+      getList(this.listQuery).then(response => {
         this.list = response.data.data
         this.total = response.data.total
         this.listLoading = false
@@ -166,7 +166,7 @@ export default {
     createData() {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          createDictGroup(this.temp).then(res => {
+          save(this.temp).then(res => {
             this.dialogFormVisible = false;
             this.getList();
           });
@@ -187,7 +187,7 @@ export default {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          createDictGroup(tempData).then(res => {
+          save(tempData).then(res => {
             this.dialogFormVisible = false;
             this.getList();
           });
@@ -202,7 +202,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteDictGroup(row.id).then(res => {
+        drop(row.id).then(res => {
           this.dialogFormVisible = false;
           this.getList();
         })

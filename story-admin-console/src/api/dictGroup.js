@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchDictGroupList(params) {
+export function getList(params) {
   return request({
     url: '/sysmgr/dict/group/list',
     method: 'get',
@@ -8,7 +8,7 @@ export function fetchDictGroupList(params) {
   })
 }
 
-export function createDictGroup(param) {
+export function save(param) {
   return request({
     url: '/sysmgr/dict/group/save',
     method: 'post',
@@ -16,7 +16,7 @@ export function createDictGroup(param) {
   })
 }
 
-export function deleteDictGroup(param) {
+export function drop(param) {
   return request({
     url: '/sysmgr/dict/group/delete/',
     method: 'post',

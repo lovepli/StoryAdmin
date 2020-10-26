@@ -9,7 +9,7 @@ export function fetchDicts() {
 }
 
 // 查看列表
-export function fetchDictList(params) {
+export function getList(params) {
   return request({
     url: '/sysmgr/dict/list',
     method: 'get',
@@ -18,7 +18,7 @@ export function fetchDictList(params) {
 }
 
 // 保存
-export function createDict(param) {
+export function save(param) {
   return request({
     url: '/sysmgr/dict/save',
     method: 'post',
@@ -27,7 +27,7 @@ export function createDict(param) {
 }
 
 // 删除
-export function deleteDict(param) {
+export function drop(param) {
   return request({
     url: '/sysmgr/dict/delete',
     method: 'post',

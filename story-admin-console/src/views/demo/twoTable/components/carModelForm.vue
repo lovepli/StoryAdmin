@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { createCarModel, updateCarModel, getCarModel } from '@/api/demo/carModel'
+import { save, findById } from '@/api/demo/carModel'
 
 export default {
   name: 'CarModelForm',
@@ -81,7 +81,7 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          createCarModel(this.temp).then((response) => {
+          save(this.temp).then((response) => {
             const data = response.data
             if (data.code === 0) {
               this.dialogFormVisible = false
@@ -101,7 +101,7 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
-      getCarModel(id).then(response => {
+      findById(id).then(response => {
         if (response.data.code === 0) {
           this.temp = response.data.data
         } else {
@@ -114,7 +114,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          updateCarModel(tempData).then((response) => {
+          save(tempData).then((response) => {
             const data = response.data
             if (data.code === 0) {
               this.dialogFormVisible = false

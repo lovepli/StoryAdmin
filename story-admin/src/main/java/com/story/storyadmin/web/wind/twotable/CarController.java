@@ -3,14 +3,12 @@ package com.story.storyadmin.web.wind.twotable;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.wind.Car;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.CarDto;
 import com.story.storyadmin.service.wind.ICarService;
-import com.story.storyadmin.utils.MethodUtil;
 import com.story.storyadmin.utils.wind.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -22,8 +20,7 @@ import java.time.Instant;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/test/twotable/car")
-@RequiresPermissions("test:twotable:car")
+@RequestMapping("/sysmgr/car")
 public class CarController {
 
     private static final Logger logger = LoggerFactory.getLogger(CarController.class);
@@ -39,7 +36,7 @@ public class CarController {
      * @throws IOException
      */
     @PostMapping(value = "list")
-    @RequiresPermissions("test:twotable:car:list")
+    @RequiresPermissions("sysmgr.car.query")
     public Result list(CarDto carDto,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit) throws IOException {
@@ -61,16 +58,8 @@ public class CarController {
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
-
-//    @GetMapping("detail/{id}")
-//    @RequiresPermissions("test:twotable:car:detail")
-//    public String detail(@PathVariable("id") String id) {
-//        Car car = carService.selectById(id);
-//        return Response.successJson(car);
-//    }
-
-    @PostMapping("add")
-    @RequiresPermissions("add")
+    @RequiresPermissions("sysmgr.car.save")
+    @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Car car){
         Result result ;
         if(car.getId()!= null){
@@ -93,8 +82,8 @@ public class CarController {
     }
 
 
-    @PostMapping("delete/{id}")
-    @RequiresPermissions("test:twotable:car:delete")
+    @RequiresPermissions("sys.car.delete")
+    @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Car car){
         Result result ;
         if(car.getId()!=null){
@@ -106,22 +95,6 @@ public class CarController {
             result=new Result(carService.updateById(delCar),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
             result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
-        }
-        return result;
-    }
-
-    @RequestMapping(value = "/forceRefresh", method = RequestMethod.POST)
-    @ResponseBody
-    @RequiresPermissions("test:twotable:car:force:refresh")
-    public Result forceRefresh() {
-        Result result ;
-        try {
-            // 从缓存中删除
-            // DictUtils.clear();
-            result= new Result(true, "字典刷新成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "字典刷新失败", MethodUtil.getLineInfo());
         }
         return result;
     }

@@ -30,8 +30,7 @@ import java.util.Date;
  */
 
 @RestController
-@RequestMapping("/test/twotable/carmodel")
-@RequiresPermissions("test:twotable:carmodel")
+@RequestMapping("/sysmgr/carmodel")
 public class CarModelController{
 
     private static final Logger logger = LoggerFactory.getLogger(CarModelController.class);
@@ -47,7 +46,7 @@ public class CarModelController{
      * @throws IOException
      */
     @PostMapping(value = "list")
-    @RequiresPermissions("test:twotable:carmodel:list")
+    @RequiresPermissions("sysmgr.car.carmodel.query")
     public Result list(CarModelDto carModelDto,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit) throws IOException {
@@ -73,15 +72,9 @@ public class CarModelController{
         return result;
     }
 
-//    @GetMapping("detail/{id}")
-//    @RequiresPermissions("test:twotable:carmodel:detail")
-//    public String detail(@PathVariable("id") String id) {
-//        CarModel carModel = carModelService.selectById(id);
-//        return Response.successJson(carModel);
-//    }
 
-    @PostMapping("add")
-    @RequiresPermissions("add")
+    @RequiresPermissions("sysmgr.car.carmodel.save")
+    @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody CarModel carModel){
         Result result ;
         if(carModel.getId()!= null){
@@ -104,8 +97,8 @@ public class CarModelController{
     }
 
 
-    @PostMapping("delete/{id}")
-    @RequiresPermissions("test:twotable:carmodel:delete")
+    @RequiresPermissions("sysmgr.car.carmodel.delete")
+    @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody CarModel carModel){
         Result result ;
         if(carModel.getId()!=null){
@@ -121,8 +114,8 @@ public class CarModelController{
         return result;
     }
 
-    @PostMapping("batch/delete")
-    @RequiresPermissions("test:twotable:carmodel:delete")
+    @RequiresPermissions("sysmgr.car.carmodel.delete")
+    @PostMapping("/batch/delete")
     public Result dropByIds(@RequestParam("ids") Long[] ids){
         Result result ;
         // 删除数组集合，直接删除数据库中的数据

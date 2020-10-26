@@ -39,7 +39,7 @@
       <div class="pagination-container">
         <el-pagination
           :current-page.sync="listQuery.page"
-          :page-sizes="pageArray"
+          :page-sizes="[10,20,30,50,100,300,500,1000]"
           :page-size="listQuery.limit"
           :total="total"
           background
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { fetchCarModelList, deleteCarModel } from '@/api/demo/carModel'
+import { getList, drop } from '@/api/demo/carModel'
 import waves from '@/directive/waves' // 水波纹指令
 import carModelForm from './carModelForm'
 
@@ -71,10 +71,9 @@ export default {
       list: null,
       total: null,
       listLoading: false,
-      pageArray: this.$store.getters.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize,
+        limit: 10,
         title: undefined,
         type: undefined,
         carId: undefined
@@ -86,8 +85,8 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchCarModelList(this.listQuery).then(response => {
-        this.list = response.data.data
+      getList(this.listQuery).then(response => {
+        this.list = response.data.records
         this.total = response.data.total
         this.listLoading = false
       })
@@ -125,15 +124,15 @@ export default {
       this.$refs.form.handleCreate(this.dictGroup)
     },
     handleDelete(row) {
-      deleteCarModel(row.id).then((response) => {
-        const data = response.data
-        if (data.code === 0) {
-          this.dialogFormVisible = false
-          this.$message.success('删除成功')
-          this.getList()
-        } else {
-          this.$message.error(data.msg)
-        }
+      this.$confirm('确定删除该数据吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        drop(row.id).then(res => {
+          this.dialogFormVisible = false;
+          this.getList();
+        })
       })
     }
 
