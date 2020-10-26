@@ -11,10 +11,5 @@ public interface IDictService extends IService<WDict> {
 
     List<WDict> selectDictList();
 
-    /**
-     * 保存用户
-     * @param wDict
-     * @return
-     */
-    Result persist(WDict wDict);
+
 }

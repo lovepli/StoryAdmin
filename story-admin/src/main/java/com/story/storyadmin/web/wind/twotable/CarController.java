@@ -1,0 +1,128 @@
+package com.story.storyadmin.web.wind.twotable;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.common.exception.CustomException;
+import com.story.storyadmin.config.shiro.security.UserContext;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
+import com.story.storyadmin.domain.entity.wind.Car;
+import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.domain.vo.wind.CarDto;
+import com.story.storyadmin.service.wind.ICarService;
+import com.story.storyadmin.utils.MethodUtil;
+import com.story.storyadmin.utils.wind.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.Date;
+
+@RestController
+@RequestMapping("/test/twotable/car")
+@RequiresPermissions("test:twotable:car")
+public class CarController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CarController.class);
+
+    @Autowired
+    private ICarService carService;
+
+
+    /**
+     * 根据页码和每页记录数，以及查询条件动态加载数据
+     *
+     * @param
+     * @throws IOException
+     */
+    @PostMapping(value = "list")
+    @RequiresPermissions("test:twotable:car:list")
+    public Result list(CarDto carDto,
+                       @RequestParam(defaultValue = "1")int pageNo,
+                       @RequestParam(defaultValue = "10")int limit) throws IOException {
+        //加入条件
+        Result result = new Result();
+        Page<Car> page = new Page(pageNo, limit);
+        //加入条件
+        QueryWrapper<Car> entityWrapper = new QueryWrapper<>();
+        entityWrapper.orderByDesc( "create_date");
+        String keyword = carDto.getKeyword();
+        if (!StringUtils.isEmpty(keyword)) {
+            entityWrapper.like("name", keyword).or().like("code", keyword);
+        }
+        // 预处理
+        IPage<Car> list = carService.page(page, entityWrapper);
+        logger.info("查询出字典信息:{}",list);
+        result.setData(list);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
+    }
+
+//    @GetMapping("detail/{id}")
+//    @RequiresPermissions("test:twotable:car:detail")
+//    public String detail(@PathVariable("id") String id) {
+//        Car car = carService.selectById(id);
+//        return Response.successJson(car);
+//    }
+
+    @PostMapping("add")
+    @RequiresPermissions("add")
+    public Result save(@RequestBody Car car){
+        Result result ;
+        if(car.getId()!= null){
+            car.setUpdateDate(Date.from(Instant.now()));
+            car.setUpdateBy(UserContext.getCurrentUser().getAccount());
+            carService.updateById(car);
+            result= new Result(true, "修改成功", car, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        }else{//添加
+            //父编码设置为空
+            //wDict.setParentCode("");
+            //标志为有效
+            car.setDelFlag("0");
+            //添加时间
+            car.setCreateDate(Date.from(Instant.now()));
+            car.setCreateBy(UserContext.getCurrentUser().getAccount());
+            carService.save(car);
+            result= new Result(true, "添加成功", car, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        }
+        return result;
+    }
+
+
+    @PostMapping("delete/{id}")
+    @RequiresPermissions("test:twotable:car:delete")
+    public Result dropById(@RequestBody Car car){
+        Result result ;
+        if(car.getId()!=null){
+            Car delCar= new Car();
+            delCar.setId(car.getId());
+            delCar.setDelFlag("1");
+            delCar.setUpdateDate(Date.from(Instant.now()));
+            delCar.setUpdateBy(UserContext.getCurrentUser().getAccount());
+            result=new Result(carService.updateById(delCar),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        }else{
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/forceRefresh", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresPermissions("test:twotable:car:force:refresh")
+    public Result forceRefresh() {
+        Result result ;
+        try {
+            // 从缓存中删除
+            // DictUtils.clear();
+            result= new Result(true, "字典刷新成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "字典刷新失败", MethodUtil.getLineInfo());
+        }
+        return result;
+    }
+}

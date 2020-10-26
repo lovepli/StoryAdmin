@@ -1,29 +1,25 @@
 package com.story.storyadmin.domain.entity.wind;
 
-
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.story.storyadmin.domain.entity.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@TableName("test_car")
 @Data
-@TableName("sys_dict_group")
-public class DictGroup extends BaseEntity<DictGroup> {
-
+public class Car extends BaseEntity<Car> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 分组名称
+     * 汽车品牌
      */
     @TableField(value = "name")
     private String name;
 
     /**
-     * 分组编码
+     * 品牌编码
      */
     @TableField(value = "code")
     private String code;

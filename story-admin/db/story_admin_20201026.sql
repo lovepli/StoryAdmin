@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2020-10-22 17:43:55
+Date: 2020-10-26 16:08:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -135,7 +135,7 @@ CREATE TABLE `st_authority` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='权限表';
 
 -- ----------------------------
 -- Records of st_authority
@@ -220,6 +220,29 @@ INSERT INTO `st_authority` VALUES ('88', '数据监控', 'monitor.druid', '0-72'
 INSERT INTO `st_authority` VALUES ('89', '数据监控', 'monitor.druid', '0-72', null, '3', '72', '0', 'admin', 'admin', '2020-08-24 06:39:19', '2020-08-24 06:39:29');
 INSERT INTO `st_authority` VALUES ('90', '数据监控查询', 'monitor.druid.query', '0-72-84', null, '1', '84', '1', 'admin', 'admin', '2020-08-24 06:40:20', '2020-08-24 06:40:20');
 INSERT INTO `st_authority` VALUES ('91', '下载附件', 'sysmgr.att.download', '0-2-38', null, '4', '38', '1', 'admin', 'admin', '2020-09-11 03:36:05', '2020-09-11 03:36:05');
+INSERT INTO `st_authority` VALUES ('92', 'wind管理', 'sys', '0', null, '6', '0', '0', 'admin', 'admin', '2020-10-23 08:49:50', '2020-10-26 01:54:32');
+INSERT INTO `st_authority` VALUES ('93', 'wind管理', 'sys', '0', null, '6', '0', '0', 'admin', 'admin', '2020-10-23 08:49:50', '2020-10-23 08:49:59');
+INSERT INTO `st_authority` VALUES ('94', 'w字典管理', 'sys.dict', '0-92', null, '1', '92', '1', 'admin', 'admin', '2020-10-23 08:51:05', '2020-10-23 08:54:28');
+INSERT INTO `st_authority` VALUES ('95', 'w字典组管理', 'sys.dict.group', '0-92', null, '2', '92', '0', 'admin', 'admin', '2020-10-23 08:52:29', '2020-10-23 09:12:30');
+INSERT INTO `st_authority` VALUES ('96', '字典查询', 'sys.dict.query', '0-92-94', null, '1', '94', '1', 'admin', 'admin', '2020-10-23 08:53:16', '2020-10-23 09:09:04');
+INSERT INTO `st_authority` VALUES ('97', '字典保存', 'sys.dict.save', '0-92-94', null, '2', '94', '1', 'admin', 'admin', '2020-10-23 08:54:52', '2020-10-23 09:09:20');
+INSERT INTO `st_authority` VALUES ('98', '字典删除', 'sys.dict.delete', '0-92-94', null, '3', '94', '1', 'admin', 'admin', '2020-10-23 08:55:17', '2020-10-23 09:09:32');
+INSERT INTO `st_authority` VALUES ('99', '查询', 'sys.dict.group.query', '0-92-95', null, '1', '95', '1', 'admin', 'admin', '2020-10-23 08:56:19', '2020-10-23 08:56:19');
+INSERT INTO `st_authority` VALUES ('100', '保存', 'sys.dict.group.save', '0-92-95', null, '2', '95', '1', 'admin', 'admin', '2020-10-23 08:56:44', '2020-10-23 08:56:44');
+INSERT INTO `st_authority` VALUES ('101', '删除', 'sys.dict.group.delete', '0-92-95', null, '3', '95', '1', 'admin', 'admin', '2020-10-23 08:57:04', '2020-10-23 08:57:04');
+INSERT INTO `st_authority` VALUES ('102', '刷新', 'sys.dict.force.refresh', '0-92-95', null, '4', '95', '1', 'admin', 'admin', '2020-10-23 08:57:48', '2020-10-23 08:57:48');
+INSERT INTO `st_authority` VALUES ('103', '字典组查询', 'sys.dict.group.query', '0-92-94', null, '4', '94', '1', 'admin', 'admin', '2020-10-23 09:10:17', '2020-10-23 09:10:17');
+INSERT INTO `st_authority` VALUES ('104', '字典组保存', 'sys.dict.group.save', '0-92-94', null, '5', '94', '1', 'admin', 'admin', '2020-10-23 09:10:55', '2020-10-23 09:10:55');
+INSERT INTO `st_authority` VALUES ('105', '字典组删除', 'sys.dict.group.delete', '0-92-94', null, '6', '94', '1', 'admin', 'admin', '2020-10-23 09:11:30', '2020-10-23 09:11:30');
+INSERT INTO `st_authority` VALUES ('106', '字典刷新', 'sys.dict.force.refresh', '0-92-94', null, '7', '94', '1', 'admin', 'admin', '2020-10-23 09:12:05', '2020-10-23 09:12:05');
+INSERT INTO `st_authority` VALUES ('107', '字典管理', 'sysmgr.dict', '0-2', null, '22', '2', '1', 'admin', 'admin', '2020-10-26 01:47:57', '2020-10-26 01:48:08');
+INSERT INTO `st_authority` VALUES ('108', '查询字典列表', 'sysmgr.dict.query', '0-2-107', null, '1', '107', '1', 'admin', 'admin', '2020-10-26 01:49:15', '2020-10-26 01:49:34');
+INSERT INTO `st_authority` VALUES ('109', '保存字典', 'sysmgr.dict.save', '0-2-107', null, '2', '107', '1', 'admin', 'admin', '2020-10-26 01:50:05', '2020-10-26 01:50:42');
+INSERT INTO `st_authority` VALUES ('110', '字典删除', 'sysmgr.dict.delete', '0-2-107', null, '3', '107', '1', 'admin', 'admin', '2020-10-26 01:51:24', '2020-10-26 01:51:24');
+INSERT INTO `st_authority` VALUES ('111', '字典组查询', 'sysmgr.dict.group.query', '0-2-107', null, '4', '107', '1', 'admin', 'admin', '2020-10-26 01:52:02', '2020-10-26 01:54:07');
+INSERT INTO `st_authority` VALUES ('112', '字典组保存', 'sysmgr.dict.group.save', '0-2-107', null, '5', '107', '1', 'admin', 'admin', '2020-10-26 01:52:31', '2020-10-26 01:54:27');
+INSERT INTO `st_authority` VALUES ('113', '字典组删除', 'sysmgr.dict.group.delete', '0-2-107', null, '6', '107', '1', 'admin', 'admin', '2020-10-26 01:53:08', '2020-10-26 01:54:43');
+INSERT INTO `st_authority` VALUES ('114', '字典刷新', 'sysmgr.dict.force.refresh', '0-2-107', null, '7', '107', '1', 'admin', 'admin', '2020-10-26 01:53:34', '2020-10-26 01:55:01');
 
 -- ----------------------------
 -- Table structure for `st_backup`
@@ -418,7 +441,7 @@ CREATE TABLE `st_login_log` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=313 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=325 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of st_login_log
@@ -735,6 +758,18 @@ INSERT INTO `st_login_log` VALUES ('309', 'admin', '2020-10-22 02:21:14', '登�
 INSERT INTO `st_login_log` VALUES ('310', 'admin', '2020-10-22 02:22:24', '登录成功', '1', 'admin', 'admin', '2020-10-22 02:22:24', '2020-10-22 02:22:23');
 INSERT INTO `st_login_log` VALUES ('311', 'admin', '2020-10-22 02:23:24', '登录成功', '1', 'admin', 'admin', '2020-10-22 02:23:24', '2020-10-22 02:23:24');
 INSERT INTO `st_login_log` VALUES ('312', 'admin', '2020-10-22 03:05:42', '登录成功', '1', 'admin', 'admin', '2020-10-22 03:05:42', '2020-10-22 03:05:41');
+INSERT INTO `st_login_log` VALUES ('313', 'admin', '2020-10-23 08:45:02', '登录成功', '1', 'admin', 'admin', '2020-10-23 08:45:02', '2020-10-23 08:45:01');
+INSERT INTO `st_login_log` VALUES ('314', 'admin', '2020-10-23 09:16:46', '登录成功', '1', 'admin', 'admin', '2020-10-23 09:16:46', '2020-10-23 09:16:46');
+INSERT INTO `st_login_log` VALUES ('315', 'admin', '2020-10-23 09:20:35', '登录成功', '1', 'admin', 'admin', '2020-10-23 09:20:35', '2020-10-23 09:20:35');
+INSERT INTO `st_login_log` VALUES ('316', 'admin', '2020-10-23 09:35:05', '登录成功', '1', 'admin', 'admin', '2020-10-23 09:35:05', '2020-10-23 09:35:05');
+INSERT INTO `st_login_log` VALUES ('317', 'admin', '2020-10-23 09:37:32', '登录成功', '1', 'admin', 'admin', '2020-10-23 09:37:32', '2020-10-23 09:37:32');
+INSERT INTO `st_login_log` VALUES ('318', 'admin', '2020-10-23 09:39:52', '登录成功', '1', 'admin', 'admin', '2020-10-23 09:39:52', '2020-10-23 09:39:51');
+INSERT INTO `st_login_log` VALUES ('319', 'admin', '2020-10-26 01:38:53', '登录成功', '1', 'admin', 'admin', '2020-10-26 01:38:53', '2020-10-26 01:38:53');
+INSERT INTO `st_login_log` VALUES ('320', 'admin', '2020-10-26 01:42:28', '登录成功', '1', 'admin', 'admin', '2020-10-26 01:42:28', '2020-10-26 01:42:28');
+INSERT INTO `st_login_log` VALUES ('321', 'admin', '2020-10-26 01:55:56', '登录成功', '1', 'admin', 'admin', '2020-10-26 01:55:56', '2020-10-26 01:55:55');
+INSERT INTO `st_login_log` VALUES ('322', 'admin', '2020-10-26 01:58:44', '登录成功', '1', 'admin', 'admin', '2020-10-26 01:58:44', '2020-10-26 01:58:44');
+INSERT INTO `st_login_log` VALUES ('323', 'admin', '2020-10-26 02:01:54', '登录成功', '1', 'admin', 'admin', '2020-10-26 02:01:54', '2020-10-26 02:01:53');
+INSERT INTO `st_login_log` VALUES ('324', 'admin', '2020-10-26 07:59:02', '登录成功', '1', 'admin', 'admin', '2020-10-26 07:59:02', '2020-10-26 07:59:01');
 
 -- ----------------------------
 -- Table structure for `st_resource`
@@ -757,13 +792,13 @@ CREATE TABLE `st_resource` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 -- ----------------------------
 -- Records of st_resource
 -- ----------------------------
 INSERT INTO `st_resource` VALUES ('1', '系统管理', '0', 'nested', '30', '/sysmgr', '/layout/Layout', '1', '0', null, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-09-25 07:25:47');
-INSERT INTO `st_resource` VALUES ('2', '用户管理', '0-1', 'user', '1', 'user', '/sysmgr/user/index', '7', '1', null, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-08-19 11:04:38');
+INSERT INTO `st_resource` VALUES ('2', '用户管理', '0-1', 'user', '30', 'user', '/sysmgr/user/index', '7', '1', null, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2020-10-26 01:41:26');
 INSERT INTO `st_resource` VALUES ('3', '角色管理', '0-1', 'peoples', '3', 'role', '/sysmgr/role/index', '10', '1', null, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2020-08-14 08:43:05');
 INSERT INTO `st_resource` VALUES ('4', '菜单管理', '0-1', 'list', '4', 'menu', '/sysmgr/menu/index', '13', '1', null, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-08-19 11:04:42');
 INSERT INTO `st_resource` VALUES ('5', '权限管理', '0-1', 'password', '5', 'authority', '/sysmgr/authority/index', '16', '1', null, '1', 'admin', 'admin', '2019-07-12 09:20:40', '2019-08-19 11:04:43');
@@ -788,6 +823,8 @@ INSERT INTO `st_resource` VALUES ('23', '操作日志', '0-1-21', 'documentation
 INSERT INTO `st_resource` VALUES ('24', '系统工具', '0', 'nested', '41', '/tool', '/layout/Layout', '1', '0', null, '1', 'admin', 'admin', '2020-08-24 03:30:35', '2020-08-24 03:43:31');
 INSERT INTO `st_resource` VALUES ('25', 'Swagger_API接口文档', '0-24', 'documentation', '1', 'swagger', '/tool/swagger/index', '83', '24', null, '1', 'admin', 'admin', '2020-08-24 03:33:54', '2020-08-24 03:34:31');
 INSERT INTO `st_resource` VALUES ('26', '数据监控', '0-17', 'documentation', '3', 'druid', '/monitor/druid/index', '90', '17', null, '1', 'admin', 'admin', '2020-08-24 06:42:42', '2020-08-24 06:46:14');
+INSERT INTO `st_resource` VALUES ('27', 'w字典管理', '0-6', 'user', '2', 'wdict', '/sysmgr/dict/index', '96', '6', null, '0', 'admin', 'admin', '2020-10-23 09:15:28', '2020-10-23 09:36:58');
+INSERT INTO `st_resource` VALUES ('28', 'w字典管理', '0-1', 'component', '30', 'wdict', '/sysmgr/wdict/index', '108', '1', null, '1', 'admin', 'admin', '2020-10-23 09:36:29', '2020-10-26 02:01:33');
 
 -- ----------------------------
 -- Table structure for `st_role`
@@ -828,7 +865,7 @@ CREATE TABLE `st_role_authority` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1228 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='角色权限关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=1385 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='角色权限关系表';
 
 -- ----------------------------
 -- Records of st_role_authority
@@ -1772,76 +1809,233 @@ INSERT INTO `st_role_authority` VALUES ('1154', '5', '83', '1', 'admin', 'admin'
 INSERT INTO `st_role_authority` VALUES ('1155', '5', '84', '1', 'admin', 'admin', '2020-10-20 01:55:35', '2020-10-20 01:55:35');
 INSERT INTO `st_role_authority` VALUES ('1156', '5', '90', '1', 'admin', 'admin', '2020-10-20 01:55:35', '2020-10-20 01:55:35');
 INSERT INTO `st_role_authority` VALUES ('1157', '5', '91', '1', 'admin', 'admin', '2020-10-20 01:55:35', '2020-10-20 01:55:35');
-INSERT INTO `st_role_authority` VALUES ('1158', '6', '0', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1159', '6', '1', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1160', '6', '2', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1161', '6', '3', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1162', '6', '4', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1163', '6', '5', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1164', '6', '6', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1165', '6', '7', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1166', '6', '8', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1167', '6', '9', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1168', '6', '10', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1169', '6', '11', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1170', '6', '12', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1171', '6', '13', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1172', '6', '14', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1173', '6', '15', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1174', '6', '16', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1175', '6', '17', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1176', '6', '18', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1177', '6', '30', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1178', '6', '31', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1179', '6', '32', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1180', '6', '33', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1181', '6', '34', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1182', '6', '35', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1183', '6', '36', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1184', '6', '37', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1185', '6', '38', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1186', '6', '39', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1187', '6', '40', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1188', '6', '41', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1189', '6', '42', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1190', '6', '43', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1191', '6', '44', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1192', '6', '45', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1193', '6', '50', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1194', '6', '51', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1195', '6', '52', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1196', '6', '53', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1197', '6', '54', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1198', '6', '55', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1199', '6', '56', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1200', '6', '57', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1201', '6', '58', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1202', '6', '59', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1203', '6', '60', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1204', '6', '61', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1205', '6', '62', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1206', '6', '63', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1207', '6', '64', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1208', '6', '65', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1209', '6', '66', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1210', '6', '67', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1211', '6', '68', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1212', '6', '69', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1213', '6', '70', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1214', '6', '71', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1215', '6', '72', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1216', '6', '73', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1217', '6', '74', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1218', '6', '75', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1219', '6', '76', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1220', '6', '77', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1221', '6', '78', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1222', '6', '81', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1223', '6', '82', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1224', '6', '83', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1225', '6', '84', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1226', '6', '90', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
-INSERT INTO `st_role_authority` VALUES ('1227', '6', '91', '1', 'admin', 'admin', '2020-10-20 02:53:00', '2020-10-20 02:53:00');
+INSERT INTO `st_role_authority` VALUES ('1158', '6', '0', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1159', '6', '1', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1160', '6', '2', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1161', '6', '3', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1162', '6', '4', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1163', '6', '5', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1164', '6', '6', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1165', '6', '7', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1166', '6', '8', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1167', '6', '9', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1168', '6', '10', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1169', '6', '11', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1170', '6', '12', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1171', '6', '13', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1172', '6', '14', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1173', '6', '15', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1174', '6', '16', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1175', '6', '17', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1176', '6', '18', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1177', '6', '30', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1178', '6', '31', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1179', '6', '32', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1180', '6', '33', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1181', '6', '34', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1182', '6', '35', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1183', '6', '36', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1184', '6', '37', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1185', '6', '38', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1186', '6', '39', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1187', '6', '40', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1188', '6', '41', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1189', '6', '42', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1190', '6', '43', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1191', '6', '44', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1192', '6', '45', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1193', '6', '50', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1194', '6', '51', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1195', '6', '52', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1196', '6', '53', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1197', '6', '54', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1198', '6', '55', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1199', '6', '56', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1200', '6', '57', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1201', '6', '58', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1202', '6', '59', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1203', '6', '60', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1204', '6', '61', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1205', '6', '62', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1206', '6', '63', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1207', '6', '64', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1208', '6', '65', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1209', '6', '66', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1210', '6', '67', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1211', '6', '68', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1212', '6', '69', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1213', '6', '70', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1214', '6', '71', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1215', '6', '72', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1216', '6', '73', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1217', '6', '74', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1218', '6', '75', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1219', '6', '76', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1220', '6', '77', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1221', '6', '78', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1222', '6', '81', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1223', '6', '82', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1224', '6', '83', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1225', '6', '84', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1226', '6', '90', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1227', '6', '91', '0', 'admin', null, '2020-10-20 02:53:00', '2020-10-23 09:16:25');
+INSERT INTO `st_role_authority` VALUES ('1228', '6', '0', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1229', '6', '1', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1230', '6', '2', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1231', '6', '3', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1232', '6', '4', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1233', '6', '5', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1234', '6', '6', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1235', '6', '7', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1236', '6', '8', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1237', '6', '9', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1238', '6', '10', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1239', '6', '11', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1240', '6', '12', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1241', '6', '13', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1242', '6', '14', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1243', '6', '15', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1244', '6', '16', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1245', '6', '17', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1246', '6', '18', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1247', '6', '30', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1248', '6', '31', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1249', '6', '32', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1250', '6', '33', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1251', '6', '34', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1252', '6', '35', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1253', '6', '36', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1254', '6', '37', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1255', '6', '38', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1256', '6', '39', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1257', '6', '40', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1258', '6', '41', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1259', '6', '42', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1260', '6', '43', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1261', '6', '44', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1262', '6', '45', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1263', '6', '50', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1264', '6', '51', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1265', '6', '52', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1266', '6', '53', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1267', '6', '54', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1268', '6', '55', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1269', '6', '56', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1270', '6', '57', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1271', '6', '58', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1272', '6', '59', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1273', '6', '60', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1274', '6', '61', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1275', '6', '62', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1276', '6', '63', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1277', '6', '64', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1278', '6', '65', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1279', '6', '66', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1280', '6', '67', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1281', '6', '68', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1282', '6', '69', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1283', '6', '70', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1284', '6', '71', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1285', '6', '72', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1286', '6', '73', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1287', '6', '74', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1288', '6', '75', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1289', '6', '76', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1290', '6', '77', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1291', '6', '78', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1292', '6', '81', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1293', '6', '82', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1294', '6', '83', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1295', '6', '84', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1296', '6', '90', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1297', '6', '91', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1298', '6', '92', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1299', '6', '94', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1300', '6', '96', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1301', '6', '97', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1302', '6', '98', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1303', '6', '103', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1304', '6', '104', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1305', '6', '105', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1306', '6', '106', '0', 'admin', null, '2020-10-23 09:16:25', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1307', '6', '0', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1308', '6', '1', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1309', '6', '2', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1310', '6', '3', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1311', '6', '4', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1312', '6', '5', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1313', '6', '6', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1314', '6', '7', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1315', '6', '8', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1316', '6', '9', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1317', '6', '10', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1318', '6', '11', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1319', '6', '12', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1320', '6', '13', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1321', '6', '14', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1322', '6', '15', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1323', '6', '16', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1324', '6', '17', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1325', '6', '18', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1326', '6', '30', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1327', '6', '31', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1328', '6', '32', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1329', '6', '33', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1330', '6', '34', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1331', '6', '35', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1332', '6', '36', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1333', '6', '37', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1334', '6', '38', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1335', '6', '39', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1336', '6', '40', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1337', '6', '41', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1338', '6', '42', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1339', '6', '43', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1340', '6', '44', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1341', '6', '45', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1342', '6', '50', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1343', '6', '51', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1344', '6', '52', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1345', '6', '53', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1346', '6', '54', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1347', '6', '55', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1348', '6', '56', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1349', '6', '57', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1350', '6', '58', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1351', '6', '59', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1352', '6', '60', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1353', '6', '61', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1354', '6', '62', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1355', '6', '63', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1356', '6', '64', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1357', '6', '65', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1358', '6', '66', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1359', '6', '67', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1360', '6', '68', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1361', '6', '69', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1362', '6', '70', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1363', '6', '71', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1364', '6', '72', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1365', '6', '73', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1366', '6', '74', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1367', '6', '75', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1368', '6', '76', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1369', '6', '77', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1370', '6', '78', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1371', '6', '81', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1372', '6', '82', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1373', '6', '83', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1374', '6', '84', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1375', '6', '90', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1376', '6', '91', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1377', '6', '107', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1378', '6', '108', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1379', '6', '109', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1380', '6', '110', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1381', '6', '111', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1382', '6', '112', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1383', '6', '113', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
+INSERT INTO `st_role_authority` VALUES ('1384', '6', '114', '1', 'admin', 'admin', '2020-10-26 01:55:45', '2020-10-26 01:55:45');
 
 -- ----------------------------
 -- Table structure for `st_schedule_job`
@@ -2054,4 +2248,156 @@ CREATE TABLE `sys_dict_group` (
 
 -- ----------------------------
 -- Records of sys_dict_group
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `test_car`
+-- ----------------------------
+DROP TABLE IF EXISTS `test_car`;
+CREATE TABLE `test_car` (
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `code` varchar(100) DEFAULT NULL COMMENT '品牌代码',
+  `remarks` varchar(100) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(32) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(32) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `del_flag` char(1) DEFAULT NULL,
+  `tenant_id` varchar(64) NOT NULL DEFAULT '00000000' COMMENT '租户ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典分组';
+
+-- ----------------------------
+-- Records of test_car
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `test_car_model`
+-- ----------------------------
+DROP TABLE IF EXISTS `test_car_model`;
+CREATE TABLE `test_car_model` (
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `car_id` varchar(32) DEFAULT NULL COMMENT '汽车',
+  `name` varchar(100) DEFAULT NULL COMMENT '型号名',
+  `value` varchar(100) DEFAULT NULL COMMENT '型号代码',
+  `sort` int(5) DEFAULT NULL COMMENT '排序',
+  `remarks` varchar(100) DEFAULT NULL COMMENT '描述',
+  `create_by` varchar(32) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(32) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `del_flag` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `test_car_model_car_id` (`car_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据字典';
+
+-- ----------------------------
+-- Records of test_car_model
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `test_expand_table`
+-- ----------------------------
+DROP TABLE IF EXISTS `test_expand_table`;
+CREATE TABLE `test_expand_table` (
+  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) NOT NULL COMMENT '商品名称',
+  `shop` varchar(100) NOT NULL COMMENT '所属店铺',
+  `category` varchar(100) DEFAULT NULL COMMENT '商品分类',
+  `address` text COMMENT '店铺地址',
+  `description` longtext COMMENT '商品描述',
+  `tag` varchar(200) DEFAULT NULL COMMENT '标签',
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(32) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) DEFAULT NULL,
+  `create_by` varchar(32) DEFAULT NULL,
+  `organization_id` varchar(64) DEFAULT NULL COMMENT '组织ID',
+  `tenant_id` varchar(64) NOT NULL DEFAULT '00000000' COMMENT '租户ID',
+  `image` text COMMENT '图片',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of test_expand_table
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `test_table`
+-- ----------------------------
+DROP TABLE IF EXISTS `test_table`;
+CREATE TABLE `test_table` (
+  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `author` varchar(100) NOT NULL COMMENT '作者',
+  `type` varchar(250) DEFAULT NULL COMMENT '类型',
+  `level` varchar(100) DEFAULT NULL COMMENT '密码',
+  `content` longtext COMMENT '内容',
+  `status` varchar(32) DEFAULT NULL COMMENT '状态',
+  `tag` varchar(200) DEFAULT NULL COMMENT '标签',
+  `readings` int(11) DEFAULT NULL COMMENT '阅读数',
+  `publish_date` datetime DEFAULT NULL COMMENT '发布时间',
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(32) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) DEFAULT NULL,
+  `create_by` varchar(32) DEFAULT NULL,
+  `tenant_id` varchar(64) NOT NULL DEFAULT '00000000' COMMENT '租户ID',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_test_table_title` (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of test_table
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `test_tree_and_table`
+-- ----------------------------
+DROP TABLE IF EXISTS `test_tree_and_table`;
+CREATE TABLE `test_tree_and_table` (
+  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) DEFAULT NULL COMMENT '部门名称',
+  `type` varchar(250) DEFAULT NULL COMMENT '类型',
+  `tag` varchar(200) DEFAULT NULL COMMENT '标签',
+  `area_id` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(32) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) DEFAULT NULL,
+  `create_by` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of test_tree_and_table
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `test_tree_table`
+-- ----------------------------
+DROP TABLE IF EXISTS `test_tree_table`;
+CREATE TABLE `test_tree_table` (
+  `id` bigint(64) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL COMMENT '机构名称',
+  `geocoding` varchar(32) DEFAULT NULL COMMENT '是否叶子节点',
+  `postal_code` varchar(32) DEFAULT NULL,
+  `parent_id` varchar(32) DEFAULT NULL COMMENT '父节点',
+  `parent_ids` varchar(1000) DEFAULT NULL COMMENT '父节点路径',
+  `create_by` varchar(32) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(32) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `del_flag` char(1) DEFAULT NULL COMMENT '删除标记',
+  `remarks` varchar(255) DEFAULT NULL,
+  `tenant_id` varchar(64) NOT NULL DEFAULT '00000000' COMMENT '租户ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of test_tree_table
 -- ----------------------------

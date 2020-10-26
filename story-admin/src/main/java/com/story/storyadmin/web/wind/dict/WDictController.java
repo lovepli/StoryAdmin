@@ -1,4 +1,4 @@
-package com.story.storyadmin.web.wind;
+package com.story.storyadmin.web.wind.dict;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

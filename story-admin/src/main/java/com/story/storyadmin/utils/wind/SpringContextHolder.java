@@ -1,7 +1,6 @@
 package com.story.storyadmin.utils.wind;
 
 
-import com.story.storyadmin.web.wind.DictGroupController;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
