@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
+//import org.apache.commons.text.StringEscapeUtils;
 import com.story.storyadmin.domain.entity.wind.Table;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.TableDto;
 import com.story.storyadmin.service.wind.ITableService;
 import com.story.storyadmin.utils.wind.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,7 @@ import java.util.Date;
  */
 
 @RestController
-@RequestMapping("test/table/table")
+@RequestMapping("/test/table")
 @RequiresPermissions("test:table:table")
 public class TableController{
 
@@ -46,8 +48,8 @@ public class TableController{
      * @param
      * @throws IOException
      */
-    @PostMapping(value = "list")
-    @RequiresPermissions("test:table:table:list")
+    @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequiresPermissions("test.table.list")
     public Result list(TableDto tableDto,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit){
@@ -57,7 +59,7 @@ public class TableController{
         //查询参数对象，加入条件
         QueryWrapper<Table> entityWrapper = new QueryWrapper<>();
         //查询出有效的，del_flag为1表示逻辑删除
-        //entityWrapper.eq("del_flag", "0");
+        entityWrapper.eq("del_flag", "0");
         entityWrapper.orderByDesc( "create_date");
 
         String title = tableDto.getTitle();
@@ -81,8 +83,8 @@ public class TableController{
         return result;
     }
 
-    @PostMapping("add")
-    @RequiresPermissions("test:table:table:add")
+    @RequiresPermissions("test.table.save")
+    @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Table table){
         Result result ;
         if(table.getId()!= null){
@@ -91,8 +93,6 @@ public class TableController{
             tableService.updateById(table);
             result= new Result(true, "修改成功", table, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
-            //父编码设置为空
-            //wDict.setParentCode("");
             //标志为有效
             table.setDelFlag("0");
             //添加时间
@@ -105,8 +105,8 @@ public class TableController{
     }
 
 
-    @PostMapping("delete/{id}")
-    @RequiresPermissions("test:table:table:delete")
+    @RequiresPermissions("test.table.delete")
+    @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Table table){
         Result result ;
         if(table.getId()!=null){
@@ -123,16 +123,21 @@ public class TableController{
     }
 
 
-//    @GetMapping("detail/{id}")
-//    @RequiresPermissions("test:table:table:detail")
-//    public String detail(@PathVariable("id") String id) {
-//        Table tableEntity = tableService.selectById(id);
-//        tableEntity.setContent(StringEscapeUtils.unescapeHtml4(tableEntity.getContent()));
-//        return Response.successJson(tableEntity);
-//    }
 
-    @PostMapping("batch/delete")
-    @RequiresPermissions("test:table:table:delete")
+    @RequiresPermissions("test.table.query")
+    @RequestMapping(value="/find",method = {RequestMethod.POST})
+    public Result findById(@RequestBody Table table){
+        Table tableBean= tableService.getById(table.getId());
+        tableBean.setContent(StringEscapeUtils.unescapeHtml4(table.getContent()));
+        Result result = new Result();
+        result.setData(tableBean);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
+    }
+
+    @RequiresPermissions("test.table.delete")
+    @PostMapping("/batch/delete")
     public Result dropByIds(@RequestParam("ids") Long[] ids){
         Result result ;
         // 删除数组集合，直接删除数据库中的数据

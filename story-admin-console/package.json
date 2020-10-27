@@ -23,6 +23,7 @@
     "jsonlint": "^1.6.3",
     "fuse.js": "3.4.4",
     "screenfull": "4.2.0",
+    "sortablejs": "1.8.4",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "script-loader": "^0.7.2",
