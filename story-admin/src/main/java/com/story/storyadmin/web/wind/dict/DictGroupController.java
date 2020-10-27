@@ -47,7 +47,7 @@ public class DictGroupController {
         //查询参数对象，加入条件
         QueryWrapper<DictGroup> entityWrapper = new QueryWrapper<>();
         //查询出有效的，del_flag为1表示逻辑删除
-        //entityWrapper.eq("del_flag", "0");
+        entityWrapper.eq("del_flag", "0");
         entityWrapper.orderByDesc( "create_date");
         String keyword = wDictDto.getKeyword();
         if (!StringUtils.isEmpty(keyword)) {
@@ -72,8 +72,6 @@ public class DictGroupController {
             dictGroupService.updateById(dictGroup);
             result= new Result(true, "修改成功", dictGroup, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
-            //父编码设置为空
-            //wDict.setParentCode("");
             //标志为有效
             dictGroup.setDelFlag("0");
             //添加时间

@@ -225,7 +225,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        drop(row.id).then(res => {
+        const params = {};
+        params.id = row.id;
+        drop(params).then(res => {
           this.dialogFormVisible = false;
           this.getList();
         })

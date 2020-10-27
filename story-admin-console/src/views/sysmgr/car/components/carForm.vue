@@ -90,11 +90,11 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
       findById(id).then(response => {
-        if (response.data.code === 0) {
-          this.temp = response.data.data
+        if (response.code === 20000) {
+          this.temp = response.data.records
         } else {
           this.dialogFormVisible = false
-          this.$message.error(response.data.msg)
+          this.$message.error(response.message)
         }
       })
     },

@@ -55,6 +55,7 @@ public class CarModelController{
 
         //加入条件
         QueryWrapper<CarModel> entityWrapper = new QueryWrapper<>();
+        entityWrapper.eq("del_flag", "0");
         entityWrapper.orderByAsc( "sort");
         String keyword = carModelDto.getKeyword();
         String carId = carModelDto.getCarId();
@@ -83,8 +84,6 @@ public class CarModelController{
             carModelService.updateById(carModel);
             result= new Result(true, "修改成功", carModel, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
-            //父编码设置为空
-            //wDict.setParentCode("");
             //标志为有效
             carModel.setDelFlag("0");
             //添加时间

@@ -79,21 +79,19 @@ export default {
       }
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          save(this.temp).then((response) => {
-            const data = response.data
-            if (data.code === 0) {
-              this.dialogFormVisible = false
-              this.$message.success('创建成功')
-              this.getList()
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
+          // 添加 保存
+          save(this.temp).then(res => {
+            this.dialogFormVisible = false;
+            this.getList();
+          });
+        } else {
+          return false;
         }
-      })
+      });
     },
+
     handleUpdate(id) {
       this.resetTemp()
       this.dialogStatus = 'update'
@@ -102,31 +100,31 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
       findById(id).then(response => {
-        if (response.data.code === 0) {
-          this.temp = response.data.data
+        if (response.data.code === 20000) {
+          this.temp = response.data.records
         } else {
           this.dialogFormVisible = false
-          this.$message.error(response.data.msg)
+          this.$message.error(response.message)
         }
       })
     },
+
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
+          // copy obj
           const tempData = Object.assign({}, this.temp)
-          save(tempData).then((response) => {
-            const data = response.data
-            if (data.code === 0) {
-              this.dialogFormVisible = false
-              this.$message.success('更新成功')
-              this.getList()
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
+          // 保存
+          save(tempData).then(res => {
+            this.dialogFormVisible = false;
+            this.getList();
+          });
+        } else {
+          return false;
         }
-      })
+      });
     }
+
   }
 
 }

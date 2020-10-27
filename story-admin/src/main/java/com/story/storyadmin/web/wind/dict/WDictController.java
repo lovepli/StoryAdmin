@@ -96,7 +96,7 @@ public class WDictController {
         //查询参数对象，加入条件
         QueryWrapper<WDict> entityWrapper = new QueryWrapper<>();
         //查询出有效的，del_flag为1表示逻辑删除
-        //entityWrapper.eq("del_flag", "0");
+        entityWrapper.eq("del_flag", "0");
         entityWrapper.orderByAsc( "sort");
 
         String keyword = wDictDto.getKeyword();
@@ -130,8 +130,6 @@ public class WDictController {
             dictService.updateById(wDict);
             result= new Result(true, "修改成功", wDict, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
-            //父编码设置为空
-            //wDict.setParentCode("");
             //标志为有效
             wDict.setDelFlag("0");
             //添加时间
@@ -144,7 +142,7 @@ public class WDictController {
     }
 
 
-    @RequiresPermissions("sys.dict.delete")
+    @RequiresPermissions("sysmgr.dict.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody WDict wDict){
         Result result ;

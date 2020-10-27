@@ -45,6 +45,7 @@ public class CarController {
         Page<Car> page = new Page(pageNo, limit);
         //加入条件
         QueryWrapper<Car> entityWrapper = new QueryWrapper<>();
+        entityWrapper.eq("del_flag", "0");
         entityWrapper.orderByDesc( "create_date");
         String keyword = carDto.getKeyword();
         if (!StringUtils.isEmpty(keyword)) {
@@ -68,8 +69,6 @@ public class CarController {
             carService.updateById(car);
             result= new Result(true, "修改成功", car, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
-            //父编码设置为空
-            //wDict.setParentCode("");
             //标志为有效
             car.setDelFlag("0");
             //添加时间
