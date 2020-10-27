@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" :placeholder="$t('table.title')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.title" :placeholder="表格标题" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         查询
       </el-button>
@@ -34,9 +34,10 @@
         </template>
       </el-table-column>
       <el-table-column label="作者" width="110px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.user.realname }}</span>
-        </template>
+         <!--组件 -->
+        <!-- <template slot-scope="scope">
+          <span>{{ scope.row.user.name }}</span>
+        </template> -->
       </el-table-column>
       <el-table-column label="创建时间" width="150px" align="center">
         <template slot-scope="scope">
@@ -180,7 +181,7 @@ export default {
     handleDelete(row) {
       const params = {};
       params.id = row.id;
-      drop(params).then(response => {  
+      drop(params).then(response =>{
         this.getList()
       })
     },

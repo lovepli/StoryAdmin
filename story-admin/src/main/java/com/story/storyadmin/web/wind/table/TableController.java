@@ -34,7 +34,6 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/test/table")
-@RequiresPermissions("test:table:table")
 public class TableController{
 
     private static final Logger logger = LoggerFactory.getLogger(TableController.class);
@@ -126,7 +125,7 @@ public class TableController{
 
     @RequiresPermissions("test.table.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
-    public Result findById(@RequestBody Table table){
+    public Result findById(@RequestBody Table table){ //RequestParam LONG id
         Table tableBean= tableService.getById(table.getId());
         tableBean.setContent(StringEscapeUtils.unescapeHtml4(table.getContent()));
         Result result = new Result();

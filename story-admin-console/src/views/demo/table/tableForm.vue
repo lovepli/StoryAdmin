@@ -12,6 +12,7 @@
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />
       </el-form-item>
+      <!--组件 -->
       <el-form-item label="作者" prop="author">
         <system-user v-model="temp.author" />
       </el-form-item>
@@ -43,7 +44,7 @@
 import { save, findById } from '@/api/demo/table'
 // import { isIntegerGEZRule } from '@/utils/validate'
 import Tinymce from '@/components/Tinymce'
-// import SystemUser from '@/components/system/systemUser'
+import SystemUser from '@/components/system/systemUser'
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -54,7 +55,7 @@ const calendarTypeOptions = [
 
 export default {
   name: 'TableForm',
-  components: { Tinymce },
+  components: { Tinymce, SystemUser },
   data() {
     return {
       rules: {
@@ -71,8 +72,8 @@ export default {
         content: undefined,
         title: '',
         type: undefined,
-        status: 'published',
-        author: ''
+        status: 'published'
+        // author: ''
       },
       calendarTypeOptions,
       textMap: {
@@ -124,9 +125,11 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
-      findById(id).then(response => {
+      const params = {};
+      params.id = id;
+      findById(params).then(response => {
         if (response.data.code === 20000) {
-          this.temp = response.data.records
+          this.temp = response.data
         } else {
           this.dialogFormVisible = false
           this.$message.error(response.message)
