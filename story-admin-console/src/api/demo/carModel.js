@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList(data) {
   return request({
-    url: '/sysmgr/carmodel/list',
+    url: '/test/carmodel/list',
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ export function getList(data) {
 
 export function findById(param) {
   return request({
-    url: '/sysmgr/carmodel/find',
+    url: '/test/carmodel/find',
     method: 'post',
     data: param
   })
@@ -18,7 +18,7 @@ export function findById(param) {
 
 export function save(param) {
   return request({
-    url: '/sysmgr/carmodel/save',
+    url: '/test/carmodel/save',
     method: 'post',
     data: param
   })
@@ -26,7 +26,7 @@ export function save(param) {
 
 export function drop(param) {
   return request({
-    url: '/sysmgr/carmodel/delete',
+    url: '/test/carmodel/delete',
     method: 'post',
     data: param
   })

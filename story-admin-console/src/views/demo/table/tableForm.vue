@@ -72,8 +72,8 @@ export default {
         content: undefined,
         title: '',
         type: undefined,
-        status: 'published'
-        // author: ''
+        status: 'published',
+        author: ''
       },
       calendarTypeOptions,
       textMap: {

@@ -20,7 +20,7 @@ import java.time.Instant;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/sysmgr/car")
+@RequestMapping("/test/car")
 public class CarController {
 
     private static final Logger logger = LoggerFactory.getLogger(CarController.class);
@@ -35,7 +35,7 @@ public class CarController {
      * @param
      * @throws IOException
      */
-    @RequiresPermissions("sysmgr.car.query")
+    @RequiresPermissions("test.car.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(CarDto carDto,
                        @RequestParam(defaultValue = "1")int pageNo,
@@ -59,7 +59,7 @@ public class CarController {
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
-    @RequiresPermissions("sysmgr.car.save")
+    @RequiresPermissions("test.car.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Car car){
         Result result ;
@@ -81,7 +81,7 @@ public class CarController {
     }
 
 
-    @RequiresPermissions("sys.car.delete")
+    @RequiresPermissions("test.car.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Car car){
         Result result ;

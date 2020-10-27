@@ -30,7 +30,7 @@ import java.util.Date;
  */
 
 @RestController
-@RequestMapping("/sysmgr/carmodel")
+@RequestMapping("/test/carmodel")
 public class CarModelController{
 
     private static final Logger logger = LoggerFactory.getLogger(CarModelController.class);
@@ -45,7 +45,7 @@ public class CarModelController{
      * @param
      * @throws IOException
      */
-    @RequiresPermissions("sysmgr.car.carmodel.query")
+    @RequiresPermissions("test.car.carmodel.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(CarModelDto carModelDto,
                        @RequestParam(defaultValue = "1")int pageNo,
@@ -74,7 +74,7 @@ public class CarModelController{
     }
 
 
-    @RequiresPermissions("sysmgr.car.carmodel.save")
+    @RequiresPermissions("test.car.carmodel.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody CarModel carModel){
         Result result ;
@@ -96,7 +96,7 @@ public class CarModelController{
     }
 
 
-    @RequiresPermissions("sysmgr.car.carmodel.delete")
+    @RequiresPermissions("test.car.carmodel.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody CarModel carModel){
         Result result ;
@@ -113,7 +113,7 @@ public class CarModelController{
         return result;
     }
 
-    @RequiresPermissions("sysmgr.car.carmodel.delete")
+    @RequiresPermissions("test.car.carmodel.delete")
     @PostMapping("/batch/delete")
     public Result dropByIds(@RequestParam("ids") Long[] ids){
         Result result ;
