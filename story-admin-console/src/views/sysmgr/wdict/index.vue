@@ -40,11 +40,10 @@ export default {
     }
   },
   created() {
-    // 查询所有用户名
     // debugger
-    fetchDicts().then(res => {
-      console.log(res.data.records);
-    })
+    // fetchDicts().then(res => {
+    //   console.log(res.data.records);
+    // })
   },
   methods: {
     // 字典刷新

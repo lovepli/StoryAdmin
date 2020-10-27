@@ -45,8 +45,8 @@ public class CarModelController{
      * @param
      * @throws IOException
      */
-    @PostMapping(value = "list")
     @RequiresPermissions("sysmgr.car.carmodel.query")
+    @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(CarModelDto carModelDto,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit) throws IOException {

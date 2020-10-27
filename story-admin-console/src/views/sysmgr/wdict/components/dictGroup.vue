@@ -3,8 +3,8 @@
     <div>
       <div class="filter-container">
         <el-input v-model="listQuery.keyword" style="width: 200px;" class="filter-item" placeholder="请输入分组名称或编码" @keyup.enter.native="handleFilter" />
-        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
       </div>
 
       <el-table
@@ -28,11 +28,10 @@
           label="分组编码"
           width="160"
         />
-        <el-table-column :label="$t('table.actions')" align="center" width="180" class-name="small-padding fixed-width">
+        <el-table-column :label="响应" align="center" width="180" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-            <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
-            </el-button>
+            <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">删除 </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -63,9 +62,9 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-          <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-          <el-button v-else type="primary" @click="updateData">{{ $t('table.confirm') }}</el-button>
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">确定</el-button>
+          <el-button v-else type="primary" @click="updateData">确定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -123,7 +122,7 @@ export default {
     getList() {
       this.listLoading = true
       getList(this.listQuery).then(response => {
-        this.list = response.data.data
+        this.list = response.data.records
         this.total = response.data.total
         this.listLoading = false
       })

@@ -3,8 +3,8 @@
     <div>
       <div class="filter-container">
         <el-input v-model="listQuery.keyword" style="width: 200px;" class="filter-item" placeholder="请输入汽车型号标签或值" @keyup.enter.native="handleFilter" />
-        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
       </div>
 
       <el-table
@@ -27,11 +27,10 @@
           label="汽车型号值"
           width="160"
         />
-        <el-table-column :label="$t('table.actions')" align="center" width="180" class-name="small-padding fixed-width">
+        <el-table-column :label="响应" align="center" width="180" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-            <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
-            </el-button>
+            <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
