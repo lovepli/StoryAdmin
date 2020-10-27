@@ -34,8 +34,7 @@ import java.util.Date;
  */
 
 @RestController
-@RequestMapping("test/treeandtable/treeandtable")
-@RequiresPermissions("test:treeandtable:treeandtable")
+@RequestMapping("/test/treeandtable")
 public class TreeAndTableController  {
 
     private static final Logger logger = LoggerFactory.getLogger(TreeAndTableController.class);
@@ -49,8 +48,8 @@ public class TreeAndTableController  {
      * @param
      * @throws IOException
      */
-    @PostMapping(value = "list")
-    @RequiresPermissions("test:treeandtable:treeandtable:list")
+    @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequiresPermissions("test.treeandtable.list")
     public Result list(TreeAndTableDto treeAndTableDto,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit) throws IOException {
@@ -59,6 +58,7 @@ public class TreeAndTableController  {
         Page<TreeAndTable> page = new Page(pageNo, limit);
         //查询参数对象，加入条件
         QueryWrapper<TreeAndTable> entityWrapper = new QueryWrapper<>();
+        entityWrapper.eq("del_flag", "0");
         entityWrapper.orderByDesc( "create_date");
         String name = treeAndTableDto.getName();
         if (!StringUtils.isEmpty(name)) {
@@ -81,8 +81,8 @@ public class TreeAndTableController  {
         return result;
     }
 
-    @PostMapping("add")
-    @RequiresPermissions("test:treeandtable:treeandtable:add")
+    @RequiresPermissions("test.treeandtable.save")
+    @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody TreeAndTable treeAndTable){
         Result result ;
         if(treeAndTable.getId()!= null){
@@ -91,8 +91,6 @@ public class TreeAndTableController  {
             treeAndTableService.updateById(treeAndTable);
             result= new Result(true, "修改成功", treeAndTable, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
-            //父编码设置为空
-            //wDict.setParentCode("");
             //标志为有效
             treeAndTable.setDelFlag("0");
             //添加时间
@@ -105,8 +103,8 @@ public class TreeAndTableController  {
     }
 
 
-    @PostMapping("delete/{id}")
-    @RequiresPermissions("test:treeandtable:treeandtable:delete")
+    @RequiresPermissions("test.treeandtable.delete")
+    @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody TreeAndTable treeAndTable){
         Result result ;
         if(treeAndTable.getId()!=null){
@@ -129,8 +127,8 @@ public class TreeAndTableController  {
 //        return Response.successJson(treeAndTable);
 //    }
 
-    @PostMapping("batch/delete")
-    @RequiresPermissions("test:treeandtable:treeandtable:delete")
+    @RequiresPermissions("test.treeandtable.delete")
+    @PostMapping("/batch/delete")
     public Result dropByIds(@RequestParam("ids") Long[] ids){
         Result result ;
         // 删除数组集合，直接删除数据库中的数据
