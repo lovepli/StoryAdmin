@@ -1,0 +1,169 @@
+<template>
+  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 80%; margin-left:50px;">
+      <el-form-item label="商品名称" prop="name">
+        <el-input v-model="temp.name" />
+      </el-form-item>
+      <el-form-item label="所属店铺" prop="shop">
+        <el-input v-model="temp.shop" />
+      </el-form-item>
+      <el-form-item label="商品分类" prop="category">
+        <el-input v-model="temp.category" />
+      </el-form-item>
+      <el-form-item label="店铺地址" prop="address">
+        <el-input v-model="temp.address" />
+      </el-form-item>
+      <el-form-item label="商品描述" prop="description">
+        <el-input v-model="temp.description" />
+      </el-form-item>
+      <el-form-item label="标签" prop="tag">
+        <el-input v-model="temp.tag" />
+      </el-form-item>
+      <el-form-item label="图片" prop="image">
+        <el-input v-model="temp.image" />
+        <el-upload
+          ref="uploader"
+          :on-success="handleUploadSuccess"
+          :action="uploadUrl"
+          :before-upload="beforeUpload"
+          :show-file-list="false"
+          class="avatar-uploader"
+          accept="image/jpeg,image/png,image/jpg">
+          <img v-if="temp.image" :src="temp.image" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon" />
+        </el-upload>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dialogFormVisible = false">
+        取消
+      </el-button>
+      <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+        确认
+      </el-button>
+    </div>
+  </el-dialog>
+</template>
+
+<script>
+import { save, findById } from '@/api/demo/expandTable'
+
+export default {
+  name: 'ExpandTableForm',
+  data() {
+    return {
+      rules: {
+      },
+      temp: {
+        id: undefined,
+        name: undefined,
+        shop: undefined,
+        category: undefined,
+        address: undefined,
+        description: undefined,
+        tag: undefined,
+        image: undefined,
+        createDate: undefined,
+        updateBy: undefined,
+        updateDate: undefined,
+        remarks: undefined,
+        delFlag: undefined,
+        createBy: undefined,
+        remark: ''
+      },
+      uploadUrl: 'http://' + process.env.VUE_APP_BASE_API + '/oss/attachment/upload?dir=test',
+      textMap: {
+        update: '编辑',
+        create: '新建'
+      },
+      dialogFormVisible: false,
+      dialogStatus: ''
+    }
+  },
+  methods: {
+    handleUploadSuccess(res, file) {
+      console.log(res)
+      if (res.code === 20000) {
+        this.temp.image = res.data
+      } else {
+        this.$message.error(res.message)
+      }
+    },
+    beforeUpload(file) {
+      this.$refs.uploader.action = this.uploadUrl
+      const isLt2M = file.size / 1024 < 300
+      if (!isLt2M) {
+        this.$message.error('上传图片大小不能超过 300KB!')
+      }
+      return isLt2M
+    },
+    getList() {
+      this.$emit('refreshList')
+    },
+    resetTemp() {
+      this.temp = {
+        id: undefined,
+        name: undefined,
+        shop: undefined,
+        category: undefined,
+        address: undefined,
+        description: undefined,
+        tag: undefined,
+        image: undefined,
+        createDate: undefined,
+        updateBy: undefined,
+        updateDate: undefined,
+        remarks: undefined,
+        delFlag: undefined,
+        createBy: undefined,
+        remark: ''
+      }
+    },
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          save(this.temp).then(response => {
+            this.getList()
+            this.dialogFormVisible = false
+          })
+        }
+      })
+    },
+    handleUpdate(id) {
+      this.resetTemp()
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+      findById(id).then(response => {
+        if (response.data.code === 20000) {
+          this.temp = response.data.records
+        } else {
+          this.dialogFormVisible = false
+          this.$message.error(response.message)
+        }
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          save(tempData).then(() => {
+            this.getList()
+            this.dialogFormVisible = false
+          })
+        }
+      })
+    }
+  }
+}
+</script>

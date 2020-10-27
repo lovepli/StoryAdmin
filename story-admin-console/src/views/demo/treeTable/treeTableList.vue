@@ -83,7 +83,7 @@ export default {
       }).then(() => {
         const params = {};
         params.id = row.id;
-        drop(params).then(response => {    
+        drop(params).then(response => {
           this.getList()
         })
       })

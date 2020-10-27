@@ -32,7 +32,7 @@ import java.util.Date;
  */
 
 @RestController
-@RequestMapping("test/expandtable/expandtable")
+@RequestMapping("/test/expandtable")
 public class ExpandTableController  {
 
     private static final Logger logger = LoggerFactory.getLogger(ExpandTableController.class);
@@ -45,8 +45,8 @@ public class ExpandTableController  {
      * @param
      * @throws IOException
      */
-    @PostMapping(value = "list")
-    @RequiresPermissions("test:expandtable:expandtable:list")
+    @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequiresPermissions("test.expandtable.list")
     public Result list(ExpandTable expandTable,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit) throws IOException {
@@ -55,11 +55,8 @@ public class ExpandTableController  {
         //查询参数对象，加入条件
         //加入条件
         QueryWrapper<ExpandTable> entityWrapper = new QueryWrapper<>();
+        entityWrapper.eq("del_flag", "0");
         entityWrapper.orderByDesc( "create_date");
-        //查询出有效的，del_flag为1表示逻辑删除
-        //entityWrapper.eq("del_flag", "0");
-
-
         // 预处理
         IPage<ExpandTable> list = expandTableService.page(page, entityWrapper);
         logger.info("查询出字典信息:{}",list);
@@ -69,8 +66,8 @@ public class ExpandTableController  {
         return result;
     }
 
-    @PostMapping("save")
-    @RequiresPermissions("test:expandtable:expandtable:save")
+    @RequiresPermissions("test.expandtable.save")
+    @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody ExpandTable expandTable){
         Result result ;
         if(expandTable.getId()!= null){
@@ -79,8 +76,6 @@ public class ExpandTableController  {
             expandTableService.updateById(expandTable);
             result= new Result(true, "修改成功", expandTable, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
-            //父编码设置为空
-            //wDict.setParentCode("");
             //标志为有效
             expandTable.setDelFlag("0");
             //添加时间
@@ -94,8 +89,8 @@ public class ExpandTableController  {
 
 
 
-    @PostMapping("delete/{id}")
-    @RequiresPermissions("test:expandtable:expandtable:delete")
+    @RequiresPermissions("test.expandtable.delete")
+    @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody ExpandTable expandTable){
         Result result ;
         if(expandTable.getId()!=null){
@@ -111,8 +106,8 @@ public class ExpandTableController  {
         return result;
     }
 
-    @PostMapping("batch/delete")
-    @RequiresPermissions("test:expandtable:expandtable:delete")
+    @RequiresPermissions("test.expandtable.delete")
+    @PostMapping("/batch/delete")
     public Result dropByIds(@RequestParam("ids") Long[] ids){
         Result result ;
         // 删除数组集合，直接删除数据库中的数据
