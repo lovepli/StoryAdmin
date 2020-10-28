@@ -488,18 +488,6 @@ CREATE TABLE `st_login_log` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1321344106551652355 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='登录日志';
 
--- ----------------------------
--- Records of st_login_log
--- ----------------------------
-INSERT INTO `st_login_log` VALUES ('350', 'admin', '2020-10-27 14:16:00', '登录成功', '1', 'admin', 'admin', '2020-10-27 14:16:00', '2020-10-27 14:15:59');
-INSERT INTO `st_login_log` VALUES ('351', 'admin', '2020-10-28 01:11:14', '登录成功', '1', 'admin', 'admin', '2020-10-28 01:11:14', '2020-10-28 01:11:14');
-INSERT INTO `st_login_log` VALUES ('352', 'admin', '2020-10-28 01:18:26', '登录成功', '1', 'admin', 'admin', '2020-10-28 01:18:26', '2020-10-28 01:18:25');
-INSERT INTO `st_login_log` VALUES ('353', 'admin', '2020-10-28 01:23:03', '登录成功', '1', 'admin', 'admin', '2020-10-28 01:23:03', '2020-10-28 01:23:02');
-INSERT INTO `st_login_log` VALUES ('354', 'admin', '2020-10-28 01:42:07', '登录成功', '1', 'admin', 'admin', '2020-10-28 01:42:07', '2020-10-28 01:42:07');
-INSERT INTO `st_login_log` VALUES ('355', 'admin', '2020-10-28 01:44:38', '登录成功', '1', 'admin', 'admin', '2020-10-28 01:44:38', '2020-10-28 01:44:37');
-INSERT INTO `st_login_log` VALUES ('356', 'admin', '2020-10-28 01:45:59', '登录成功', '1', 'admin', 'admin', '2020-10-28 01:45:59', '2020-10-28 01:45:59');
-INSERT INTO `st_login_log` VALUES ('357', 'admin', '2020-10-28 04:17:37', '登录成功', '1', 'admin', 'admin', '2020-10-28 04:17:37', '2020-10-28 04:17:37');
-INSERT INTO `st_login_log` VALUES ('1321344106551652354', 'admin', '2020-10-28 06:52:39', '登录成功', '1', 'admin', 'admin', '2020-10-28 06:52:39', '2020-10-28 06:52:39');
 
 -- ----------------------------
 -- Table structure for `st_resource`
@@ -587,8 +575,6 @@ INSERT INTO `st_role` VALUES ('2', '管理员', '系统管理员', '0', null, 'a
 INSERT INTO `st_role` VALUES ('3', '供应商', '供应商大大', '1', null, null, null, '2020-08-17 04:27:53');
 INSERT INTO `st_role` VALUES ('4', '游客', '游客大大', '1', null, null, null, '2020-08-17 04:28:07');
 INSERT INTO `st_role` VALUES ('5', '管理员', null, '0', 'admin', 'admin', '2020-10-20 01:55:29', '2020-10-20 02:52:33');
-INSERT INTO `st_role` VALUES ('6', '掐额扥掐', null, '0', 'admin', 'admin', '2020-10-28 07:29:54', '2020-10-28 07:29:59');
-INSERT INTO `st_role` VALUES ('7', '掐额扥掐', null, '0', 'admin', 'admin', '2020-10-28 07:29:54', '2020-10-28 07:30:01');
 
 -- ----------------------------
 -- Table structure for `st_role_authority`

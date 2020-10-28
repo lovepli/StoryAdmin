@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
@@ -119,13 +120,17 @@ public class TreeAndTableController  {
         }
         return result;
     }
-//
-//    @GetMapping("detail/{id}")
-//    @RequiresPermissions("test:treeandtable:treeandtable:detail")
-//    public String detail(@PathVariable("id") String id) {
-//        TreeAndTable treeAndTable = treeAndTableService.selectById(id);
-//        return Response.successJson(treeAndTable);
-//    }
+
+    @RequiresPermissions("test.treeandtable.query")
+    @RequestMapping(value="/find",method = {RequestMethod.POST})
+    public Result findById(@RequestBody TreeAndTable treeAndTable){ //RequestParam LONG id
+        TreeAndTable treeAndTable2 = treeAndTableService.getById(treeAndTable.getId());
+        Result result = new Result();
+        result.setData(treeAndTable2);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
+    }
 
     @RequiresPermissions("test.treeandtable.delete")
     @PostMapping("/batch/delete")

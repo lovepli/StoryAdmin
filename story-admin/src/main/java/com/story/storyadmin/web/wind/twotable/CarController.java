@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
@@ -77,6 +78,17 @@ public class CarController {
             carService.save(car);
             result= new Result(true, "添加成功", car, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
+        return result;
+    }
+
+    @RequiresPermissions("test.car.query")
+    @RequestMapping(value="/find",method = {RequestMethod.POST})
+    public Result findById(@RequestBody Car car){ //RequestParam LONG id
+        Car treeAndTable2 = carService.getById(car.getId());
+        Result result = new Result();
+        result.setData(treeAndTable2);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 

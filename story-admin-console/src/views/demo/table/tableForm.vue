@@ -128,7 +128,7 @@ export default {
       const params = {};
       params.id = id;
       findById(params).then(response => {
-        if (response.data.code === 20000) {
+        if (response.code === 20000) {
           this.temp = response.data
         } else {
           this.dialogFormVisible = false

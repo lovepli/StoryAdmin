@@ -74,7 +74,7 @@
             草稿
           </el-button>
           <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row)">
-            取消
+            删除
           </el-button>
         </template>
       </el-table-column>

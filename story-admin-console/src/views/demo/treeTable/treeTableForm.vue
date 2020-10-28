@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { save, findById } from '@/api/demo/treeTable'
+import { add, update, findById } from '@/api/demo/treeTable'
 
 export default {
   name: 'TreeTableForm',
@@ -118,7 +118,7 @@ export default {
           if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
             this.temp.parentIds.length = 0
           }
-          save(this.temp).then(response => {
+          add(this.temp).then(response => {
             this.getList()
             this.dialogFormVisible = false
           })
@@ -134,9 +134,11 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
-      findById(id).then(response => {
+      const params = {};
+      params.id = id;
+      findById(params).then(response => {
         if (response.code === 20000) {
-          this.temp = response.data.records
+          this.temp = response.data
           if (this.temp.children !== undefined) {
             this.temp.children.length = 0
           }
@@ -171,7 +173,7 @@ export default {
           }
           const tempData = Object.assign({}, this.temp)
           console.log(tempData)
-          save(tempData).then(() => {
+          update(tempData).then(() => {
             this.getList()
             this.dialogFormVisible = false
           })

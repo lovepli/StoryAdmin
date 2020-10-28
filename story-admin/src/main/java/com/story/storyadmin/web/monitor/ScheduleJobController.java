@@ -170,7 +170,11 @@ public class ScheduleJobController {
     public Result getJobCombo() {
         // 返沪任务编号jobId，任务名称jobName，任务类名jobClass
         List<ScheduleJob> jobList= scheduleJobService.findScheduleJobCombo();
-        return new Result(true, "", jobList ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        Result result = new Result();
+        result.setData(jobList);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
     }
 
     /**

@@ -1,22 +1,19 @@
 package com.story.storyadmin.web.wind.treeTable;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.wind.tree.TreeTable;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.wind.ITreeTableService;
-import com.story.storyadmin.utils.wind.StringUtils;
 import com.story.storyadmin.utils.wind.common.VueTreeHelper;
 import com.story.storyadmin.web.wind.BaseBeanController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
 
@@ -65,21 +62,37 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
 
     }
 
+    //@RequiresPermissions("test.treetable.save")
+    //@RequestMapping(value="/save",method = {RequestMethod.POST})
+    //public Result save(TreeTable entity, BindingResult result) {
+    //    Result result2 ;
+    //    this.checkError(entity, result);
+    //    if(!StringUtils.isEmpty(entity.getId())){
+    //        treeTableService.insertOrUpdate(entity);
+    //        result2= new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    //    }else{//添加
+    //        treeTableService.insert(entity);
+    //        result2= new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    //    }
+    //    return result2;
+    //}
+
+
     @RequiresPermissions("test.treetable.save")
-    @RequestMapping(value="/save",method = {RequestMethod.POST})
-    public Result add(@RequestBody TreeTable entity, BindingResult result) {
-        Result result2=null;
+    @RequestMapping(value="/add",method = {RequestMethod.POST})
+    public Result add(TreeTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
-        if (StringUtils.isEmpty(entity.getId())){
-            treeTableService.insert(entity);
-            result2 = new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        }else {
-            treeTableService.insertOrUpdate(entity);
-            result2 = new Result(true, "更新成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        }
-
-        return result2;
+        treeTableService.insert(entity);
+        return new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+    @RequiresPermissions("test.treetable.save")
+    @RequestMapping(value="/update",method = {RequestMethod.POST})
+    public Result update(TreeTable entity, BindingResult result) {
+        // 验证错误
+        this.checkError(entity, result);
+        treeTableService.insertOrUpdate(entity);
+        return new Result(true, "更新成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
 
@@ -87,7 +100,11 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody TreeTable treeTable){ //RequestParam LONG id
         TreeTable treeTable2 = treeTableService.selectById(treeTable.getId());
-        return new Result(true, "", treeTable2, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        Result result = new Result();
+        result.setData(treeTable2);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
     }
 
     @RequiresPermissions("test.treetable.delete")
@@ -95,7 +112,10 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     public Result dropById(@RequestBody TreeTable treeTable){
         Result result ;
         // 物理删除
-       // treeTableService.deleteById(treeTable.getId());
+         treeTableService.deleteById(treeTable.getId());
+        result=new Result(true,"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+ /**
+        // 逻辑删除
         if(!StringUtils.isEmpty(treeTable.getId())){
             TreeTable delTable= new TreeTable();
             delTable.setId(treeTable.getId());
@@ -106,6 +126,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
         }else{
             result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
+*/
         return result;
     }
 
@@ -116,10 +137,10 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     public Result dropByIds(@RequestParam("ids") String[] ids){
         Result result ;
 //        // 删除数组集合，直接删除数据库中的数据
-//        List<Serializable> idList = java.util.Arrays.asList(ids);
-//        treeTableService.deleteBatchIds(idList);
-//        result=new Result(true,"批量删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-
+        List<Serializable> idList = java.util.Arrays.asList(ids);
+        treeTableService.deleteBatchIds(idList);
+        result=new Result(true,"批量删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+/**
         // 逻辑删除
         TreeTable delTable= null;
         // 遍历删除
@@ -136,6 +157,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
         }else{
             result = new Result(false, "批量删除失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }
+ */
         return result;
     }
 

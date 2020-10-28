@@ -8,11 +8,27 @@ export function getList(data) {
   })
 }
 
-export function save(param) {
+// export function save(data) {
+//   return request({
+//     url: '/test/treetable/save',
+//     method: 'post',
+//     data
+//   })
+// }
+
+export function add(data) {
   return request({
-    url: '/test/treetable/save',
+    url: '/test/treetable/add',
     method: 'post',
-    data: param
+    data
+  })
+}
+
+export function update(data) {
+  return request({
+    url: '/test/treetable/update',
+    method: 'post',
+    data
   })
 }
 

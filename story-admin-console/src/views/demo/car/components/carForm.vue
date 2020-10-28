@@ -89,9 +89,11 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
-      findById(id).then(response => {
+      const params = {};
+      params.id = id;
+      findById(params).then(response => {
         if (response.code === 20000) {
-          this.temp = response.data.records
+          this.temp = response.data
         } else {
           this.dialogFormVisible = false
           this.$message.error(response.message)
