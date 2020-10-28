@@ -1,11 +1,9 @@
 package com.story.storyadmin.domain.entity.wind;
-
 import com.baomidou.mybatisplus.annotation.*;
-import com.story.storyadmin.domain.entity.wind.common.WindBaseEntity;
+import com.story.storyadmin.domain.entity.wind.common.WindIdStringEntity;
 import lombok.Data;
-
 import java.io.Serializable;
-import java.util.Date;
+
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -21,7 +19,7 @@ import java.util.Date;
 
 @Data
 @TableName("test_tree_and_table")
-public class TreeAndTable  extends WindBaseEntity<TreeAndTable> {
+public class TreeAndTable  extends WindIdStringEntity<TreeAndTable> {
 
     private static final long serialVersionUID = 1L;
 

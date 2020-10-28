@@ -105,7 +105,7 @@ export default {
     getTreeList() {
       this.listLoading = true
       getTreeTableList(this.listQuery).then(response => {
-        this.treeList = response.data.records
+        this.treeList = response.data
         this.listLoading = false
         this.$refs.form.setList(this.treeList)
       })

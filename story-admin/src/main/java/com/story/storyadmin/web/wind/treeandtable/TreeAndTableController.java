@@ -52,7 +52,7 @@ public class TreeAndTableController  {
     @RequiresPermissions("test.treeandtable.list")
     public Result list(TreeAndTableDto treeAndTableDto,
                        @RequestParam(defaultValue = "1")int pageNo,
-                       @RequestParam(defaultValue = "10")int limit) throws IOException {
+                       @RequestParam(defaultValue = "10")int limit){
         //加入条件
         Result result = new Result();
         Page<TreeAndTable> page = new Page(pageNo, limit);
