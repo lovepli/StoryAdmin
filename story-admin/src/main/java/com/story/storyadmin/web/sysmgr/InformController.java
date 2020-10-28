@@ -60,7 +60,7 @@ public class InformController {
         Inform inform = new Inform();
         inform.setStatus(status);
         inform.setTitle(title);
-        inform.setCreator(creatorId);
+        inform.setCreatorId(creatorId);
         inform.setTop(topFirst);
         //logger.info(inform.toString());
         Page<Inform> InformPage = new Page(page, limit);
@@ -130,7 +130,7 @@ public class InformController {
         Long id= UserContext.getCurrentUser().getUserId();
         // TODO 这里取不到ID
         System.out.println("################上传者的id:"+id);
-        inform.setCreator(id);
+        inform.setCreatorId(id);
 
         List<Long> attachmentIds = inform.getAttachments();
         System.out.println("数组长度为："+attachmentIds.size()); // TODO 数组的长度为0？？

@@ -70,29 +70,4 @@ public class Todo extends BaseEntity {
      */
     private String executor;
 
-    /**
-     * 有效标志
-     */
-    private String ynFlag;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 修改人
-     */
-    private String editor;
-
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
-
-    /**
-     * 修改时间
-     */
-    private Date modifiedTime;
-
 }

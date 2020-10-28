@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.wind;
+package com.story.storyadmin.domain.entity.wind.common;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

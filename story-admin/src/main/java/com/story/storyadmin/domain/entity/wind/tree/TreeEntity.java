@@ -1,7 +1,7 @@
 package com.story.storyadmin.domain.entity.wind.tree;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.story.storyadmin.domain.entity.wind.AbstractEntity;
+import com.story.storyadmin.domain.entity.wind.common.AbstractEntity;
 import com.story.storyadmin.utils.wind.StringUtils;
 import lombok.Data;
 

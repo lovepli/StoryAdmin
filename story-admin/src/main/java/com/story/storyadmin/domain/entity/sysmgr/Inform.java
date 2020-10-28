@@ -1,10 +1,6 @@
 package com.story.storyadmin.domain.entity.sysmgr;
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
-
 import lombok.Data;
 
 import java.util.Date;
@@ -15,7 +11,7 @@ import java.util.Date;
  */
 @Data
 @TableName("st_inform")
-public class Inform extends BaseEntity {
+public class Inform extends BaseEntity{
 
     private static final long serialVersionUID = 1L;
 
@@ -42,7 +38,7 @@ public class Inform extends BaseEntity {
     /**
      * 创建者id
      */
-    private Long creator;
+    private Long creatorId;
 
     /**
      * 附件列表ID 的id本来是long类型的
@@ -80,7 +76,7 @@ public class Inform extends BaseEntity {
                 "title='" + title + '\'' +
                 ", top=" + top +
                 ", status=" + status +
-                ", creator=" + creator +
+                ", creator=" + creatorId +
                 '}';
     }
 }

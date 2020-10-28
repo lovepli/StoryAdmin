@@ -54,7 +54,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform> impleme
       //  Date currentDate = Date.from(Instant.now());
         inform.setCreateDate(new Date());
         System.out.println("############创建者ID为："+UserContext.getCurrentUser().getUserId());
-        inform.setCreator(UserContext.getCurrentUser().getUserId());
+        inform.setCreatorId(UserContext.getCurrentUser().getUserId());
         inform.setStatus(NORMAL);
         //新增用户
         baseMapper.insert(inform);

@@ -55,34 +55,6 @@ public class Authority extends BaseEntity<Authority> {
      */
     private Long pid;
 
-    /**
-     * 有效标志
-     */
-    @TableField("yn_flag")
-    private String ynFlag;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 修改人
-     */
-    private String editor;
-
-    /**
-     * 创建时间
-     */
-    @TableField("created_time")
-    private Date createdTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modified_time")
-    private Date modifiedTime;
-
     @Override
     protected Serializable pkVal() {
         return this.id;

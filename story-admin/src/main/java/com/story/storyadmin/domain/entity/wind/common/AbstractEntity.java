@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.wind;
+package com.story.storyadmin.domain.entity.wind.common;
 
 import java.io.Serializable;
 

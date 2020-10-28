@@ -61,30 +61,4 @@ public class Backup extends BaseEntity {
      */
     private Integer status;
 
-    /**
-     * 有效标志
-     */
-    private String ynFlag;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 修改人
-     */
-    private String editor;
-
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
-
-    /**
-     * 修改时间
-     */
-    private Date modifiedTime;
-
-
 }

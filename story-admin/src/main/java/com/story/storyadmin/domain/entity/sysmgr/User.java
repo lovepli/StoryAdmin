@@ -80,33 +80,6 @@ public class User extends BaseEntity<User> {
     @TableField("erp_flag")
     private String erpFlag;
 
-    /**
-     * 有效标志  1表示有效，0表示无效，无效不会进行物理删除，做的是逻辑删除
-     */
-    @TableField("yn_flag")
-    private String ynFlag;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 修改人
-     */
-    private String editor;
-
-    /**
-     * 创建时间
-     */
-    @TableField("created_time")
-    private Date createdTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modified_time")
-    private Date modifiedTime;
 
   /**
      * 实体类继承Model类，必须重写pkVal方法
