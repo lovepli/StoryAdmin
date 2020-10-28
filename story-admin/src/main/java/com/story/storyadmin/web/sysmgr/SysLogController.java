@@ -36,7 +36,7 @@ public class SysLogController {
      * @return
      */
     @ApiOperation(value = "系统日志" ,  notes="查询系统日志列表")
-    @RequiresPermissions("sysmgr.syslog.query")
+    @RequiresPermissions("sysmgr.log.sys.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(SysLog sysLog,
                        @RequestParam(defaultValue = "1")int pageNo,
@@ -56,7 +56,7 @@ public class SysLogController {
      * @return
      */
     @ApiOperation(value = "系统日志" ,  notes="根据Id查询系统日志")
-    @RequiresPermissions("sysmgr.syslog.query")
+    @RequiresPermissions("sysmgr.log.sys.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody SysLog sysLog){
         SysLog userBean= sysLogService.findById(sysLog.getId());

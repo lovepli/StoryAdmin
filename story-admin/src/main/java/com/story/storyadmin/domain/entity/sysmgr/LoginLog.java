@@ -1,5 +1,7 @@
 package com.story.storyadmin.domain.entity.sysmgr;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.common.annotation.Excel;
 import com.story.storyadmin.domain.entity.BaseEntity;
@@ -23,7 +25,6 @@ import lombok.experimental.Accessors;
 public class LoginLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
     /**
      * 用户名
      */

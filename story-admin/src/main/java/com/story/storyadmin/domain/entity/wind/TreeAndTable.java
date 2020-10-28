@@ -25,6 +25,10 @@ public class TreeAndTable  extends BaseEntity<TreeAndTable> {
 
     private static final long serialVersionUID = 1L;
 
+    // TODO 父级继承过来的 随机字符串
+//    @TableId(value = "id", type = IdType.UUID)
+//    String id;
+
     @TableField(value = "name")
     private String name;  //部门名称
     @TableField(value = "type")

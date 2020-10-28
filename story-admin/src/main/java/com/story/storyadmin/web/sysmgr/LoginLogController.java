@@ -52,7 +52,7 @@ public class LoginLogController {
      * @return
      */
     @ApiOperation(value = "登录日志" ,  notes="查询登录日志列表")
-    @RequiresPermissions("sysmgr.loginlog.query")
+    @RequiresPermissions("sysmgr.log.login.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(LoginLog loginLog,
                        @RequestParam(defaultValue = "1")int pageNo,
@@ -76,7 +76,7 @@ public class LoginLogController {
      */
     @SysLogAnnotation
     @ApiOperation(value = "登录日志" ,  notes="删除登录日志列表")
-    @RequiresPermissions("sysmgr.loginlog.delete")
+    @RequiresPermissions("sysmgr.log.login.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody User user){
         Result result ;
@@ -100,7 +100,7 @@ public class LoginLogController {
      */
     @SysLogAnnotation
     @ApiOperation(value = "登录日志" ,  notes="批量删除登录日志列表")
-    @RequiresPermissions("sysmgr.loginlog.delete")
+    @RequiresPermissions("sysmgr.log.login.delete")
     @DeleteMapping(value="/deletes/{ids}")
     public Result dropByIds(@PathVariable Long[] ids){
         Result result ;
@@ -131,7 +131,7 @@ public class LoginLogController {
      * @return
      */
     @ApiOperation(value = "登录日志" ,  notes="通过用户名查询登录日志")
-    @RequiresPermissions("sysmgr.loginlog.query")
+    @RequiresPermissions("sysmgr.log.login.query")
     @RequestMapping(value = "/querylogsByAccount", method = GET)
     public Result list(@RequestParam(value = "ua", required = false) String userAccount,
                        @RequestParam(value = "page", defaultValue = "1") int pageNum,
@@ -151,7 +151,7 @@ public class LoginLogController {
     }
 
     @ApiOperation(value = "登录日志" ,  notes="导出登录日志")
-    @RequiresPermissions("sysmgr.loginlog.query")
+    @RequiresPermissions("sysmgr.log.login.query")
     @GetMapping("/export")
     public Result export(LoginLog loginLog,
                          @RequestParam(defaultValue = "1")int pageNo,

@@ -138,7 +138,7 @@ public class TreeAndTableController  {
         if(ids!=null || ids.length >0){
             for (Long id:ids){
                 delTable= new TreeAndTable();
-                delTable.setId(id);
+//                delTable.setId(id);
                 delTable.setDelFlag("1");
                 delTable.setUpdateDate(Date.from(Instant.now()));
                 delTable.setUpdateBy(UserContext.getCurrentUser().getAccount());

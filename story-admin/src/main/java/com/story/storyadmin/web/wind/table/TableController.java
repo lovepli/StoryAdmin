@@ -103,6 +103,17 @@ public class TableController{
         return result;
     }
 
+    @RequiresPermissions("test.table.query")
+    @RequestMapping(value="/find",method = {RequestMethod.POST})
+    public Result findById(@RequestBody Table table){ //RequestParam LONG id
+        Table tableBean= tableService.getById(table.getId());
+        tableBean.setContent(StringEscapeUtils.unescapeHtml4(table.getContent()));
+        Result result = new Result();
+        result.setData(tableBean);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return result;
+    }
 
     @RequiresPermissions("test.table.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
@@ -121,19 +132,6 @@ public class TableController{
         return result;
     }
 
-
-
-    @RequiresPermissions("test.table.query")
-    @RequestMapping(value="/find",method = {RequestMethod.POST})
-    public Result findById(@RequestBody Table table){ //RequestParam LONG id
-        Table tableBean= tableService.getById(table.getId());
-        tableBean.setContent(StringEscapeUtils.unescapeHtml4(table.getContent()));
-        Result result = new Result();
-        result.setData(tableBean);
-        result.setResult(true);
-        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        return result;
-    }
 
     @RequiresPermissions("test.table.delete")
     @PostMapping("/batch/delete")

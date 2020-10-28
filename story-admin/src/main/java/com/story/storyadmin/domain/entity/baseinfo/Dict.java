@@ -1,5 +1,7 @@
 package com.story.storyadmin.domain.entity.baseinfo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
 import java.util.Date;

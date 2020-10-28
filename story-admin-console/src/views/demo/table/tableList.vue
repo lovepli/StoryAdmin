@@ -34,7 +34,7 @@
         </template>
       </el-table-column>
       <el-table-column label="作者" width="110px" align="center">
-         <!--组件 -->
+        <!--组件 -->
         <!-- <template slot-scope="scope">
           <span>{{ scope.row.user.name }}</span>
         </template> -->

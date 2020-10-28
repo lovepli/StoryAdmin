@@ -25,6 +25,9 @@ public class ExpandTable extends BaseEntity<ExpandTable> {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.AUTO)
+    Long id;
+
     @TableField(value = "name")
     private String name;  //商品名称
     @TableField(value = "shop")

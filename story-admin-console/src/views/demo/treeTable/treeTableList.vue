@@ -62,7 +62,7 @@ export default {
     getList() {
       this.listLoading = true
       getList(this.listQuery).then(response => {
-        this.list = response.data.records
+        this.list = response.data
         this.listLoading = false
         this.$refs.form.setList(this.list)
       })

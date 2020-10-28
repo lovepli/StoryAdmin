@@ -14,6 +14,9 @@ public class WDict extends BaseEntity<WDict> {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.AUTO)
+    Long id;
+
 
     /**
      * 分组ID

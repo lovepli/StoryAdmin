@@ -1,7 +1,5 @@
 package com.story.storyadmin.domain.vo.wind;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import java.util.Date;
 @Data

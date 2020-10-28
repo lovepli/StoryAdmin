@@ -1,6 +1,8 @@
 package com.story.storyadmin.domain.entity.sysmgr;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
 import lombok.Data;
@@ -23,6 +25,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("st_user_role")
 public class UserRole extends BaseEntity<UserRole> {
+
 
     /**
      * 用户ID
