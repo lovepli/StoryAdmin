@@ -67,6 +67,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @PostMapping("update")
     @RequiresPermissions("sysmgr.organization.update")
     public Result update(@RequestBody Organization entity, BindingResult result) {
+        // 获取到了用户参数，但是添加逻辑出现错误，sql语句失败
         logger.info("##############"+entity.toString());
         // 验证错误
         this.checkError(entity, result);

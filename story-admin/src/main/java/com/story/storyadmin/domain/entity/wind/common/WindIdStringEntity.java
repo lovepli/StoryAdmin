@@ -17,7 +17,7 @@ import java.util.Date;
 public class WindIdStringEntity<T extends Model<?>> extends Model<T> {
 
     /**
-     * 主键id 为 String
+     * 主键id 为 String ，随机字符串
      */
     @TableId(value = "id", type = IdType.UUID)
     protected String id;

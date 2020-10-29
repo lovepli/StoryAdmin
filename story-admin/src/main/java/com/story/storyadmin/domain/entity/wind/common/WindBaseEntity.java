@@ -17,7 +17,7 @@ import java.util.Date;
 public class WindBaseEntity<T extends Model<?>> extends Model<T> {
 
     /**
-     * 主键id 为 Long
+     * 主键id 为 Long 自增长
      */
     @TableId(value = "id", type = IdType.AUTO)
     protected Long id;
