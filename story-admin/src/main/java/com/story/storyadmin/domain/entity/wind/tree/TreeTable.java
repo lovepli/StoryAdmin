@@ -21,7 +21,6 @@ import lombok.Data;
 @SuppressWarnings("serial")
 public class TreeTable extends TreeEntity<String> {
 
-
     @TableField(value = "geocoding")
     private String geocoding;  //地理编码
     @TableField(value = "postal_code")
