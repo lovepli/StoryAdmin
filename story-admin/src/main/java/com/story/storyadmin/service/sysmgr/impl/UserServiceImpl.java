@@ -301,10 +301,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 // 设置有效标识1，逻辑删除则将这个属性置为无效0
                 user.setYnFlag(YNFlagStatusEnum.VALID.getCode());
                 //设置创建人为当前系统登录用户
-                user.setEditor(UserContext.getCurrentUser().getAccount());
                 user.setCreator(UserContext.getCurrentUser().getAccount());
                 user.setCreatedTime(currentDate);
-                user.setModifiedTime(currentDate);
                 //新增用户
                 baseMapper.insert(user);
                 result= new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
