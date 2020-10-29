@@ -81,14 +81,21 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     @RequiresPermissions("test.treetable.save")
     @RequestMapping(value="/add",method = {RequestMethod.POST})
     public Result add(TreeTable entity, BindingResult result) {
+        logger.info("查询出TreeTable:{}",entity.toString());
         // 验证错误
         this.checkError(entity, result);
-        treeTableService.insert(entity);
+        TreeTable treeTable =new TreeTable();
+        treeTable.setId(entity.getId());
+        treeTable.setGeocoding(entity.getGeocoding());
+        treeTable.setPostalCode(entity.getPostalCode());
+        treeTable.setParentId(entity.getParentId());
+        treeTable.setRemarks(entity.getRemarks());
+        treeTableService.insert(treeTable);
         return new Result(true, "添加成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
     @RequiresPermissions("test.treetable.save")
     @RequestMapping(value="/update",method = {RequestMethod.POST})
-    public Result update(TreeTable entity, BindingResult result) {
+    public Result update(@RequestBody TreeTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         treeTableService.insertOrUpdate(entity);
