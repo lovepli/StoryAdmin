@@ -8,6 +8,7 @@ import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.wind.ExpandTable;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.wind.IExpandTableService;
+import com.story.storyadmin.web.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +35,8 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/test/expandtable")
-public class ExpandTableController  {
+public class ExpandTableController  extends BaseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExpandTableController.class);
     @Autowired
     private IExpandTableService expandTableService;
 

@@ -10,6 +10,7 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.CarDto;
 import com.story.storyadmin.service.wind.ICarService;
 import com.story.storyadmin.utils.wind.StringUtils;
+import com.story.storyadmin.web.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,8 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/test/car")
-public class CarController {
+public class CarController extends BaseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CarController.class);
 
     @Autowired
     private ICarService carService;

@@ -25,9 +25,7 @@ import java.util.Map;
  */
 @Api(description = "首页天气接口")
 @RestController
-public class PubController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PubController.class);
+public class PubController extends BaseController{
 
     @Autowired
     WeatherProperties weatherProperties;

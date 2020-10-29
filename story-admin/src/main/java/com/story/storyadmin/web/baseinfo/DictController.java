@@ -11,6 +11,7 @@ import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.baseinfo.Dict;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.baseinfo.DictService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,7 +33,7 @@ import java.util.List;
 @Api(description = "字典管理")
 @RestController
 @RequestMapping("/baseinfo/dict")
-public class DictController {
+public class DictController extends BaseController {
 
     @Autowired
     DictService dictService;

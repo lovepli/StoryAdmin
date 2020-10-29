@@ -7,6 +7,7 @@ import com.story.storyadmin.domain.entity.sysmgr.Dept;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.DeptNode;
 import com.story.storyadmin.service.sysmgr.DeptService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -28,7 +29,7 @@ import java.util.List;
 @Api(description = "部门管理")
 @RestController
 @RequestMapping("/sysmgr/dept")
-public class DeptController {
+public class DeptController extends BaseController {
 
     @Autowired
     DeptService deptService;

@@ -29,9 +29,8 @@ import java.io.IOException;
  */
 @Api(description = "验证码接口")
 @Controller
-public class CaptchaController {
+public class CaptchaController extends BaseController{
 
-    private static final Logger logger = LoggerFactory.getLogger(CaptchaController.class);
     /**
      * 验证码 redis key
      */

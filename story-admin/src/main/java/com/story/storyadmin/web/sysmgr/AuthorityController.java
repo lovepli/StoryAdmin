@@ -6,6 +6,7 @@ import com.story.storyadmin.domain.entity.sysmgr.Authority;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.AuthorityNode;
 import com.story.storyadmin.service.sysmgr.AuthorityService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,7 +23,7 @@ import java.util.List;
 @Api(description = "权限管理")
 @RestController
 @RequestMapping(value="/sysmgr/authority")
-public class AuthorityController {
+public class AuthorityController extends BaseController {
     @Autowired
     AuthorityService authorityService;
 

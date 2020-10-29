@@ -10,6 +10,7 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.WDictDto;
 import com.story.storyadmin.service.wind.IDictGroupService;
 import com.story.storyadmin.utils.wind.StringUtils;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -23,9 +24,7 @@ import java.util.Date;
 @Api(description = "W字典组管理")
 @RestController
 @RequestMapping(value="/sysmgr/dict/group")
-public class DictGroupController {
-
-    private static final Logger logger = LoggerFactory.getLogger(DictGroupController.class);
+public class DictGroupController extends BaseController {
 
     @Autowired
     private IDictGroupService dictGroupService;

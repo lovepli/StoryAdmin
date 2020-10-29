@@ -8,6 +8,7 @@ import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.tool.Todo;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.tool.TodoService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -33,7 +34,7 @@ import java.util.List;
 @Api(description = "待办事项")
 @RestController
 @RequestMapping("/tool/todo")
-public class TodoController {
+public class TodoController extends BaseController {
 
     @Autowired
     TodoService todoService;

@@ -15,6 +15,7 @@ import com.story.storyadmin.domain.vo.wind.WDictDto;
 import com.story.storyadmin.service.wind.IDictService;
 import com.story.storyadmin.utils.wind.SpringContextHolder;
 import com.story.storyadmin.utils.wind.StringUtils;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,9 +33,7 @@ import java.util.Map;
 @Api(description = "W字典管理")
 @RestController
 @RequestMapping(value="/sysmgr/dict")
-public class WDictController {
-
-    private static final Logger logger = LoggerFactory.getLogger(WDictController.class);
+public class WDictController extends BaseController {
 
     @Autowired
     private IDictService dictService;

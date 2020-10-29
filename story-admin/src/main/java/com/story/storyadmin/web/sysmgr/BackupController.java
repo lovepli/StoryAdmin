@@ -10,6 +10,7 @@ import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Backup;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.BackupService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,7 +31,7 @@ import java.util.Date;
 @Api(description = "系统备份")
 @RestController
 @RequestMapping("/sysmgr/backup")
-public class BackupController {
+public class BackupController extends BaseController {
 
     @Autowired
     BackupService backupService;

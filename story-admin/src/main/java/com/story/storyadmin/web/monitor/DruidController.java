@@ -1,6 +1,7 @@
 package com.story.storyadmin.web.monitor;
 
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Api(description = "数据监控")
 @Controller
 @RequestMapping("/monitor/druid")
-public class DruidController {
+public class DruidController extends BaseController {
 
     @ApiOperation(value = "数据监控" ,  notes="查询数据监控信息")
     @RequestMapping(value="/info",method = {RequestMethod.POST,RequestMethod.GET})

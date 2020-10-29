@@ -3,6 +3,7 @@ package com.story.storyadmin.web.monitor;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.monitorserver.Server;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(description = "服务监控")
 @RestController
 @RequestMapping("/monitor/server")
-public class ServerController {
+public class ServerController extends BaseController {
 
     @ApiOperation(value = "服务监控" ,  notes="查询服务监控信息")
     @RequiresPermissions("monitor.server.query")

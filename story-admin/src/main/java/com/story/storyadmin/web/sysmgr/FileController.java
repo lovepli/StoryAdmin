@@ -9,6 +9,7 @@ import com.story.storyadmin.domain.entity.sysmgr.Attachment;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.IFileService;
 import com.story.storyadmin.utils.MethodUtil;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -37,9 +38,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @Api(description = "系统公告附件")
 @RestController
 @RequestMapping("/sysmgr/file")
-public class FileController  {
-
-    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
+public class FileController  extends BaseController {
 
     @Autowired
     IFileService fileService;

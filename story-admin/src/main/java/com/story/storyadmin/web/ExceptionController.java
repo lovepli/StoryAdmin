@@ -23,9 +23,7 @@ import java.util.regex.Pattern;
  * @author
  */
 @RestControllerAdvice
-public class ExceptionController {
-
-    private final static Logger logger = LoggerFactory.getLogger(ExceptionController.class);
+public class ExceptionController extends BaseController{
 
     /**
      * 捕捉shiro的异常

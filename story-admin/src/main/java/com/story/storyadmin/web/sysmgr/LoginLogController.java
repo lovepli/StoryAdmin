@@ -12,6 +12,7 @@ import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.LoginLogService;
 import com.story.storyadmin.utils.ruoyiutils.reflect.ExcelUtil;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -37,9 +38,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Api(description = "登录日志")
 @RestController
 @RequestMapping("/sysmgr/loginlog")
-public class LoginLogController {
-
-    private static final Logger logger = LoggerFactory.getLogger(LoginLogController.class);
+public class LoginLogController extends BaseController {
 
     @Autowired
     LoginLogService loginLogService;

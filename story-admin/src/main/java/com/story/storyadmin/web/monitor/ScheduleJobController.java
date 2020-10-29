@@ -14,11 +14,10 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.scheduler.service.StorySchedulerService;
 import com.story.storyadmin.service.sysmgr.ScheduleJobService;
 import com.story.storyadmin.utils.DateUtils;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,9 +37,7 @@ import java.util.List;
 @Api(description = "定时任务")
 @RestController
 @RequestMapping("/monitor/schedulejob")
-public class ScheduleJobController {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class ScheduleJobController extends BaseController {
 
     @Autowired
     ScheduleJobService scheduleJobService;

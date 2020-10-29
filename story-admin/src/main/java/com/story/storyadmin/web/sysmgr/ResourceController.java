@@ -6,6 +6,7 @@ import com.story.storyadmin.domain.entity.sysmgr.Resource;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.ResourceNode;
 import com.story.storyadmin.service.sysmgr.ResourceService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,7 +23,7 @@ import java.util.List;
 @Api(description = "菜单管理")
 @RestController
 @RequestMapping(value="/sysmgr/resource")
-public class ResourceController {
+public class ResourceController extends BaseController {
     @Autowired
     ResourceService resourceService;
 

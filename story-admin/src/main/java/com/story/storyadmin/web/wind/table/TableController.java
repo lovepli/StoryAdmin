@@ -10,6 +10,7 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.TableDto;
 import com.story.storyadmin.service.wind.ITableService;
 import com.story.storyadmin.utils.wind.StringUtils;
+import com.story.storyadmin.web.BaseController;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -35,9 +36,8 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/test/table")
-public class TableController{
+public class TableController extends BaseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(TableController.class);
 
     @Autowired
     private ITableService tableService;

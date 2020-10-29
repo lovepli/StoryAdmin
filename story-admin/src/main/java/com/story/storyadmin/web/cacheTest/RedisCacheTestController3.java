@@ -1,6 +1,7 @@
 package com.story.storyadmin.web.cacheTest;
 
 import com.story.storyadmin.utils.JedisUtils;
+import com.story.storyadmin.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,7 @@ import java.util.stream.IntStream;
  */
 @RestController
 @RequestMapping(value="/redisCacheTest")
-public class RedisCacheTestController3 {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class RedisCacheTestController3 extends BaseController {
 
     @Autowired
     private JedisUtils jedisUtils;

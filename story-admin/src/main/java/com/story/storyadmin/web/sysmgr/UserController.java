@@ -13,6 +13,7 @@ import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
 import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.service.sysmgr.UserService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -31,9 +32,7 @@ import java.util.List;
 @Api(description = "用户管理")
 @RestController
 @RequestMapping(value="/sysmgr/user")
-public class UserController {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+public class UserController extends BaseController {
 
     @Autowired
     UserService userService;

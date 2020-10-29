@@ -11,6 +11,7 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.*;
 import com.story.storyadmin.service.sysmgr.InformService;
 import com.story.storyadmin.utils.DateUtil;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,9 +30,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Api(description = "系统通知")
 @RestController
-public class InformController {
-
-    private static final Logger logger = LoggerFactory.getLogger(InformController.class);
+public class InformController extends BaseController {
 
     @Autowired
     InformService informService;

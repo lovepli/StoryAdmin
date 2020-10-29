@@ -11,6 +11,7 @@ import com.story.storyadmin.domain.entity.sysmgr.Att;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.AttService;
 import com.story.storyadmin.utils.MethodUtil;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -38,9 +39,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Api(description = "附件管理")
 @RestController
 @RequestMapping("/sysmgr/att")
-public class AttController {
-
-    private static final Logger logger = LoggerFactory.getLogger(AttController.class);
+public class AttController extends BaseController {
 
     @Value("${file.multipart.baseDir}")
     private String baseDir;

@@ -6,6 +6,7 @@ import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.SysLog;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.SysLogService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "系统日志")
 @RestController
 @RequestMapping("/sysmgr/syslog")
-public class SysLogController {
+public class SysLogController extends BaseController {
 
     @Autowired
     SysLogService sysLogService;

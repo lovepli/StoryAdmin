@@ -1,5 +1,6 @@
 package com.story.storyadmin.web.mongoTest;
 
+import com.story.storyadmin.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/mongoDBTest")
-public class MongoDBTestController {
-
-    private static final Logger logger = LoggerFactory.getLogger(MongoDBTestController.class);
+public class MongoDBTestController extends BaseController {
 
     @Autowired
     MongoTemplate mongoTemplate;

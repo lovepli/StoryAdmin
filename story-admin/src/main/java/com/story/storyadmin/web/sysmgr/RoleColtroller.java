@@ -10,6 +10,7 @@ import com.story.storyadmin.domain.entity.sysmgr.Role;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.RoleAuth;
 import com.story.storyadmin.service.sysmgr.RoleService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,7 +23,7 @@ import java.util.List;
 @Api(description = "角色管理")
 @RestController
 @RequestMapping(value="/sysmgr/role")
-public class RoleColtroller {
+public class RoleColtroller extends BaseController {
 
     @Autowired
     RoleService roleService;

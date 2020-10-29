@@ -24,9 +24,8 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/common")
-public class CommonController {
+public class CommonController extends BaseController{
 
-    private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
     @Value("${file.multipart.baseDir}")
     private String baseDir;
@@ -51,8 +50,8 @@ public class CommonController {
     @GetMapping("/download")
     public void fileDownload(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request)
     {
-        log.info("文件名称：{}",fileName);
-        log.info("是否删除：{}",delete);
+        logger.info("文件名称：{}",fileName);
+        logger.info("是否删除：{}",delete);
         try
         {
             if (!FileUtils.isValidFilename(fileName))
@@ -73,7 +72,7 @@ public class CommonController {
         }
         catch (Exception e)
         {
-            log.error("下载文件失败", e);
+            logger.error("下载文件失败", e);
         }
     }
 
@@ -131,7 +130,7 @@ public class CommonController {
             System.out.print("插入结果"+jieguo+"\n");
             System.out.print("保存的完整url===="+url+"\n");
         } catch (IOException e) { //受检查异常，不是throw Eexception()这样处理
-            log.error("上传失败", e);
+            logger.error("上传失败", e);
             result = new Result(false, "上传失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
         }
         System.out.println("上传成功,文件url=="+url);

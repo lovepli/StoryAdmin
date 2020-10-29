@@ -33,9 +33,7 @@ import java.util.List;
 @Api(description = "登录接口")
 @Controller
 @RequestMapping(value="/user")
-public class LoginController {
-
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+public class LoginController extends BaseController{
 
     @Autowired
     UserService userService;

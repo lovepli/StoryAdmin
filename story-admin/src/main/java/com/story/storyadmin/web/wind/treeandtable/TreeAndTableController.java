@@ -10,6 +10,7 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.wind.TreeAndTableDto;
 import com.story.storyadmin.service.wind.ITreeAndTableService;
 import com.story.storyadmin.utils.wind.StringUtils;
+import com.story.storyadmin.web.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +37,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/test/treeandtable")
-public class TreeAndTableController  {
-
-    private static final Logger logger = LoggerFactory.getLogger(TreeAndTableController.class);
+public class TreeAndTableController  extends BaseController {
 
     @Autowired
     private ITreeAndTableService treeAndTableService;
