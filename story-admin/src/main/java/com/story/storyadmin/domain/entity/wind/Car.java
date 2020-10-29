@@ -11,13 +11,13 @@ public class Car extends  WindBaseEntity<Car> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 汽车品牌
+     * 汽车品牌(分组名称)
      */
     @TableField(value = "name")
     private String name;
 
     /**
-     * 品牌编码
+     * 品牌编码(分组编码)
      */
     @TableField(value = "code")
     private String code;

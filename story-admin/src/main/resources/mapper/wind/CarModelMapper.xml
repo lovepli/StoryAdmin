@@ -3,7 +3,7 @@
 <mapper namespace="com.story.storyadmin.mapper.wind.CarModelMapper">
     <resultMap id="BaseResultMap" type="com.story.storyadmin.domain.entity.wind.CarModel">
         <result column="car_id" property="carId" jdbcType="INTEGER"/>
-        <result column="label" property="label" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="value" property="value" jdbcType="VARCHAR"/>
         <result column="sort" property="sort" jdbcType="INTEGER"/>
         <result column="remarks" property="remarks" jdbcType="VARCHAR"/>

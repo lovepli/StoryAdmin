@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function getList(data) {
+export function getList(params) {
   return request({
     url: '/test/carmodel/list',
-    method: 'post',
-    data
+    method: 'get',
+    params
   })
 }
 

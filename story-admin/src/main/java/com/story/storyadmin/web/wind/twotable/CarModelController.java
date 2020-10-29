@@ -50,7 +50,7 @@ public class CarModelController{
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(CarModelDto carModelDto,
                        @RequestParam(defaultValue = "1")int pageNo,
-                       @RequestParam(defaultValue = "10")int limit) throws IOException {
+                       @RequestParam(defaultValue = "10")int limit) {
         Result result = new Result();
         Page<CarModel> page = new Page(pageNo, limit);
 
@@ -59,15 +59,15 @@ public class CarModelController{
         entityWrapper.eq("del_flag", "0");
         entityWrapper.orderByAsc( "sort");
         String keyword = carModelDto.getKeyword();
-        String carId = carModelDto.getCarId();
-        if (!StringUtils.isEmpty(carId) && !StringUtils.isEmpty(keyword)) {
-            entityWrapper.eq("car_id", carId).and(i -> i.like("label", keyword).or().like("value", keyword));
-        } else if (!StringUtils.isEmpty(carId)) {
+        Long carId = carModelDto.getCarId();
+        if (carId!=null && !StringUtils.isEmpty(keyword)) {
+            entityWrapper.eq("car_id", carId).and(i -> i.like("name", keyword).or().like("value", keyword));
+        } else if (carId!=null) {
             entityWrapper.eq("car_id", carId);
         }
         // 预处理
         IPage<CarModel> list = carModelService.page(page, entityWrapper);
-        logger.info("查询出字典信息:{}",list);
+        logger.info("查询出CarModel信息:{}",list);
         result.setData(list);
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());

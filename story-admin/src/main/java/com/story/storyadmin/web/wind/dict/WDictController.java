@@ -51,8 +51,6 @@ public class WDictController {
         try {
             System.out.println("############"+this.getDictInfo());
             result= new Result(true, "获取成功", this.getDictInfo(), ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-           // System.out.println("############"+DictUtils.getDict());
-           // result= new Result(true, "获取成功", DictUtils.getDict(), ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(ResultEnum.UNKNOWN_EXCEPTION.getCode(), "获取失败", MethodUtil.getLineInfo());

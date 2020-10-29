@@ -81,6 +81,9 @@ export default {
       downloadLoading: false
     }
   },
+  created() {
+    this.getList()
+  },
   methods: {
     getList() {
       this.listLoading = true
