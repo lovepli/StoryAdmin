@@ -241,11 +241,11 @@ export default {
           }
           save(param).then(res => {
             this.modifyVisible = false;
-            Message({
-              message: '保存成功',
-              type: 'success',
-              duration: 5 * 1000
-            });
+            // Message({
+            //   message: '保存成功',
+            //   type: 'success',
+            //   duration: 5 * 1000
+            // });
             this.loadData();
           });
         } else {

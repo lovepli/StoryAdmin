@@ -35,6 +35,7 @@
           @click="handleAdd"
         >新增</el-button>
       </el-col>
+      <!--right-toolbar 组件 -->
       <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
     </el-row>
 
@@ -50,7 +51,7 @@
       <el-table-column :formatter="statusFormat" prop="status" label="状态" width="100"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="200">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime) }}</span>
+          <span>{{ scope.row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -135,13 +136,19 @@
 
 <script>
 import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from '@/api/ruoyi/dept';
-import { resetForm } from '@/utils/ruoyi';
+// eslint-disable-next-line no-unused-vars
+import { handleTree, selectDictLabel, resetForm } from '@/utils/ruoyi';
+import { parseTime } from '@/utils';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+import RightToolbar from '@/components/RightToolbar'; // 引入RightToolbar子组件
 
 export default {
   name: 'Dept',
-  components: { Treeselect },
+  components: { Treeselect, RightToolbar },
+  filters: {
+    parseTime
+  },
   data() {
     return {
       // 遮罩层
@@ -196,6 +203,7 @@ export default {
   created() {
     this.getList();
     // 从字典中取出来
+    this.statusOptions = [{ dictValue: '0', dictLabel: '正常' }, { dictValue: '1', dictLabel: '停用' }]
     // this.getDicts('sys_normal_disable').then(response => {
     //   this.statusOptions = response.data;
     // });
@@ -205,7 +213,7 @@ export default {
     getList() {
       this.loading = true;
       listDept(this.queryParams).then(response => {
-        this.deptList = this.handleTree(response.data, 'deptId');
+        this.deptList = handleTree(response.data, 'deptId');
         this.loading = false;
       });
     },
@@ -222,7 +230,7 @@ export default {
     },
     // 字典状态字典翻译
     statusFormat(row, column) {
-      return this.selectDictLabel(this.statusOptions, row.status);
+      return selectDictLabel(this.statusOptions, row.status);
     },
     // 取消按钮
     cancel() {
@@ -241,8 +249,11 @@ export default {
         email: undefined,
         status: '0'
       };
-      // 重置
-      resetForm('form');
+      // 重置表单
+      // resetForm('form'); // 这个方法有问题，改成下面这种重置表单的方式就可以了
+      this.$nextTick(() => {
+        this.$refs['form'].resetFields();
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -250,8 +261,11 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      // 重置
-      resetForm('queryForm');
+      // 重置搜索框
+      // resetForm('queryForm');
+      this.$nextTick(() => {
+        this.$refs['queryForm'].resetFields();
+      });
       this.handleQuery();
     },
     /** 新增按钮操作 */
@@ -263,7 +277,7 @@ export default {
       this.open = true;
       this.title = '添加部门';
       listDept().then(response => {
-        this.deptOptions = this.handleTree(response.data, 'deptId');
+        this.deptOptions = handleTree(response.data, 'deptId');
       });
     },
     /** 修改按钮操作 */
@@ -275,7 +289,7 @@ export default {
         this.title = '修改部门';
       });
       listDeptExcludeChild(row.deptId).then(response => {
-        this.deptOptions = this.handleTree(response.data, 'deptId');
+        this.deptOptions = handleTree(response.data, 'deptId');
       });
     },
     /** 提交按钮 */
@@ -284,19 +298,13 @@ export default {
         if (valid) {
           if (this.form.deptId !== undefined) {
             updateDept(this.form).then(response => {
-              if (response.code === 200) {
-                this.msgSuccess('修改成功');
-                this.open = false;
-                this.getList();
-              }
+              this.open = false;
+              this.getList();
             });
           } else {
             addDept(this.form).then(response => {
-              if (response.code === 200) {
-                this.msgSuccess('新增成功');
-                this.open = false;
-                this.getList();
-              }
+              this.open = false;
+              this.getList();
             });
           }
         }
@@ -312,7 +320,6 @@ export default {
         return delDept(row.deptId);
       }).then(() => {
         this.getList();
-        this.msgSuccess('删除成功');
       }).catch(function() {});
     }
   }

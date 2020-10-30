@@ -63,6 +63,7 @@ export default {
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
+      // 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })

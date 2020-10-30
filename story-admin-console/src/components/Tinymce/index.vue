@@ -87,6 +87,7 @@ export default {
         // console.log('val', val)
         window.tinymce.get(this.tinymceId).setContent(val || '')
 
+        // 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
         // this.$nextTick(() => {
         //   window.tinymce.get(this.tinymceId).setContent(val || '')
         // })
