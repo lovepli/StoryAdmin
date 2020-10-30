@@ -237,6 +237,12 @@
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
         </dependency>
+      <!--ruoyi添加GitHub——page分页依赖-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.1.10</version>
+        </dependency>
     </dependencies>
 
 

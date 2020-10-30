@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2020-10-29 16:43:17
+Date: 2020-10-30 17:52:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -135,7 +135,7 @@ CREATE TABLE `st_authority` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='权限表';
 
 -- ----------------------------
 -- Records of st_authority
@@ -289,6 +289,18 @@ INSERT INTO `st_authority` VALUES ('157', '查询组织列表', 'sysmgr.organiza
 INSERT INTO `st_authority` VALUES ('158', '添加组织', 'sysmgr.organization.add', '0-2-156', null, '2', '156', '1', 'admin', 'admin', '2020-10-29 07:46:12', '2020-10-29 07:47:00');
 INSERT INTO `st_authority` VALUES ('159', '修改组织', 'sysmgr.organization.update', '0-2-156', null, '3', '156', '1', 'admin', 'admin', '2020-10-29 07:46:49', '2020-10-29 07:46:49');
 INSERT INTO `st_authority` VALUES ('160', '删除组织', 'sysmgr.organization.delete', '0-2-156', null, '4', '156', '1', 'admin', 'admin', '2020-10-29 07:47:24', '2020-10-29 07:47:24');
+INSERT INTO `st_authority` VALUES ('161', 'w部门管理', 'sysmgr.rydept', '0-2', null, '25', '2', '1', 'admin', 'admin', '2020-10-30 02:02:15', '2020-10-30 02:02:34');
+INSERT INTO `st_authority` VALUES ('162', '获取部门列表', 'sysmgr.rydept.list', '0-2-161', null, '1', '161', '1', 'admin', 'admin', '2020-10-30 02:03:22', '2020-10-30 02:03:22');
+INSERT INTO `st_authority` VALUES ('163', '根据部门编号获取详细信息', 'sysmgr.rydept.query', '0-2-161', null, '2', '161', '1', 'admin', 'admin', '2020-10-30 02:04:24', '2020-10-30 02:04:24');
+INSERT INTO `st_authority` VALUES ('164', '新增部门', 'sysmgr.rydept.add', '0-2-161', null, '3', '161', '1', 'admin', 'admin', '2020-10-30 02:05:12', '2020-10-30 02:05:12');
+INSERT INTO `st_authority` VALUES ('165', '修改部门', 'sysmgr.rydept.edit', '0-2-161', null, '4', '161', '1', 'admin', 'admin', '2020-10-30 02:05:42', '2020-10-30 02:05:42');
+INSERT INTO `st_authority` VALUES ('166', '删除部门', 'sysmgr.rydept.delete', '0-2-161', null, '5', '161', '1', 'admin', 'admin', '2020-10-30 02:06:11', '2020-10-30 02:06:11');
+INSERT INTO `st_authority` VALUES ('167', 'w岗位管理', 'sysmgr.post', '0-2', null, '26', '2', '1', 'admin', 'admin', '2020-10-30 09:30:22', '2020-10-30 09:30:22');
+INSERT INTO `st_authority` VALUES ('168', '获取岗位列表', 'sysmgr.post.list', '0-2-167', null, '1', '167', '1', 'admin', 'admin', '2020-10-30 09:30:39', '2020-10-30 09:30:39');
+INSERT INTO `st_authority` VALUES ('169', '根据岗位编号获取详细信息', 'sysmgr.post.query', '0-2-167', null, '2', '167', '1', 'admin', 'admin', '2020-10-30 09:31:23', '2020-10-30 09:31:23');
+INSERT INTO `st_authority` VALUES ('170', '新增岗位', 'sysmgr.post.add', '0-2-167', null, '3', '167', '1', 'admin', 'admin', '2020-10-30 09:31:48', '2020-10-30 09:31:48');
+INSERT INTO `st_authority` VALUES ('171', '修改岗位', 'sysmgr.post.edit', '0-2-167', null, '4', '167', '1', 'admin', 'admin', '2020-10-30 09:32:16', '2020-10-30 09:32:16');
+INSERT INTO `st_authority` VALUES ('172', '删除岗位', 'sysmgr.post.remove', '0-2-167', null, '5', '167', '1', 'admin', 'admin', '2020-10-30 09:32:47', '2020-10-30 09:32:47');
 
 -- ----------------------------
 -- Table structure for `st_backup`
@@ -493,7 +505,7 @@ CREATE TABLE `st_login_log` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1321344106551652372 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1321344106551652379 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of st_login_log
@@ -515,6 +527,13 @@ INSERT INTO `st_login_log` VALUES ('1321344106551652368', 'admin', '2020-10-29 0
 INSERT INTO `st_login_log` VALUES ('1321344106551652369', 'admin', '2020-10-29 07:41:41', '登录成功', '1', 'admin', 'admin', '2020-10-29 07:41:41', '2020-10-29 07:41:40');
 INSERT INTO `st_login_log` VALUES ('1321344106551652370', 'admin', '2020-10-29 07:54:24', '登录成功', '1', 'admin', 'admin', '2020-10-29 07:54:24', '2020-10-29 07:54:23');
 INSERT INTO `st_login_log` VALUES ('1321344106551652371', 'admin', '2020-10-29 08:17:37', '登录成功', '1', 'admin', 'admin', '2020-10-29 08:17:37', '2020-10-29 08:17:37');
+INSERT INTO `st_login_log` VALUES ('1321344106551652372', 'admin', '2020-10-30 01:59:49', '登录成功', '1', 'admin', 'admin', '2020-10-30 01:59:49', '2020-10-30 01:59:48');
+INSERT INTO `st_login_log` VALUES ('1321344106551652373', 'admin', '2020-10-30 02:10:34', '登录成功', '1', 'admin', 'admin', '2020-10-30 02:10:34', '2020-10-30 02:10:34');
+INSERT INTO `st_login_log` VALUES ('1321344106551652374', 'admin', '2020-10-30 03:28:15', '登录成功', '1', 'admin', 'admin', '2020-10-30 03:28:15', '2020-10-30 03:28:14');
+INSERT INTO `st_login_log` VALUES ('1321344106551652375', 'admin', '2020-10-30 06:19:39', '登录成功', '1', 'admin', 'admin', '2020-10-30 06:19:39', '2020-10-30 06:19:39');
+INSERT INTO `st_login_log` VALUES ('1321344106551652376', 'admin', '2020-10-30 07:01:50', '登录成功', '1', 'admin', 'admin', '2020-10-30 07:01:50', '2020-10-30 07:01:50');
+INSERT INTO `st_login_log` VALUES ('1321344106551652377', 'admin', '2020-10-30 09:28:34', '登录成功', '1', 'admin', 'admin', '2020-10-30 09:28:34', '2020-10-30 09:28:33');
+INSERT INTO `st_login_log` VALUES ('1321344106551652378', 'admin', '2020-10-30 09:35:19', '登录成功', '1', 'admin', 'admin', '2020-10-30 09:35:19', '2020-10-30 09:35:19');
 
 -- ----------------------------
 -- Table structure for `st_resource`
@@ -537,7 +556,7 @@ CREATE TABLE `st_resource` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 -- ----------------------------
 -- Records of st_resource
@@ -578,6 +597,8 @@ INSERT INTO `st_resource` VALUES ('33', '展开表格', '0-30', 'user', '3', 'Ex
 INSERT INTO `st_resource` VALUES ('34', '文章表格', '0-30', 'user', '4', 'ComplexTable', '/demo/table/tableList', '125', '30', null, '1', 'admin', 'admin', '2020-10-27 12:07:15', '2020-10-27 12:07:15');
 INSERT INTO `st_resource` VALUES ('35', '双表联动', '0-30', 'user', '5', 'TwoTable', '/demo/car/index', '142', '30', null, '1', 'admin', 'admin', '2020-10-27 14:10:11', '2020-10-27 14:10:37');
 INSERT INTO `st_resource` VALUES ('36', '组织管理', '0-1', 'peoples', '39', 'organization', '/sysmgr/organization/organizationList', '157', '1', null, '1', 'admin', 'admin', '2020-10-29 07:51:02', '2020-10-29 07:52:55');
+INSERT INTO `st_resource` VALUES ('37', 'w部门管理', '0-1', 'user', '40', 'wdept', '/sysmgr/ruoyi/dept/index', '162', '1', null, '1', 'admin', 'admin', '2020-10-30 02:09:49', '2020-10-30 02:09:49');
+INSERT INTO `st_resource` VALUES ('38', 'w岗位管理', '0-1', 'user', '41', 'wpost', '/sysmgr/ruoyi/post/index', '168', '1', null, '1', 'admin', 'admin', '2020-10-30 09:34:19', '2020-10-30 09:34:19');
 
 -- ----------------------------
 -- Table structure for `st_role`
@@ -618,7 +639,7 @@ CREATE TABLE `st_role_authority` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3137 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='角色权限关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=3218 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='角色权限关系表';
 
 -- ----------------------------
 -- Records of st_role_authority
@@ -3505,42 +3526,123 @@ INSERT INTO `st_role_authority` VALUES ('3097', '1', '60', '0', 'admin', null, '
 INSERT INTO `st_role_authority` VALUES ('3098', '1', '61', '0', 'admin', null, '2020-10-29 07:54:03', '2020-10-29 08:17:28');
 INSERT INTO `st_role_authority` VALUES ('3099', '1', '62', '0', 'admin', null, '2020-10-29 07:54:03', '2020-10-29 08:17:28');
 INSERT INTO `st_role_authority` VALUES ('3100', '1', '63', '0', 'admin', null, '2020-10-29 07:54:03', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3101', '1', '0', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3102', '1', '1', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3103', '1', '2', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3104', '1', '66', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3105', '1', '3', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3106', '1', '67', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3107', '1', '4', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3108', '1', '68', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3109', '1', '5', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3110', '1', '69', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3111', '1', '6', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3112', '1', '70', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3113', '1', '7', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3114', '1', '71', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3115', '1', '8', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3116', '1', '9', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3117', '1', '10', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3118', '1', '11', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3119', '1', '12', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3120', '1', '13', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3121', '1', '14', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3122', '1', '15', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3123', '1', '16', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3124', '1', '17', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3125', '1', '18', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3126', '1', '156', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3127', '1', '157', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3128', '1', '158', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3129', '1', '159', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3130', '1', '160', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3131', '1', '56', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3132', '1', '57', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3133', '1', '58', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3134', '1', '59', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3135', '1', '60', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
-INSERT INTO `st_role_authority` VALUES ('3136', '1', '61', '1', 'admin', 'admin', '2020-10-29 08:17:28', '2020-10-29 08:17:28');
+INSERT INTO `st_role_authority` VALUES ('3101', '1', '0', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3102', '1', '1', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3103', '1', '2', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3104', '1', '66', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3105', '1', '3', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3106', '1', '67', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3107', '1', '4', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3108', '1', '68', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3109', '1', '5', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3110', '1', '69', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3111', '1', '6', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3112', '1', '70', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3113', '1', '7', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3114', '1', '71', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3115', '1', '8', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3116', '1', '9', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3117', '1', '10', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3118', '1', '11', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3119', '1', '12', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3120', '1', '13', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3121', '1', '14', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3122', '1', '15', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3123', '1', '16', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3124', '1', '17', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3125', '1', '18', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3126', '1', '156', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3127', '1', '157', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3128', '1', '158', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3129', '1', '159', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3130', '1', '160', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3131', '1', '56', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3132', '1', '57', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3133', '1', '58', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3134', '1', '59', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3135', '1', '60', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3136', '1', '61', '0', 'admin', null, '2020-10-29 08:17:28', '2020-10-30 02:10:25');
+INSERT INTO `st_role_authority` VALUES ('3137', '1', '0', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3138', '1', '1', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3139', '1', '2', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3140', '1', '66', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3141', '1', '3', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3142', '1', '67', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3143', '1', '4', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3144', '1', '68', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3145', '1', '5', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3146', '1', '69', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3147', '1', '6', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3148', '1', '70', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3149', '1', '7', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3150', '1', '71', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3151', '1', '8', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3152', '1', '9', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3153', '1', '10', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3154', '1', '11', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3155', '1', '12', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3156', '1', '13', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3157', '1', '14', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3158', '1', '15', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3159', '1', '16', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3160', '1', '17', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3161', '1', '18', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3162', '1', '156', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3163', '1', '157', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3164', '1', '158', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3165', '1', '159', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3166', '1', '160', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3167', '1', '161', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3168', '1', '162', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3169', '1', '163', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3170', '1', '164', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3171', '1', '165', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3172', '1', '166', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3173', '1', '56', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3174', '1', '57', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3175', '1', '58', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3176', '1', '59', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3177', '1', '60', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3178', '1', '61', '0', 'admin', null, '2020-10-30 02:10:25', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3179', '1', '0', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3180', '1', '1', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3181', '1', '2', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3182', '1', '66', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3183', '1', '3', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3184', '1', '67', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3185', '1', '4', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3186', '1', '5', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3187', '1', '6', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3188', '1', '7', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3189', '1', '8', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3190', '1', '9', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3191', '1', '10', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3192', '1', '11', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3193', '1', '12', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3194', '1', '13', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3195', '1', '14', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3196', '1', '15', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3197', '1', '16', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3198', '1', '17', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3199', '1', '18', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3200', '1', '161', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3201', '1', '162', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3202', '1', '163', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3203', '1', '164', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3204', '1', '165', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3205', '1', '166', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3206', '1', '167', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3207', '1', '168', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3208', '1', '169', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3209', '1', '170', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3210', '1', '171', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3211', '1', '172', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3212', '1', '56', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3213', '1', '57', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3214', '1', '58', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3215', '1', '59', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3216', '1', '60', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
+INSERT INTO `st_role_authority` VALUES ('3217', '1', '61', '1', 'admin', 'admin', '2020-10-30 09:35:09', '2020-10-30 09:35:09');
 
 -- ----------------------------
 -- Table structure for `st_schedule_job`
@@ -3713,6 +3815,43 @@ INSERT INTO `st_user_role` VALUES ('26', '1', '5', '0', 'admin', null, '2020-10-
 INSERT INTO `st_user_role` VALUES ('27', '1', '1', '1', 'admin', 'admin', '2020-10-27 02:10:07', '2020-10-27 02:10:07');
 
 -- ----------------------------
+-- Table structure for `sys_dept`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dept`;
+CREATE TABLE `sys_dept` (
+  `dept_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '部门id',
+  `parent_id` bigint(20) DEFAULT '0' COMMENT '父部门id',
+  `ancestors` varchar(50) DEFAULT '' COMMENT '祖级列表',
+  `dept_name` varchar(30) DEFAULT '' COMMENT '部门名称',
+  `order_num` int(4) DEFAULT '0' COMMENT '显示顺序',
+  `leader` varchar(20) DEFAULT NULL COMMENT '负责人',
+  `phone` varchar(11) DEFAULT NULL COMMENT '联系电话',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `status` char(1) DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
+  `del_flag` char(1) DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`dept_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
+
+-- ----------------------------
+-- Records of sys_dept
+-- ----------------------------
+INSERT INTO `sys_dept` VALUES ('100', '0', '0', '若依科技', '0', '若依', '17671226463', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2020-10-30 07:27:26');
+INSERT INTO `sys_dept` VALUES ('101', '100', '0,100', '深圳总公司', '1', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2020-10-30 07:27:26');
+INSERT INTO `sys_dept` VALUES ('102', '100', '0,100', '长沙分公司', '2', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES ('103', '101', '0,100,101', '研发部门', '1', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES ('104', '101', '0,100,101', '市场部门', '2', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES ('105', '101', '0,100,101', '测试部门', '3', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES ('106', '101', '0,100,101', '财务部门', '4', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES ('107', '101', '0,100,101', '运维部门', '5', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES ('108', '102', '0,100,102', '市场部门', '1', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES ('109', '102', '0,100,102', '财务部门', '2', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES ('110', '101', '0,100,101', '销售部', '6', '若依', '15888888888', 'ry@qq.com', '1', '0', 'admin', '2020-10-30 07:27:13', '', '2020-10-30 07:27:40');
+
+-- ----------------------------
 -- Table structure for `sys_dict`
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict`;
@@ -3765,6 +3904,117 @@ INSERT INTO `sys_dict_group` VALUES ('2', '111', '7777', '1', 'admin', '2020-10-
 INSERT INTO `sys_dict_group` VALUES ('3', '2', '2', '', 'admin', '2020-10-28 01:12:27', null, null, '0');
 
 -- ----------------------------
+-- Table structure for `sys_menu`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_menu`;
+CREATE TABLE `sys_menu` (
+  `menu_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+  `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
+  `parent_id` bigint(20) DEFAULT '0' COMMENT '父菜单ID',
+  `order_num` int(4) DEFAULT '0' COMMENT '显示顺序',
+  `path` varchar(200) DEFAULT '' COMMENT '路由地址',
+  `component` varchar(255) DEFAULT NULL COMMENT '组件路径',
+  `is_frame` int(1) DEFAULT '1' COMMENT '是否为外链（0是 1否）',
+  `menu_type` char(1) DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
+  `visible` char(1) DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
+  `status` char(1) DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
+  `perms` varchar(100) DEFAULT NULL COMMENT '权限标识',
+  `icon` varchar(100) DEFAULT '#' COMMENT '菜单图标',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`menu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1061 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
+
+-- ----------------------------
+-- Records of sys_menu
+-- ----------------------------
+INSERT INTO `sys_menu` VALUES ('1', '系统管理', '0', '1', 'system', null, '1', 'M', '0', '0', '', 'system', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统管理目录');
+INSERT INTO `sys_menu` VALUES ('2', '系统监控', '0', '2', 'monitor', null, '1', 'M', '0', '0', '', 'monitor', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统监控目录');
+INSERT INTO `sys_menu` VALUES ('3', '系统工具', '0', '3', 'tool', null, '1', 'M', '0', '0', '', 'tool', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统工具目录');
+INSERT INTO `sys_menu` VALUES ('4', '若依官网', '0', '4', 'http://ruoyi.vip', null, '0', 'M', '0', '0', '', 'guide', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '若依官网地址');
+INSERT INTO `sys_menu` VALUES ('100', '用户管理', '1', '1', 'user', 'system/user/index', '1', 'C', '0', '0', 'system:user:list', 'user', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户管理菜单');
+INSERT INTO `sys_menu` VALUES ('101', '角色管理', '1', '2', 'role', 'system/role/index', '1', 'C', '0', '0', 'system:role:list', 'peoples', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色管理菜单');
+INSERT INTO `sys_menu` VALUES ('102', '菜单管理', '1', '3', 'menu', 'system/menu/index', '1', 'C', '0', '0', 'system:menu:list', 'tree-table', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单管理菜单');
+INSERT INTO `sys_menu` VALUES ('103', '部门管理', '1', '4', 'dept', 'system/dept/index', '1', 'C', '0', '0', 'system:dept:list', 'tree', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '部门管理菜单');
+INSERT INTO `sys_menu` VALUES ('104', '岗位管理', '1', '5', 'post', 'system/post/index', '1', 'C', '0', '0', 'system:post:list', 'post', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '岗位管理菜单');
+INSERT INTO `sys_menu` VALUES ('105', '字典管理', '1', '6', 'dict', 'system/dict/index', '1', 'C', '0', '0', 'system:dict:list', 'dict', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '字典管理菜单');
+INSERT INTO `sys_menu` VALUES ('106', '参数设置', '1', '7', 'config', 'system/config/index', '1', 'C', '0', '0', 'system:config:list', 'edit', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '参数设置菜单');
+INSERT INTO `sys_menu` VALUES ('107', '通知公告', '1', '8', 'notice', 'system/notice/index', '1', 'C', '0', '0', 'system:notice:list', 'message', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '通知公告菜单');
+INSERT INTO `sys_menu` VALUES ('108', '日志管理', '1', '9', 'log', 'system/log/index', '1', 'M', '0', '0', '', 'log', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '日志管理菜单');
+INSERT INTO `sys_menu` VALUES ('109', '在线用户', '2', '1', 'online', 'monitor/online/index', '1', 'C', '0', '0', 'monitor:online:list', 'online', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '在线用户菜单');
+INSERT INTO `sys_menu` VALUES ('110', '定时任务', '2', '2', 'job', 'monitor/job/index', '1', 'C', '0', '0', 'monitor:job:list', 'job', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '定时任务菜单');
+INSERT INTO `sys_menu` VALUES ('111', '数据监控', '2', '3', 'druid', 'monitor/druid/index', '1', 'C', '0', '0', 'monitor:druid:list', 'druid', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '数据监控菜单');
+INSERT INTO `sys_menu` VALUES ('112', '服务监控', '2', '4', 'server', 'monitor/server/index', '1', 'C', '0', '0', 'monitor:server:list', 'server', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '服务监控菜单');
+INSERT INTO `sys_menu` VALUES ('113', '表单构建', '3', '1', 'build', 'tool/build/index', '1', 'C', '0', '0', 'tool:build:list', 'build', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '表单构建菜单');
+INSERT INTO `sys_menu` VALUES ('114', '代码生成', '3', '2', 'gen', 'tool/gen/index', '1', 'C', '0', '0', 'tool:gen:list', 'code', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '代码生成菜单');
+INSERT INTO `sys_menu` VALUES ('115', '系统接口', '3', '3', 'swagger', 'tool/swagger/index', '1', 'C', '0', '0', 'tool:swagger:list', 'swagger', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统接口菜单');
+INSERT INTO `sys_menu` VALUES ('500', '操作日志', '108', '1', 'operlog', 'monitor/operlog/index', '1', 'C', '0', '0', 'monitor:operlog:list', 'form', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '操作日志菜单');
+INSERT INTO `sys_menu` VALUES ('501', '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', '1', 'C', '0', '0', 'monitor:logininfor:list', 'logininfor', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '登录日志菜单');
+INSERT INTO `sys_menu` VALUES ('1001', '用户查询', '100', '1', '', '', '1', 'F', '0', '0', 'system:user:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1002', '用户新增', '100', '2', '', '', '1', 'F', '0', '0', 'system:user:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1003', '用户修改', '100', '3', '', '', '1', 'F', '0', '0', 'system:user:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1004', '用户删除', '100', '4', '', '', '1', 'F', '0', '0', 'system:user:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1005', '用户导出', '100', '5', '', '', '1', 'F', '0', '0', 'system:user:export', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1006', '用户导入', '100', '6', '', '', '1', 'F', '0', '0', 'system:user:import', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1007', '重置密码', '100', '7', '', '', '1', 'F', '0', '0', 'system:user:resetPwd', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1008', '角色查询', '101', '1', '', '', '1', 'F', '0', '0', 'system:role:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1009', '角色新增', '101', '2', '', '', '1', 'F', '0', '0', 'system:role:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1010', '角色修改', '101', '3', '', '', '1', 'F', '0', '0', 'system:role:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1011', '角色删除', '101', '4', '', '', '1', 'F', '0', '0', 'system:role:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1012', '角色导出', '101', '5', '', '', '1', 'F', '0', '0', 'system:role:export', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1013', '菜单查询', '102', '1', '', '', '1', 'F', '0', '0', 'system:menu:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1014', '菜单新增', '102', '2', '', '', '1', 'F', '0', '0', 'system:menu:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1015', '菜单修改', '102', '3', '', '', '1', 'F', '0', '0', 'system:menu:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1016', '菜单删除', '102', '4', '', '', '1', 'F', '0', '0', 'system:menu:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1017', '部门查询', '103', '1', '', '', '1', 'F', '0', '0', 'system:dept:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1018', '部门新增', '103', '2', '', '', '1', 'F', '0', '0', 'system:dept:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1019', '部门修改', '103', '3', '', '', '1', 'F', '0', '0', 'system:dept:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1020', '部门删除', '103', '4', '', '', '1', 'F', '0', '0', 'system:dept:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1021', '岗位查询', '104', '1', '', '', '1', 'F', '0', '0', 'system:post:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1022', '岗位新增', '104', '2', '', '', '1', 'F', '0', '0', 'system:post:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1023', '岗位修改', '104', '3', '', '', '1', 'F', '0', '0', 'system:post:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1024', '岗位删除', '104', '4', '', '', '1', 'F', '0', '0', 'system:post:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1025', '岗位导出', '104', '5', '', '', '1', 'F', '0', '0', 'system:post:export', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1026', '字典查询', '105', '1', '#', '', '1', 'F', '0', '0', 'system:dict:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1027', '字典新增', '105', '2', '#', '', '1', 'F', '0', '0', 'system:dict:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1028', '字典修改', '105', '3', '#', '', '1', 'F', '0', '0', 'system:dict:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1029', '字典删除', '105', '4', '#', '', '1', 'F', '0', '0', 'system:dict:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1030', '字典导出', '105', '5', '#', '', '1', 'F', '0', '0', 'system:dict:export', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1031', '参数查询', '106', '1', '#', '', '1', 'F', '0', '0', 'system:config:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1032', '参数新增', '106', '2', '#', '', '1', 'F', '0', '0', 'system:config:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1033', '参数修改', '106', '3', '#', '', '1', 'F', '0', '0', 'system:config:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1034', '参数删除', '106', '4', '#', '', '1', 'F', '0', '0', 'system:config:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1035', '参数导出', '106', '5', '#', '', '1', 'F', '0', '0', 'system:config:export', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1036', '公告查询', '107', '1', '#', '', '1', 'F', '0', '0', 'system:notice:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1037', '公告新增', '107', '2', '#', '', '1', 'F', '0', '0', 'system:notice:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1038', '公告修改', '107', '3', '#', '', '1', 'F', '0', '0', 'system:notice:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1039', '公告删除', '107', '4', '#', '', '1', 'F', '0', '0', 'system:notice:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1040', '操作查询', '500', '1', '#', '', '1', 'F', '0', '0', 'monitor:operlog:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1041', '操作删除', '500', '2', '#', '', '1', 'F', '0', '0', 'monitor:operlog:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1042', '日志导出', '500', '4', '#', '', '1', 'F', '0', '0', 'monitor:operlog:export', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1043', '登录查询', '501', '1', '#', '', '1', 'F', '0', '0', 'monitor:logininfor:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1044', '登录删除', '501', '2', '#', '', '1', 'F', '0', '0', 'monitor:logininfor:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1045', '日志导出', '501', '3', '#', '', '1', 'F', '0', '0', 'monitor:logininfor:export', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1046', '在线查询', '109', '1', '#', '', '1', 'F', '0', '0', 'monitor:online:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1047', '批量强退', '109', '2', '#', '', '1', 'F', '0', '0', 'monitor:online:batchLogout', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1048', '单条强退', '109', '3', '#', '', '1', 'F', '0', '0', 'monitor:online:forceLogout', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1049', '任务查询', '110', '1', '#', '', '1', 'F', '0', '0', 'monitor:job:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1050', '任务新增', '110', '2', '#', '', '1', 'F', '0', '0', 'monitor:job:add', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1051', '任务修改', '110', '3', '#', '', '1', 'F', '0', '0', 'monitor:job:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1052', '任务删除', '110', '4', '#', '', '1', 'F', '0', '0', 'monitor:job:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1053', '状态修改', '110', '5', '#', '', '1', 'F', '0', '0', 'monitor:job:changeStatus', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1054', '任务导出', '110', '7', '#', '', '1', 'F', '0', '0', 'monitor:job:export', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1055', '生成查询', '114', '1', '#', '', '1', 'F', '0', '0', 'tool:gen:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1056', '生成修改', '114', '2', '#', '', '1', 'F', '0', '0', 'tool:gen:edit', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1057', '生成删除', '114', '3', '#', '', '1', 'F', '0', '0', 'tool:gen:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1058', '导入代码', '114', '2', '#', '', '1', 'F', '0', '0', 'tool:gen:import', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1059', '预览代码', '114', '4', '#', '', '1', 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu` VALUES ('1060', '生成代码', '114', '5', '#', '', '1', 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+
+-- ----------------------------
 -- Table structure for `sys_organization`
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_organization`;
@@ -3805,6 +4055,48 @@ INSERT INTO `sys_organization` VALUES ('82e352cab34c0c5d45fb048f99a1d93f', '深�
 INSERT INTO `sys_organization` VALUES ('d269cc34a28843303a8863dde83a3d3a', '山海科技', null, null, '4028ea815a3d2a8c015a3d2f8d2a0002', '2019-12-13 10:01:07', null, null, '0', null, '35798760');
 INSERT INTO `sys_organization` VALUES ('d2cae9f8eefd5c0941bf44dcb57cec5b', '中国人民银行湖北分行', '40288ab85b6080e1015b60996d690005', '40288ab85b6080e1015b60996d690005/', '4028ea815a3d2a8c015a3d2f8d2a0002', '2020-05-26 23:25:53', '4028ea815a3d2a8c015a3d2f8d2a0002', '2020-10-22 09:19:39', '0', null, '00000000');
 INSERT INTO `sys_organization` VALUES ('ea33ae995d2daa7f41843eeca8976c65', '九州科技', null, null, '4028ea815a3d2a8c015a3d2f8d2a0002', '2019-12-16 09:28:50', null, null, '0', null, '86865558');
+
+-- ----------------------------
+-- Table structure for `sys_post`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_post`;
+CREATE TABLE `sys_post` (
+  `post_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
+  `post_code` varchar(64) NOT NULL COMMENT '岗位编码',
+  `post_name` varchar(50) NOT NULL COMMENT '岗位名称',
+  `post_sort` int(4) NOT NULL COMMENT '显示顺序',
+  `status` char(1) NOT NULL COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`post_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='岗位信息表';
+
+-- ----------------------------
+-- Records of sys_post
+-- ----------------------------
+INSERT INTO `sys_post` VALUES ('1', 'ceo', '董事长', '1', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_post` VALUES ('2', 'se', '项目经理', '2', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_post` VALUES ('3', 'hr', '人力资源', '3', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_post` VALUES ('4', 'user', '普通员工', '4', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
+
+-- ----------------------------
+-- Table structure for `sys_user_post`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_post`;
+CREATE TABLE `sys_user_post` (
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `post_id` bigint(20) NOT NULL COMMENT '岗位ID',
+  PRIMARY KEY (`user_id`,`post_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户与岗位关联表';
+
+-- ----------------------------
+-- Records of sys_user_post
+-- ----------------------------
+INSERT INTO `sys_user_post` VALUES ('1', '1');
+INSERT INTO `sys_user_post` VALUES ('2', '2');
 
 -- ----------------------------
 -- Table structure for `test_car`

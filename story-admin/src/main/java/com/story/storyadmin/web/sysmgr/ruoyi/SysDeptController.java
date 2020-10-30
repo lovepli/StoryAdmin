@@ -5,7 +5,7 @@ import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysDept;
 import com.story.storyadmin.domain.vo.Result;
-import com.story.storyadmin.service.sysmgr.ISysDeptService;
+import com.story.storyadmin.service.sysmgr.ruoyi.ISysDeptService;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
 import com.story.storyadmin.web.BaseController;
 import org.apache.commons.lang3.ArrayUtils;
