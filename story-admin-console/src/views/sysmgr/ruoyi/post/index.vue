@@ -239,7 +239,10 @@ export default {
         status: '0',
         remark: undefined
       };
-      resetForm('form');
+      // resetForm('form');
+      this.$nextTick(() => {
+        this.$refs['form'].resetFields();
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -248,7 +251,10 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      resetForm('queryForm');
+      // resetForm('queryForm');
+      this.$nextTick(() => {
+        this.$refs['queryForm'].resetFields();
+      })
       this.handleQuery();
     },
     // 多选框选中数据
