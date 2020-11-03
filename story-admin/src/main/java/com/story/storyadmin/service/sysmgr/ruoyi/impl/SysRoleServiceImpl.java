@@ -2,13 +2,13 @@ package com.story.storyadmin.service.sysmgr.ruoyi.impl;
 
 import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.constant.sysmgr.ruoyi.UserConstants;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysRole;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysRoleDept;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysRoleMenu;
+import com.story.storyadmin.ruoyidomain.dto.SysRoleDept;
+import com.story.storyadmin.ruoyidomain.dto.SysRoleMenu;
 import com.story.storyadmin.mapper.sysmgr.ruoyi.SysRoleDeptMapper;
 import com.story.storyadmin.mapper.sysmgr.ruoyi.SysRoleMapper;
 import com.story.storyadmin.mapper.sysmgr.ruoyi.SysRoleMenuMapper;
 import com.story.storyadmin.mapper.sysmgr.ruoyi.SysUserRoleMapper;
+import com.story.storyadmin.ruoyidomain.entity.SysRole;
 import com.story.storyadmin.service.sysmgr.ruoyi.ISysRoleService;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

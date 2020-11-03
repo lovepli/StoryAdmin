@@ -3,7 +3,7 @@ package com.story.storyadmin.utils.ruoyiutils;
 
 import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.constant.sysmgr.ruoyi.HttpStatus;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.model.LoginUser;
+import com.story.storyadmin.ruoyidomain.model.LoginUser;
 
 /**
  * 安全服务工具类

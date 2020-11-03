@@ -1,6 +1,6 @@
 package com.story.storyadmin.service.sysmgr.ruoyi;
 
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysPost;
+import com.story.storyadmin.ruoyidomain.entity.SysPost;
 
 import java.util.List;
 

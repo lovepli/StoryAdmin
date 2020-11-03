@@ -1,9 +1,10 @@
-package com.story.storyadmin.domain.entity.sysmgr.ruoyi;
+package com.story.storyadmin.ruoyidomain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.story.storyadmin.common.annotation.Excel;
 import com.story.storyadmin.common.annotation.Excels;
+import com.story.storyadmin.ruoyidomain.RuoYiBaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

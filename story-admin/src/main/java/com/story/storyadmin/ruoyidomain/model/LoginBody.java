@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.sysmgr.ruoyi.model;
+package com.story.storyadmin.ruoyidomain.model;
 
 /**
  * 用户登录对象

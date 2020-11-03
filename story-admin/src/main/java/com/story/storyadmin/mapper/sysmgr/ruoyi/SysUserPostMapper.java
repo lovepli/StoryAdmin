@@ -1,6 +1,6 @@
 package com.story.storyadmin.mapper.sysmgr.ruoyi;
 
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUserPost;
+import com.story.storyadmin.ruoyidomain.dto.SysUserPost;
 
 import java.util.List;
 

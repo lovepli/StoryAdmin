@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.constant.sysmgr.ruoyi.UserConstants;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysPost;
+import com.story.storyadmin.ruoyidomain.entity.SysPost;
 import com.story.storyadmin.mapper.sysmgr.ruoyi.SysPostMapper;
 import com.story.storyadmin.mapper.sysmgr.ruoyi.SysUserPostMapper;
 import com.story.storyadmin.service.sysmgr.ruoyi.ISysPostService;

@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.story.storyadmin.mapper.sysmgr.ruoyi.SysUserMapper">
 
-	<resultMap type="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser" id="SysUserResult">
+	<resultMap type="com.story.storyadmin.ruoyidomain.entity.SysUser" id="SysUserResult">
 		<id     property="userId"       column="user_id"      />
 		<result property="deptId"       column="dept_id"      />
 		<result property="userName"     column="user_name"    />
@@ -23,11 +23,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="updateBy"     column="update_by"    />
 		<result property="updateTime"   column="update_time"  />
 		<result property="remark"       column="remark"       />
-		<association property="dept"    column="dept_id" javaType="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysDept" resultMap="deptResult" />
+		<!-- 一对一 assocication 通过查询用户，也查询到他的部门信息
+		assocication可以指定联合的JavaBean对象
+                property="role"指定哪个属性是联合的对象
+                javaType:指定这个属性对象的类型
+            -->
+		<association property="dept" column="dept_id" javaType="com.story.storyadmin.ruoyidomain.entity.SysDept" resultMap="deptResult" />
+         <!--一对多，collection 通过查询用户查到他对应的多个角色信息-->
 		<collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
 	</resultMap>
-	
-	<resultMap id="deptResult" type="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysDept">
+
+   <!-- 部门对象	-->
+	<resultMap id="deptResult" type="com.story.storyadmin.ruoyidomain.entity.SysDept">
 		<id     property="deptId"   column="dept_id"     />
 		<result property="parentId" column="parent_id"   />
 		<result property="deptName" column="dept_name"   />
@@ -35,8 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="leader"   column="leader"      />
 		<result property="status"   column="dept_status" />
 	</resultMap>
-	
-	<resultMap id="RoleResult" type="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysRole">
+   <!-- 角色集合	-->
+	<resultMap id="RoleResult" type="com.story.storyadmin.ruoyidomain.entity.SysRole">
 		<id     property="roleId"       column="role_id"        />
 		<result property="roleName"     column="role_name"      />
 		<result property="roleKey"      column="role_key"       />
@@ -55,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    left join sys_role r on r.role_id = ur.role_id
     </sql>
     
-    <select id="selectUserList" parameterType="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser" resultMap="SysUserResult">
+    <select id="selectUserList" parameterType="com.story.storyadmin.ruoyidomain.entity.SysUser" resultMap="SysUserResult">
 		select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader from sys_user u
 		left join sys_dept d on u.dept_id = d.dept_id
 		where u.del_flag = '0'
@@ -74,7 +81,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
 			AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
 		</if>
-		<if test="deptId != null and deptId != 0">
+		<if test="deptId != null and deptId != 0">  <!--FIND_IN_SET(str,strlist)函数的使用
+                                                                                   str 要查询的字符串
+                                                                                   strlist 字段名 参数以”,”分隔 如 (1,2,6,8)
+                                                                                   查询字段(strlist)中包含(str)的结果，返回结果为null或记录 -->
 			AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{deptId},ancestors) ))
 		</if>
 		<!-- 数据范围过滤 -->
@@ -103,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select user_id, email from sys_user where email = #{email} limit 1
 	</select>
 	
-	<insert id="insertUser" parameterType="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser" useGeneratedKeys="true" keyProperty="userId">
+	<insert id="insertUser" parameterType="com.story.storyadmin.ruoyidomain.entity.SysUser" useGeneratedKeys="true" keyProperty="userId">
  		insert into sys_user(
  			<if test="userId != null and userId != 0">user_id,</if>
  			<if test="deptId != null and deptId != 0">dept_id,</if>
@@ -135,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		)
 	</insert>
 	
-	<update id="updateUser" parameterType="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser">
+	<update id="updateUser" parameterType="com.story.storyadmin.ruoyidomain.entity.SysUser">
  		update sys_user
  		<set>
  			<if test="deptId != null and deptId != 0">dept_id = #{deptId},</if>
@@ -156,22 +166,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		where user_id = #{userId}
 	</update>
 	
-	<update id="updateUserStatus" parameterType="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser">
+	<update id="updateUserStatus" parameterType="com.story.storyadmin.ruoyidomain.entity.SysUser">
  		update sys_user set status = #{status} where user_id = #{userId}
 	</update>
 	
-	<update id="updateUserAvatar" parameterType="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser">
+	<update id="updateUserAvatar" parameterType="com.story.storyadmin.ruoyidomain.entity.SysUser">
  		update sys_user set avatar = #{avatar} where user_name = #{userName}
 	</update>
 	
-	<update id="resetUserPwd" parameterType="com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser">
+	<update id="resetUserPwd" parameterType="com.story.storyadmin.ruoyidomain.entity.SysUser">
  		update sys_user set password = #{password} where user_name = #{userName}
 	</update>
-	
+
+<!--	删除-->
 	<delete id="deleteUserById" parameterType="Long">
  		delete from sys_user where user_id = #{userId}
  	</delete>
- 	
+<!-- 批量删除	-->
  	<delete id="deleteUserByIds" parameterType="Long">
  		update sys_user set del_flag = '2' where user_id in
  		<foreach collection="array" item="userId" open="(" separator="," close=")">

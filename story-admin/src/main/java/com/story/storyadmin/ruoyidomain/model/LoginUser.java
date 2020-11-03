@@ -1,7 +1,7 @@
-package com.story.storyadmin.domain.entity.sysmgr.ruoyi.model;
+package com.story.storyadmin.ruoyidomain.model;
 
 
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser;
+import com.story.storyadmin.ruoyidomain.entity.SysUser;
 import java.util.Set;
 
 /**

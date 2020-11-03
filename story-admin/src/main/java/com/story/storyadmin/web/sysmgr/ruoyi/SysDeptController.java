@@ -3,7 +3,7 @@ package com.story.storyadmin.web.sysmgr.ruoyi;
 
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysDept;
+import com.story.storyadmin.ruoyidomain.entity.SysDept;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.ruoyi.ISysDeptService;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
@@ -25,7 +25,7 @@ import java.util.Map;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/sysmgr/rydept")
+@RequestMapping("/sysmgr/wdept")
 public class SysDeptController extends BaseController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class SysDeptController extends BaseController {
     /**
      * 获取部门列表
      */
-    @RequiresPermissions("sysmgr.rydept.list")
+    @RequiresPermissions("sysmgr.wdept.list")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(SysDept dept) {
         Result result = new Result();
@@ -48,7 +48,7 @@ public class SysDeptController extends BaseController {
     /**
      * 查询部门列表（排除节点）
      */
-    @RequiresPermissions("sysmgr.rydept.list")
+    @RequiresPermissions("sysmgr.wdept.list")
     @GetMapping("/list/exclude/{deptId}")
     public Result excludeChild(@PathVariable(value = "deptId", required = false) Long deptId) {
         Result result = new Result();
@@ -70,7 +70,7 @@ public class SysDeptController extends BaseController {
     /**
      * 根据部门编号获取详细信息
      */
-    @RequiresPermissions("sysmgr.rydept.query")
+    @RequiresPermissions("sysmgr.wdept.query")
     @GetMapping(value = "/{deptId}")
     public Result getInfo(@PathVariable Long deptId) {
         Result result = new Result();
@@ -83,7 +83,7 @@ public class SysDeptController extends BaseController {
     /**
      * 获取部门下拉树列表
      */
-    @RequiresPermissions("sysmgr.rydept.query")
+    @RequiresPermissions("sysmgr.wdept.query")
     @GetMapping("/treeselect")
     public Result treeselect(SysDept dept) {
         Result result = new Result();
@@ -97,7 +97,7 @@ public class SysDeptController extends BaseController {
     /**
      * 加载对应角色部门列表树
      */
-    @RequiresPermissions("sysmgr.rydept.query")
+    @RequiresPermissions("sysmgr.wdept.query")
     @GetMapping(value = "/roleDeptTreeselect/{roleId}")
     public Result roleDeptTreeselect(@PathVariable("roleId") Long roleId) {
         Result result = new Result();
@@ -114,7 +114,7 @@ public class SysDeptController extends BaseController {
     /**
      * 新增部门
      */
-    @RequiresPermissions("sysmgr.rydept.add")
+    @RequiresPermissions("sysmgr.wdept.add")
     @PostMapping
     public Result add(@Validated @RequestBody SysDept dept) {
         Result result = null;
@@ -130,7 +130,7 @@ public class SysDeptController extends BaseController {
     /**
      * 修改部门
      */
-    @RequiresPermissions("sysmgr.rydept.edit")
+    @RequiresPermissions("sysmgr.wdept.edit")
     @PutMapping
     public Result edit(@Validated @RequestBody SysDept dept) {
         Result result = null;
@@ -151,7 +151,7 @@ public class SysDeptController extends BaseController {
     /**
      * 删除部门
      */
-    @RequiresPermissions("sysmgr.rydept.delete")
+    @RequiresPermissions("sysmgr.wdept.delete")
     @DeleteMapping("/{deptId}")
     public Result remove(@PathVariable Long deptId) {
         Result result = null;

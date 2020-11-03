@@ -1,8 +1,8 @@
 package com.story.storyadmin.service.sysmgr.ruoyi;
 
 
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysDept;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.TreeSelect;
+import com.story.storyadmin.ruoyidomain.entity.SysDept;
+import com.story.storyadmin.ruoyidomain.TreeSelect;
 
 import java.util.List;
 

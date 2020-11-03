@@ -1,6 +1,6 @@
 package com.story.storyadmin.mapper.sysmgr.ruoyi;
 
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysUser;
+import com.story.storyadmin.ruoyidomain.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -2,8 +2,12 @@ package com.story.storyadmin.service.sysmgr.ruoyi.impl;
 
 import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.constant.sysmgr.ruoyi.UserConstants;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.*;
+import com.story.storyadmin.ruoyidomain.entity.SysPost;
+import com.story.storyadmin.ruoyidomain.dto.SysUserPost;
+import com.story.storyadmin.ruoyidomain.dto.SysUserRole;
 import com.story.storyadmin.mapper.sysmgr.ruoyi.*;
+import com.story.storyadmin.ruoyidomain.entity.SysRole;
+import com.story.storyadmin.ruoyidomain.entity.SysUser;
 import com.story.storyadmin.service.sysmgr.ruoyi.ISysUserService;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
 import org.slf4j.Logger;

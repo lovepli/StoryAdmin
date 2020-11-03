@@ -4,7 +4,7 @@ import com.story.storyadmin.constant.sysmgr.ruoyi.HttpStatus;
 import com.story.storyadmin.constant.sysmgr.ruoyi.page.PageDomain;
 import com.story.storyadmin.constant.sysmgr.ruoyi.page.TableDataInfo;
 import com.story.storyadmin.constant.sysmgr.ruoyi.page.TableSupport;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.AjaxResult;
+import com.story.storyadmin.ruoyidomain.AjaxResult;
 import com.story.storyadmin.utils.ruoyiutils.DateUtils;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
 import com.story.storyadmin.utils.ruoyiutils.sql.SqlUtil;

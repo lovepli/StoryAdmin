@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.sysmgr.ruoyi;
+package com.story.storyadmin.ruoyidomain.dto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

@@ -1,9 +1,9 @@
 package com.story.storyadmin.service.sysmgr.ruoyi.impl;
 
 import com.story.storyadmin.common.exception.CustomException;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysDept;
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.TreeSelect;
+import com.story.storyadmin.ruoyidomain.TreeSelect;
 import com.story.storyadmin.mapper.sysmgr.ruoyi.SysDeptMapper;
+import com.story.storyadmin.ruoyidomain.entity.SysDept;
 import com.story.storyadmin.service.sysmgr.ruoyi.ISysDeptService;
 import com.story.storyadmin.utils.ruoyiutils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

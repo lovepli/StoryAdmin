@@ -1,6 +1,6 @@
 package com.story.storyadmin.mapper.sysmgr.ruoyi;
 
-import com.story.storyadmin.domain.entity.sysmgr.ruoyi.SysRoleDept;
+import com.story.storyadmin.ruoyidomain.dto.SysRoleDept;
 
 import java.util.List;
 

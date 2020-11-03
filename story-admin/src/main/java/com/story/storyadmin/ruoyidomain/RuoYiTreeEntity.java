@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.sysmgr.ruoyi;
+package com.story.storyadmin.ruoyidomain;
 
 import java.util.ArrayList;
 import java.util.List;

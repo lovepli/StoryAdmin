@@ -132,7 +132,7 @@
           <el-col :span="12">
             <el-form-item label="状态">
               <el-radio-group v-model="form.status">
-                <el-radio v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictValue">{{dict.dictLabel}}</el-radio>
+                <el-radio v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictValue">{{ dict.dictLabel }}</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -169,7 +169,7 @@
 
     <!-- 用户导入对话框 -->
     <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
-      <el-upload ref="upload" :limit="1" :headers="upload.headers" :action="upload.url + '?updateSupport=' + upload.updateSupport" accept=".xlsx, .xls" :disabled="upload.isUploading" :on-progress="handleFileUploadProgress" :on-success="handleFileSuccess" :auto-upload="false" drag>
+      <el-upload ref="upload" :limit="1" :headers="upload.headers" :action="upload.url + '?updateSupport=' + upload.updateSupport" :disabled="upload.isUploading" :on-progress="handleFileUploadProgress" :on-success="handleFileSuccess" :auto-upload="false" accept=".xlsx, .xls" drag>
         <i class="el-icon-upload"/>
         <div class="el-upload__text">
           将文件拖到此处，或
@@ -408,7 +408,10 @@ export default {
         postIds: [],
         roleIds: []
       };
-      this.resetForm('form');
+      // resetForm('form');
+      this.$nextTick(() => {
+        this.$refs['form'].resetFields();
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -418,7 +421,10 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.dateRange = [];
-      this.resetForm('queryForm');
+      // resetForm('queryForm');
+      this.$nextTick(() => {
+        this.$refs['queryForm'].resetFields();
+      })
       this.handleQuery();
     },
     // 多选框选中数据
