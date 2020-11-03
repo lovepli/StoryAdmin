@@ -85,7 +85,7 @@ service.interceptors.response.use(
       if (res.code === 60001 || res.code === 60002 || res.code === 60003 || res.code === 401) {
         // element-ui的消息弹框,因为这里是单独引入MessageBox，所以调用方式不是this.$confirm()打开消息弹框
         MessageBox.confirm(
-          '登录状态已过期，您可以继续留在改页面，或者重新登录！', '系统提示', {
+          '登录状态已过期，您可以继续留在该页面，或者重新登录！', '系统提示', {
             confirmButtonText: '重新登录',
             cancelButtonText: '取消',
             type: 'warning'

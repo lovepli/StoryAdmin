@@ -18,6 +18,9 @@ import java.beans.PropertyEditorSupport;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * ruoyi
+ */
 public abstract class BaseController {
 
     /**

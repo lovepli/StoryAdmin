@@ -1,11 +1,7 @@
 package com.story.storyadmin.domain.entity.sysmgr.ruoyi;
-
-
 import com.story.storyadmin.common.annotation.Excel;
-import com.story.storyadmin.domain.entity.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
