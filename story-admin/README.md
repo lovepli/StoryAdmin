@@ -25,7 +25,7 @@
 作者的博客：https://www.sundayfine.com/
 
 使用jwt采用token有效期内刷新机制更新Token。
-参考：1、story—admin 2、ruoyi 3、birdAdmin 开源项目
+参考：1、story—admin 2、ruoyi 3、birdAdmin 4、wind飞镰 开源项目
 
 项目已实现功能包括：
 1. 代办事项，日历

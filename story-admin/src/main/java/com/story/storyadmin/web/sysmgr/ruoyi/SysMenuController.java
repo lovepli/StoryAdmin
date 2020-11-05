@@ -58,6 +58,7 @@ public class SysMenuController extends BaseController
     /**
      * 获取菜单下拉树列表
      */
+    @RequiresPermissions("sysmgr.wmenu.list")
     @GetMapping("/treeselect")
     public AjaxResult treeselect(SysMenu menu)
     {
@@ -70,6 +71,7 @@ public class SysMenuController extends BaseController
     /**
      * 加载对应角色菜单列表树
      */
+    @RequiresPermissions("sysmgr.wmenu.list")
     @GetMapping(value = "/roleMenuTreeselect/{roleId}")
     public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId)
     {
