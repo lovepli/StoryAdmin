@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 public abstract class TreeEntity<T> extends AbstractEntity<T> implements TreeNode<T>, java.io.Serializable {
-   // UUID改为AUTO
+   // UUID
     @TableId(value = "id", type = IdType.UUID)
     protected T id; // 编号
     @TableField(value = "name")

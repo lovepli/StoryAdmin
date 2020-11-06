@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.storyadmin.mapper.sysmgr.expand.DeptMapper2">
+
+    <!-- 菜单信息：开启二级缓存 -->
+<!--    开启二级缓存之后，可能在页面添加菜单，不会显示出来，菜单有一个容量，新添加的菜单没有添加进容量内-->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+</mapper>

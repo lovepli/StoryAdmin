@@ -57,6 +57,15 @@ export default {
         remarks: undefined,
         remark: ''
       },
+      temp2: {
+        id: undefined,
+        name: undefined,
+        geocoding: undefined,
+        parentId: undefined,
+        postalCode: undefined,
+        // parentIds: undefined,
+        remark: ''
+      },
       list: [],
       treeProps: {
         value: 'id',
@@ -104,26 +113,40 @@ export default {
       })
     },
     createData() {
+      const parentIds = this.temp.parentIds
+      if (parentIds !== undefined && parentIds !== '') {
+        if (parentIds instanceof Array && parentIds.length > 0) {
+          const parentId = parentIds[parentIds.length - 1]
+          this.temp.parentId = parentId
+        }
+      }
+
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          // 预处理提交的数据
-          const parentIds = this.temp.parentIds
-          if (parentIds !== undefined && parentIds !== '') {
-            if (parentIds instanceof Array && parentIds.length > 0) {
-              const parentId = parentIds[parentIds.length - 1]
-              this.temp.parentId = parentId
-            }
-          }
+          // // 预处理提交的数据
+          // const parentIds = this.temp.parentIds
+          // if (parentIds !== undefined && parentIds !== '') {
+          //   if (parentIds instanceof Array && parentIds.length > 0) {
+          //     const parentId = parentIds[parentIds.length - 1]
+          //     this.temp.parentId = parentId
+          //   }
+          // }
 
           if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
             this.temp.parentIds.length = 0
           }
-          add(this.temp).then(response => {
+          this.temp2.id = this.temp.id;
+          this.temp2.name = this.temp.name;
+          this.temp2.parentId = this.temp.parentId;
+          this.temp2.geocoding = this.temp.geocoding;
+          this.temp2.remark = this.temp.remark;
+          this.temp2.postalCode = this.temp.postalCode;
+          const tempData2 = Object.assign({}, this.temp)
+          console.log('------' + tempData2)
+          add(this.temp2).then(response => {
             this.getList()
             this.dialogFormVisible = false
           })
-        } else {
-          return false;
         }
       })
     },

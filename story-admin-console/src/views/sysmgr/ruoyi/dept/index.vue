@@ -280,6 +280,17 @@ export default {
         this.deptOptions = handleTree(response.data, 'deptId');
       });
     },
+    // handleAdd2() {
+    //   this.reset();
+    //   // if (row !== undefined) {
+    //   //   this.form.parentId = row.deptId;
+    //   // }
+    //   this.open = true;
+    //   this.title = '添加部门';
+    //   listDept().then(response => {
+    //     this.deptOptions = handleTree(response.data, 'deptId');
+    //   });
+    // },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();

@@ -12,10 +12,13 @@ import java.util.Date;
  * @Description:
  * @date 2017-02-07 21:06:09
  */
-@TableName("sys_organization")
+@TableName("test_organization")
 @SuppressWarnings("serial")
 public class Organization extends TreeEntity<String> {
 
+    /**
+     * 节点名称
+     */
     @TableField(exist = false)
     private String label;
 
@@ -30,6 +33,10 @@ public class Organization extends TreeEntity<String> {
         this.label = label;
     }
 
+    /**
+     * 重写方法
+     * @param name
+     */
     @Override
     public void setName(String name) {
         super.setName(name);

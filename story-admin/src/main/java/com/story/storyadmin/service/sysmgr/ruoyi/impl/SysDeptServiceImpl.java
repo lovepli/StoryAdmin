@@ -178,6 +178,7 @@ public class SysDeptServiceImpl implements ISysDeptService
         {
             throw new CustomException("部门停用，不允许新增");
         }
+        // 拼接字符窜
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
         return deptMapper.insertDept(dept);
     }

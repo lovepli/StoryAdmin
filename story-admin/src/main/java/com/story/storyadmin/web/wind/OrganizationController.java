@@ -56,6 +56,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @PostMapping("add")
     @RequiresPermissions("sysmgr.organization.add")
     public Result add(@RequestBody Organization entity, BindingResult result) {
+        logger.info("##############"+entity.toString());
         // 验证错误
         this.checkError(entity, result);
 //        entity.setTenantId(UserUtils.getTenantId());

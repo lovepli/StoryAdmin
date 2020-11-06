@@ -21,7 +21,7 @@
     <select id="selectDictList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from sys_dict d
-        LEFT JOIN sys_dict_group g on d.gid=g.id ORDER BY sort ASC
+        from test_dict d
+        LEFT JOIN test_dict_group g on d.gid=g.id ORDER BY sort ASC
     </select>
 </mapper>

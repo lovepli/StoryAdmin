@@ -75,12 +75,7 @@ export default {
         type: 'warning'
       }).then(() => {
         deleteOrganization(row.id).then(response => {
-          if (response.code === 20000) {
-            this.getList()
-            this.$message.success(response.message)
-          } else {
-            this.$message.error(response.message)
-          }
+          this.getList()
         })
       })
     }

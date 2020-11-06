@@ -39,6 +39,13 @@ export default {
       },
       list: [],
       temp: {},
+      temp2: {
+        id: undefined,
+        name: undefined,
+        // parentIds: undefined, 这个参数不传递
+        parentId: undefined,
+        remark: undefined
+      },
       textMap: {
         update: '编辑',
         create: '新建'
@@ -88,10 +95,17 @@ export default {
           if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
             this.temp.parentIds.length = 0
           }
-          createOrganization(this.temp).then(() => {
+          // const tempData = Object.assign({}, this.temp)
+          // console.log(tempData)
+          this.temp2.id = this.temp.id;
+          this.temp2.name = this.temp.name;
+          this.temp2.parentId = this.temp.parentId;
+          // 复制temp到temp2
+          const tempData2 = Object.assign({}, this.temp2)
+          console.log('------' + tempData2)
+          createOrganization(this.temp2).then(() => {
             this.getList()
             this.dialogFormVisible = false
-            this.$message.success('创建成功')
           })
         }
       })
@@ -135,7 +149,7 @@ export default {
           updateOrganization(tempData).then(() => {
             this.getList()
             this.dialogFormVisible = false
-            this.$message.success('更新成功')
+            // this.$message.success('更新成功')
           })
         }
       })
