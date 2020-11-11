@@ -151,7 +151,7 @@ export default {
       row.status = status
     },
 
-    // 导出
+    // 导出功能，全部由前端控制 Export2Excel
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {

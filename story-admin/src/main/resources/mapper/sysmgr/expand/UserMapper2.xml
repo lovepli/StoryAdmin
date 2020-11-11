@@ -50,7 +50,7 @@
         </foreach>
     </insert>
 
-    <select id="selectUserNameList" resultType="java.util.List">
+    <select id="selectUserNameList" resultType="com.story.storyadmin.domain.entity.sysmgr.expand.User2">
         SELECT
           u.id,u.name
         FROM   st2_user u
