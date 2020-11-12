@@ -1,5 +1,8 @@
 package com.story.storyadmin.web.sysmgr;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,11 +14,15 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
+import com.story.storyadmin.ruoyidomain.entity.SysUser;
 import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.service.sysmgr.UserService;
+import com.story.storyadmin.utils.ruoyiutils.StringUtils;
+import com.story.storyadmin.utils.wind.DateUtils;
 import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -24,9 +31,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Api(description = "用户管理")
@@ -207,4 +216,43 @@ public class UserController extends BaseController {
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
+
+    /**
+     * user和sysUser不一致
+     */
+    //@GetMapping("export")
+    //@RequiresPermissions("sys:user:export")
+    //public String export(SysUser user,
+    //                     @RequestParam(defaultValue = "1")int pageNo,
+    //                     @RequestParam(defaultValue = "10")int limit) {
+    //    HashMap<String, Object> response = new HashMap<>();
+    //    try {
+    //        TemplateExportParams params = new TemplateExportParams(
+    //                "");
+    //        //加入条件
+    //        QueryWrapper<SysUser> entityWrapper = new QueryWrapper<>();
+    //        // 子查询
+    //        if (!StringUtils.isNull(user.getDeptId())) {
+    //            entityWrapper.eq("dept_id", user.getDeptId());
+    //        }
+    //        Result result = new Result();
+    //        Page<SysUser> page = new Page(pageNo, limit);
+    //        IPage<SysUser> list = userService.page(page, entityWrapper);
+    //        //Page pageBean = userService.selectPage(getPage(), entityWrapper);
+    //        String title = "用户信息";
+    //        Workbook book = ExcelExportUtil.exportExcel(new ExportParams(
+    //                title, title, title), SysUser.class, pageBean.getRecords());
+    //        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    //        book.write(bos);
+    //        byte[] bytes = bos.toByteArray();
+    //        String bytesRes = com.story.storyadmin.utils.wind.StringUtils.bytesToHexString2(bytes);
+    //        title = title + "-" + DateUtils.getDateTime();
+    //        response.put("bytes", bytesRes);
+    //        response.put("title", title);
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //        return Response.error(ResponseError.NORMAL_ERROR, "导出失败");
+    //    }
+    //    return Response.toJson(response, "导出成功");
+    //}
 }

@@ -12,12 +12,10 @@
     <el-col :span="18">
       <div class="app-container calendar-list-container">
         <div class="filter-container">
-          <!-- <el-input v-model="listQuery.realname" style="width: 200px;" class="filter-item" placeholder="请输入姓名" @keyup.enter.native="handleFilter" /> -->
           <el-input v-model="listQuery.userName" style="width: 200px;" class="filter-item" placeholder="请输入用户名" @keyup.enter.native="handleFilter" />
-          <!-- <el-input v-model="listQuery.phone" style="width: 200px;" class="filter-item" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" /> -->
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
           <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-          <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button> -->
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
         </div>
 
         <el-table
@@ -45,25 +43,13 @@
               <span>{{ scope.row.phonenumber }}</span>
             </template>
           </el-table-column>
-          <!-- <el-table-column width="160" align="center" label="可否登录">
-            <template slot-scope="scope">
-              <el-tag :type="scope.row.status | statusFilter">
-                {{ scope.row.status | dictLabel('sf') }}
-              </el-tag>
-            </template>
-          </el-table-column> -->
-          <!-- <el-table-column width="160" align="center" label="部门">
-            <template slot-scope="scope">
-              <span>{{ scope.row.organization.name }}</span>
-            </template>
-          </el-table-column> -->
           <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
-            <!-- <template slot-scope="scope">
+            <template slot-scope="scope">
               <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">编辑</el-button>
               <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">删除</el-button>
               <el-button size="small" type="text" icon="el-icon-user" @click="toAssignRoles(scope.row)">设置角色</el-button>
               <el-button size="small" type="text" icon="el-icon-refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
-            </template> -->
+            </template>
           </el-table-column>
         </el-table>
 
@@ -79,35 +65,6 @@
             @current-change="handleCurrentChange"
           />
         </div>
-
-        <!-- 子组件 -->
-        <!-- <user-form ref="form" @refreshList="getList" /> -->
-
-        <!-- <el-dialog :visible.sync="dialogFormPasswordVisible" title="修改密码">
-          <el-form ref="dataModifyForm" :rules="modifyPasswordRules" :model="modifyPassword" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-            <el-form-item label="初始密码" prop="password">
-              <el-input v-model="modifyPassword.password" type="password" />
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormPasswordVisible = false">取消</el-button>
-            <el-button type="primary" @click="postModifyPassword">确定</el-button>
-          </div>
-        </el-dialog> -->
-
-        <!-- <el-dialog :visible.sync="dialogFormRolesVisible" title="设置角色">
-          <el-transfer
-            v-model="userRoleIds"
-            :filterable="true"
-            :props="{key: 'id',label: 'name'}"
-            :titles="['可选角色', '已有角色']"
-            :button-texts="['撤回', '设置']"
-            :format="{noChecked: '${total}', hasChecked: '${checked}/${total}'}"
-            :data="roleList"
-            @change="handleChangeRoles"
-          />
-        </el-dialog> -->
-
       </div>
     </el-col>
   </el-row>
@@ -115,22 +72,12 @@
 </template>
 
 <script>
-import { listUser } from '@/api/ruoyi/user';
+import { listUser, exportUser } from '@/api/ruoyi/user';
 import { treeselect } from '@/api/ruoyi/dept';
-import { addDateRange } from '@/utils/ruoyi';
-
-// import { fetchList, deleteUser, modifyPassword, exportUser } from '@/api/sys/user'
-// import { fetchList } from '@/api/sys/user'
-// import { fetchOrganizationList } from '@/api/sys/organization'
-// import { fetchUsableRoleList } from '@/api/sys/role'
-// import { fetchUserRoleIds, insertByUserId, deleteByUserId } from '@/api/sys/userRole'
-// import { insertByUserId, deleteByUserId } from '@/api/sys/userRole'
 import waves from '@/directive/waves' // 水波纹指令
-// import userForm from './userForm'
 
 export default {
   name: 'UserList',
-  // components: { userForm },
   directives: {
     waves
   },
@@ -146,10 +93,6 @@ export default {
   data() {
     return {
       treeList: [],
-      treeProps: {
-        value: 'id',
-        label: 'label'
-      },
       tableKey: 0,
       list: null,
       total: null,
@@ -157,52 +100,21 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        deptId: undefined,
-        userName: undefined
-      },
-      listQuery2: {
-        page: 1,
-        limit: 10,
         userName: undefined,
         phonenumber: undefined,
         status: undefined,
         deptId: undefined
       },
-      downloadLoading: false,
-      dialogFormRolesVisible: false,
-      roleList: [],
-      userRoleIds: [],
-      selectCurentUserId: null,
-      modifyPassword: {
-        id: undefined,
-        password: undefined
-      },
-      dialogFormPasswordVisible: false,
-      modifyPasswordRules: {
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-      }
+      downloadLoading: false
     }
   },
   created() {
     this.getTreeList()
     this.getList()
-    // this.getUsableRoleList()
   },
   methods: {
     getTreeList() {
       this.listLoading = true
-      // fetchOrganizationList(this.listQuery).then(response => {
-      //   this.treeList = response.data
-      //   this.listLoading = false
-      // }) 
-
-      // treeselect(this.listQuery).then(response => {
-      //   this.treeList = response.data
-      //   this.listLoading = false
-      // }) 
       treeselect().then((response) => {
         this.treeList = response.data
         this.listLoading = false
@@ -211,144 +123,43 @@ export default {
     submitForm(data) {
       console.log(data)
       console.log('部门ID:' + data.id)
-      this.listQuery2.deptId = data.id
+      this.listQuery.deptId = data.id
       this.getList()
     },
     getList() {
       this.listLoading = false
-      // fetchList(this.listQuery).then(response => {
-      //   this.list = response.data
-      //   this.total = response.data.total
-      //   this.listLoading = false
-      // })
-
-      listUser(this.listQuery2).then(response => {
+      listUser(this.listQuery).then(response => {
         this.list = response.rows
-        this.total = response.data.total
+        this.total = response.total
         this.listLoading = false
       })
     },
-    // getUsableRoleList() {
-    //   fetchUsableRoleList().then(response => {
-    //     this.roleList = response.data.data
-    //   })
-    // },
-
-    // getUserRoleIds(userId) {
-    //   fetchUserRoleIds(userId).then(response => {
-    //     this.userRoleIds = response.data
-    //   })
-    // },
     handleFilter() {
-      this.listQuery2.page = 1
+      this.listQuery.page = 1
       this.getList()
     },
     handleSizeChange(val) {
-      this.listQuery2.limit = val
+      this.listQuery.limit = val
       this.getList()
     },
     handleCurrentChange(val) {
-      this.listQuery2.page = val
+      this.listQuery.page = val
       this.getList()
-    }
-
-    // handleModifyStatus(row, status) {
-    //   this.$message({
-    //     message: '操作成功',
-    //     type: 'success'
-    //   })
-    //   row.status = status
-    // },
-    // handleCreate() {
-    //   this.$refs.form.handleCreate()
-    // },
-    // handleUpdate(row) {
-    //   this.$refs.form.handleUpdate(row)
-    // },
-    // handleModifyPassword(row) {
-    //   this.modifyPassword.id = row.id // copy obj
-    //   this.dialogFormPasswordVisible = true
-    //   this.$nextTick(() => {
-    //     this.$refs['dataModifyForm'].clearValidate()
-    //   })
-    // },
-    // postModifyPassword() {
-    //   this.$refs['dataModifyForm'].validate((valid) => {
-    //     if (valid) {
-    //       const tempData = Object.assign({}, this.modifyPassword)
-    //       modifyPassword(tempData).then(response => {
-    //         if (response.code === 20000) {
-    //           this.dialogFormPasswordVisible = false
-    //           this.$message.success(response.data.msg)
-    //         } else {
-    //           this.$message.error(response.data.msg)
-    //         }
-    //       })
-    //     }
-    //   })
-    // },
-    // handleDelete(row) {
-    //   this.$confirm('确定删除该数据吗?', '提示', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //     type: 'warning'
-    //   }).then(() => {
-    //     deleteUser(row.id).then(response => {
-    //       if (response.code === 20000) {
-    //         this.getList()
-    //         this.$message.success(response.data.msg)
-    //       } else {
-    //         this.$message.error(response.data.msg)
-    //       }
-    //     })
-    //   })
-    // },
-    // handleInsertByUserId(selectCurentUserId, roleIds) {
-    //   var idsStr = roleIds.join(',')
-    //   insertByUserId(selectCurentUserId, idsStr).then((response) => {
-    //     if (response.code === 20000) {
-    //       this.$message.success('设置成功')
-    //     } else {
-    //       this.$message.error(response.data.msg)
-    //     }
-    //   })
-    // },
-    // handleDeleteByUserId(selectCurentUserId, roleIds) {
-    //   var idsStr = roleIds.join(',')
-    //   deleteByUserId(selectCurentUserId, idsStr).then((response) => {
-    //     if (response.code === 20000) {
-    //       this.$message('撤回成功')
-    //     } else {
-    //       this.$message.error(response.data.msg)
-    //     }
-    //   })
-    // },
-    // handleDownload() {
-    //   this.downloadLoading = false
-    //   exportUser(this.listQuery).then(response => {
-    //     this.downloadLoading = true
-    //     if (response.code === 20000) {
-    //       import('@/vendor/Export2Excel').then(excel => {
-    //         excel.export_byte_to_excel(response.data.data.bytes, response.data.data.title)
-    //         this.downloadLoading = false
-    //       })
-    //     } else {
-    //       this.$message.error(response.data.msg)
-    //     }
-    //   })
-    // },
-    // toAssignRoles(row) {
-    //   this.selectCurentUserId = row.id
-    //   this.dialogFormRolesVisible = true
-    //   this.getUserRoleIds(this.selectCurentUserId)
-    // },
-    // handleChangeRoles(value, direction, movedKeys) {
-    //   if (direction === 'left') {
-    //     this.handleDeleteByUserId(this.selectCurentUserId, movedKeys)
-    //   } else {
-    //     this.handleInsertByUserId(this.selectCurentUserId, movedKeys)
-    //   }
-    // }
+    },
+    handleDownload() {
+      this.downloadLoading = false
+      exportUser(this.listQuery).then(response => {
+        this.downloadLoading = true
+        if (response.data.code === 0) {
+          import('@/vendor/Export2Excel').then(excel => {
+            excel.export_byte_to_excel(response.data.data.bytes, response.data.data.title)
+            this.downloadLoading = false
+          })
+        } else {
+          this.$message.error(response.data.msg)
+        }
+      })
+    },
   }
 }
 </script>
