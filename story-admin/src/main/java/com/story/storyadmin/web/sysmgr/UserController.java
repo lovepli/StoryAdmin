@@ -217,42 +217,5 @@ public class UserController extends BaseController {
         return result;
     }
 
-    /**
-     * user和sysUser不一致
-     */
-    //@GetMapping("export")
-    //@RequiresPermissions("sys:user:export")
-    //public String export(SysUser user,
-    //                     @RequestParam(defaultValue = "1")int pageNo,
-    //                     @RequestParam(defaultValue = "10")int limit) {
-    //    HashMap<String, Object> response = new HashMap<>();
-    //    try {
-    //        TemplateExportParams params = new TemplateExportParams(
-    //                "");
-    //        //加入条件
-    //        QueryWrapper<SysUser> entityWrapper = new QueryWrapper<>();
-    //        // 子查询
-    //        if (!StringUtils.isNull(user.getDeptId())) {
-    //            entityWrapper.eq("dept_id", user.getDeptId());
-    //        }
-    //        Result result = new Result();
-    //        Page<SysUser> page = new Page(pageNo, limit);
-    //        IPage<SysUser> list = userService.page(page, entityWrapper);
-    //        //Page pageBean = userService.selectPage(getPage(), entityWrapper);
-    //        String title = "用户信息";
-    //        Workbook book = ExcelExportUtil.exportExcel(new ExportParams(
-    //                title, title, title), SysUser.class, pageBean.getRecords());
-    //        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-    //        book.write(bos);
-    //        byte[] bytes = bos.toByteArray();
-    //        String bytesRes = com.story.storyadmin.utils.wind.StringUtils.bytesToHexString2(bytes);
-    //        title = title + "-" + DateUtils.getDateTime();
-    //        response.put("bytes", bytesRes);
-    //        response.put("title", title);
-    //    } catch (Exception e) {
-    //        e.printStackTrace();
-    //        return Response.error(ResponseError.NORMAL_ERROR, "导出失败");
-    //    }
-    //    return Response.toJson(response, "导出成功");
-    //}
+
 }

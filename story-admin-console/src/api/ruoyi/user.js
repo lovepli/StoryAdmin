@@ -44,8 +44,17 @@ export function delUser(userId) {
   })
 }
 
-// 导出用户
+// 导出用户 全部交给后端控制
 export function exportUser(query) {
+  return request({
+    url: '/sysmgr/wuser/export',
+    method: 'get',
+    params: query
+  })
+}
+
+// 导出用户 全部交给前端控制
+export function exportUser2(query) {
   return request({
     url: '/sysmgr/wuser/export',
     method: 'get',

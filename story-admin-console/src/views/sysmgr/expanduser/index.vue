@@ -150,13 +150,13 @@ export default {
       this.downloadLoading = false
       exportUser(this.listQuery).then(response => {
         this.downloadLoading = true
-        if (response.data.code === 0) {
+        if (response.code === 20000) {
           import('@/vendor/Export2Excel').then(excel => {
-            excel.export_byte_to_excel(response.data.data.bytes, response.data.data.title)
+            excel.export_byte_to_excel(response.data.bytes, response.data.title)
             this.downloadLoading = false
           })
         } else {
-          this.$message.error(response.data.msg)
+          this.$message.error(response.msg)
         }
       })
     },
