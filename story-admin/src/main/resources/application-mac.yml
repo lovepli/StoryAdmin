@@ -97,6 +97,10 @@ upload-file:
 cbs:
   imagesPath: /Users/lipan/Desktop/fileUpload/
 
+oasys:
+  upload:
+    location: /Users/lipan/Desktop/OASys/oasys/target/upload/file/
+
 # Swagger配置，只在开发环境和测试环境启用，生产环境不启用
 swagger:
   # 是否开启swagger
