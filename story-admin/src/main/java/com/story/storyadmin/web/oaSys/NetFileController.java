@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/oasys/file")
 public class NetFileController {
 
     private final NetFileService netFileService;
@@ -22,12 +21,12 @@ public class NetFileController {
         this.netFileService = netFileService;
     }
 
-    @RequestMapping(value="/getFiles",method = {RequestMethod.GET})
+    @RequestMapping(value="/oasys/file/getFiles",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.file.query")
-    public Result getNetFiles( @RequestParam("parentId") int parentId,
-                                                    @RequestParam("personal") boolean personal,
-                                                    @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
-                                                    @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public Result getNetFiles( @RequestParam("parentId") Long parentId,
+                               @RequestParam("personal") boolean personal,
+                               @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
+                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         Result result = new Result();
         PageInfo<NetFile> pageInfo = netFileService.getNetFiles( parentId, personal, pageNumber, pageSize);
         result.setData(pageInfo);
@@ -37,9 +36,9 @@ public class NetFileController {
         return result;
     }
 
-    @RequestMapping(value="/addFolder",method = {RequestMethod.GET})
+    @RequestMapping(value="/oasys/file/addFolder",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.file.save")
-    public Result addFolder(@RequestParam("parentId") int parentId,
+    public Result addFolder(@RequestParam("parentId") Long parentId,
                             @RequestParam("folderName") String folderName,
                             @RequestParam("personal") boolean personal) {
         Result result ;
@@ -48,21 +47,28 @@ public class NetFileController {
         return result;
     }
 
-    @RequestMapping(value="/uploadFile",method = {RequestMethod.POST})
-    @RequiresPermissions("oasys.file.upload")
-    public Result uploadFile(@RequestParam("parentId") int parentId,
+    /**
+     * 上传文件
+     * @param parentId
+     * @param personal
+     * @param multipartFile
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value="/common/uploadFile",method = {RequestMethod.POST})
+    public Result uploadFile(@RequestParam("parentId") Long parentId,
                                   @RequestParam("personal") boolean personal,
                                   @RequestParam("file") MultipartFile multipartFile) throws IOException {
         Result result ;
-        netFileService.uploadFile(multipartFile, parentId, personal);
+        netFileService.uploadFile(multipartFile,parentId, personal);
         result=new Result(true,"上传成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
-    @RequestMapping(value="/renameFile",method = {RequestMethod.GET})
+    @RequestMapping(value="/oasys/file/renameFile",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.file.save")
-    public Result renameNetFile(@RequestParam("id") int id,
-                                     @RequestParam("newName") String newName) {
+    public Result renameNetFile(@RequestParam("id") Long id,
+                                @RequestParam("newName") String newName) {
         Result result ;
         netFileService.renameNetFile(id, newName);
         result=new Result(true,"重命名成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
@@ -70,9 +76,9 @@ public class NetFileController {
     }
 
 
-    @RequestMapping(value="/deleteFiles",method = {RequestMethod.POST})
+    @RequestMapping(value="/oasys/file/deleteFiles",method = {RequestMethod.POST})
     @RequiresPermissions("oasys.file.delete")
-    public Result deleteNetFiles(@RequestBody Integer[] ids) {
+    public Result deleteNetFiles(@RequestBody Long[] ids) {
         Result result ;
         netFileService.deleteNetFiles(ids);
         result=new Result(true,"重命名成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());

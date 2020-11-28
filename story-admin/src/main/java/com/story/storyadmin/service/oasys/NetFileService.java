@@ -6,13 +6,13 @@ import com.story.storyadmin.domain.entity.oasys.NetFile;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface NetFileService {
-    PageInfo<NetFile> getNetFiles( int parentId, boolean personal, int pageNumber, int pageSize);
+    PageInfo<NetFile> getNetFiles(Long parentId, boolean personal, int pageNumber, int pageSize);
 
-    void addFolder(String folderName,  int parentId, boolean personal);
+    void addFolder(String folderName, Long parentId, boolean personal);
 
-    void uploadFile(MultipartFile multipartFile,  int parentId, boolean personal);
+    void uploadFile(MultipartFile multipartFile,  Long parentId, boolean personal);
 
-    void renameNetFile(int id, String newName);
+    void renameNetFile(Long id, String newName);
 
-    void deleteNetFiles(Integer[] ids);
+    void deleteNetFiles(Long[] ids);
 }

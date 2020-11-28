@@ -3,8 +3,8 @@ package com.story.storyadmin.service.oasys.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.domain.entity.oasys.NetFile;
-import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.mapper.oasys.NetFileMapper;
 import com.story.storyadmin.service.oasys.NetFileService;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,18 +29,23 @@ public class NetFileServiceImpl implements NetFileService {
     }
 
     @Override
-    public PageInfo<NetFile> getNetFiles( int parentId, boolean personal, int pageNumber, int pageSize) {
+    public PageInfo<NetFile> getNetFiles(  Long parentId, boolean personal, int pageNumber, int pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
-        return new PageInfo<>(netFileMapper.selectNetFiles(parentId, personal));
+        // 获取当前登录用户ID TODO 为啥不能获取到userId??fd
+        Long userId= UserContext.getCurrentUser().getUserId();
+        System.out.println("########用户ID："+userId);
+        return new PageInfo<>(netFileMapper.selectNetFiles((long) 1,parentId, personal));
     }
 
     @Override
-    public void addFolder(String folderName,  int parentId, boolean personal) {
+    public void addFolder(String folderName, Long parentId, boolean personal) {
         NetFile folder = new NetFile();
         folder.setName(folderName);
         folder.setPath("/");
         folder.setSize("-");
         folder.setType("文件夹");
+       // folder.setUserId(UserContext.getCurrentUser().getUserId());
+        folder.setUserId((long) 1);
         folder.setParentId(parentId);
         folder.setPersonal(personal);
         LocalDateTime time = LocalDateTime.now();
@@ -49,7 +54,7 @@ public class NetFileServiceImpl implements NetFileService {
     }
 
     @Override
-    public void uploadFile(MultipartFile multipartFile,  int parentId, boolean personal) {
+    public void uploadFile(MultipartFile multipartFile, Long parentId, boolean personal) {
         File folder = new File(location);
         if (!folder.exists()) {
             folder.mkdirs();
@@ -63,6 +68,7 @@ public class NetFileServiceImpl implements NetFileService {
             e.printStackTrace();
         }
         NetFile netFile = new NetFile();
+        // 上传文件的路径
         netFile.setPath("/upload/file/" + millis + "-" + fileName);
         assert fileName != null;
         int index = fileName.lastIndexOf('.');
@@ -71,19 +77,21 @@ public class NetFileServiceImpl implements NetFileService {
         netFile.setSize(formatSize(multipartFile.getSize()));
         netFile.setParentId(parentId);
         netFile.setPersonal(personal);
+        //netFile.setUserId(UserContext.getCurrentUser().getUserId());
+        netFile.setUserId((long) 1);
         LocalDateTime time = LocalDateTime.now();
         netFile.setCreatedTime(time);
         netFileMapper.insertNetFile(netFile);
     }
 
     @Override
-    public void renameNetFile(int id, String newName) {
+    public void renameNetFile(Long id, String newName) {
         netFileMapper.updateNetFile(id, newName);
     }
 
     @Override
-    public void deleteNetFiles(Integer[] ids) {
-        for (Integer id : ids) {
+    public void deleteNetFiles(Long[] ids) {
+        for (Long id : ids) {
             NetFile netFile = netFileMapper.selectNetFile(id);
             if (!netFile.getType().equals("文件夹")) {
                 String fileName = netFile.getPath().substring(13);

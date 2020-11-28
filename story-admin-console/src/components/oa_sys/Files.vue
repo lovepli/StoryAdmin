@@ -62,7 +62,7 @@
       </el-table-column>
       <el-table-column prop="type" label="类型" align="center" width="100" />
       <el-table-column prop="size" label="大小" align="center" width="100" />
-      <!-- <el-table-column prop="user.username" label="作者" align="center" width="100"/> -->
+      <el-table-column prop="user.username" label="作者" align="center" width="100"/>
       <el-table-column prop="createdTime" label="创建时间" align="center" width="200"/>
       <el-table-column label="操作" align="center" width="200px">
         <template slot-scope="scope">
@@ -82,13 +82,14 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <!-- 下载对话框 -->
+    <!-- 上传对话框 -->
     <el-dialog :visible.sync="uploadFileDialog" width="26%">
       <el-upload
+        :headers="importHeaders"
         :data="{ personal, parentId }"
         :on-success="uploadSuccess"
+        :action="filePostUrl"
         drag
-        action="/oasys/file/uploadFile"
         multiple
       >
         <i class="el-icon-upload"/>
@@ -101,6 +102,7 @@
 <script>
 import { addFolder, getFiles, renameFile, deleteFile } from '@/api/oa_sys/oa';
 import axios from 'axios';
+import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 
 export default {
   name: 'Files',
@@ -114,13 +116,14 @@ export default {
       current: [1],
       selection: [],
       path: [' / 根目录'],
-      uploadFileDialog: false
+      uploadFileDialog: false,
+      // 文件上传
+      filePostUrl: process.env.BASE_API + '/common/uploadFile',
+      importHeaders: { Authorization: getToken() }
     };
   },
-  created() {
-    this.getFiles(1);
-  },
-  // eslint-disable-next-line vue/order-in-components
+  // computed 计算属性
+  // 定义：当其依赖的属性的值发生变化的时，计算属性会重新计算。反之则使用缓存中的属性值。
   computed: {
     currentPath() {
       return this.path.join(' / ');
@@ -128,6 +131,9 @@ export default {
     parentId() {
       return this.current[this.current.length - 1];
     }
+  },
+  created() {
+    this.getFiles(1);
   },
   methods: {
     getFiles(parentId, pageNumber) {
@@ -191,13 +197,15 @@ export default {
     },
     // 下载文件
     downloadFile(row) {
-      axios.get(row.path, { responseType: 'blob' }).then((response) => {
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(new Blob([response]));
-        link.setAttribute('download', row.name + '.' + row.type);
-        link.click();
-      });
+      this.$message.error('下载失败')
+      // axios.get(row.path, { responseType: 'blob' }).then((r) => {
+      //   const link = document.createElement('a');
+      //   link.href = window.URL.createObjectURL(new Blob([r]));
+      //   link.setAttribute('download', row.name + '.' + row.type);
+      //   link.click();
+      // });
     },
+
     // 重命名文件
     renameFile(row) {
       this.$prompt('请输入新文件名', '重命名', {

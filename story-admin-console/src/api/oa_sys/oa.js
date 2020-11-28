@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { search } from '@/utils/common'
 
 // 获取文件列表
 export function getFiles(params) {
@@ -8,12 +9,12 @@ export function getFiles(params) {
     params
   })
 }
-// 添加文件目录
-export function addFolder(param) {
+
+export function addFolder(params) {
   return request({
-    url: '/oasys/file/addFolder',
+    url: `/oasys/file/addFolder?${search(params)}`,
     method: 'get',
-    data: param
+    data: params
   })
 }
 
@@ -27,11 +28,11 @@ export function deleteFile(param) {
 }
 
 // 给文件重新命名
-export function renameFile(param) {
+export function renameFile(params) {
   return request({
-    url: '/oasys/file/renameFile',
+    url: `/oasys/file/renameFile?${search(params)}`,
     method: 'get',
-    data: param
+    data: params
   })
 }
 

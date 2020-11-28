@@ -15,13 +15,16 @@ import java.time.LocalDateTime;
 @Data
 @Alias("NetFile")
 public class NetFile implements Serializable {
-    private int id;
+    private Long id;
     private String name;
     private String path;
     private String type;
     private String size;
-    //private User user;
-    private int parentId;
+    private Long userId;
+    private Long parentId;
+    /**
+     * 是否公共网盘
+     */
     private boolean personal;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdTime;

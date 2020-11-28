@@ -8,13 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface NetFileMapper {
-    List<NetFile> selectNetFiles( @Param("parentId") int parentId, @Param("personal") boolean personal);
+    List<NetFile> selectNetFiles( @Param("userId") Long userId,@Param("parentId") Long parentId, @Param("personal") boolean personal);
 
-    NetFile selectNetFile(@Param("id") int id);
+    NetFile selectNetFile(@Param("id") Long id);
 
     void insertNetFile(NetFile netFile);
 
-    void updateNetFile(@Param("id") int id, @Param("newName") String newName);
+    void updateNetFile(@Param("id") Long id, @Param("newName") String newName);
 
-    void deleteNetFiles(@Param("ids") Integer[] ids);
+    void deleteNetFiles(@Param("ids") Long[] ids);
 }
