@@ -24,7 +24,6 @@ import org.springframework.context.annotation.DependsOn;
 import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -113,8 +112,8 @@ public class ShiroConfig {
         filterRuleMap.put("/images/**", "anon");
         filterRuleMap.put("/druid/**", "anon");
         filterRuleMap.put("/common/**", "anon");
-        filterRuleMap.put("/mongoDBTest/**", "anon");
-        filterRuleMap.put("/redisCacheTest/**", "anon");
+        //filterRuleMap.put("/mongoDBTest/**", "anon");
+        //filterRuleMap.put("/redisCacheTest/**", "anon");
         filterRuleMap.put("/**", "jwt");
 
         shiroFilter.setFilterChainDefinitionMap(filterRuleMap);

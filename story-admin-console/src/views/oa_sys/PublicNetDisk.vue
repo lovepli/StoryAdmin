@@ -8,7 +8,7 @@
 import Files from '@/components/oa_sys/Files';
 
 export default {
-  name: 'PublicNetDisk',
+  name: 'PublicNetDisk', // 公共网盘
   components: {
     Files
   }

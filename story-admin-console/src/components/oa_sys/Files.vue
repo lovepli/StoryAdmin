@@ -105,7 +105,6 @@ import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 
 export default {
   name: 'Files',
-  // eslint-disable-next-line vue/require-prop-types
   props: ['personal'],
   data() {
     return {
