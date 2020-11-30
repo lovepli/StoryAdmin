@@ -100,8 +100,7 @@
 </template>
 
 <script>
-import { addFolder, getFiles, renameFile, deleteFile } from '@/api/oa_sys/oa';
-import axios from 'axios';
+import { addFolder, getFiles, renameFile, deleteFile, downloadFile } from '@/api/oa_sys/oa';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 
 export default {
@@ -146,6 +145,7 @@ export default {
     },
     // 跳到文件夹
     toFolder(file) {
+      console.log('---进入文件夹---')
       this.getFiles(file.id);
       this.path.push(file.name);
       this.current.push(file.id);
@@ -172,8 +172,7 @@ export default {
           var folderName = value;
           var parentId = this.current[this.current.length - 1];
           addFolder({ folderName, personal, parentId }).then((response) => {
-            if (response && response.code === 20000) {
-              this.$message.success(response.message);
+            if (response && response.code === 20000) {  
               this.getFiles(parentId);
             }
           });
@@ -197,13 +196,14 @@ export default {
     },
     // 下载文件
     downloadFile(row) {
-      this.$message.error('下载失败')
-      // axios.get(row.path, { responseType: 'blob' }).then((r) => {
-      //   const link = document.createElement('a');
-      //   link.href = window.URL.createObjectURL(new Blob([r]));
-      //   link.setAttribute('download', row.name + '.' + row.type);
-      //   link.click();
-      // });
+      console.log('输出路径：' + row.path)
+      downloadFile(row.path).then((r) => {
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(new Blob([r]));
+        link.setAttribute('download', row.name + '.' + row.type);
+        link.click();
+        this.$message.success('下载成功');
+      }).catch(e => { this.$message.error('下载失败') });
     },
 
     // 重命名文件
@@ -218,8 +218,8 @@ export default {
           var id = row.id;
           row.name = value;
           renameFile({ id, newName }).then((response) => {
+            // eslint-disable-next-line no-empty
             if (response && response.code === 20000) {
-              this.$message.success(response.message);
             }
           });
         })
@@ -239,7 +239,6 @@ export default {
           });
           deleteFile(ids).then((response) => {
             if (response && response.code === 20000) {
-              this.$message.success(response.message);
               this.getFiles(this.current[this.current.length - 1]);
             }
           });

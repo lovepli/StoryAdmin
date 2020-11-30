@@ -17,6 +17,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // 在发送请求之前做点什么
+    // config.timeout = 4000;
     // console.log('service.interceptors.request')
     // Getter 会暴露为 store.getters 对象，你可以以属性的形式访问这些值，这里是通过属性访问token的值
     if (store.getters.token) { // 判断toke是否为null
@@ -29,6 +30,7 @@ service.interceptors.request.use(
   error => {
     // 发送请求失败的时候做点什么
     console.log(error) // for debug
+    MessageBox.alert(error);
     Promise.reject(error)
   }
 )

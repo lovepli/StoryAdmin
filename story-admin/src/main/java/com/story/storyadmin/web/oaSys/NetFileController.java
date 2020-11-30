@@ -21,6 +21,14 @@ public class NetFileController {
         this.netFileService = netFileService;
     }
 
+    /**
+     * 查询文件列表
+     * @param parentId
+     * @param personal
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
     @RequestMapping(value="/oasys/file/getFiles",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.file.query")
     public Result getNetFiles( @RequestParam("parentId") Long parentId,
@@ -32,10 +40,16 @@ public class NetFileController {
         result.setData(pageInfo);
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        result.setMessage("获取成功！");
         return result;
     }
 
+    /**
+     * 新增文件
+     * @param parentId
+     * @param folderName
+     * @param personal
+     * @return
+     */
     @RequestMapping(value="/oasys/file/addFolder",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.file.save")
     public Result addFolder(@RequestParam("parentId") Long parentId,
@@ -65,6 +79,12 @@ public class NetFileController {
         return result;
     }
 
+    /**
+     * 上传文件
+     * @param id
+     * @param newName
+     * @return
+     */
     @RequestMapping(value="/oasys/file/renameFile",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.file.save")
     public Result renameNetFile(@RequestParam("id") Long id,
@@ -76,12 +96,17 @@ public class NetFileController {
     }
 
 
+    /**
+     * 删除文件
+     * @param ids
+     * @return
+     */
     @RequestMapping(value="/oasys/file/deleteFiles",method = {RequestMethod.POST})
     @RequiresPermissions("oasys.file.delete")
     public Result deleteNetFiles(@RequestBody Long[] ids) {
         Result result ;
         netFileService.deleteNetFiles(ids);
-        result=new Result(true,"重命名成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        result=new Result(true,"成功删除文件!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 }

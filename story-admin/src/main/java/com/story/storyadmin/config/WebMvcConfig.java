@@ -18,6 +18,12 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     private String mImagesPath;
 
     /**
+     * 我的网盘地址
+     */
+    @Value("${oasys.upload.location}")
+    private String location;
+
+    /**
      * 过滤
      * springboot中配置addResourceHandler和addResourceLocations，使得可以从磁盘中读取图片、视频、音频等
      * 访问路径：
@@ -32,6 +38,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         // 存放用户图像地址  图片放到/D:/fileUpload/后，从磁盘读取的图片数据scr将会变成images/picturename.jpg的格式
         registry.addResourceHandler("/images/**").addResourceLocations("file:"+mImagesPath);
+        // 配置我的网盘下载地址，这个地址就不需要再在shiro那里进行配置了
+        registry.addResourceHandler("/upload/file/**").addResourceLocations("file:" + location);
+
     }
 }
 

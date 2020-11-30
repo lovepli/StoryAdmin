@@ -36,3 +36,12 @@ export function renameFile(params) {
   })
 }
 
+// 下载文件不需要写一个专门的接口
+export function downloadFile(value) {
+  return request({
+    url: value,
+    method: 'get',
+    responseType: 'blob'
+  })
+}
+
