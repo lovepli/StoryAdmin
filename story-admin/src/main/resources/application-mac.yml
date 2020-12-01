@@ -97,9 +97,22 @@ upload-file:
 cbs:
   imagesPath: /Users/lipan/Desktop/fileUpload/
 
+# 网盘文件存储
 oasys:
   upload:
     location: /Users/lipan/Desktop/OASys/oasys/target/upload/file/
+  #上传配置
+  servlet:
+    multipart:
+      max-file-size: 20000000
+      max-request-size: 20000000
+
+#Kafka
+#  kafka:
+#    consumer:
+#      auto-offset-reset: earliest
+#      group-id: consumer-group
+
 
 # Swagger配置，只在开发环境和测试环境启用，生产环境不启用
 swagger:

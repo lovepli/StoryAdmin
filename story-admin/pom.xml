@@ -262,6 +262,17 @@
             <artifactId>pagehelper</artifactId>
             <version>5.1.10</version>
         </dependency>
+
+        <!--sysoa 添加kafka-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <!--sysoa 添加websocket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
     </dependencies>
 
 

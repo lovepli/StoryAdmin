@@ -100,11 +100,12 @@
 </template>
 
 <script>
-import { addFolder, getFiles, renameFile, deleteFile, downloadFile } from '@/api/oa_sys/oa';
+import { addFolder, getFiles, renameFile, deleteFile, downloadFile } from '@/api/oa_sys/oa_file';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 
 export default {
   name: 'Files',
+  // eslint-disable-next-line vue/require-prop-types
   props: ['personal'],
   data() {
     return {
@@ -171,7 +172,7 @@ export default {
           var folderName = value;
           var parentId = this.current[this.current.length - 1];
           addFolder({ folderName, personal, parentId }).then((response) => {
-            if (response && response.code === 20000) {  
+            if (response && response.code === 20000) {
               this.getFiles(parentId);
             }
           });
