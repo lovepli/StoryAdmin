@@ -63,7 +63,9 @@
       <notice/>
     </div>
     <div class="right-menu">
-      <Chat/>
+      <router-link to="/">
+        <Chat/>
+      </router-link>
     </div>
   </el-menu>
 </template>
