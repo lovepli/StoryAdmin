@@ -3,6 +3,7 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />
+
     <div class="right-menu">
 
       <template >
@@ -24,7 +25,6 @@
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
          -->
       </template>
-
       <!-- 系统登录用户名 -->
       <div class="user_name right-menu-item">{{ name }}</div>
       <!-- 用户图像 -->
@@ -59,6 +59,12 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <div class="right-menu">
+      <notice/>
+    </div>
+    <div class="right-menu">
+      <Chat/>
+    </div>
   </el-menu>
 </template>
 
@@ -68,8 +74,10 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 // import Search from '@/components/HeaderSearch'
-import RuoYiGit from '@/components/RuoYi/Git'
-import RuoYiDoc from '@/components/RuoYi/Doc'
+// import RuoYiGit from '@/components/RuoYi/Git'
+// import RuoYiDoc from '@/components/RuoYi/Doc'
+import Notice from '@/components/oa_sys/Notice';
+import Chat from '@/components/oa_sys/Chat';
 
 export default {
   components: {
@@ -77,8 +85,10 @@ export default {
     Hamburger,
     Screenfull,
     // Search,
-    RuoYiGit,
-    RuoYiDoc
+    // RuoYiGit,
+    // RuoYiDoc,
+    Notice,
+    Chat
   },
   // 官方说明文档：计算属性是基于它们的响应式依赖进行缓存的。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 erp 还没有发生改变，多次访问 isErp 计算属性会立即返回之前的计算结果，而不必再次执行函数。
   computed: { // 动态计算属性，相当于this.$store.getters.name, this.$store.getters.sidebar,
@@ -91,7 +101,7 @@ export default {
     ]),
     // 这里的计算属性是调用了一个方法，当这个erp值改变的时候，方法才调用
     isErp() {
-      return this.erp == '0'
+      return this.erp === '0'
     }
   },
   methods: {

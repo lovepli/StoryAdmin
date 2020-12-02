@@ -9,7 +9,8 @@
       <el-scrollbar ref="elscrollbar" style="height: 300px">
         <ul>
           <li v-for="item in messages" :key="item.id">
-            <div v-if="item.username != auth.username" class="message">
+            <!-- <div v-if="item.username != auth.username" class="message"> -->
+            <div v-if="item.username != admin" class="message">
               <div class="user">
                 <el-avatar :src="item.avatar" class="avatar" />
                 <div class="name">{{ item.username }}</div>
@@ -72,7 +73,8 @@ export default {
     }
   },
   mounted() {
-    if (this.auth && 'WebSocket' in window) {
+  // if (this.auth && 'WebSocket' in window) {
+    if ('WebSocket' in window) {
       this.initWebSocket();
     }
   },

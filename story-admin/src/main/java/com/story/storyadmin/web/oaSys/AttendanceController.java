@@ -23,6 +23,10 @@ public class AttendanceController {
     }
 
 
+    /**
+     * 设置时间
+     * @return
+     */
     @RequestMapping(value="/getAttendanceTime",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
     public Result getAttendanceTime() {
@@ -41,6 +45,12 @@ public class AttendanceController {
     }
 
 
+    /**
+     * 工作时间设置
+     * @param begin
+     * @param end
+     * @return
+     */
     @RequestMapping(value="/setAttendanceTime",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
     public Result setAttendanceTime(@RequestParam("begin") String begin, @RequestParam("end") String end) {
@@ -51,6 +61,10 @@ public class AttendanceController {
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     @RequestMapping(value="/getAttendance",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
     public Result getAttendance( ) {
@@ -61,6 +75,10 @@ public class AttendanceController {
         return result;
     }
 
+    /**
+     * 签到记录
+     * @return
+     */
     @RequestMapping(value="/getAttendances",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
     public Result getAttendances() {
@@ -71,6 +89,11 @@ public class AttendanceController {
         return result;
     }
 
+    /**
+     * 签到
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping(value="/signIn",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
     public Result signIn() throws ParseException {
@@ -92,6 +115,11 @@ public class AttendanceController {
         return result;
     }
 
+    /**
+     * 签退
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping(value="/signOut",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
     public Result signOut() throws ParseException {

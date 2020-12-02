@@ -20,7 +20,8 @@ public class NoticeController {
     }
 
     @RequestMapping(value="/getNotices",method = {RequestMethod.GET})
-    @RequiresPermissions("oasys.notice.query")
+    //@RequiresPermissions("oasys.notice.query")
+    @RequiresPermissions("sysmgr.user.query") // 作为一个通用权限，因为没有单独页面
     public Result getNotices() {
         Result result ;
         //User user = new User();
@@ -31,7 +32,7 @@ public class NoticeController {
     }
 
     @RequestMapping(value="/markRead",method = {RequestMethod.POST})
-    @RequiresPermissions("oasys.notice.query")
+    @RequiresPermissions("sysmgr.user.query")
     public Result markRead(@RequestBody Integer[] ids) {
         noticeService.markRead(ids);
         Result result ;

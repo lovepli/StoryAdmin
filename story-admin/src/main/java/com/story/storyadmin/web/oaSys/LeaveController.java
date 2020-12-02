@@ -19,6 +19,11 @@ public class LeaveController {
         this.leaveService = leaveService;
     }
 
+    /**
+     * 请假
+     * @param leave
+     * @return
+     */
     @RequestMapping(value="/askLeave",method = {RequestMethod.POST})
     @RequiresPermissions("oasys.leave.query")
     public Result askLeave( @RequestBody Leave leave) {
@@ -30,6 +35,11 @@ public class LeaveController {
         return result;
     }
 
+    /**
+     *请假审批
+     * @param leave
+     * @return
+     */
     @RequestMapping(value="/checkLeave",method = {RequestMethod.POST})
     @RequiresPermissions("oasys.leave.query")
     public Result checkLeave(@RequestBody Leave leave) {
@@ -39,10 +49,16 @@ public class LeaveController {
         return result;
     }
 
-    @RequestMapping(value="/getLeaves",method = {RequestMethod.GET})
+    /**
+     * 分页查询
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value="/getLeaves",method = {RequestMethod.POST})
     @RequiresPermissions("oasys.leave.query")
     public Result getLeaves(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
-                                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
         Result result ;
         PageInfo<Leave> pageInfo = leaveService.getLeaves(pageNumber, pageSize);
