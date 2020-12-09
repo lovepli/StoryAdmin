@@ -12,15 +12,19 @@
             <!-- <div v-if="item.username != auth.username" class="message"> -->
             <div v-if="item.username != admin" class="message">
               <div class="user">
+                <!-- 用户图像 -->
                 <el-avatar :src="item.avatar" class="avatar" />
-                <div class="name">{{ item.username }}</div>
+                <!-- <div class="name">{{ item.username }}</div> -->
+                <!-- 用户名称 -->
+                <div class="name">{{ name }}</div>
               </div>
+              <!-- 发送的内容 -->
               <div class="text">{{ item.content }}</div>
             </div>
             <div v-else class="message mine">
               <div class="user">
                 <el-avatar :src="item.avatar" class="avatar" />
-                <div class="name">{{ item.username }}</div>
+                <div class="name">{{ name }}</div>
               </div>
               <div class="text">{{ item.content }}</div>
             </div>
@@ -40,13 +44,14 @@
       </span>
     </el-dialog>
     <el-badge :value="unreadCount" :max="99" class="open-button">
+      <!-- 点击聊天，弹框弹出来 -->
       <el-button size="small" @click="openDialog">聊天</el-button>
     </el-badge>
   </div>
 </template>
 
 <script>
-// import { mapState } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Chat',
@@ -60,7 +65,10 @@ export default {
     };
   },
   computed: {
-    //    mapState(["auth"]),
+    ...mapGetters([
+      'name', // 当前用户
+      'avatar' // 用户图像
+    ])
   },
   watch: {
     messages() {
@@ -80,7 +88,7 @@ export default {
   },
   methods: {
     initWebSocket() {
-      this.webSocket = new WebSocket('ws://localhost/chat');
+      this.webSocket = new WebSocket('ws://127.0.0.1:9428/chat');
       this.webSocket.onmessage = this.webSocketMessage;
     },
     webSocketMessage(event) {

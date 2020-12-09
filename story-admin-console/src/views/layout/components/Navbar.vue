@@ -5,26 +5,6 @@
     <breadcrumb />
 
     <div class="right-menu">
-
-      <template >
-        <!-- 根据输入的目录进行全文检索 -->
-        <!--
-        <search id="header-search" class="right-menu-item" />
-        -->
-        <!-- 外部链接，因为svg-icon不同的项目使用的不同，所以这里我都是使用项目自己的，所以我显示的都是user图像 -->
-        <!--
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
-        </el-tooltip>
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
-        </el-tooltip>
-        -->
-        <!-- 全屏显示 -->
-        <!--
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-         -->
-      </template>
       <!-- 系统登录用户名 -->
       <div class="user_name right-menu-item">{{ name }}</div>
       <!-- 用户图像 -->
@@ -59,13 +39,37 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <!-- 通知 -->
     <div class="right-menu">
       <notice/>
     </div>
+    <!-- 聊天室 -->
     <div class="right-menu">
-      <router-link to="/">
+      <!-- <router-link to="/">
         <Chat/>
-      </router-link>
+      </router-link> -->
+      <Chat/>
+    </div>
+    <div lass="right-menu">
+      <template >
+        <!-- 根据输入的目录进行全文检索 -->
+        <!--
+        <search id="header-search" class="right-menu-item" />
+        -->
+        <!-- 外部链接，因为svg-icon不同的项目使用的不同，所以这里我都是使用项目自己的，所以我显示的都是user图像 -->
+        <!--
+        <el-tooltip content="源码地址" effect="dark" placement="bottom">
+          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
+        </el-tooltip>
+        <el-tooltip content="文档地址" effect="dark" placement="bottom">
+          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
+        </el-tooltip>
+        -->
+        <!-- 全屏显示 -->
+        <!--
+        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+         -->
+      </template>
     </div>
   </el-menu>
 </template>
