@@ -87,6 +87,7 @@ export default {
     }
   },
   methods: {
+    // 进入页面创建websocket连接
     initWebSocket() {
       this.webSocket = new WebSocket('ws://127.0.0.1:9428/chat');
       this.webSocket.onmessage = this.webSocketMessage;
@@ -97,6 +98,7 @@ export default {
         this.unreadCount++;
       }
     },
+    // 发送聊天信息
     sendMessage() {
       if (this.content !== null && this.content.trim() !== '') {
         this.webSocket.send(this.content);
@@ -115,11 +117,12 @@ export default {
 </script>
 
 <style scoped>
-.open-button {
+/* 聊天按钮置于底部 */
+/* .open-button {
   position: fixed;
   bottom: 25px;
   right: 40px;
-}
+} */
 
 .send-button {
   margin-top: 15px;
