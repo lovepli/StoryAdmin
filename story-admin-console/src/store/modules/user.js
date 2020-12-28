@@ -84,6 +84,7 @@ const user = {
           }
           // 全局设置信息-姓名 commit将状态信息提交到mutations处理，第一个参数为事件类型，需要和mutation中函数名称一致；第二个参数为要传递的参数。mutation中的函数接受 state 作为其第一个参数
           // commit分发多重 mutation，调用mutation中对应相同名称的方法
+          commit('SET_ID', data.id) // 用户ID
           commit('SET_NAME', data.name)// 姓名
           commit('SET_AVATAR', data.avatar) // 头像
           commit('SET_ERP', data.erp)
@@ -136,6 +137,9 @@ const user = {
       state.token = token
     },
     // 回调函数 SET_NAME:()
+    SET_ID: (state, id) => { // 登录id
+      state.id = id
+    },
     SET_NAME: (state, name) => { // 姓名状态的改变
       state.name = name
     },

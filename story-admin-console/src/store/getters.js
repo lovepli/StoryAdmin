@@ -11,6 +11,7 @@ const getters = {
 
   token: state => state.user.token, // token
   // 通过属性访问:Getter 会暴露为 store.getters 对象，你可以以属性的形式访问这些值，例如这里我们可以通过store.getters.token访问到token的值,也可以在任何其他组件中使用它：this.$store.getters.token获取到全局状态token的值
+  id: state => state.user.id, // 登录id
   avatar: state => state.user.avatar, // 登录图像
   name: state => state.user.name, // 用户名
   erp: state => state.user.erp,

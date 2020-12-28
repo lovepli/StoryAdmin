@@ -52,6 +52,7 @@ export default {
     };
   },
   mounted() {
+    // 初始化weosocket
     this.initWebSocket();
   },
   destroyed() {
@@ -60,8 +61,8 @@ export default {
   },
   methods: {
     // 发送聊天信息
-    sendText() {
-      const _this = this;
+    sendText2() {
+      const _this = this; // 保存当前对象this
       _this.$refs['sendMsg'].focus();
       if (!_this.contentText) {
         return;
@@ -73,7 +74,51 @@ export default {
         msg: _this.contentText,
         count: _this.count
       };
+      console.log('发送的参数：{}', JSON.stringify(params))
+      // 若是ws开启状态
+      if (_this.ws.readyState === _this.ws.OPEN) {
+        // 发送数据
+        _this.ws.send(JSON.stringify(params)); // 调用WebSocket send()发送信息的方法
+        _this.ws.send('hello world!');
+        _this.contentText = '';
+        setTimeout(() => {
+          _this.scrollBottm();
+        }, 500);
+      } else if (_this.ws.readyState === _this.ws.CONNECTING) { // 若是 正在开启状态，则等待300毫秒
+        setTimeout(() => {
+        // 发送数据
+          _this.ws.send(JSON.stringify(params)); // 调用WebSocket send()发送信息的方法
+          _this.ws.send('hello world!');
+        }, 300);
+      } else {
+        this.initWebSocket();
+
+        setTimeout(() => {
+        // 发送数据
+          _this.ws.send(JSON.stringify(params)); // 调用WebSocket send()发送信息的方法
+          _this.ws.send('hello world!');
+        }, 500);
+      }
+    },
+    // 发送聊天信息
+    sendText() {
+      const _this = this;
+      _this.$refs['sendMsg'].focus();
+      if (!_this.contentText) {
+        return;
+      }
+      // 参数
+      const params = {
+        userId: _this.userId,
+        username: _this.username,
+        avatar: _this.avatar,
+        msg: _this.contentText,
+        count: _this.count
+      };
+      console.log('发送的参数：{}', JSON.stringify(params))
+      // 发送数据
       _this.ws.send(JSON.stringify(params)); // 调用WebSocket send()发送信息的方法
+      _this.ws.send('hello world!');
       _this.contentText = '';
       setTimeout(() => {
         _this.scrollBottm();
@@ -100,8 +145,9 @@ export default {
         ws.onopen = function(e) {
           console.log('服务器连接成功: ' + url);
         };
-        ws.onclose = function(e) {
+        ws.onclose = function(e) { // 关闭
           console.log('服务器连接关闭: ' + url);
+          // console.log('connection closed (' + e.code + ')');
         };
         ws.onerror = function() {
           console.log('服务器连接出错: ' + url);
@@ -109,6 +155,8 @@ export default {
         ws.onmessage = function(e) {
           // 接收服务器返回的数据
           const resData = JSON.parse(e.data);
+          console.log('响应值：' + resData.value)
+          // 响应条数
           _this.count = resData.count;
           _this.list = [
             ..._this.list,

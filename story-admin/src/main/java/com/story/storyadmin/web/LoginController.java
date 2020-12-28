@@ -15,8 +15,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -102,7 +101,9 @@ public class LoginController extends BaseController{
 
         User user;
         user = userService.findUserByAccount(JwtUtil.getClaim(SecurityUtils.getSubject().getPrincipal().toString(), SecurityConsts.ACCOUNT));
-
+       // logger.info("用户ID:,{}",user.getId());
+        //logger.info("登录用户信息:,{}",user.toString());
+        json.put("id",user.getId());
         json.put("name", user.getName());
         json.put("erp", user.getErpFlag());
         //用户图像信息， TODO 这个可以开发一个添加用户的时候支持上传用户图像，然后从数据库中查询出用户图像信息
@@ -110,6 +111,8 @@ public class LoginController extends BaseController{
         json.put("avatar",user.getAvatar());
         //角色信息
         json.put("roles",new String[]{"admin"});
+        // 查询出用户所有的角色，类型为数组
+       // json.put("roles",new String[]{"admin"});
 
         //查询菜单
         List<ResourceNode> menus = resourceService.findByUserId(user.getId());

@@ -83,7 +83,7 @@ export default {
   mounted() {
   // if (this.auth && 'WebSocket' in window) {
     if ('WebSocket' in window) {
-      this.initWebSocket();
+      // this.initWebSocket();
     }
   },
   methods: {

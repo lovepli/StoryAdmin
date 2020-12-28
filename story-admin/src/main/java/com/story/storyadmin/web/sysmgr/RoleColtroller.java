@@ -74,7 +74,7 @@ public class RoleColtroller extends BaseController {
      * @param role
      * @return
      */
-    @SysLogAnnotation
+    //@SysLogAnnotation
     @ApiOperation(value = "角色" ,  notes="保存/修改角色信息")
     @RequiresPermissions("sysmgr.role.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
