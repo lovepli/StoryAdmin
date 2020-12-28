@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import { findRoleListByAccount } from '@/api/sysmgr/user'
+// import { findRoleListByAccount } from '@/api/sysmgr/user'
 export default {
   name: 'PersonalInfo',
   data() {
@@ -28,11 +28,12 @@ export default {
   },
   // 一个实例被创建之后执行代码
   created() {
+    this.roles = this.$store.getters.roles
     // 根据登录的账户名查询多有角色
-    findRoleListByAccount({ userName: this.$store.getters.name }).then(r => {
-      this.roles = r.data;
-      // console.log('角色数组=>', this.roleNameMap);
-    }).catch(e => {})
+    // findRoleListByAccount({ userName: this.$store.getters.name }).then(r => {
+    //   this.roles = r.data;
+    //   // console.log('角色数组=>', this.roleNameMap);
+    // }).catch(e => {})
 
     // findRoleListByAccount({ userName: this.$store.getters.name }).then(r => {
     //   this.roleNameMap = {}

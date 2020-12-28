@@ -78,6 +78,7 @@ const user = {
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             // 全局设置信息-角色信息，并存储到store中
             commit('SET_ROLES', data.roles)
+            // console.log('登录用户角色：' + JSON.stringify(data.roles))
           } else {
             reject('getInfo: roles must be a non-null array !')
             // reject('Verification failed, please Login again.')

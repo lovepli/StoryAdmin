@@ -43,6 +43,9 @@ public class LoginController extends BaseController{
     @Autowired
     AuthorityService authorityService;
 
+    //@Autowired
+    //UserService2 userService2;
+
     @Value("${project.domain}")
     String domain;
 
@@ -110,9 +113,14 @@ public class LoginController extends BaseController{
        // json.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         json.put("avatar",user.getAvatar());
         //角色信息
-        json.put("roles",new String[]{"admin"});
-        // 查询出用户所有的角色，类型为数组
-       // json.put("roles",new String[]{"admin"});
+        //json.put("roles",new String[]{"admin"});
+        // 根据用户名查询出用户所有的角色，类型为角色名数组
+        List<String> roleNameList = (List<String>) userService.findUserRole(user.getName()).getData();
+        String[] toBeStored = roleNameList.toArray(new String[roleNameList.size()]);
+        for(String s : toBeStored) {
+            System.out.println("角色名："+s);
+        }
+        json.put("roles",toBeStored);
 
         //查询菜单
         List<ResourceNode> menus = resourceService.findByUserId(user.getId());
