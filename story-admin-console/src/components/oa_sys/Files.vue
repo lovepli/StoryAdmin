@@ -76,7 +76,7 @@
       <el-pagination
         :pager-count="5"
         :total="files.total"
-        :hide-on-single-page="true"
+        :hide-on-single-page="false"
         background
         layout="prev, pager, next"
         @current-change="handleCurrentChange"

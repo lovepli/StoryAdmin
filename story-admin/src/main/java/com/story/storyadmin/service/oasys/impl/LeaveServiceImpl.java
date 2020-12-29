@@ -35,7 +35,7 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     public void checkLeave(Leave leave) {
        //  String username = leave.getUser().getUsername();
-        String username = "管理员" ;
+        String username = "admin" ;
         Notice notice = new Notice();
         notice.setReceiverName(username);
         LocalDateTime time = LocalDateTime.now();
@@ -51,7 +51,7 @@ public class LeaveServiceImpl implements LeaveService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        kafkaTemplate.send("notice", json);
+       // kafkaTemplate.send("notice", json);
         leaveMapper.checkLeave(leave);
     }
 

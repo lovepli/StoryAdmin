@@ -117,9 +117,6 @@ public class LoginController extends BaseController{
         // 根据用户名查询出用户所有的角色，类型为角色名数组
         List<String> roleNameList = (List<String>) userService.findUserRole(user.getName()).getData();
         String[] toBeStored = roleNameList.toArray(new String[roleNameList.size()]);
-        for(String s : toBeStored) {
-            System.out.println("角色名："+s);
-        }
         json.put("roles",toBeStored);
 
         //查询菜单

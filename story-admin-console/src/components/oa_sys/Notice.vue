@@ -24,7 +24,7 @@
 </template>
 
 <script>
-// import { mapState } from "vuex";
+
 import { getNotices, markRead } from '@/api/oa_sys/oa_notice';
 
 export default {
@@ -34,6 +34,11 @@ export default {
       notices: []
     };
   },
+  computed: {
+    unreadCount() {
+      return this.notices.length;
+    }
+  },
   watch: {
     $route() {
       this.getNotices();
@@ -41,13 +46,6 @@ export default {
   },
   created() {
     this.getNotices();
-  },
-  // eslint-disable-next-line vue/order-in-components
-  computed: {
-    // ...mapState(['auth']),
-    unreadCount() {
-      return this.notices.length;
-    }
   },
   methods: {
     getNotices() {
@@ -68,7 +66,7 @@ export default {
       });
       markRead(ids).then((response) => {
         if (response && response.code === 20000) {
-          this.$message.success(response.message);
+        //  this.$message.success(response.message);
           this.getNotices();
         }
       });

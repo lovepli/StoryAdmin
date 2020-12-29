@@ -40,7 +40,6 @@ public class AttendanceController {
         result.setData(list);
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        result.setMessage("获取成功！");
         return result;
     }
 
@@ -69,9 +68,11 @@ public class AttendanceController {
     @RequiresPermissions("oasys.sign.query")
     public Result getAttendance( ) {
         // Long userId=UserContext.getCurrentUser().getUserId();
-        Result result ;
+        Result result = new Result();
         Attendance attendance = attendanceService.getAttendance((long) 1);
-        result=new Result(true,"获取成功!",attendance, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        result.setData(attendance);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -82,10 +83,12 @@ public class AttendanceController {
     @RequestMapping(value="/getAttendances",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
     public Result getAttendances() {
-        Result result ;
+        Result result = new Result();
         // Long userId=UserContext.getCurrentUser().getUserId();
         List<String> attendances = attendanceService.getAttendances((long) 1);
-        result=new Result(true,"获取成功!",attendances, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        result.setData(attendances);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 

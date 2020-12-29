@@ -23,18 +23,20 @@ public class NoticeController {
     //@RequiresPermissions("oasys.notice.query")
     @RequiresPermissions("sysmgr.user.query") // 作为一个通用权限，因为没有单独页面
     public Result getNotices() {
-        Result result ;
+
         //User user = new User();
-        String username= "张三";
+        Result result = new Result();
+        String username= "admin";
         List<Notice> notices = noticeService.getNotices(username);
-        result=new Result(true,"获取成功!",notices, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        result.setData(notices);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
     @RequestMapping(value="/markRead",method = {RequestMethod.POST})
     @RequiresPermissions("sysmgr.user.query")
     public Result markRead(@RequestBody Integer[] ids) {
-        noticeService.markRead(ids);
         Result result ;
         noticeService.markRead(ids);
         result=new Result(true,"成功标记已读!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());

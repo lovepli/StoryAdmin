@@ -10,7 +10,7 @@
         <template slot-scope="scope">
           <el-radio
             v-model="selection"
-            :label="scope.row"
+            :label="scope.row.id"
             :disabled="scope.row.status !== 0"
           />
         </template>

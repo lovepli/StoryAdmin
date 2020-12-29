@@ -59,10 +59,11 @@ public class LeaveController {
     @RequiresPermissions("oasys.leave.query")
     public Result getLeaves(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-
-        Result result ;
+        Result result = new Result();
         PageInfo<Leave> pageInfo = leaveService.getLeaves(pageNumber, pageSize);
-        result=new Result(true,"获取成功!",pageInfo, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        result.setData(pageInfo);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 }
