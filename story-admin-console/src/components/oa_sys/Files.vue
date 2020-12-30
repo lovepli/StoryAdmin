@@ -218,8 +218,8 @@ export default {
           var id = row.id;
           row.name = value;
           renameFile({ id, newName }).then((response) => {
-            // eslint-disable-next-line no-empty
             if (response && response.code === 20000) {
+              // this.$message.success(response.message);
             }
           });
         })

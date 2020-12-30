@@ -18,8 +18,14 @@
         values (#{userId}, #{beginDate}, #{endDate}, #{reason}, #{type}, #{status})
     </insert>
 
-    <select id="selectLeaves" resultMap="LeaveResultMap">
-        select l.*, u.id, u.name as username from `leave` l, st_user u
+<!--    <select id="selectLeaves" resultMap="LeaveResultMap">-->
+<!--        select l.*, u.id, u.name as username from `leave` l, st_user u-->
+<!--        where l.user_id = u.id-->
+<!--        order by l.status-->
+<!--    </select>-->
+
+    <select id="selectLeaves" resultType="com.story.storyadmin.domain.vo.oasys.LeaveVo">
+        select l.*, u.id, u.name as userName from `leave` l, st_user u
         where l.user_id = u.id
         order by l.status
     </select>

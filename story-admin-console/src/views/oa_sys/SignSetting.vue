@@ -41,7 +41,7 @@ export default {
       var end = this.attendanceTime[1];
       setAttendanceTime({ begin, end }).then((response) => {
         if (response && response.code === 20000) {
-          this.$message.success(response.message);
+          // this.$message.success(response.message);
         }
       });
     }

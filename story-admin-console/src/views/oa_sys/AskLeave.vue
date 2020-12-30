@@ -67,7 +67,7 @@ export default {
         var endDate = this.duration[1];
         askLeave({ reason, type, beginDate, endDate }).then((response) => {
           if (response && response.code === 20000) {
-            this.$message.success(response.message);
+            // this.$message.success(response.message);
           }
         });
       }

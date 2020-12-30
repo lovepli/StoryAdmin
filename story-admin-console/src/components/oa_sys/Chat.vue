@@ -9,28 +9,27 @@
       <el-scrollbar ref="elscrollbar" style="height: 300px">
         <ul>
           <li v-for="item in messages" :key="item.id">
-            <!-- <div v-if="item.username != auth.username" class="message"> -->
-            <div v-if="item.username != admin" class="message">
+            <div v-if="item.username != name" class="message">
               <div class="user">
                 <!-- 用户图像 -->
                 <el-avatar :src="item.avatar" class="avatar" />
-                <!-- <div class="name">{{ item.username }}</div> -->
-                <!-- 用户名称 -->
-                <div class="name">{{ name }}</div>
+                <div class="name">{{ item.username }}</div>
               </div>
               <!-- 发送的内容 -->
               <div class="text">{{ item.content }}</div>
             </div>
+
             <div v-else class="message mine">
               <div class="user">
                 <el-avatar :src="item.avatar" class="avatar" />
-                <div class="name">{{ name }}</div>
+                <div class="name">{{ item.name }}</div>
               </div>
               <div class="text">{{ item.content }}</div>
             </div>
           </li>
         </ul>
       </el-scrollbar>
+
       <span slot="footer" class="dialog-footer">
         <el-input v-model="content" type="textarea" />
         <div class="send-button">
@@ -52,11 +51,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { getToken } from '@/utils/auth' // 验权
 
 export default {
   name: 'Chat',
   data() {
     return {
+      // userId: this.$store.getters.id, // 当前用户ID
+      // name: this.$store.getters.name, // 当前用户昵称
+      // avatar: this.$store.getters.avatar, // 当前用户头像
+
       content: '',
       messages: [],
       unreadCount: 0,
@@ -82,8 +86,8 @@ export default {
   },
   mounted() {
   // if (this.auth && 'WebSocket' in window) {
-    if ('WebSocket' in window) {
-      // this.initWebSocket();
+    if (getToken() && 'WebSocket' in window) {
+      this.initWebSocket();
     }
   },
   methods: {

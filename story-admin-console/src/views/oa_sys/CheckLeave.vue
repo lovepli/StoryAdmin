@@ -10,13 +10,13 @@
         <template slot-scope="scope">
           <el-radio
             v-model="selection"
-            :label="scope.row.id"
+            :label="scope.row"
             :disabled="scope.row.status !== 0"
           />
         </template>
       </el-table-column>
       <el-table-column
-        prop="user.username"
+        prop="userName"
         label="申请人"
         align="center"
         width="100"
@@ -103,13 +103,12 @@ export default {
           inputErrorMessage: '审批意见不能为空'
         })
           .then(({ value }) => {
-            const username = this.selection.user.username;
+            const userName = this.selection.userName;
             const id = this.selection.id;
-            const user = { username };
+            const user = { userName };
             const comment = value;
             checkLeave({ id, user, comment, status }).then((response) => {
               if (response && response.code === 20000) {
-                this.$message.success(response.message);
                 this.getLeaves();
               }
             });

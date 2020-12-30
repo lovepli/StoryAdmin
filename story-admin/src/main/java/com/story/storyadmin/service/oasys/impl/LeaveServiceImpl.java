@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.story.storyadmin.domain.entity.oasys.Leave;
 import com.story.storyadmin.domain.entity.oasys.Notice;
+import com.story.storyadmin.domain.vo.oasys.LeaveVo;
 import com.story.storyadmin.mapper.oasys.LeaveMapper;
 import com.story.storyadmin.service.oasys.LeaveService;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -51,12 +52,13 @@ public class LeaveServiceImpl implements LeaveService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+        // 请假审批 将请假的结果通过消息发送出去的同时修改数据库请假记录的状态
        // kafkaTemplate.send("notice", json);
         leaveMapper.checkLeave(leave);
     }
 
     @Override
-    public PageInfo<Leave> getLeaves(int pageNumber, int pageSize) {
+    public PageInfo<LeaveVo> getLeaves(int pageNumber, int pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
         return new PageInfo<>(leaveMapper.selectLeaves());
     }

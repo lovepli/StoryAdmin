@@ -121,7 +121,7 @@ export default {
     signIn() {
       signIn().then((response) => {
         if (response && response.code === 20000) {
-          this.$message.success(response.message);
+          // this.$message.success(response.message);
           this.getAttendance();
         }
       });
@@ -129,7 +129,7 @@ export default {
     signOut() {
       signOut().then((response) => {
         if (response && response.code === 20000) {
-          this.$message.success(response.message);
+          // this.$message.success(response.message);
           this.getAttendance();
         }
       });

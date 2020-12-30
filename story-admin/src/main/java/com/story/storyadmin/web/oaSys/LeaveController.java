@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.oasys.Leave;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.domain.vo.oasys.LeaveVo;
 import com.story.storyadmin.service.oasys.LeaveService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,7 @@ public class LeaveController {
     public Result getLeaves(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         Result result = new Result();
-        PageInfo<Leave> pageInfo = leaveService.getLeaves(pageNumber, pageSize);
+        PageInfo<LeaveVo> pageInfo = leaveService.getLeaves(pageNumber, pageSize);
         result.setData(pageInfo);
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());

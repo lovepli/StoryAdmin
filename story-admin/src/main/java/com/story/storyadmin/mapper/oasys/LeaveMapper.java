@@ -1,6 +1,7 @@
 package com.story.storyadmin.mapper.oasys;
 
 import com.story.storyadmin.domain.entity.oasys.Leave;
+import com.story.storyadmin.domain.vo.oasys.LeaveVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface LeaveMapper {
 
     void checkLeave(Leave leave);
 
-    List<Leave> selectLeaves();
+    List<LeaveVo> selectLeaves();
 }
