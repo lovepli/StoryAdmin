@@ -9,7 +9,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/story_admin?useSSL=false&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/story_admin2?useSSL=false&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: 123456
     initialSize: 5
@@ -102,6 +102,30 @@ upload-file:
 #配置外部访问文件
 cbs:
   imagesPath: D:/fileUpload/
+
+# 网盘文件存储
+oasys:
+  upload:
+    location: D:/fileUpload/OASys/oasys/target/upload/file/
+  #上传配置
+  servlet:
+    multipart:
+      max-file-size: 20000000
+      max-request-size: 20000000
+#Kafka配置
+#  kafka:
+#    bootstrap-servers: 127.0.0.1:9092 #指定kafka server的地址，集群配多个，中间，逗号隔开
+#    producer: # 指定消息key和消息体的编解码方式
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#    consumer:
+#      group-id: default_consumer_group #群组ID
+#      auto-offset-reset: earliest
+#      enable-auto-commit: true 
+#      auto-commit-interval: 1000
+#      # 指定消息key和消息体的解码方式
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 # Swagger配置，只在开发环境和测试环境启用，生产环境不启用
 swagger:

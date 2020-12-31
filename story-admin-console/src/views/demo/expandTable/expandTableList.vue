@@ -38,6 +38,7 @@
           </el-form>
         </template>
       </el-table-column>
+      
       <el-table-column label="商品名称" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>

@@ -4,6 +4,8 @@ import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.oasys.Attendance;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.oasys.AttendanceService;
+import com.story.storyadmin.web.BaseController;
+import com.sun.media.jfxmedia.logging.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/oasys/sign")
-public class AttendanceController {
+public class AttendanceController extends BaseController {
     private final AttendanceService attendanceService;
 
     public AttendanceController(AttendanceService attendanceService) {
@@ -99,7 +101,7 @@ public class AttendanceController {
      */
     @RequestMapping(value="/signIn",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
-    public Result signIn() throws ParseException {
+    public Result signIn() {
         Result result ;
         // Long userId=UserContext.getCurrentUser().getUserId();
 
@@ -113,7 +115,7 @@ public class AttendanceController {
         if (localTime.isAfter(beginTime.plusHours(1L))) {
             result=new Result(false,"已超过签到时间!",null, ResultEnum.PARAMETERS_MISSING.getCode());
         }
-        attendanceService.signIn((long) 1);
+        attendanceService.signIn((long)1);
         result=new Result(true,"签到成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
@@ -125,12 +127,13 @@ public class AttendanceController {
      */
     @RequestMapping(value="/signOut",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
-    public Result signOut() throws ParseException {
+    public Result signOut() {
 
         Result result ;
         // Long userId=UserContext.getCurrentUser().getUserId();
 
-        if (attendanceService.getAttendance((long) 1) == null) {
+        if (attendanceService.getAttendance(1L) == null) {
+            logger.info("是否签到过：",attendanceService.getAttendance(1L) == null? "是":"否" );
             result=new Result(false,"您未签到，不能签退!",null, ResultEnum.PARAMETERS_MISSING.getCode());
         }
         Map<String, String> map = attendanceService.getAttendanceTime();
@@ -142,7 +145,7 @@ public class AttendanceController {
         if (localTime.isAfter(endTime.plusHours(1L))) {
             result=new Result(false,"已超过签退时间!",null, ResultEnum.PARAMETERS_MISSING.getCode());
         }
-        attendanceService.signOut((long) 1);
+        attendanceService.signOut((long)1);
         result=new Result(true,"签退成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }

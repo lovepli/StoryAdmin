@@ -12,12 +12,17 @@ import java.time.LocalTime;
 @Alias("Attendance")
 public class Attendance implements Serializable {
     private Long id;
+    /**用户ID */
     private Long userId;
+    /**当前日期 */
     private LocalDate signInDate;
+    /**签到时间 */
     @JsonFormat(pattern = "HH:mm")
     private LocalTime signInTime;
+    /**签退时间 */
     @JsonFormat(pattern = "HH:mm")
     private LocalTime signOutTime;
+    /** 是否签退 */
     private boolean hasSignOut;
     private static final long serialVersionUID = 1L;
 }
