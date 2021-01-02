@@ -5,14 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.story.storyadmin.domain.entity.oasys.Notice;
 import com.story.storyadmin.mapper.oasys.NoticeMapper;
 import com.story.storyadmin.service.oasys.NoticeService;
-import org.apache.commons.logging.Log;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -41,7 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
      * @param cr 变量代表消息本身，可以通过ConsumerRecord<?,?>类型的record变量来打印接收的消息的各种信息
      * @throws IOException
      */
-    // @KafkaListener(topics = "notice")
+    @KafkaListener(topics = "notice")
     public void onListenNotice(ConsumerRecord<String, String> cr) throws IOException {
         //判断是否为null
         //Optional<?> kafkaMessage = Optional.ofNullable(cr.value());

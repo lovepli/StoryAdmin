@@ -3,6 +3,7 @@
     <span>{{ name }}</span>
     <el-divider /> <!-- 横线  -->
     <div>
+      <!-- 遍历角色对象 -->
       <el-tag v-for="(r,i) in roles" :key="i" size="small" style="margin:10px 8px">{{ r }}</el-tag>
     </div>
   </div>

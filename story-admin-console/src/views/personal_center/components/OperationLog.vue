@@ -32,7 +32,7 @@ export default {
     }
   },
   created() {
-    this.loadLog()
+    // this.loadLog()
   },
   methods: {
     loadLog() {

@@ -12,7 +12,7 @@ docker pull wurstmeister/kafka
 
 > `docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper`
 
-3 启动 kafka 容器
+3 启动 kafka 容器 
 
 ```
 docker run  -d --name kafka -p 9092:9092 -e KAFKA_BROKER_ID=0 -e KAFKA_ZOOKEEPER_CONNECT=192.168.1.100:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.1.100:9092 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
@@ -25,7 +25,7 @@ KAFKA_BROKER_ID=0
 KAFKA_ZOOKEEPER_CONNECT=192.168.1.100:2181  
 KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.1.100:9092  
 KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092  
-中间两个参数的 192.168.204.128 改为宿主机器的 IP 地址，如果不这么设置，可能会导致在别的机器上访问不到 kafka。
+中间两个参数的 192.168.1.100 改为宿主机器的 IP 地址，注意不能设置为127.0.0.1，如果不这么设置，可能会导致在别的机器上访问不到 kafka。
 
 4 测试 kafka 进入 kafka 容器的命令行
 
