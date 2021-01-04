@@ -1,6 +1,7 @@
 import { constantRouterMap } from '@/router' // 引入路由
 
 // 声明一个 permission module组件 ,里面包含三个变量state，mutations，actions
+// 参考：https://github.com/Heeexy/SpringBoot-Shiro-Vue/blob/master/explain-frontend.md
 const permission = {
   // 声明一个需要全局维护的状态 state
   // state:共同维护的一个状态，state里面可以是很多个全局状态
