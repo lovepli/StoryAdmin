@@ -53,7 +53,7 @@ public class LeaveServiceImpl implements LeaveService {
             e.printStackTrace();
         }
         // 请假审批 将请假的结果通过消息发送出去的同时修改数据库请假记录的状态,这里的topic可以写在配置文件中引入
-        kafkaTemplate.send("notice", json); //通过KafkaTemplate模板类发送数据
+        //kafkaTemplate.send("notice", json); //通过KafkaTemplate模板类发送数据
         leaveMapper.checkLeave(leave);
     }
 

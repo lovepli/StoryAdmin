@@ -1,6 +1,9 @@
 <template>
-  <div :class="{'show':show}" class="header-search">
-    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
+  <div :class="{'show':show}" class="header-search storyAdminGit"  >
+  <el-tooltip content="全局搜索" effect="dark" placement="bottom">
+      <el-button  size="small" type="text"  icon="el-icon-search" @click.stop="click">
+  </el-button>
+   </el-tooltip>
     <el-select
       ref="headerSearchSelect"
       v-model="search"
@@ -24,7 +27,7 @@ import Fuse from 'fuse.js'
 import path from 'path'
 
 export default {
-  name: 'HeaderSearch',
+  name: 'StoryAdminSearch',
   data() {
     return {
       search: '',
@@ -37,7 +40,7 @@ export default {
   computed: {
     routes() {
       // 所有路由
-      return this.$store.getters.permission_routes
+      return this.$store.getters.permission_routers
     }
   },
   watch: {
