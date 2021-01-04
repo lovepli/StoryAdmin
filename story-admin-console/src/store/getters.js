@@ -16,6 +16,9 @@ const getters = {
   name: state => state.user.name, // 用户名
   erp: state => state.user.erp,
   roles: state => state.user.roles, // 用户角色
+  menus: state => state.user.menus, // 菜单
+  permissions: state => state.user.permissions, // 权限
+
   permission_routers: state => state.permission.routers, // 权限路由
   addRouters: state => state.permission.addRouters, // 添加路由
   btns: state => state.permission.btns // 权限按钮？

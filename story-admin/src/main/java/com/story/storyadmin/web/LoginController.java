@@ -125,7 +125,7 @@ public class LoginController extends BaseController{
         List<Object> authorityList = authorityService.findByUserId(user.getId());
 
         json.put("menus",menus);
-        json.put("auth",authorityList);
+        json.put("permissions",authorityList); // 权限编码 permissions
 
         result.setData(json);
         return result;

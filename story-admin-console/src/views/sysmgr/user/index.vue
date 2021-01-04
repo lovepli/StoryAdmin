@@ -88,7 +88,7 @@
           class-name="small-padding fixed-width"
         >
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="modify(scope.row)">编辑</el-button>
+            <el-button v-if="hasPerm('sysmgr.user.save')" type="primary" size="mini" @click="modify(scope.row)">编辑</el-button>
             <el-button size="mini" @click="modifyUserRole(scope.row)">角色</el-button>
             <el-button type="danger" size="mini" @click="dropRow(scope.row)">删除</el-button>
           </template>

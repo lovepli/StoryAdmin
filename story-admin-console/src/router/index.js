@@ -125,22 +125,22 @@ export const constantRouterMap = [
 //   const value = modulesFiles(modulePath)
 //   routesModules.push(value.default)
 // }, {})
-// export const asyncRoutes = routesModules
+// export const asyncRouterMap = routesModules
 
 /**
  * 最终无法匹配到相应路由，重定向到404
  * 异步加载路由时，在生成完异步路由准备挂载时，需要将重定向404的匹配规则定义在最后面，否则刷新会出错。
  */
-// export const notFoundRoutes = [
-//   {
-//     path: '*',  //会匹配所有路径, // path: '/user-*', 会匹配以 `/user-` 开头的任意路径
-//     redirect: '/404',
-//     hidden: true,
-//     meta: {
-//       title: '404'
-//     }
-//   }
-// ]
+export const notFoundRoutes = [
+  {
+    path: '*', // 会匹配所有路径, // path: '/user-*', 会匹配以 `/user-` 开头的任意路径
+    redirect: '/404',
+    hidden: true,
+    meta: {
+      title: '404'
+    }
+  }
+]
 
 // 定义实例化路由的方法
 const createRouter = () => new Router({
