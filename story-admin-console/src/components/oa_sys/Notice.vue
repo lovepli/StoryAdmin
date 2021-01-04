@@ -12,10 +12,19 @@
         <el-table-column prop="createdTime" label="时间" width="160" />
         <el-table-column prop="content" label="内容" />
       </el-table>
-      <el-button slot="reference" type="text">
+
+     <!-- <el-badge :value="unreadCount" :max="99" >
+     <el-tooltip content="通知" effect="dark" placement="bottom">
+      <el-button slot="reference"  type="text"  icon="el-icon-bell">
+     </el-button>
+    </el-tooltip>
+   </el-badge> -->
+
+      <el-button slot="reference" type="text" >
         通知
         <el-badge :value="unreadCount" :max="99" />
       </el-button>
+
       <div class="mark">
         <el-button size="small" @click="markRead">标记已读</el-button>
       </div>
