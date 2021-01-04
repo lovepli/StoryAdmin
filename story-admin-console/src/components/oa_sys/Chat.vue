@@ -44,8 +44,8 @@
     </el-dialog>
     <el-badge :value="unreadCount" :max="99" class="open-button">
       <!-- 点击聊天，弹框弹出来 -->
-      <!-- <el-button size="small" @click="openDialog">聊天</el-button> -->
-      
+      <!-- <el-button size="small"  @click="openDialog">聊天</el-button> -->
+
     <el-tooltip content="聊天" effect="dark" placement="bottom">
       <el-button  type="text"  icon="el-icon-chat-dot-round" @click="openDialog()">
   </el-button>
