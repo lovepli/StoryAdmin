@@ -15,7 +15,6 @@ import store from './store' // 全局引入本地存储store,中央存储,store�
 
 import '@/icons' // icon图标
 import '@/permission' // permission control权限控制
-import authority from './utils/authority'
 import { hasPermission } from './utils/hasPermission';
 import './utils/constant.js'
 import LunarFullCalendar from 'vue-lunar-full-calendar'
@@ -28,8 +27,6 @@ Vue.use(ElementUI, { locale })
 
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission
-
-Vue.use(authority);
 
 Vue.config.productionTip = false
 

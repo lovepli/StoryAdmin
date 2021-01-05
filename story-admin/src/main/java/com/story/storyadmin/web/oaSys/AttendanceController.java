@@ -23,8 +23,7 @@ public class AttendanceController extends BaseController {
     public AttendanceController(AttendanceService attendanceService) {
         this.attendanceService = attendanceService;
     }
-
-
+    
     /**
      * 设置时间
      * @return
@@ -33,12 +32,10 @@ public class AttendanceController extends BaseController {
     @RequiresPermissions("oasys.sign.query")
     public Result getAttendanceTime() {
         Result result = new Result();
-
         Map<String, String> map = attendanceService.getAttendanceTime();
         List<String> list = new ArrayList<>();
         list.add(map.get("begin"));
         list.add(map.get("end"));
-
         result.setData(list);
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
@@ -55,7 +52,6 @@ public class AttendanceController extends BaseController {
     @RequestMapping(value="/setAttendanceTime",method = {RequestMethod.GET})
     @RequiresPermissions("oasys.sign.query")
     public Result setAttendanceTime(@RequestParam("begin") String begin, @RequestParam("end") String end) {
-
         Result result ;
         attendanceService.setAttendanceTime(begin, end);
         result=new Result(true,"设置成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
@@ -104,19 +100,17 @@ public class AttendanceController extends BaseController {
     public Result signIn() {
         Result result ;
         // Long userId=UserContext.getCurrentUser().getUserId();
-
         Map<String, String> map = attendanceService.getAttendanceTime();
         LocalTime beginTime = LocalTime.parse(map.get("begin"));
         LocalTime localTime = LocalTime.now();
         if (localTime.isBefore(beginTime.minusHours(1L))) {
             result=new Result(false,"还未到签到时间!",null, ResultEnum.PARAMETERS_MISSING.getCode());
-
-        }
-        if (localTime.isAfter(beginTime.plusHours(1L))) {
+        } else if (localTime.isAfter(beginTime.plusHours(1L))) {
             result=new Result(false,"已超过签到时间!",null, ResultEnum.PARAMETERS_MISSING.getCode());
+        } else {
+            attendanceService.signIn((long)1);
+            result=new Result(true,"签到成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
-        attendanceService.signIn((long)1);
-        result=new Result(true,"签到成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -131,22 +125,21 @@ public class AttendanceController extends BaseController {
 
         Result result ;
         // Long userId=UserContext.getCurrentUser().getUserId();
-
         if (attendanceService.getAttendance(1L) == null) {
-            logger.info("是否签到过：",attendanceService.getAttendance(1L) == null? "是":"否" );
             result=new Result(false,"您未签到，不能签退!",null, ResultEnum.PARAMETERS_MISSING.getCode());
+        } else {
+            Map<String, String> map = attendanceService.getAttendanceTime();
+            LocalTime endTime = LocalTime.parse(map.get("end"));
+            LocalTime localTime = LocalTime.now();
+            if (localTime.isBefore(endTime.minusHours(1L))) {
+                result=new Result(false,"还未到签退时间!",null, ResultEnum.PARAMETERS_MISSING.getCode());
+            } else if (localTime.isAfter(endTime.plusHours(1L))) {
+                result=new Result(false,"已超过签退时间!",null, ResultEnum.PARAMETERS_MISSING.getCode());
+            } else {
+                attendanceService.signOut((long)1);
+                result=new Result(true,"签退成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            }
         }
-        Map<String, String> map = attendanceService.getAttendanceTime();
-        LocalTime endTime = LocalTime.parse(map.get("end"));
-        LocalTime localTime = LocalTime.now();
-        if (localTime.isBefore(endTime.minusHours(1L))) {
-            result=new Result(false,"还未到签退时间!",null, ResultEnum.PARAMETERS_MISSING.getCode());
-        }
-        if (localTime.isAfter(endTime.plusHours(1L))) {
-            result=new Result(false,"已超过签退时间!",null, ResultEnum.PARAMETERS_MISSING.getCode());
-        }
-        attendanceService.signOut((long)1);
-        result=new Result(true,"签退成功!",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 }

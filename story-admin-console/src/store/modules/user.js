@@ -75,12 +75,12 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
           const data = response.data
-          console.log('用户登录的数据：' + JSON.stringify(response.data))
+         // console.log('用户登录的数据：' + JSON.stringify(response.data))
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             // 全局设置信息-角色信息，并存储到store中
             commit('SET_ROLES', data.roles)
             commit('SET_PERMISSIONS', data.permissions) // 权限
-            console.log('登录用户角色：' + JSON.stringify(data.roles))
+            //console.log('登录用户角色：' + JSON.stringify(data.roles))
           } else {
             // commit('SET_ROLES', ['ROLE_DEFAULT'])
             reject('getInfo: roles must be a non-null array !')
