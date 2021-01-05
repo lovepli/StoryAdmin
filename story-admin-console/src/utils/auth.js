@@ -26,3 +26,4 @@ export function removeToken() {
 export function getERPToken() {
   return Cookies.get(SSOTokenKey)
 }
+

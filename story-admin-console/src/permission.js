@@ -25,9 +25,11 @@ router.beforeEach((to, from, next) => {
       // Getter 会暴露为 store.getters 对象，你可以以属性的形式访问这些值，这里是通过属性访问roles的值
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
       // 通过 store.dispatch(type)方法触发action，参数为事件类型，需要和action中函数名称一致。
+      // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
           const menus = res.data.menus;
           var fmtRoutes = formatRoutes(menus); // 生成可访问的路由表
+          // 根据menus权限生成可访问的路由表
           router.addRoutes(fmtRoutes); // 动态添加可访问路由表
           // 通过 store.commit(type,data)调用 mutation，第一个参数为事件类型，需要和mutation中函数名称一致；第二个参数为要传递的参数。
           store.commit('SET_ROUTERS', fmtRoutes); // store.commit 方法触发状态变更,这里是变更路由表,第一个参数为事件类型,第二个参数为载荷，这里是路由表
@@ -67,7 +69,10 @@ router.afterEach(() => {
 // 正常我们调用函数会写：name(function(){})，而ES6也提供了一个方式：methodName(() => {})，
 // 这种用法的好处就解决了this指向问题，因为如果元素定义在了函数内部，那么其中的this就表示当前函数的对象，
 // 如果我们需要使用外部的对象，除了在外部全局定义一个对象，一个简单的方式就是使用ES6提供的=>
-
+ /**
+  * 格式化路由表
+  * @param {*} routes 
+  */
 export const formatRoutes = (routes) => {
   const fmRoutes = [];
   routes.forEach(router => {

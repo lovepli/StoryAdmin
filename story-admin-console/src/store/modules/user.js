@@ -1,8 +1,6 @@
 import { login, logout, getInfo, loginerp } from '@/api/login'
 // eslint-disable-next-line no-unused-vars
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import store from '../../store'
-import router from '../../router'
 
 // 声明一个 user module组件 ,里面包含三个变量state，actions,mutations，
 // state 相当于自定义组件中的data,gatters相当于自定义组件中的computed,mutations相当自定义组件中的methods，只能做同步操作，对state中的数据进行修改，action异步操作，例如ajax请求，使用commit 触发mutations
@@ -81,8 +79,10 @@ const user = {
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             // 全局设置信息-角色信息，并存储到store中
             commit('SET_ROLES', data.roles)
+            commit('SET_PERMISSIONS', data.permissions) // 权限
             console.log('登录用户角色：' + JSON.stringify(data.roles))
           } else {
+            // commit('SET_ROLES', ['ROLE_DEFAULT'])
             reject('getInfo: roles must be a non-null array !')
             // reject('Verification failed, please Login again.')
           }
@@ -92,14 +92,7 @@ const user = {
           commit('SET_NAME', data.name)// 姓名
           commit('SET_AVATAR', data.avatar) // 头像
           commit('SET_MENUS', data.menus) // 菜单
-          commit('SET_PERMISSIONS', data.permissions) // 权限
           commit('SET_ERP', data.erp)
-          // 生成路由
-          const userPermission = data;
-          store.dispatch('GenerateRoutes', userPermission).then(() => {
-            // 生成该用户的新路由json操作完毕之后,调用vue-router的动态新增路由方法,将新路由添加
-            router.addRoutes(store.getters.addRouters)
-          })
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -118,6 +111,7 @@ const user = {
           commit('SET_TOKEN', '')
           // 重置角色信息
           // commit('SET_ROLES', [])
+          // commit('SET_PERMISSIONS', [])
           // 重置用户信息，包括角色信息，菜单信息等。。
           commit('RESET_USER')
           // 移除Cookies中的token， removeToken()方法是auth.js中的方法
@@ -134,7 +128,7 @@ const user = {
     FedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
-        commit('RESET_USER')
+       // commit('RESET_USER')
         removeToken()
         resolve()
       })

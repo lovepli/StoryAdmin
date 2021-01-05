@@ -1,5 +1,6 @@
 import { constantRouterMap } from '@/router/index'// 引入路由
 
+
 /**
  * 判断用户是否拥有此菜单
  * 通过meta.role判断是否与当前用户权限匹配
@@ -7,18 +8,18 @@ import { constantRouterMap } from '@/router/index'// 引入路由
  * @param route 前端定义好的异步路由中的项
  */
 
-function hasPermission(menus, route) {
-  // if (route.meta && route.meta.menus) {
-  if (route.menu) {
-    /*
-    * 如果这个路由有menu属性,就需要判断用户是否拥有此menu权限
-    */
-    // return menus.some(func => route.meta.menus.indexOf(func) >= 0)
-    return menus.indexOf(route.menu) > -1;
-  } else {
-    return true
-  }
-}
+// function hasPermission(menus, route) {
+//   // if (route.meta && route.meta.menus) {
+//   if (route.menu) {
+//     /*
+//     * 如果这个路由有menu属性,就需要判断用户是否拥有此menu权限
+//     */
+//     // return menus.some(func => route.meta.menus.indexOf(func) >= 0)
+//     return menus.indexOf(route.menu) > -1;
+//   } else {
+//     return true
+//   }
+// }
 
 /**
  * 递归过滤异步路由表，返回符合用户角色权限的路由表
@@ -26,23 +27,23 @@ function hasPermission(menus, route) {
  * @param menus
  */
 
-function filterAsyncRouter(asyncRouterMap, menus) {
-  const accessedRouters = asyncRouterMap.filter(route => {
-    // filter,js语法里数组的过滤筛选方法
-    if (hasPermission(menus, route)) {
-      if (route.children && route.children.length) {
-        // 如果这个路由下面还有下一级的话,就递归调用
-        // eslint-disable-next-line no-undef
-        route.children = filterAsyncRouter(route.children, roles)
-        // 如果过滤一圈后,没有子元素了,这个父级菜单就也不显示了
-        return (route.children && route.children.length)
-      }
-      return true
-    }
-    return false
-  })
-  return accessedRouters
-}
+// function filterAsyncRouter(asyncRouterMap, menus) {
+//   const accessedRouters = asyncRouterMap.filter(route => {
+//     // filter,js语法里数组的过滤筛选方法
+//     if (hasPermission(menus, route)) {
+//       if (route.children && route.children.length) {
+//         // 如果这个路由下面还有下一级的话,就递归调用
+//         // eslint-disable-next-line no-undef
+//         route.children = filterAsyncRouter(route.children, roles)
+//         // 如果过滤一圈后,没有子元素了,这个父级菜单就也不显示了
+//         return (route.children && route.children.length)
+//       }
+//       return true
+//     }
+//     return false
+//   })
+//   return accessedRouters
+// }
 
 // 声明一个 permission module组件 ,里面包含三个变量state，mutations，actions
 // 参考：https://github.com/Heeexy/SpringBoot-Shiro-Vue/blob/master/explain-frontend.md
@@ -67,35 +68,100 @@ const permission = {
   // actions：数据的异步操作
   // 给action注册事件处理函数。当这个函数被触发时候，将状态提交到mutations中处理
   actions: {
-    // 获取动态路由
-    GenerateRoutes({ commit }, userPermission) {
-      // 生成路由
-      return new Promise(resolve => {
-        // roles是后台传过来的角色数组,比如['管理员','文章']
-        const roles = userPermission.roles;
-        const menus = userPermission.menus;
-        let accessedRouters
-        // 是否是管理员
-        if (roles.indexOf('管理员') >= 0) {
-          // 如果角色里包含'管理员',那么所有的路由都可以用
-          // 其实管理员也拥有全部菜单,这里主要是利用角色判断,节省加载时间
-          // eslint-disable-next-line no-undef
-          accessedRouters = asyncRouterMap
-        } else {
-          // 否则需要通过以下方法来筛选出本角色可用的路由 匹配前端路由和后台返回的菜单
-          // eslint-disable-next-line no-undef
-          accessedRouters = filterAsyncRouter(asyncRouterMap, menus)
-        }
-        // 执行设置路由的方法
-        commit('SET_ROUTERS', accessedRouters)
-        resolve()
-      })
-    },
-    initMenu(state, menus) {
-      state.routes = menus;
-    }
-  }
 
+    // 获取动态路由
+    // GenerateRoutes({ commit }, userPermission) {
+    //   // 生成路由
+    //   return new Promise(resolve => {
+    //     // roles是后台传过来的角色数组,比如['管理员','文章']
+    //     if(!roles){
+    //       return;
+    //     }
+    //     if(!menus){
+    //       return;
+    //     }
+    //     const roles = userPermission.roles;
+    //     const menus = userPermission.menus;
+
+    //     // var fmtRoutes = formatRoutes(menus); // 生成可访问的路由表
+    //       // router.addRoutes(fmtRoutes); // 动态添加可访问路由表
+    //       // // 通过 store.commit(type,data)调用 mutation，第一个参数为事件类型，需要和mutation中函数名称一致；第二个参数为要传递的参数。
+    //       // store.commit('SET_ROUTERS', fmtRoutes);
+    //     let accessedRouters
+    //     // 是否是管理员
+    //     if (roles.indexOf('管理员') >= 0) {
+    //       // 如果角色里包含'管理员',那么所有的路由都可以用
+    //       // 其实管理员也拥有全部菜单,这里主要是利用角色判断,节省加载时间
+    //      // accessedRouters = asyncRouterMap
+    //      var fmtRoutes = formatRoutes(menus); // 生成可访问的路由表
+    //       accessedRouters = fmtRoutes
+    //     } else {
+    //       // 否则需要通过以下方法来筛选出本角色可用的路由 匹配前端路由和后台返回的菜单
+    //       var fmtRoutes = formatRoutes(menus); // 生成可访问的路由表
+    //      accessedRouters = filterAsyncRouter(fmtRoutes, menus)
+    //     }
+    //     // 执行设置路由的方法
+    //     accessedRouters.push({ path: '*', redirect: '/404', hidden: true })
+    //     commit('SET_ROUTERS', accessedRouters)
+    //     //resolve()
+    //     resolve(accessedRouters)
+    //   })
+    // }
+    // ,
+    // initMenu(state, menus) {
+    //   state.routes = menus;
+    // }
+  }
 }
 
 export default permission
+
+//  /**
+//   * 格式化路由表
+//   * @param {*} routes 
+//   */
+//  export const formatRoutes = (routes) => {
+//   const fmRoutes = [];
+//   if(!routes){ // 判断是遍历的对象否为空
+//     return;
+//   }
+//   routes.forEach(router => {
+//     let {
+//       // eslint-disable-next-line prefer-const
+//       url,
+//       // eslint-disable-next-line prefer-const
+//       label,
+//       // eslint-disable-next-line prefer-const
+//       iconClass,
+//       children,
+//       // eslint-disable-next-line prefer-const
+//       component
+//     } = router;
+
+//     if (children && children instanceof Array && children.length > 0) {
+//       children = formatRoutes(children);
+//     }
+
+//     // 本项目里的侧边栏是根据 router.js 配置的路由并且根据权限动态生成的，这样就省去了写一遍路由还要再手动写侧边栏这种麻烦事，
+//     // 同时使用了递归组件，这样不管你路由多少级嵌套，都能愉快的显示了。权限验证那里也做了递归的处理。
+//     // 同时本项目中也封装了一个面包屑导航，它也是通过watch $route动态生成的
+//     const fmRouter = {
+//       path: url,
+//       component(resolve) {
+//         require(['./views' + component + '.vue'], resolve)
+//       },
+//       name: label,
+//       meta: {
+//         title: label,
+//         icon: iconClass
+//       },
+//       children: children
+//     };
+
+//     if (fmRouter.children && !fmRouter.children.length) {
+//       delete fmRouter['children'];
+//     }
+//     fmRoutes.push(fmRouter);
+//   })
+//   return fmRoutes;
+// }

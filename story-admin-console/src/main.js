@@ -28,7 +28,9 @@ Vue.use(ElementUI, { locale })
 
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission
+
 Vue.use(authority);
+
 Vue.config.productionTip = false
 
 // 全局方法挂载
