@@ -39,7 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
      * @param cr 变量代表消息本身，可以通过ConsumerRecord<?,?>类型的record变量来打印接收的消息的各种信息
      * @throws IOException
      */
-    //@KafkaListener(topics = "notice")
+    @KafkaListener(topics = "notice")
     public void onListenNotice(ConsumerRecord<String, String> cr) throws IOException {
         //判断是否为null
         //Optional<?> kafkaMessage = Optional.ofNullable(cr.value());

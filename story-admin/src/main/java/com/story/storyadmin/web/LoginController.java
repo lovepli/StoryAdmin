@@ -123,9 +123,8 @@ public class LoginController extends BaseController{
         List<ResourceNode> menus = resourceService.findByUserId(user.getId());
         //查询权限
         List<Object> authorityList = authorityService.findByUserId(user.getId());
-
         json.put("menus",menus);
-        json.put("permissions",authorityList); // 权限编码 permissions
+        json.put("permissions",authorityList);
 
         result.setData(json);
         return result;
