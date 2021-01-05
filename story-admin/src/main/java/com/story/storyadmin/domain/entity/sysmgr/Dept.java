@@ -42,6 +42,12 @@ public class Dept extends BaseEntity<Dept> {
     private Long pid;
 
     /**
+     * 编号路径
+     */
+    @TableField("full_id")
+    private String fullId;
+
+    /**
      * 部门描述
      */
     @TableField("dept_desc")
