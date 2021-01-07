@@ -170,24 +170,36 @@ service.interceptors.response.use(response => {
     //   return res // 返回请求成功结果
     // }
   }, error => {
-    // 请求失败的时候做点什么
-    console.log('err' + error)
-    // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
-    let { message } = error;
-    if (message === 'Network Error') {
-      message = '后端接口连接异常';
-    } else if (message.includes('timeout')) {
-      message = '系统接口请求超时';
-    } else if (message.includes('Request failed with status code')) {
-      message = '系统接口' + message.substr(message.length - 3) + '异常';
-      console.log('err' + message)
+       // 请求失败的时候做点什么
+     console.log('err' + error)
+    if(error.response.status == 401){
+     // console.log('err.response' + JSON.stringify(error.response))
+      Message({
+        message: JSON.stringify(error.response.data.message),
+        type: 'error',
+        duration: 5 * 1000
+      })
+
+    }else {
+   // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
+   let { message } = error;
+   if (message === 'Network Error') {
+     message = '后端接口连接异常';
+   } else if (message.includes('timeout')) {
+     message = '系统接口请求超时';
+   } else if (message.includes('Request failed with status code')) {
+     message = '系统接口' + message.substr(message.length - 3) + '异常';
+     console.log('err' + message)
+   }
+   Message({
+     message: message,
+     type: 'error',
+     duration: 5 * 1000
+   })
+   return Promise.reject(error)
     }
-    Message({
-      message: message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(error)
+ 
+ 
   }
 )
 
