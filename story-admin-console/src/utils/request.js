@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui' // 单独引入element-ui的Message消息提示, MessageBox弹框
+import {Notification, Message, MessageBox } from 'element-ui' // 单独引入element-ui的Message消息提示, MessageBox弹框
 import store from '../store' // 引入store
 import { setToken, getToken } from '@/utils/auth'
 
 // 对axios请求进行全局封装
 // axios拦截器的配置与使用
-
+axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, //   // axios中请求配置有baseURL选项，表示请求URL公共部分 ，这里是从config配置文件中读取
@@ -14,8 +14,7 @@ const service = axios.create({
 })
 
 // request拦截器，设置请求头参数，如用户标识token等
-service.interceptors.request.use(
-  config => {
+service.interceptors.request.use(config => {
     // 在发送请求之前做点什么
     // config.timeout = 4000;
     // console.log('service.interceptors.request')
@@ -26,18 +25,16 @@ service.interceptors.request.use(
       config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改 ，这里的getToken()方法是从Cookies中获取token
     }
     return config
-  },
-  error => {
+  }, error => {
     // 发送请求失败的时候做点什么
     console.log(error) // for debug
-    MessageBox.alert(error);
+    // MessageBox.alert(error);
     Promise.reject(error)
   }
 )
 
 // axios response 响应拦截器，请求接口得到相应后，需要进行一些预处理
-service.interceptors.response.use(
-  response => {
+service.interceptors.response.use(response => {
     // 在响应请求之前做点什么
     // console.log('service.interceptors.response res=' + JSON.stringify(response.data))
 
@@ -72,34 +69,50 @@ service.interceptors.response.use(
      * code为非20000是抛错
      */
     console.log('service.interceptors.response res code=' + res.code)
-    // 成功返回结果的逻辑。根据接口定义的数据返回格式 状态码不是20000的返回的message都是错误提示信息
-    if (res.code !== undefined && res.code !== null && res.code !== 20000) {
-      // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
-      // 可以在vm实例中通过this.$message(options)方法来调用出message，也可以通过在文件中单独引入Message,通过Message(options)来调用
-      Message({
-        message: res.message ? res.message : '请求错误',
-        type: 'error',
-        duration: 3 * 1000 // 持续事件主动关闭消息弹框
-      })
-
-      // 60001:非法的token; 60002:其他客户端登录了;  60003:Token 过期了;
-      // 如果是token过期的状况，退出登录重定向到登陆页
-      if (res.code === 60001 || res.code === 60002 || res.code === 60003 || res.code === 401) {
-        // element-ui的消息弹框,因为这里是单独引入MessageBox，所以调用方式不是this.$confirm()打开消息弹框
-        MessageBox.confirm(
-          '登录状态已过期，您可以继续留在该页面，或者重新登录！', '系统提示', {
-            confirmButtonText: '重新登录',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }
-        ).then(() => {
-          // 分发Action 通过 store.dispatch(type)方法触发action，参数为事件类型，需要和action中函数名称一致。
-          store.dispatch('FedLogOut').then(() => { // 前端登出，移除token
-            location.reload() // 为了重新实例化vue-router对象 避免bug
-          })
-        })
+    // 状态已过期 或者 HTTP 状态码为404
+    if(res.code === 60003){
+      MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
+        confirmButtonText: '重新登录',
+        cancelButtonText: '取消',
+        type: 'warning'
       }
-      return Promise.reject(new Error(res.message || '请求错误'))
+    ).then(() => {
+      store.dispatch('FedLogOut').then(() => {
+        // location.reload() // 为了重新实例化vue-router对象 避免bug
+        location.href = '/index';
+      })
+    })
+    } else if(res.code === 50000){
+      Message({
+        message: res.message,
+        type: 'error'
+      })
+      return Promise.reject(new Error(msg))
+    } else if(res.code === 60001){
+      Message({
+        message: res.message,
+        type: 'error'
+      })
+      return Promise.reject(new Error(msg))
+    }else if(res.code === 60002){
+      Message({
+        message: res.message,
+        type: 'error'
+      })
+      return Promise.reject(new Error(msg))
+    }
+    // else if(res.code === 60003){
+    //   Message({
+    //     message: res.message,
+    //     type: 'error'
+    //   })
+    //   return Promise.reject(new Error(msg))
+    // } 
+    else if(res.code !== undefined && res.code !== null && res.code !== 20000){
+      Notification.error({
+        title: res.message
+      })
+      return Promise.reject('error')
     } else {
       // console.log('service.interceptors.response return data')
       // 将后台接口调用的message结果响应显示在前端页面 ,result可以要也可以不要，result表示接口调用结果，true为成功，false为失败
@@ -113,9 +126,50 @@ service.interceptors.response.use(
       }
       return res // 返回请求成功结果
     }
-  },
 
-  error => {
+
+    // 成功返回结果的逻辑。根据接口定义的数据返回格式 状态码不是20000的返回的message都是错误提示信息
+    // if (res.code !== undefined && res.code !== null && res.code !== 20000) {
+    //   // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框
+    //   // 可以在vm实例中通过this.$message(options)方法来调用出message，也可以通过在文件中单独引入Message,通过Message(options)来调用
+    //   Message({
+    //     message: res.message ? res.message : '请求错误',
+    //     type: 'error',
+    //     duration: 3 * 1000 // 持续事件主动关闭消息弹框
+    //   })
+
+    //   // 60001:非法的token; 60002:其他客户端登录了;  60003:Token 过期了;
+    //   // 如果是token过期的状况，退出登录重定向到登陆页
+    //   if (res.code === 60001 || res.code === 60002 || res.code === 60003 || res.code === 401) {
+    //     // element-ui的消息弹框,因为这里是单独引入MessageBox，所以调用方式不是this.$confirm()打开消息弹框
+    //     MessageBox.confirm(
+    //       '登录状态已过期，您可以继续留在该页面，或者重新登录！', '系统提示', {
+    //         confirmButtonText: '重新登录',
+    //         cancelButtonText: '取消',
+    //         type: 'warning'
+    //       }
+    //     ).then(() => {
+    //       // 分发Action 通过 store.dispatch(type)方法触发action，参数为事件类型，需要和action中函数名称一致。
+    //       store.dispatch('FedLogOut').then(() => { // 前端登出，移除token
+    //         location.reload() // 为了重新实例化vue-router对象 避免bug
+    //       })
+    //     })
+    //   }
+    //   return Promise.reject(new Error(res.message || '请求错误'))
+    // } else {
+    //   // console.log('service.interceptors.response return data')
+    //   // 将后台接口调用的message结果响应显示在前端页面 ,result可以要也可以不要，result表示接口调用结果，true为成功，false为失败
+    //   // if (res.message !== null) {
+    //   if (res.message !== null && res.result === true) {
+    //     Message({
+    //       message: res.message,
+    //       type: 'success',
+    //       duration: 3 * 1000 // 持续事件主动关闭消息弹框
+    //     })
+    //   }
+    //   return res // 返回请求成功结果
+    // }
+  }, error => {
     // 请求失败的时候做点什么
     console.log('err' + error)
     // element-ui的消息弹框,因为这里是单独引入Message，所以调用方式不是this.$message()打开消息弹框

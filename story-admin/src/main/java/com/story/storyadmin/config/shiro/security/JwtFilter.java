@@ -210,7 +210,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                         msg = throwable.getMessage();
                     }
                 }
-                //401非法请求 响应给前端
+                //401非法请求 响应给前端 TODO 这个前端页面没有显示？？？
                 this.response401(response, msg);
                 return false;
             }
@@ -233,6 +233,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
+     *  TODO 这个前端也没有显示响应的结果信息 ？？？
      * 401非法请求 （token过期）
      * @param resp
      * @param msg

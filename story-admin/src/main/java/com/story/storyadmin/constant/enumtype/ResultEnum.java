@@ -48,6 +48,10 @@ public enum ResultEnum {
 
     STATUS_ERROR_EXCEPTION(70004,"状态错误"),
 
+    /**********************shiro/接口权限相关***********************/
+    API_DO_NOT_UNAUTHORIZED(80001,"接口没有权限，权限不足"),
+    SHIRO_UNAUTHORIZED_EXCEPTION(80002,"shiro权限异常")
+
     ;
 
     private Integer code;

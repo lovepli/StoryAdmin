@@ -34,11 +34,11 @@ public class ExceptionController extends BaseController{
     @ExceptionHandler(ShiroException.class)
     public Result handle401(ShiroException e) {
         logger.error("ShiroException:{}", e);
-        return new Result<String>(false, e.getMessage(), null,401);
+        return new Result<String>(false, e.getMessage(), null,ResultEnum.SHIRO_UNAUTHORIZED_EXCEPTION.getCode());
     }
 
     /**
-     * 捕捉UnauthorizedException权限异常
+     * 捕捉UnauthorizedException权限异常：接口没有权限异常，这个异常前端页面显示了，捕获到了
      * @param ex
      * @return
      */
@@ -53,9 +53,9 @@ public class ExceptionController extends BaseController{
         String funcCode;
         if (m.find()) {
             funcCode= m.group(1);
-            return new Result<String>(false, String.format("操作失败，权限不足，权限码：%s",funcCode), null,401);
+            return new Result<String>(false, String.format("操作失败，权限不足，权限码：%s",funcCode), null,ResultEnum.API_DO_NOT_UNAUTHORIZED.getCode());
         }else{
-            return new Result<String>(false, "操作失败，权限不足，请联系管理员", null,401);
+            return new Result<String>(false, "操作失败，权限不足，请联系管理员", null,ResultEnum.API_DO_NOT_UNAUTHORIZED.getCode());
         }
     }
 
@@ -67,7 +67,6 @@ public class ExceptionController extends BaseController{
      */
     @ExceptionHandler(Exception.class)
     public Result exception(Exception e, HttpServletRequest request) {
-
          // 如果是自定义的业务异常
         if(e instanceof CustomException){
             logger.error("【自定义异常】:{}",e);
