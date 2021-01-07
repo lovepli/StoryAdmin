@@ -45,7 +45,7 @@ public class ExceptionController extends BaseController{
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public Result authorityException(UnauthorizedException ex) {
-        logger.error("UnauthorizedException", ex);
+        logger.error("UnauthorizedException权限异常:{}", ex);
         String msg= ex.getMessage();
         String pattern = "\\[(.*?)\\]";
         Pattern r = Pattern.compile(pattern);
@@ -53,6 +53,7 @@ public class ExceptionController extends BaseController{
         String funcCode;
         if (m.find()) {
             funcCode= m.group(1);
+            // 响应给前端页面
             return new Result<String>(false, String.format("操作失败，权限不足，权限码：%s",funcCode), null,ResultEnum.API_DO_NOT_UNAUTHORIZED.getCode());
         }else{
             return new Result<String>(false, "操作失败，权限不足，请联系管理员", null,ResultEnum.API_DO_NOT_UNAUTHORIZED.getCode());
