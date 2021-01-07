@@ -145,7 +145,7 @@ const user = {
       // 改变stat中的token的值
       state.token = token
     },
-    // 回调函数 SET_NAME:()
+    // 回调函数 SET_NAME:() 对数据进行赋值，类似Java中的set方法，存储的数据是存储在vuex的store中，获取值的方式是在getter中获取
     SET_ID: (state, id) => { // 登录id
       state.id = id
     },

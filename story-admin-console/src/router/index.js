@@ -114,33 +114,6 @@ export const constantRouterMap = [
   }
 ]
 
-/**
- * 异步挂载的路由
- * 动态需要根据权限加载的路由表
- */
-// const modulesFiles = require.context('./modules', true, /\.js$/)
-// const routesModules = []
-// // 自动引入modules目录下的所有模块
-// modulesFiles.keys().reduce((modules, modulePath) => {
-//   const value = modulesFiles(modulePath)
-//   routesModules.push(value.default)
-// }, {})
-// export const asyncRouterMap = routesModules
-
-/**
- * 最终无法匹配到相应路由，重定向到404
- * 异步加载路由时，在生成完异步路由准备挂载时，需要将重定向404的匹配规则定义在最后面，否则刷新会出错。
- */
-export const notFoundRoutes = [
-  {
-    path: '*', // 会匹配所有路径, // path: '/user-*', 会匹配以 `/user-` 开头的任意路径
-    redirect: '/404',
-    hidden: true,
-    meta: {
-      title: '404'
-    }
-  }
-]
 
 // 定义实例化路由的方法
 const createRouter = () => new Router({
@@ -151,6 +124,23 @@ const createRouter = () => new Router({
 })
 // 实例化路由
 const router = createRouter()
+
+/**
+ * 最终无法匹配到相应路由，重定向到404
+ * 异步加载路由时，在生成完异步路由准备挂载时，需要将重定向404的匹配规则定义在最后面，否则刷新会出错。
+ */
+const notFoundRoutes = [
+  {
+    path: '*', // 会匹配所有路径, // path: '/user-*', 会匹配以 `/user-` 开头的任意路径
+    redirect: '/404',
+    hidden: true,
+    meta: {
+      title: '404'
+    }
+  }
+]
+// 路由里添加404路由
+router.addRoutes(notFoundRoutes)
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 // 定义重置路由的方法
