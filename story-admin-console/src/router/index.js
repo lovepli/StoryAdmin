@@ -111,6 +111,18 @@ export const constantRouterMap = [
         name: '修改密码',
         meta: { title: '修改密码', icon: 'edit', noCache: true }
       }]
+  },
+  {
+    path: 'Http://ruoyi.vip',
+    component: Layout,
+   // redirect: 'Http://ruoyi.vip',
+   name: "Http://ruoyi.vip",
+    meta: {
+      title: '官网地址',
+      icon: 'dashboard',
+      noCache: true
+    },
+    children: [ ]
   }
 ]
 
