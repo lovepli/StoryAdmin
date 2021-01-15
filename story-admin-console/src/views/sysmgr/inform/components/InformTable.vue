@@ -20,7 +20,11 @@
       <el-table-column :formatter="r=>r.title" label="标题" align="center" min-width="360" />
       <el-table-column :formatter="r=>parseDate(r.createDate)" label="发布时间" align="center" min-width="120" />
       <el-table-column :formatter="r=>getUserName(r.creatorId)" label="发布人" align="center" min-width="120" />
-      <el-table-column label="状态" align="center">
+      <el-table-column label="状态" align="center" 
+      :filters="[{ text: '已撤销', value: 0 }, { text: '有效中', value: 1 }, { text: '已过期', value: 2 }]"
+      :filter-method="filterTag"
+      filter-placement="bottom-end"
+      >
         <template slot-scope="{row}">
           <el-tag :type="statusType[row.status]" size="mini">
             {{ statusLabel[row.status] }}
@@ -109,6 +113,12 @@ export default {
     this.query()
   },
   methods: {
+     // 对表格字段内容进行筛选 ,只能筛选某一页的数据，分页筛选需要在el-table中使用 @filter-change=""方法
+     filterTag(value, row) {
+       console.log("勾选的值:"+value)
+       console.log("状态标签:"+this.statusLabel[row.status])
+       return row.status === value ? this.statusLabel[row.status]:false ;
+      },
     query() {
       this.listLoading = true
       queryInform(this.listQuery, this.page).then(r => {

@@ -8,6 +8,6 @@ import store from '../store'
 export function hasPermission(permission) {
   const myPermissions = store.getters.permissions;
  // console.log("权限值数组=》"+JSON.stringify(myPermissions))
-  console.log("权限值=》"+myPermissions.indexOf(permission))
+//  console.log("权限值=》"+myPermissions.indexOf(permission))
   return myPermissions.indexOf(permission) > -1;
 }
