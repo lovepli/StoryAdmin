@@ -8,32 +8,32 @@
       >
         <img :src="middleImg" alt="" >
         <div
+          v-show="isShade"
+          ref="shade"
           class="shade"
           @mouseover="shadeMouseOver"
-          v-show="isShade"
           @mousemove="shadeMouseMove"
-          ref="shade"
-        ></div>
+        />
       </div>
       <div class="carousel">
-        <div class="left_arrow arrow" @click="leftArrowClick"></div>
+        <div class="left_arrow arrow" @click="leftArrowClick"/>
         <div class="show_box">
-          <ul class="picture_container" ref="middlePicture">
+          <ul ref="middlePicture" class="picture_container">
             <li
-              class="picture_item"
-              @mouseover="tabPicture(item)"
               v-for="(item, index) in pictureList"
               :key="index"
+              class="picture_item"
+              @mouseover="tabPicture(item)"
             >
-              <img :src="item.url" class="small_img" alt="" />
+              <img :src="item.url" class="small_img" alt="" >
             </li>
           </ul>
         </div>
-        <div class="right_arrow arrow" @click="rightArrowClick"></div>
+        <div class="right_arrow arrow" @click="rightArrowClick"/>
       </div>
     </div>
-    <div class="right_contanier" v-show="isBig">
-      <img :src="middleImg" ref="bigImg" class="big_img" alt="" />
+    <div v-show="isBig" class="right_contanier">
+      <img ref="bigImg" :src="middleImg" class="big_img" alt="" >
     </div>
   </div>
 </template>
@@ -158,14 +158,14 @@ export default {
       this.isBig = true;
       // 计算阴影的位置
       let x = e.offsetX - $('.shade').width() / 2;
-      let y = e.offsetY - $(".shade").height() / 2;
-      let maxLeft = $(".middle_img").width() - $(".shade").width();
-      let maxTop = $(".middle_img").height() - $(".shade").height();
+      let y = e.offsetY - $('.shade').height() / 2;
+      const maxLeft = $('.middle_img').width() - $('.shade').width();
+      const maxTop = $('.middle_img').height() - $('.shade').height();
       x = x <= 0 ? 0 : x;
       x = x >= maxLeft ? maxLeft : x;
       y = y <= 0 ? 0 : y;
       y = y >= maxTop ? maxTop : y;
-      $(".shade").css({
+      $('.shade').css({
         left: x,
         top: y
       });
@@ -175,38 +175,38 @@ export default {
       e.preventDefault();
       e.stopPropagation();
 
-      //用页面x - 父盒子的offsetLeft - 父盒子的左边框宽度
+      // 用页面x - 父盒子的offsetLeft - 父盒子的左边框宽度
       var x =
         this.getEventPage(e).pageX -
-        $(".middle_img")[0].offsetParent.offsetLeft -
-        $(".middle_img")[0].offsetParent.clientLeft;
-      //用页面y - 父盒子的offsetTop - 父盒子的上边框宽度
+        $('.middle_img')[0].offsetParent.offsetLeft -
+        $('.middle_img')[0].offsetParent.clientLeft;
+      // 用页面y - 父盒子的offsetTop - 父盒子的上边框宽度
       var y =
         this.getEventPage(e).pageY -
-        $(".middle_img")[0].offsetParent.offsetTop -
-        $(".middle_img")[0].offsetParent.clientTop;
+        $('.middle_img')[0].offsetParent.offsetTop -
+        $('.middle_img')[0].offsetParent.clientTop;
 
-      //让阴影的坐标居中
-      x -= $(".shade").width() / 2;
-      y -= $(".shade").height() / 2;
+      // 让阴影的坐标居中
+      x -= $('.shade').width() / 2;
+      y -= $('.shade').height() / 2;
 
       // 移动边界限制
-      let maxLeft = $(".middle_img").width() - $(".shade").width();
-      let maxTop = $(".middle_img").height() - $(".shade").height();
+      const maxLeft = $('.middle_img').width() - $('.shade').width();
+      const maxTop = $('.middle_img').height() - $('.shade').height();
       x = x <= 0 ? 0 : x;
       x = x >= maxLeft ? maxLeft : x;
       y = y <= 0 ? 0 : y;
       y = y >= maxTop ? maxTop : y;
       // 重新赋值当前的定位值
-      $(".shade").css({
+      $('.shade').css({
         left: x,
         top: y
       });
       // 计算出实时的大图的定位,首先计算出比例
       // 比例为x:大图宽度/小图宽度 y: 大图高度/小图高度,将小图的定位乘以比例就是大图的定位
-      const xRate = $(".big_img").width() / $(".middle_img").width();
-      const yRate = $(".big_img").height() / $(".middle_img").height();
-      $(".big_img").css({
+      const xRate = $('.big_img').width() / $('.middle_img').width();
+      const yRate = $('.big_img').height() / $('.middle_img').height();
+      $('.big_img').css({
         left: -x * xRate,
         top: -y * yRate
       });
@@ -245,7 +245,7 @@ export default {
       // 每次向左平移一个盒子的宽度,最多移动的宽度为(图片数组长度-4)*每张缩略图的宽度
       if (this.middleLeft > -this.itemWidth * (this.pictureList.length - 4)) {
         this.middleLeft -= this.itemWidth;
-        $(".picture_container").animate(
+        $('.picture_container').animate(
           {
             left: this.middleLeft
           },

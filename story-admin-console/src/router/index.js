@@ -3,6 +3,8 @@ import Router from 'vue-router'
 /* Layout */
 import Layout from '../views/layout/Layout' // 引入页面布局
 
+// import CommonLayout from '../views/layout/commonLayout' //三级路由
+
 // 使用 Vue.js ，我们已经可以通过组合组件来组成应用程序，当你要把 Vue Router 添加进来，我们需要做的是，
 // 将组件 (components) 映射到路由 (routes)，然后告诉 Vue Router 在哪里渲染它们。
 
@@ -126,6 +128,7 @@ export const constantRouterMap = [
     children: []
   },
   // 静态菜单功能页面展示
+  // 例子
   {
     path: '/example_demo',
     name: 'example_demo',
@@ -157,13 +160,95 @@ export const constantRouterMap = [
         meta: { title: 'pdf', icon: 'el-icon-tickets' }
       }
     ]
+  },
+  {
+    path: '/editImage',
+    component: Layout,
+    redirect: '/editImage/image',
+    meta: { title: '图形编辑', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: 'image',
+        component: () => import('@/views/example_demo/editImage/editImage'),
+        name: 'editImage',
+        meta: { title: '图形编辑', icon: 'el-icon-picture' }
+      },
+      {
+        path: 'imageObj',
+        component: () => import('@/views/example_demo/editImage/imgobj'),
+        name: 'editImageObj',
+        meta: { title: '图形编辑(js包引入)', icon: 'el-icon-picture' }
+      },
+      {
+        path: 'upload/file',
+        component: () => import('@/views/example_demo/editImage/upload'),
+        name: 'uploadFile',
+        meta: { title: '文件列表上传', icon: 'el-icon-picture' }
+      }
+    ]
+  },
+  {
+    path: '/Table',
+    component: Layout,
+    // redirect: '/Table/tree',
+    meta: { title: '表格', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: 'tree',
+        component: () => import('@/views/example_demo/Table/treeTable'),
+        name: 'treeTable',
+        meta: { title: '树形表格', icon: 'el-icon-s-grid' }
+      },
+      {
+        path: 'validate',
+        component: () => import('@/views/example_demo/Table/validateTable'),
+        name: 'validateTable',
+        meta: { title: '可验证表格', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'checkbox',
+        component: () => import('@/views/example_demo/Table/checkTable'),
+        name: 'checkTable',
+        meta: { title: '可选择表格', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'spanTable',
+        component: () => import('@/views/example_demo/Table/spanTable'),
+        name: 'spanTable',
+        meta: { title: '表格合并', icon: 'el-icon-film' }
+      }
+    ]
+  },
+  {
+    path: '/nest',
+    component: Layout,
+    redirect: '/nest/nest1',
+    meta: { title: '嵌套路由', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: 'nest1',
+        name: 'nest1',
+        component: () => import('@/views/example_demo/nest/nest1-1'),
+        meta: { title: '嵌套路由1', icon: 'el-icon-connection' }
+      },
+      {
+        path: 'nest1-1',
+        name: 'nest1-1',
+        component: Layout, // 嵌套路由3级以上有问题
+        meta: { title: '嵌套路由1-1', icon: 'el-icon-connection' },
+        // redirect: '/nest/nest1-1/nest1-1-1',
+        children: [
+          {
+            path: 'nest1-1-1',
+            name: 'nest1-1-1',
+            component: () => import('@/views/example_demo/nest/nest1-1/nest1-1-1'),
+            meta: { title: '嵌套路由1-1-1', icon: 'el-icon-connection', noCache: true },
+            children: []
+          }
+        ]
+      }]
   }
-  // {
-  //   path: '/pdf/index',
-  //   name: 'pdf',
-  //   component: 'pdf',
-  //   meta: { title: 'pdf', icon: 'el-icon-tickets' }
-  // }
+
 ]
 
 // 定义实例化路由的方法

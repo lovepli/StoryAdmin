@@ -16,16 +16,17 @@ import store from './store' // 全局引入本地存储store,中央存储,store�
 import '@/icons' // icon图标
 import '@/permission' // permission control权限控制
 import { hasPermission } from './utils/hasPermission';
+import { getById, download } from './utils/common'
 import './utils/constant.js'
 import LunarFullCalendar from 'vue-lunar-full-calendar'
-import { getById, download } from './utils/common'
-// import Print from 'vue-print-nb' //  这里引入的是本地的组件
-import Print from './utils/vue-print-nb/src'
+import Print from './utils/vue-print-nb/src' // import Print from 'vue-print-nb' //  这里引入的是本地的组件
+import filter from '@/utils/example_demo/filter' /* 引入公用filter */
 
 // 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成
 Vue.use(ElementUI, { locale })
 Vue.use(LunarFullCalendar)
 Vue.use(Print)
+Vue.mixin(filter) // 混入公用filter
 
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission
@@ -153,8 +154,6 @@ new Vue({
 // expression: 绑定值的字符串形式，如v-focus="1+1"，那么experssion的值是1+1。
 // 定义私有指令：
 // 使用私有指令和全局指令的用法基本相同，我们参考上面讲过的私有过滤器和全局过滤器就能猜想到私有指令的用法：
-
-
 
 // Vue实例的生命周期
 // 什么是声明周期：从Vue实例创建、运行、到销毁期间，伴随着发生的事件的过程成为生命周期。

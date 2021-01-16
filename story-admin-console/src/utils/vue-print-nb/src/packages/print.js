@@ -18,6 +18,7 @@ export default {
 					id = binding.value.id;
 					let ids = id.replace(new RegExp("#", "g"), '');
 					let elsdom = document.getElementById(ids);
+					// eslint-disable-next-line no-console
 					if (!elsdom) console.log("id in Error"), id = '';
 				}
 				// 局部打印

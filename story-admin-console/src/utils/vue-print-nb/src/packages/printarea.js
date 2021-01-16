@@ -45,6 +45,7 @@ export default class {
         }
         box.parentNode.removeChild(box);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
     };
@@ -108,6 +109,7 @@ export default class {
             }
           }
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.log(domStyle[i].href + e);
         }
       }
