@@ -127,7 +127,7 @@ export const constantRouterMap = [
     },
     children: []
   },
-  // 静态菜单功能页面展示
+  // 静态菜单功能页面展示 参考：https://github.com/shengbid/vue-demo
   // 例子
   {
     path: '/example_demo',
