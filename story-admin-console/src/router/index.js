@@ -76,6 +76,7 @@ export const constantRouterMap = [
     component: () => import('@/views/404'), // 链接到404界面
     hidden: true
   },
+  // 首页
   {
     path: '',
     component: Layout, // 引入home首页布局组件
@@ -123,7 +124,46 @@ export const constantRouterMap = [
       noCache: true
     },
     children: []
+  },
+  // 静态菜单功能页面展示
+  {
+    path: '/example_demo',
+    name: 'example_demo',
+    component: Layout,
+    meta: { title: '示例', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: 'rotate',
+        component: () => import('@/views/example_demo/rotate'),
+        name: 'rotateOrangination',
+        meta: { title: '旋转', icon: 'el-icon-menu' }
+      },
+      {
+        path: 'magnifer',
+        component: () => import('@/views/example_demo/magnifer'),
+        name: 'magnifying',
+        meta: { title: '放大镜', icon: 'el-icon-search' }
+      },
+      {
+        path: 'print',
+        component: () => import('@/views/example_demo/print'),
+        name: 'print',
+        meta: { title: '打印', icon: 'el-icon-s-grid' }
+      },
+      {
+        path: 'pdf',
+        name: 'pdf',
+        component: () => import('@/views/example_demo/pdf'),
+        meta: { title: 'pdf', icon: 'el-icon-tickets' }
+      }
+    ]
   }
+  // {
+  //   path: '/pdf/index',
+  //   name: 'pdf',
+  //   component: 'pdf',
+  //   meta: { title: 'pdf', icon: 'el-icon-tickets' }
+  // }
 ]
 
 // 定义实例化路由的方法

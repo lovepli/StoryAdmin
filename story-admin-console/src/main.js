@@ -19,11 +19,13 @@ import { hasPermission } from './utils/hasPermission';
 import './utils/constant.js'
 import LunarFullCalendar from 'vue-lunar-full-calendar'
 import { getById, download } from './utils/common'
+// import Print from 'vue-print-nb' //  这里引入的是本地的组件
+import Print from './utils/vue-print-nb/src'
 
 // 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成
-Vue.use(LunarFullCalendar)
-
 Vue.use(ElementUI, { locale })
+Vue.use(LunarFullCalendar)
+Vue.use(Print)
 
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission
