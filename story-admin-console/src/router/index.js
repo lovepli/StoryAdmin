@@ -115,17 +115,16 @@ export const constantRouterMap = [
   {
     path: 'Http://ruoyi.vip',
     component: Layout,
-   // redirect: 'Http://ruoyi.vip',
-   name: "Http://ruoyi.vip",
+    // redirect: 'Http://ruoyi.vip',
+    name: 'Http://ruoyi.vip',
     meta: {
       title: '官网地址',
       icon: 'dashboard',
       noCache: true
     },
-    children: [ ]
+    children: []
   }
 ]
-
 
 // 定义实例化路由的方法
 const createRouter = () => new Router({
