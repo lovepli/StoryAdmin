@@ -1,6 +1,7 @@
 <template>
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
+    <!-- element 滚动条 -->
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :show-timeout="200"

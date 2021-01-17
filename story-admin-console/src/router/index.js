@@ -247,6 +247,56 @@ export const constantRouterMap = [
           }
         ]
       }]
+  },
+  { // 图表
+    path: '/Chat',
+    component: Layout,
+    // redirect: '/Table/tree',
+    meta: { title: '图表', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: 'areaChart',
+        component: () => import('@/views/example_demo/chart/area-chart/AreaChart'),
+        name: 'areaChart',
+        meta: { title: '面积图', icon: 'el-icon-s-grid' }
+      },
+      {
+        path: 'barChart',
+        component: () => import('@/views/example_demo/chart/bar-chart/BarChart'),
+        name: 'barChart',
+        meta: { title: '条形图', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'lineChart',
+        component: () => import('@/views/example_demo/chart/line-chart/LineChart'),
+        name: 'lineChart',
+        meta: { title: '折线图', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'pieChart',
+        component: () => import('@/views/example_demo/chart/pie-chart/PieChart'),
+        name: 'pieChart',
+        meta: { title: '饼状图', icon: 'el-icon-film' }
+      },
+      {
+        path: 'PillarChart',
+        component: () => import('@/views/example_demo/chart/pillar-chart/PillarChart'),
+        name: 'PillarChart',
+        meta: { title: '柱状图', icon: 'el-icon-film' }
+      },
+      {
+        path: 'pointChart',
+        component: () => import('@/views/example_demo/chart/point-chart/PointChart'),
+        name: 'pointChart',
+        meta: { title: '点状图', icon: 'el-icon-film' }
+      },
+      {
+        path: 'radarChart',
+        component: () => import('@/views/example_demo/chart/radar-chart/RadarChart'),
+        name: 'radarChart',
+        meta: { title: '雷达图', icon: 'el-icon-film' }
+      }
+    ]
   }
 
 ]
@@ -256,7 +306,7 @@ const createRouter = () => new Router({
   mode: 'history', // 去掉url中的#
   // 对于所有路由导航，简单地让页面滚动到顶部
   scrollBehavior: () => ({ y: 0 }), // 使用前端路由，当切换到新路由时，想要页面滚到顶部，或者是保持原先的滚动位置，就像重新加载页面那样。 vue-router 能做到，而且更好，它让你可以自定义路由切换时页面如何滚动。
-  routes: constantRouterMap// 挂载常规路由
+  routes: constantRouterMap // 挂载常规路由
 })
 // 实例化路由
 const router = createRouter()

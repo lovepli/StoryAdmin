@@ -1,6 +1,6 @@
 <template>
   <section class="app-main">
-    <!-- transition过度动效 下面的是给所有路由设置一样的过渡效果-->
+    <!-- transition过度动效 下面的是给所有路由设置一样的过渡效果 https://cn.vuejs.org/v2/guide/transitions.html -->
     <!-- <router-view> 是基本的动态组件，所以我们可以用 <transition> 组件给它添加一些过渡效果 -->
     <transition name="fade-transform" mode="out-in">
       <!-- 动态组件keep-alive -->
