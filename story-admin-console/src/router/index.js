@@ -297,6 +297,38 @@ export const constantRouterMap = [
         meta: { title: '雷达图', icon: 'el-icon-film' }
       }
     ]
+  },
+  { //  表单
+    path: '/Form',
+    component: Layout,
+    // redirect: '/Table/tree',
+    meta: { title: '表单', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: 'baseForm',
+        component: () => import('@/views/example_demo/form/base-form/BaseForm'),
+        name: 'baseForm',
+        meta: { title: '基础表单', icon: 'el-icon-s-grid' }
+      },
+      {
+        path: 'dynamicForm',
+        component: () => import('@/views/example_demo/form/dynamic-form/DynamicForm'),
+        name: 'dynamicForm',
+        meta: { title: '动态表单', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'stepForm',
+        component: () => import('@/views/example_demo/form/step-form/StepForm'),
+        name: 'stepForm',
+        meta: { title: '步骤表单', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'validForm',
+        component: () => import('@/views/example_demo/form/valid-form/ValidForm'),
+        name: 'validForm',
+        meta: { title: '自定义校验规则', icon: 'el-icon-film' }
+      }
+    ]
   }
 
 ]
