@@ -75,8 +75,26 @@
 </template>
 
 <script>
-   import tableMng from '@/utils/wangluyao/tableMng';
-
+  // import tableMng from '@/utils/wangluyao/tableMng';
+   const region = [{
+  id: '1',
+  name: '华南',
+}, {
+  id: '2',
+  name: '华北',
+}, {
+  id: '3',
+  name: '华东',
+}, {
+  id: '4',
+  name: '西南',
+}, {
+  id: '5',
+  name: '东北',
+}, {
+  id: '6',
+  name: '西北',
+}]
   export default {
     name: 'BaseForm',
     data() {
@@ -141,12 +159,14 @@
             trigger: 'change'
           }]
         },
-        regionList: [],
+        regionList: [], // 区域
         submitLoading: false,
       }
     },
     created() {
-      this.regionList = tableMng.getTable('region');
+
+      // this.regionList = tableMng.getTable('region');
+      this.regionList = region;
         console.log("查询出来的数据为："+JSON.stringify(this.regionList))
       
     },

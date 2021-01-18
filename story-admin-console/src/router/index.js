@@ -161,7 +161,7 @@ export const constantRouterMap = [
       }
     ]
   },
-  {
+  { // 编辑图片
     path: '/editImage',
     component: Layout,
     redirect: '/editImage/image',
@@ -187,12 +187,18 @@ export const constantRouterMap = [
       }
     ]
   },
-  {
+  {  // 表格
     path: '/Table',
     component: Layout,
     // redirect: '/Table/tree',
     meta: { title: '表格', icon: 'dashboard', noCache: true },
     children: [
+      {
+        path: 'BaseTable',
+        component: () => import('@/views/example_demo/Table/base-table/BaseTable'),
+        name: 'BaseTable',
+        meta: { title: '基础表格', icon: 'el-icon-s-grid' }
+      },
       {
         path: 'tree',
         component: () => import('@/views/example_demo/Table/treeTable'),
