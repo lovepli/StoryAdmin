@@ -222,6 +222,12 @@ export const constantRouterMap = [
         component: () => import('@/views/example_demo/Table/spanTable'),
         name: 'spanTable',
         meta: { title: '表格合并', icon: 'el-icon-film' }
+      },
+      {
+        path: 'Tab',
+        component: () => import('@/views/example_demo/tab'),
+        name: 'Tab',
+        meta: { title: 'Tab选项卡', icon: 'el-icon-s-grid' }
       }
     ]
   },
@@ -333,16 +339,42 @@ export const constantRouterMap = [
         component: () => import('@/views/example_demo/form/valid-form/ValidForm'),
         name: 'validForm',
         meta: { title: '自定义校验规则', icon: 'el-icon-film' }
-      },
-      {
-        path: 'Tab',
-        component: () => import('@/views/example_demo/tab'),
-        name: 'Tab',
-        meta: { title: 'Tab选项卡', icon: 'el-icon-s-grid' }
       }
     ]
+  },
+  { //  文章管理
+    name: 'Article',
+    path: '/article',
+    component: Layout,
+    redirect: '/article/list',
+    meta: { title: '文章管理', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: '/article/list',
+        component: () => import('@/views/example_demo/article/list'),
+        name: 'ArticleList',
+        meta: { title: '文章列表', icon: 'el-icon-s-grid',activePath: '/article', noCache: true }
+      },
+      {
+        path: '/article/add',
+        component: () => import('@/views/example_demo/article/edit'),
+        name: 'articleAdd',
+        meta: { title: '新增文章', hiddenInMenu: true, icon: 'el-icon-s-grid',noCache: true }
+      },
+      {
+        path: '/article/edit/:articleId/:articleIndex',
+        component: () => import('@/views/example_demo/article/edit'),
+        name: 'articleEdit',
+        meta: { title: '编辑文章', hiddenInMenu: true, icon: 'el-icon-s-grid',noCache: true },
+        props: true,
+        beforeEnter: (to, from, next) => {
+          to.meta.title = '编辑文章' + '-' + to.params.articleIndex
+          next()
+        }
+      }
+  
+    ]
   }
-
 ]
 
 // 定义实例化路由的方法

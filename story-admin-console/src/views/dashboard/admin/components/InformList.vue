@@ -4,6 +4,7 @@
     <el-divider /> <!-- 横线 -->
     <div v-for="i in dataList" :key="i.id" style="width:100%;padding:10px 10px">
       <el-tag v-if="i.top" size="mini" type="danger" style="float:left;margin-right:10px">置顶</el-tag>
+      <!-- 点击链接，打开新的页面 -->
       <router-link :to="`inform/${i.id}`" class="titleComment">{{ i.title }}</router-link>
       <a style="float:right;cursor:default;">{{ formatDate(i.createDate) }}</a>
     </div>
