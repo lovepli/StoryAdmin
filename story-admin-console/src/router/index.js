@@ -333,6 +333,12 @@ export const constantRouterMap = [
         component: () => import('@/views/example_demo/form/valid-form/ValidForm'),
         name: 'validForm',
         meta: { title: '自定义校验规则', icon: 'el-icon-film' }
+      },
+      {
+        path: 'Tab',
+        component: () => import('@/views/example_demo/tab'),
+        name: 'Tab',
+        meta: { title: 'Tab选项卡', icon: 'el-icon-s-grid' }
       }
     ]
   }
