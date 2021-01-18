@@ -353,7 +353,7 @@ export const constantRouterMap = [
         path: '/article/list',
         component: () => import('@/views/example_demo/article/list'),
         name: 'ArticleList',
-        meta: { title: '文章列表', icon: 'el-icon-s-grid',activePath: '/article', noCache: true }
+        meta: { title: '文章管理', icon: 'el-icon-s-grid',activePath: '/article', noCache: true }
       },
       {
         path: '/article/add',
