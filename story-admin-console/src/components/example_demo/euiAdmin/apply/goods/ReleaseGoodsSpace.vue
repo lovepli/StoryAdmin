@@ -13,7 +13,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="商品介绍">
-            <vEditorSpace v-model="form.goods_adress" />
+            <EditorSpace v-model="form.goods_adress" />
           </el-form-item>
           <el-form-item label="商品封面">
             <el-upload
@@ -58,7 +58,9 @@
   </div>
 </template>
 <script>
+import EditorSpace from '@/components/example_demo/euiAdmin/module/EditorSpace'
 export default {
+      components: { EditorSpace },
   data() {
     return {
       title: "商品发布中心",

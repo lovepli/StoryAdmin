@@ -84,7 +84,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="文章内容">
-            <vEditorSpace v-model="article_form.article_content" />
+            <EditorSpace v-model="article_form.article_content" />
           </el-form-item>
           <el-form-item label="作者">
             <el-input
@@ -132,7 +132,9 @@
   </div>
 </template>
 <script>
+import EditorSpace from '@/components/example_demo/euiAdmin/module/EditorSpace'
 export default {
+   components: { EditorSpace },
   data() {
     return {
       user_data: "",

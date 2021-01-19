@@ -464,7 +464,7 @@ export const constantRouterMap = [
     path: '/blank',
     component: Layout,
     redirect: '/blank/index',
-    meta: { title: '空白页', icon: 'blank', noCache: true },
+    meta: { title: '空白页', icon: 'dashboard', noCache: true },
     children: [
       {
         name: 'Blank',
@@ -479,7 +479,7 @@ export const constantRouterMap = [
      path: '/echarts',
      component: Layout,
      redirect: '/echarts/bar',
-     meta: { title: 'echarts图标组件', icon: 'blank', noCache: true },
+     meta: { title: 'echarts图标组件', icon: 'dashboard', noCache: true },
      children: [
        {
          name: 'echarts_bar',
@@ -509,7 +509,7 @@ export const constantRouterMap = [
     path: '/apply',
     component: Layout,
     redirect: '/apply/goods',
-    meta: { title: 'apply应用组件', icon: 'blank', noCache: true },
+    meta: { title: 'apply应用组件', icon: 'dashboard', noCache: true },
     children: [
       //文章
       {
@@ -550,7 +550,7 @@ export const constantRouterMap = [
     path: '/page',
     component: Layout,
     //redirect: '/apply/goods',
-    meta: { title: '常用页面', icon: 'blank', noCache: true },
+    meta: { title: '常用页面', icon: 'dashboard', noCache: true },
     children: [
       {
         name: 'message_list',
@@ -570,6 +570,29 @@ export const constantRouterMap = [
         component: resolve => require(['@/views/example_demo/euiAdmin/page/Warning.vue'], resolve),
         meta: { title: '系统错误',  icon: 'blank', noCache: true }
       }
+    ]
+  },
+
+  { //  其他组件
+    name: 'Moudle',
+    path: '/module',
+    component: Layout,
+    //redirect: '/apply/goods',
+    meta: { title: '其他Moudle组件', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: '/module/editor',
+        name: 'editor',
+        component: resolve => require(['@/views/example_demo/euiAdmin/module/Editor.vue'], resolve),
+        meta: { title: '富文本编辑器',  icon: 'blank', noCache: true }
+      },
+      // {
+      //   name: 'not_found',
+      //   path: '/page/not/found',
+      //   component: resolve => require(['@/views/example_demo/euiAdmin/page/NotFound.vue'], resolve),
+      //   meta: { title: '页面不存在',  icon: 'blank', noCache: true }
+      // }
+
     ]
   },
 
