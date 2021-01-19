@@ -474,6 +474,104 @@ export const constantRouterMap = [
       }
     ]
   },
+  { //  echarts图标组件
+     name: 'Echarts',
+     path: '/echarts',
+     component: Layout,
+     redirect: '/echarts/bar',
+     meta: { title: 'echarts图标组件', icon: 'blank', noCache: true },
+     children: [
+       {
+         name: 'echarts_bar',
+         path: '/echarts/bar',
+        // component: () => import('@/views/example_demo/blank'),
+         component: resolve => require(['@/views/example_demo/echarts/EchartsBar.vue'], resolve),
+         meta: { title: '柱状图',  icon: 'blank', noCache: true }
+       },
+       {
+        name: 'echarts_line',
+        path: '/echarts/line',
+       // component: () => import('@/views/example_demo/blank'),
+        component: resolve => require(['@/views/example_demo/echarts/EchartsLine.vue'], resolve),
+        meta: { title: '折线图',  icon: 'blank', noCache: true }
+      },
+      {
+        name: 'echarts_map',
+        path: '/echarts/map',
+       // component: () => import('@/views/example_demo/blank'),
+        component: resolve => require(['@/views/example_demo/echarts/EchartsMap.vue'], resolve),
+        meta: { title: '地图',  icon: 'blank', noCache: true }
+      }
+     ]
+   },
+   { //  一些应用组件
+    name: 'Apply',
+    path: '/apply',
+    component: Layout,
+    redirect: '/apply/goods',
+    meta: { title: 'apply应用组件', icon: 'blank', noCache: true },
+    children: [
+      //文章
+      {
+        path: '/apply/article',
+        name: 'apply_article',
+        component: resolve => require(['@/views/example_demo/euiAdmin/apply/article/Article.vue'], resolve),
+        meta: { title: '文章撰写系统-文章',  icon: 'blank', noCache: true }
+      },
+      {
+        path: '/apply/article/label',
+        name: 'apply_article_label',
+        component: resolve => require(['@/views/example_demo/euiAdmin/apply/article/ArticleLabel.vue'], resolve),
+        meta: { title: '文章撰写系统-类别',  icon: 'blank', noCache: true }
+      },
+      {
+        path: '/apply/article/reply',
+        name: 'article_reply',
+        component: resolve => require(['@/views/example_demo/euiAdmin/apply/article/ArticleReply.vue'], resolve),
+        meta: { title: '文章评论回复',  icon: 'blank', noCache: true }
+      },
+    // 商品
+      {
+        name: 'apply_goods',
+        path: '/apply/goods',
+        component: resolve => require(['@/views/example_demo/euiAdmin/apply/goods/Goods.vue'], resolve),
+        meta: { title: 'goods商品展示',  icon: 'blank', noCache: true }
+      },
+      {
+        name: 'goods_release',
+        path: '/apply/goods/release',
+        component: resolve => require(['@/views/example_demo/euiAdmin/apply/goods/ReleaseGoods.vue'], resolve),
+        meta: { title: 'goods商品发布',  icon: 'blank', noCache: true }
+      }
+    ]
+  },
+  { //  常用页面
+    name: 'Page',
+    path: '/page',
+    component: Layout,
+    //redirect: '/apply/goods',
+    meta: { title: '常用页面', icon: 'blank', noCache: true },
+    children: [
+      {
+        name: 'message_list',
+        path: '/page/message/list',
+        component: resolve => require(['@/views/example_demo/euiAdmin/page/MessageList.vue'], resolve),
+        meta: { title: '留言',  icon: 'blank', noCache: true }
+      },
+      {
+        name: 'not_found',
+        path: '/page/not/found',
+        component: resolve => require(['@/views/example_demo/euiAdmin/page/NotFound.vue'], resolve),
+        meta: { title: '页面不存在',  icon: 'blank', noCache: true }
+      },
+      {
+        name: 'warning',
+        path: '/page/warning',
+        component: resolve => require(['@/views/example_demo/euiAdmin/page/Warning.vue'], resolve),
+        meta: { title: '系统错误',  icon: 'blank', noCache: true }
+      }
+    ]
+  },
 
 
 ]
