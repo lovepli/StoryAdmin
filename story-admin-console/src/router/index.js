@@ -459,6 +459,21 @@ export const constantRouterMap = [
       }
     ]
   },
+  { //  空白页
+   // name: 'Blank',
+    path: '/blank',
+    component: Layout,
+    redirect: '/blank/index',
+    meta: { title: '空白页', icon: 'blank', noCache: true },
+    children: [
+      {
+        name: 'Blank',
+        path: '/blank/index',
+        component: () => import('@/views/example_demo/blank'),
+        meta: { title: '空白页', activePath: '/blank', noCache: true }
+      }
+    ]
+  },
 
 
 ]
