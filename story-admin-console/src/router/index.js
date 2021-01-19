@@ -191,7 +191,7 @@ export const constantRouterMap = [
     path: '/Table',
     component: Layout,
     // redirect: '/Table/tree',
-    meta: { title: '表格', icon: 'dashboard', noCache: true },
+    meta: { title: '表格', icon: 'table', noCache: true },
     children: [
       {
         path: 'BaseTable',
@@ -264,7 +264,7 @@ export const constantRouterMap = [
     path: '/Chat',
     component: Layout,
     // redirect: '/Table/tree',
-    meta: { title: '图表', icon: 'dashboard', noCache: true },
+    meta: { title: '图表', icon: 'chart', noCache: true },
     children: [
       {
         path: 'areaChart',
@@ -314,7 +314,7 @@ export const constantRouterMap = [
     path: '/Form',
     component: Layout,
     // redirect: '/Table/tree',
-    meta: { title: '表单', icon: 'dashboard', noCache: true },
+    meta: { title: '表单', icon: 'form', noCache: true },
     children: [
       {
         path: 'baseForm',
@@ -374,7 +374,93 @@ export const constantRouterMap = [
       }
   
     ]
-  }
+  },
+  { //  pdf处理
+    name: 'Pdf',
+    path: '/pdf',
+    component: Layout,
+    redirect: '/pdf/base64',
+    meta: { title: 'pdf处理', icon: 'pdf', noCache: true },
+    children: [
+      {
+        path: '/pdf/base64',
+        component: () => import('@/views/example_demo/pdf/pdf-base64'),
+        name: 'PdfBase64',
+        meta: { title: 'base64', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        path: '/pdf/perfect',
+        component: () => import('@/views/example_demo/pdf/pdf-perfect'),
+        name: 'PdfPerfect',
+        meta: { title: '所有功能', icon: 'el-icon-s-grid',noCache: true }
+      }
+    ]
+  },
+  { // 其他功能 
+    name: 'Other',
+    path: '/other',
+    component: Layout,
+    redirect: '/other/excel',
+    meta: { title: '其他功能', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        name: 'Excel',
+        path: '/other/excel',
+        component: () => import('@/views/example_demo/other/excel'),
+        meta: { title: 'excel', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        name: 'AMap',
+        path: '/other/aMap',
+        component: () => import('@/views/example_demo/other/a-map'), 
+        meta: { title: '地图', icon: 'el-icon-s-grid',noCache: true }
+      },
+      {
+        name: 'Print',
+        path: '/other/print',
+        component: () => import('@/views/example_demo/other/print'), 
+        meta: { title: '打印', icon: 'el-icon-s-grid',noCache: true }
+      },
+      {
+        name: 'DragDialog',
+        path: '/other/dragDialog',
+        component: () => import('@/views/example_demo/other/drag-dialog'), 
+        meta: { title: '拖拽Dialog', icon: 'el-icon-s-grid',noCache: true }
+      },
+      {
+        name: 'HtmlToCanvas',
+        path: '/other/htmlToCanvas',
+        component: () => import('@/views/example_demo/other/html-to-canvas'), 
+        meta: { title: 'htmlToCanvas', icon: 'el-icon-s-grid',noCache: true }
+      },
+      {
+        name: 'Copy',
+        path: '/other/copy',
+        component: () => import('@/views/example_demo/other/copy'), 
+        meta: { title: '快捷复制', icon: 'el-icon-s-grid',noCache: true }
+      },
+      {
+        name: 'FileToBase64',
+        path: '/other/fileToBase64',
+        component: () => import('@/views/example_demo/other/file-to-base64'), 
+        meta: { title: 'fileToBase64', icon: 'el-icon-s-grid',noCache: true }
+      },
+      {
+        name: 'TextOverflowDemo',
+        path: '/other/text-overflow',
+        component: () => import('@/views/example_demo/other/text-overflow'), 
+        meta: { title: '文本溢出', icon: 'el-icon-s-grid',noCache: true }
+      },
+      {
+        name: 'ScrollbarDemo',
+        path: '/other/scrollbar',
+        component: () => import('@/views/example_demo/other/scrollbar'), 
+        meta: { title: '滚动条', icon: 'el-icon-s-grid',noCache: true }
+      }
+    ]
+  },
+
+
 ]
 
 // 定义实例化路由的方法

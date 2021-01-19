@@ -22,6 +22,9 @@ import LunarFullCalendar from 'vue-lunar-full-calendar'
 import Print from './utils/vue-print-nb/src' // import Print from 'vue-print-nb' //  这里引入的是本地的组件
 import filter from '@/utils/example_demo/filter' /* 引入公用filter */
 
+// 全局注册指令，包含copy和拖动的对话框
+import '@/directive';
+
 // 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成
 Vue.use(ElementUI, { locale })
 Vue.use(LunarFullCalendar)
