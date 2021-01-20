@@ -29,7 +29,7 @@
 <script>
 import EditorSpace from '@/components/example_demo/euiAdmin/module/EditorSpace'
 export default {
-     components: { EditorSpace },
+  components: { EditorSpace },
   data(){
       return{
       editor_content:'',

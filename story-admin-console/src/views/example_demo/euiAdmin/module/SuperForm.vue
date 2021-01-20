@@ -2,14 +2,11 @@
   <el-container id="aside">
     <!-- <vAsideSpace /> -->
     <el-container>
-      <!-- <el-header
-        :height="head_height"
-        :style="{ backgroundColor: head_background_color }"
-      >
+      <!-- <el-header :height="head_height" :style="{backgroundColor:head_background_color}">
         <vHeadSpace />
       </el-header> -->
-      <el-main id="main" :style="{ backgroundColor: main_background_color }">
-        <HomeSpace />
+      <el-main id="main" :style="{backgroundColor:main_background_color}">
+        <SuperFormSpace />
       </el-main>
     </el-container>
   </el-container>
@@ -17,42 +14,14 @@
 <script>
 export default {
   components: {
-    HomeSpace: (resolve) => {
-      require(["@/components/example_demo/euiAdmin/home/HomeSpace"], resolve);
-    },
+    SuperFormSpace:resolve=>{require(['@/components/example_demo/euiAdmin/module/SuperFormSpace'],resolve)}
   },
-  data() {
-    return {
-      update_data: {
-        title: "更新日志",
-        message: '',
-      },
+  data(){
+      return{
       head_background_color: "#fff",
       head_height: 60 + "px",
       main_background_color: '#f2f6fc',
-    };
-  },
-  methods: {
-    update_news() {
-      this.$notify.info({
-        title: this.update_data.title,
-        dangerouslyUseHTMLString: true,
-        message: this.update_data.message,
-        duration:0,
-      });
-    },
-    get_update_news(){
-      this.$axios({
-        method:"post",
-        url:'/eui/data',
-      }).then(response=>{
-        this.update_data.message=response.data.update_content
-        this.update_news()
-      })
-    }
-  },
-  mounted() {
-  //  this.get_update_news();
+      }
   },
 };
 </script>
@@ -82,7 +51,7 @@ export default {
 /*滚动条的设置*/
 
 ::-webkit-scrollbar-thumb {
-  background-color: #f56c6c;
+  background-color: #F56C6C;
   background-clip: padding-box;
   min-height: 1px;
   -webkit-border-radius: 2em;

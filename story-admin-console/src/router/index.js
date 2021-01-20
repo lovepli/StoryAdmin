@@ -584,15 +584,44 @@ export const constantRouterMap = [
         path: '/module/editor',
         name: 'editor',
         component: resolve => require(['@/views/example_demo/euiAdmin/module/Editor.vue'], resolve),
-        meta: { title: '富文本编辑器',  icon: 'blank', noCache: true }
+        meta: { title: '富文本编辑器',  icon: 'dashboard', noCache: true }
       },
-      // {
-      //   name: 'not_found',
-      //   path: '/page/not/found',
-      //   component: resolve => require(['@/views/example_demo/euiAdmin/page/NotFound.vue'], resolve),
-      //   meta: { title: '页面不存在',  icon: 'blank', noCache: true }
-      // }
-
+      {
+        path: '/module/superform',
+        name: 'superform',
+        component: resolve => require(['@/views/example_demo/euiAdmin/module/SuperForm.vue'], resolve),
+        meta: { title: '超级表单',  icon: 'dashboard', noCache: true }
+      },
+      {
+        path: '/module/upload/image',
+        name: 'image',
+        component: resolve => require(['@/views/example_demo/euiAdmin/module/UploadImage.vue'], resolve),
+        meta: { title: '图片上传',  icon: 'dashboard', noCache: true }
+      },
+      {
+        path: '/module/upload/file',
+        name: 'file',
+        component: resolve => require(['@/views/example_demo/euiAdmin/module/UploadFile.vue'], resolve),
+        meta: { title: '文件上传',  icon: 'dashboard', noCache: true }
+      },
+      {
+        path: '/module/animate',
+        name: 'animate',
+        component: resolve => require(['@/views/example_demo/euiAdmin/module/Animate.vue'], resolve),
+        meta: { title: 'Eui动画',  icon: 'dashboard', noCache: true }
+      },
+      {
+        path: '/module/table',
+        name: 'table',
+        component: resolve => require(['@/views/example_demo/euiAdmin/module/Table.vue'], resolve),
+        meta: { title: 'Eui虚拟用户表格',  icon: 'dashboard', noCache: true }
+      },
+      {
+        path: '/module/table/excel',
+        name: 'TableExcel',
+        component: resolve => require(['@/views/example_demo/euiAdmin/module/TableExcel.vue'], resolve),
+        meta: { title: '支持Excel表格',  icon: 'dashboard', noCache: true }
+      }
     ]
   },
   // { //  首页
@@ -616,6 +645,27 @@ export const constantRouterMap = [
        // component: () => import('@/views/example_demo/blank'),
         component: resolve => require(['@/views/example_demo/euiAdmin/home/Home.vue'], resolve),
         meta: { title: 'euiAdmin首页', activePath: '/euihome', noCache: true }
+      }
+    ]
+  },
+  { //  设置
+    name: 'Setting',
+    path: '/setting',
+    component: Layout,
+    //redirect: '/apply/goods',
+    meta: { title: '设置', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: '/setting/web',
+        name: 'setting_seb',
+        component: resolve => require(['@/views/example_demo/euiAdmin/setting/WebSetting.vue'], resolve),
+        meta: { title: '系统设置',  icon: 'blank', noCache: true }
+      },
+      {
+        path: '/setting/email',
+        name: 'setting_email',
+        component: resolve => require(['@/views/example_demo/euiAdmin/setting/EmailSetting.vue'], resolve),
+        meta: { title: '邮箱设置',  icon: 'blank', noCache: true }
       }
     ]
   },
