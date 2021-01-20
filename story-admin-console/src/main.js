@@ -2,9 +2,9 @@ import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
-import ElementUI from 'element-ui' // 引入element-ui
+import ElementUI from 'element-ui' // 引入element-ui的全部组件
 import './styles/element-variables.scss'
-// import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css' //element-ui的css
 import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 
 import '@/styles/index.scss' // 全局自定义的css样式
@@ -27,7 +27,7 @@ import echarts from 'echarts'
 import '@/directive';
 
 // 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, { locale }) //使用elementUI
 Vue.use(LunarFullCalendar)
 Vue.use(Print)
 Vue.mixin(filter) // 混入公用filter

@@ -645,6 +645,24 @@ export const constantRouterMap = [
        // component: () => import('@/views/example_demo/blank'),
         component: resolve => require(['@/views/example_demo/euiAdmin/home/Home.vue'], resolve),
         meta: { title: 'euiAdmin首页', activePath: '/euihome', noCache: true }
+      },
+      {
+        name: 'euiLogin',
+        path: '/euihome/login',
+        component: resolve => require(['@/views/example_demo/euiAdmin/login/Login.vue'], resolve),
+        meta: { title: 'euiAdmin登录页面', icon: 'dashboard', noCache: true }
+      },
+      {
+        name: 'euiRegister',
+        path: '/euihome/register',
+        component: resolve => require(['@/views/example_demo/euiAdmin/login/Register.vue'], resolve),
+        meta: { title: 'euiAdmin注册页面', icon: 'dashboard', noCache: true }
+      },
+      {
+        name: 'forget_password',
+        path: '/euihome/forget/password',
+        component: resolve => require(['@/views/example_demo/euiAdmin/login/ForgetPassword.vue'], resolve),
+        meta: { title: '找回密码', icon: 'dashboard', noCache: true }
       }
     ]
   },
