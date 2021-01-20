@@ -5,7 +5,7 @@
       <!-- <el-header :height="head_height" :style="{backgroundColor:head_background_color}">
         <vHeadSpace />
       </el-header> -->
-      <el-main id="main" :style="{backgroundColor:main_background_color}">
+      <el-main id="main" :style="{ backgroundColor: main_background_color }">
         <TableExcelSpace />
       </el-main>
     </el-container>
@@ -14,15 +14,19 @@
 <script>
 export default {
   components: {
-    TableExcelSpace:resolve=>{require(['@/components/example_demo/euiAdmin/module/TableExcelSpace'],resolve)},
+    TableExcelSpace: resolve => {
+      require([
+        '@/components/example_demo/euiAdmin/module/TableExcelSpace'
+      ], resolve);
+    }
   },
   data() {
     return {
-      head_background_color: "#fff",
-      head_height: 60 + "px",
-      main_background_color: '#f2f6fc',
+      head_background_color: '#fff',
+      head_height: 60 + 'px',
+      main_background_color: '#f2f6fc'
     };
-  },
+  }
 };
 </script>
 <style scoped>

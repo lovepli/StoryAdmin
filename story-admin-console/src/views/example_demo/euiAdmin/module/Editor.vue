@@ -5,39 +5,39 @@
       <!-- <el-header :height="head_height" :style="{backgroundColor:head_background_color}">
         <vHeadSpace />
       </el-header> -->
-      <el-main id="main" :style="{backgroundColor:main_background_color}">
-         <el-card shadow="never" class="card">
-    <div slot="header" class="clearfix">
-      <span>TinyMce富文本编辑器</span>
-    </div>
-    <div>
-       <EditorSpace v-model="editor_content"/>
-       <span>编辑器渲染内容：</span>
-       <div v-html="editor_content"></div>
-       <el-divider/>
-       <span>HTML原版内容：</span>
-       <el-divider/>
-       <div>
-         {{editor_content}}
-       </div>
-    </div>
-  </el-card>
+      <el-main id="main" :style="{ backgroundColor: main_background_color }">
+        <el-card shadow="never" class="card">
+          <div slot="header" class="clearfix">
+            <span>TinyMce富文本编辑器</span>
+          </div>
+          <div>
+            <EditorSpace v-model="editor_content" />
+            <span>编辑器渲染内容：</span>
+            <div v-html="editor_content"/>
+            <el-divider />
+            <span>HTML原版内容：</span>
+            <el-divider />
+            <div>
+              {{ editor_content }}
+            </div>
+          </div>
+        </el-card>
       </el-main>
     </el-container>
   </el-container>
 </template>
 <script>
-import EditorSpace from '@/components/example_demo/euiAdmin/module/EditorSpace'
+import EditorSpace from '@/components/example_demo/euiAdmin/module/EditorSpace';
 export default {
   components: { EditorSpace },
-  data(){
-      return{
-      editor_content:'',
-      head_background_color: "#fff",
-      head_height: 60 + "px",
-      main_background_color: '#f2f6fc',
-      }
-  },
+  data() {
+    return {
+      editor_content: '',
+      head_background_color: '#fff',
+      head_height: 60 + 'px',
+      main_background_color: '#f2f6fc'
+    };
+  }
 };
 </script>
 <style scoped>
@@ -66,7 +66,7 @@ export default {
 /*滚动条的设置*/
 
 ::-webkit-scrollbar-thumb {
-  background-color: #F56C6C;
+  background-color: #f56c6c;
   background-clip: padding-box;
   min-height: 1px;
   -webkit-border-radius: 2em;

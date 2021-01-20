@@ -117,13 +117,15 @@ export const constantRouterMap = [
   },
   {
     path: 'Http://ruoyi.vip',
-    component: Layout,
+    // component: Layout,
     // redirect: 'Http://ruoyi.vip',
     name: 'Http://ruoyi.vip',
     meta: {
       title: '官网地址',
+      target: '_blank',
       icon: 'dashboard',
-      noCache: true
+      noCache: true,
+      badge: 'New'
     },
     children: []
   },
