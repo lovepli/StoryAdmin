@@ -6,7 +6,7 @@
       :key="index"
       style="margin-top: 10px"
     >
-      <el-card shadow="never">
+      <el-card shadow="hover">
         <div slot="header">
           <span>{{ goods.goods_title }}</span>
           <el-tag :type="goods.goods_surplus_num < 10 ? 'danger' : 'success'"

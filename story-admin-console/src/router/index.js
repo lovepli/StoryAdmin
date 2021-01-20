@@ -622,13 +622,19 @@ export const constantRouterMap = [
         path: '/module/table',
         name: 'table',
         component: resolve => require(['@/views/example_demo/euiAdmin/module/Table.vue'], resolve),
-        meta: { title: 'Eui虚拟用户表格',  icon: 'dashboard', noCache: true }
+        meta: { title: 'Eui虚拟用户表格', icon: 'dashboard', noCache: true }
       },
       {
         path: '/module/table/excel',
         name: 'TableExcel',
         component: resolve => require(['@/views/example_demo/euiAdmin/module/TableExcel.vue'], resolve),
-        meta: { title: '支持Excel表格',  icon: 'dashboard', noCache: true }
+        meta: { title: '支持Excel表格', icon: 'dashboard', noCache: true }
+      },
+      {
+        path: '/module/var/element',
+        name: 'element',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/element/index.vue'], resolve),
+        meta: { title: '常用组件',  icon: 'dashboard', noCache: true }
       }
     ]
   },
@@ -691,6 +697,27 @@ export const constantRouterMap = [
         name: 'setting_email',
         component: resolve => require(['@/views/example_demo/euiAdmin/setting/EmailSetting.vue'], resolve),
         meta: { title: '邮箱设置',  icon: 'blank', noCache: true }
+      }
+    ]
+  },
+  { //  商城
+    name: 'Mall',
+    path: '/mall',
+    component: Layout,
+    //redirect: '/apply/goods',
+    meta: { title: '商城', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        path: '/mall/pay',
+        name: 'Pay',
+        component: () => import('@/views/example_demo/vue_beau/mall/pay/index'),
+        meta: { title: '支付',  icon: 'blank', noCache: true }
+      },
+      {
+        path: '/mall/goodsList',
+        name: 'GoodsList',
+        component: () => import('@/views/example_demo/vue_beau/mall/goodsList/index'),
+        meta: { title: '商品列表',  icon: 'blank', noCache: true }
       }
     ]
   },
