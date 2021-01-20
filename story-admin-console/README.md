@@ -13,6 +13,7 @@
 - 富文本编辑器：Tinymce
 - 数据：axios、Mock
 - 地图：高德
+- 邮箱：vue-cookies 保存草稿，本项目中使用的是js-cookies插件 https://www.cnblogs.com/NanKe-Studying/p/13952558.html
 
 ## 项目地址
 

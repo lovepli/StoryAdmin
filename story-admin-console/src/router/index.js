@@ -542,7 +542,15 @@ export const constantRouterMap = [
         path: '/apply/goods/release',
         component: resolve => require(['@/views/example_demo/euiAdmin/apply/goods/ReleaseGoods.vue'], resolve),
         meta: { title: 'goods商品发布',  icon: 'blank', noCache: true }
+      },
+      // 邮箱
+      {
+        path: '/apply/email',
+        name: 'email',
+        component: resolve => require(['@/views/example_demo/euiAdmin/apply/email/Email.vue'], resolve),
+        meta: { title: '邮件管理',  icon: 'blank', noCache: true }
       }
+
     ]
   },
   { //  常用页面
@@ -642,7 +650,6 @@ export const constantRouterMap = [
       {
         name: 'euiAdminhome',
         path: '/euihome/index',
-       // component: () => import('@/views/example_demo/blank'),
         component: resolve => require(['@/views/example_demo/euiAdmin/home/Home.vue'], resolve),
         meta: { title: 'euiAdmin首页', activePath: '/euihome', noCache: true }
       },
