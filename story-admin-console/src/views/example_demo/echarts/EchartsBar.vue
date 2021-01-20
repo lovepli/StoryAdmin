@@ -14,15 +14,15 @@
 <script>
 export default {
   components: {
-    EchartsBarSpace:resolve=>{require(['@/components/example_demo/euiAdmin/echarts/EchartsBarSpace'],resolve)},
+    EchartsBarSpace: resolve => { require(['@/components/example_demo/euiAdmin/echarts/EchartsBarSpace'], resolve) }
   },
   data() {
     return {
-      head_background_color: "#fff",
-      head_height: 60 + "px",
-      main_background_color: '#f2f6fc',
+      head_background_color: '#fff',
+      head_height: 60 + 'px',
+      main_background_color: '#f2f6fc'
     };
-  },
+  }
 };
 </script>
 <style scoped>

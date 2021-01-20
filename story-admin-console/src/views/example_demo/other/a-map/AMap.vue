@@ -22,21 +22,21 @@
 </template>
 
 <script>
-  import MapMaker from './components/MapMaker';
-  import MapPlugin from './components/MapPlugin';
-  import MapHotSpot from './components/MapHotSpot';
+import MapMaker from './components/MapMaker';
+import MapPlugin from './components/MapPlugin';
+import MapHotSpot from './components/MapHotSpot';
 
-  export default {
-    name: 'AMap',
-    components: {
-      MapMaker,
-      MapPlugin,
-      MapHotSpot
-    },
-    data() {
-      return {
-        activeName: 'maker'
-      }
+export default {
+  name: 'AMap',
+  components: {
+    MapMaker,
+    MapPlugin,
+    MapHotSpot
+  },
+  data() {
+    return {
+      activeName: 'maker'
     }
   }
+}
 </script>

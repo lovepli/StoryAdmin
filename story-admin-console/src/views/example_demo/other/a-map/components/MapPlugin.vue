@@ -1,43 +1,43 @@
 <template>
-  <div id="plugin"></div>
+  <div id="plugin"/>
 </template>
 
 <script>
-  import { loadScript } from '@/utils/example_demo/wangluyao/core';
+import { loadScript } from '@/utils/example_demo/wangluyao/core';
 
-  const url = 'https://webapi.amap.com/maps?v=1.4.14&key=76a35d38522a828c1f825b535a5ae4bf';
+const url = 'https://webapi.amap.com/maps?v=1.4.14&key=76a35d38522a828c1f825b535a5ae4bf';
 
-  export default {
-    mounted() {
-      loadScript(url, (err, res) => {
-        if (!err) {
-          this.initMap();
-        } else {
-          this.$message.error(err.message);
-        }
-      })
-    },
-    methods: {
-      loadPlugin(map) {
-        AMap.plugin(['AMap.ToolBar', 'AMap.Scale', 'AMap.OverView'], function() {
-          const toolbar = new AMap.ToolBar();
-          const scale = new AMap.Scale();
-          const overView = new AMap.OverView();
-          map.addControl(toolbar);
-          map.addControl(scale);
-          map.addControl(overView);
-          overView.open();
-        });
-      },
-      initMap() {
-        const map = new AMap.Map('plugin', {
-          zoom: 11,
-          center: [116.397428, 39.90923]
-        });
-        this.loadPlugin(map);
+export default {
+  mounted() {
+    loadScript(url, (err, res) => {
+      if (!err) {
+        this.initMap();
+      } else {
+        this.$message.error(err.message);
       }
+    })
+  },
+  methods: {
+    loadPlugin(map) {
+      AMap.plugin(['AMap.ToolBar', 'AMap.Scale', 'AMap.OverView'], function() {
+        const toolbar = new AMap.ToolBar();
+        const scale = new AMap.Scale();
+        const overView = new AMap.OverView();
+        map.addControl(toolbar);
+        map.addControl(scale);
+        map.addControl(overView);
+        overView.open();
+      });
     },
+    initMap() {
+      const map = new AMap.Map('plugin', {
+        zoom: 11,
+        center: [116.397428, 39.90923]
+      });
+      this.loadPlugin(map);
+    }
   }
+}
 </script>
 <style lang="scss">
   #plugin {

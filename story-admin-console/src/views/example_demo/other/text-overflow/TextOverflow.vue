@@ -2,21 +2,21 @@
   <div>
     <h3>1.文本长度限制</h3>
     <text-overflow :text="text1" :limit="30" />
-    <br />
+    <br >
 
     <h3>2.文本宽度限制</h3>
     <text-overflow :text="text2" :width="500" />
-    <br />
+    <br >
 
     <div style="width:400px">
       <text-overflow :text="text3" />
     </div>
 
-    <br />
+    <br >
 
     <h3>3.文本行数限制</h3>
     <text-overflow :text="text4" :width="300" :line-clamp="3" />
-    <br />
+    <br >
   </div>
 </template>
 

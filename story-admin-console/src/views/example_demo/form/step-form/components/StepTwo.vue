@@ -15,49 +15,49 @@
 </template>
 
 <script>
-  import Upload from './Upload';
-  export default {
-    components: {
-      Upload
-    },
-    data() {
-      return {
-        uploadList: [{
-          type: 'entrust',
-          name: '授权委托书'
-        }, {
-          type: 'license',
-          name: '营业执照副本'
-        }, {
-          type: 'collect',
-          name: '数据采集表'
-        }],
-        fileList: []
+import Upload from './Upload';
+export default {
+  components: {
+    Upload
+  },
+  data() {
+    return {
+      uploadList: [{
+        type: 'entrust',
+        name: '授权委托书'
+      }, {
+        type: 'license',
+        name: '营业执照副本'
+      }, {
+        type: 'collect',
+        name: '数据采集表'
+      }],
+      fileList: []
+    }
+  },
+  methods: {
+    handleUploadSuccess(data) {
+      const fileIndex = this.fileList.findIndex(item => item.type === data.type);
+      if (fileIndex !== -1) {
+        this.fileList.splice(fileIndex, 1);
       }
+      this.fileList.push(data)
     },
-    methods: {
-      handleUploadSuccess(data) {
-        const fileIndex = this.fileList.findIndex(item => item.type === data.type);
-        if (fileIndex !== -1) {
-          this.fileList.splice(fileIndex, 1);
-        }
-        this.fileList.push(data)
-      },
-      validForm() {
-        let result = true;
-        if (this.uploadList.length !== this.fileList.length) {
-          result = false;
-        }
-        return result;
-      },
-      handleNextStep() {
-        this.$emit('onNextStep', this.validForm())
-      },
-      handlePrevStep() {
-        this.$emit('onPrevStep')
+    validForm() {
+      let result = true;
+      if (this.uploadList.length !== this.fileList.length) {
+        result = false;
       }
+      return result;
     },
+    handleNextStep() {
+      this.$emit('onNextStep', this.validForm())
+    },
+    handlePrevStep() {
+      this.$emit('onPrevStep')
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>

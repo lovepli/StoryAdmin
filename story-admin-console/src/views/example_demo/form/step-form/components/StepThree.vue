@@ -1,6 +1,6 @@
 <template>
   <div class="form-stepthree">
-    <i class="el-icon-success icon"></i>
+    <i class="el-icon-success icon"/>
     <p class="title">提交成功</p>
     <div class="remind">请等待工作人员审核，审核结果预计2~3个工作日以短信方式通知。请等待工作人员审核，审核结果预计2~3个工作日以短信方式通知。请等待工作人员审核，审核结果预计2~3个工作日以短信方式通知。</div>
 
@@ -12,20 +12,19 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
+export default {
+  data() {
+    return {
 
-      }
-    },
-    methods: {
-      handleAgain() {
-        this.$emit('onAgain');
-      }
-    },
+    }
+  },
+  methods: {
+    handleAgain() {
+      this.$emit('onAgain');
+    }
   }
+}
 </script>
-
 
 <style lang="scss" scoped>
   .form-stepthree {

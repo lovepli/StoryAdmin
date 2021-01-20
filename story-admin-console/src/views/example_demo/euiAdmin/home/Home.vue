@@ -17,20 +17,23 @@
 <script>
 export default {
   components: {
-    HomeSpace: (resolve) => {
-      require(["@/components/example_demo/euiAdmin/home/HomeSpace"], resolve);
-    },
+    HomeSpace: resolve => {
+      require(['@/components/example_demo/euiAdmin/home/HomeSpace'], resolve);
+    }
   },
   data() {
     return {
       update_data: {
-        title: "更新日志",
-        message: '',
+        title: '更新日志',
+        message: ''
       },
-      head_background_color: "#fff",
-      head_height: 60 + "px",
-      main_background_color: '#f2f6fc',
+      head_background_color: '#fff',
+      head_height: 60 + 'px',
+      main_background_color: '#f2f6fc'
     };
+  },
+  mounted() {
+    //  this.get_update_news();
   },
   methods: {
     update_news() {
@@ -38,22 +41,19 @@ export default {
         title: this.update_data.title,
         dangerouslyUseHTMLString: true,
         message: this.update_data.message,
-        duration:0,
+        duration: 0
       });
     },
-    get_update_news(){
+    get_update_news() {
       this.$axios({
-        method:"post",
-        url:'/eui/data',
-      }).then(response=>{
-        this.update_data.message=response.data.update_content
-        this.update_news()
-      })
+        method: 'post',
+        url: '/eui/data'
+      }).then(response => {
+        this.update_data.message = response.data.update_content;
+        this.update_news();
+      });
     }
-  },
-  mounted() {
-  //  this.get_update_news();
-  },
+  }
 };
 </script>
 <style scoped>

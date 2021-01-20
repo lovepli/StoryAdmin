@@ -14,15 +14,15 @@
 <script>
 export default {
   components: {
-    ChinaMapSpace:resolve=>{require(['@/components/example_demo/euiAdmin/echarts/ChinaMapSpace'],resolve)},
+    ChinaMapSpace: resolve => { require(['@/components/example_demo/euiAdmin/echarts/ChinaMapSpace'], resolve) }
   },
   data() {
     return {
-      head_background_color: "#fff",
-      head_height: 60 + "px",
-      main_background_color: '#f2f6fc',
+      head_background_color: '#fff',
+      head_height: 60 + 'px',
+      main_background_color: '#f2f6fc'
     };
-  },
+  }
 };
 </script>
 <style scoped>

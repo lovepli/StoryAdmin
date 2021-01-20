@@ -7,14 +7,14 @@
         </el-button>
         <el-dialog
           :fullscreen="true"
-          title="element文档"
           :visible.sync="dialogVisible"
+          title="element文档"
         >
           <iframe
             class="element-iframe"
             src="https://element.eleme.cn/#/zh-CN/component/installation"
             frameborder="0"
-          ></iframe>
+          />
         </el-dialog>
         <el-divider content-position="left">
           Tag 标签
@@ -45,50 +45,50 @@
             文档
           </a>
         </el-divider>
-        <el-progress :percentage="50"></el-progress>
-        <el-progress :percentage="100" status="success"></el-progress>
-        <el-progress :percentage="100" status="warning"></el-progress>
-        <el-progress :percentage="50" status="exception"></el-progress>
+        <el-progress :percentage="50"/>
+        <el-progress :percentage="100" status="success"/>
+        <el-progress :percentage="100" status="warning"/>
+        <el-progress :percentage="50" status="exception"/>
         <el-progress
           :text-inside="true"
           :stroke-width="26"
           :percentage="70"
-        ></el-progress>
+        />
         <el-progress
           :text-inside="true"
           :stroke-width="24"
           :percentage="100"
           status="success"
-        ></el-progress>
+        />
         <el-progress
           :text-inside="true"
           :stroke-width="22"
           :percentage="80"
           status="warning"
-        ></el-progress>
+        />
         <el-progress
           :text-inside="true"
           :stroke-width="20"
           :percentage="50"
           status="exception"
-        ></el-progress>
-        <el-progress type="circle" :percentage="0"></el-progress>
-        <el-progress type="circle" :percentage="25"></el-progress>
+        />
+        <el-progress :percentage="0" type="circle"/>
+        <el-progress :percentage="25" type="circle"/>
         <el-progress
-          type="circle"
           :percentage="100"
+          type="circle"
           status="success"
-        ></el-progress>
+        />
         <el-progress
-          type="circle"
           :percentage="70"
-          status="warning"
-        ></el-progress>
-        <el-progress
           type="circle"
+          status="warning"
+        />
+        <el-progress
           :percentage="50"
+          type="circle"
           status="exception"
-        ></el-progress>
+        />
 
         <el-divider content-position="left">
           按钮
@@ -117,27 +117,27 @@
         <el-button type="info" round>信息按钮</el-button>
         <el-button type="warning" round>警告按钮</el-button>
         <el-button type="danger" round>危险按钮</el-button>
-        <el-button icon="el-icon-search" circle></el-button>
-        <el-button type="primary" icon="el-icon-edit" circle></el-button>
-        <el-button type="success" icon="el-icon-check" circle></el-button>
-        <el-button type="info" icon="el-icon-message" circle></el-button>
-        <el-button type="warning" icon="el-icon-star-off" circle></el-button>
-        <el-button type="danger" icon="el-icon-delete" circle></el-button>
+        <el-button icon="el-icon-search" circle/>
+        <el-button type="primary" icon="el-icon-edit" circle/>
+        <el-button type="success" icon="el-icon-check" circle/>
+        <el-button type="info" icon="el-icon-message" circle/>
+        <el-button type="warning" icon="el-icon-star-off" circle/>
+        <el-button type="danger" icon="el-icon-delete" circle/>
         <el-button disabled>默认按钮</el-button>
         <el-button type="primary" disabled>主要按钮</el-button>
         <el-button type="success" disabled>成功按钮</el-button>
         <el-button type="info" disabled>信息按钮</el-button>
         <el-button type="warning" disabled>警告按钮</el-button>
         <el-button type="danger" disabled>危险按钮</el-button>
-        <el-button type="primary" icon="el-icon-edit"></el-button>
-        <el-button type="primary" icon="el-icon-share"></el-button>
-        <el-button type="primary" icon="el-icon-delete"></el-button>
+        <el-button type="primary" icon="el-icon-edit"/>
+        <el-button type="primary" icon="el-icon-share"/>
+        <el-button type="primary" icon="el-icon-delete"/>
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
         <el-button type="primary">
           上传
-          <i class="el-icon-upload el-icon--right"></i>
+          <i class="el-icon-upload el-icon--right"/>
         </el-button>
-        <el-button type="primary" :loading="true">加载中</el-button>
+        <el-button :loading="true" type="primary">加载中</el-button>
 
         <el-divider content-position="left">
           文字链接
@@ -173,7 +173,7 @@
             文档
           </a>
         </el-divider>
-        <el-avatar icon="el-icon-user-solid"></el-avatar>
+        <el-avatar icon="el-icon-user-solid"/>
         <el-divider content-position="left">
           页头
           <a
@@ -183,7 +183,7 @@
             文档
           </a>
         </el-divider>
-        <el-page-header content="详情页面"></el-page-header>
+        <el-page-header content="详情页面"/>
         <el-divider content-position="left">
           面包屑
           <a
@@ -205,18 +205,18 @@
 </template>
 
 <script>
-  export default {
-    name: 'Element',
-    components: {},
-    data() {
-      return {
-        dialogVisible: false,
-      }
-    },
-    created() {},
-    mounted() {},
-    methods: {},
-  }
+export default {
+  name: 'Element',
+  components: {},
+  data() {
+    return {
+      dialogVisible: false
+    }
+  },
+  created() {},
+  mounted() {},
+  methods: {}
+}
 </script>
 
 <style lang="scss" scoped>

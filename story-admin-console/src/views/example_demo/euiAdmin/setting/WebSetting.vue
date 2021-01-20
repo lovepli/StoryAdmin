@@ -1,13 +1,13 @@
 <template>
   <el-container id="aside">
-    <vAsideSpace />
+    <!-- <vAsideSpace /> -->
     <el-container>
-      <el-header
+      <!-- <el-header
         :height="head_height"
         :style="{ backgroundColor: head_background_color }"
       >
         <vHeadSpace />
-      </el-header>
+      </el-header> -->
       <el-main id="main" :style="{ backgroundColor: main_background_color }">
         <WebSettingSpace />
       </el-main>

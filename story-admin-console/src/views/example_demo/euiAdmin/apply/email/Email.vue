@@ -5,7 +5,7 @@
       <!-- <el-header :height="head_height" :style="{backgroundColor:head_background_color}">
         <vHeadSpace />
       </el-header> -->
-      <el-main id="main" :style="{backgroundColor:main_background_color}">
+      <el-main id="main" :style="{ backgroundColor: main_background_color }">
         <EmailSpace />
       </el-main>
     </el-container>
@@ -14,15 +14,19 @@
 <script>
 export default {
   components: {
-    EmailSpace:resolve=>{require(['@/components/example_demo/euiAdmin/apply/email/EmailSpace'],resolve)},
+    EmailSpace: resolve => {
+      require([
+        '@/components/example_demo/euiAdmin/apply/email/EmailSpace'
+      ], resolve);
+    }
   },
-  data(){
-      return{
-      head_background_color: "#fff",
-      head_height: 60 + "px",
-      main_background_color: '#f2f6fc',
-      }
-  },
+  data() {
+    return {
+      head_background_color: '#fff',
+      head_height: 60 + 'px',
+      main_background_color: '#f2f6fc'
+    };
+  }
 };
 </script>
 <style scoped>
@@ -51,7 +55,7 @@ export default {
 /*滚动条的设置*/
 
 ::-webkit-scrollbar-thumb {
-  background-color: #F56C6C;
+  background-color: #f56c6c;
   background-clip: padding-box;
   min-height: 1px;
   -webkit-border-radius: 2em;

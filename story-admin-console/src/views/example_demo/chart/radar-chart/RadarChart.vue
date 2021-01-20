@@ -11,16 +11,14 @@
 </template>
 
 <script>
-  import ChartBase from './components/ChartBase';
+import ChartBase from './components/ChartBase';
 
-
-  export default {
-    name: 'RadarChart',
-    components: {
-      ChartBase,
-
-    }
+export default {
+  name: 'RadarChart',
+  components: {
+    ChartBase
   }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,17 +1,17 @@
 <template>
   <div class="copy-comp">
     <section>
-      <div class="content" ref="content">
+      <div ref="content" class="content">
         <h3>要复制的内容</h3>
         <p style="background-color:yellow">第一行内容111</p>
-        <img src="https://picsum.photos/200/200/?random" alt="" />
+        <img src="https://picsum.photos/200/200/?random" alt="" >
         <p>第二行内容222</p>
         <p>第三行内容333</p>
       </div>
       <copy :content="content" />
     </section>
 
-    <br />
+    <br >
 
     <section>
       <p>{{ text }}</p>

@@ -2,12 +2,12 @@
   <div class="pdf-base64">
     <p class="pdf-base64__tip">pdf文件数据为base64</p>
     <div
-      class="pdf-base64__canvas"
       v-loading="fileLoading"
+      class="pdf-base64__canvas"
       element-loading-spinner="el-icon-loading"
       element-loading-text="文件加载中"
     >
-      <canvas v-for="item in totalPage" :key="item" :id="'the-canvas' + item"></canvas>
+      <canvas v-for="item in totalPage" :key="item" :id="'the-canvas' + item"/>
     </div>
   </div>
 </template>
@@ -30,9 +30,9 @@ export default {
     this.loadFile()
   },
   methods: {
-    //将base64数据解码
+    // 将base64数据解码
     decodeBase64(data) {
-      //[RFC2045]中有规定：base64一行不能超过76字符，超过则添加回车换行符。因此需要把base64字段中的换行符，回车符给去掉。
+      // [RFC2045]中有规定：base64一行不能超过76字符，超过则添加回车换行符。因此需要把base64字段中的换行符，回车符给去掉。
       // 如果后端返回的base64数据带有MIME类型，需要从MIME类型之后开始清除换行和回车符。
       // 如果不带MIME类型，直接去除回车和换行，然后使用atob解码(不需要手动加上MIME类型头)。
       const maker = ';base64,'

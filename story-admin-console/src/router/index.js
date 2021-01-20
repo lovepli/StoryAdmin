@@ -189,7 +189,7 @@ export const constantRouterMap = [
       }
     ]
   },
-  {  // 表格
+  { // 表格
     path: '/Table',
     component: Layout,
     // redirect: '/Table/tree',
@@ -355,26 +355,26 @@ export const constantRouterMap = [
         path: '/article/list',
         component: () => import('@/views/example_demo/article/list'),
         name: 'ArticleList',
-        meta: { title: '文章管理', icon: 'el-icon-s-grid',activePath: '/article', noCache: true }
+        meta: { title: '文章管理', icon: 'el-icon-s-grid', activePath: '/article', noCache: true }
       },
       {
         path: '/article/add',
         component: () => import('@/views/example_demo/article/edit'),
         name: 'articleAdd',
-        meta: { title: '新增文章', hiddenInMenu: true, icon: 'el-icon-s-grid',noCache: true }
+        meta: { title: '新增文章', hiddenInMenu: true, icon: 'el-icon-s-grid', noCache: true }
       },
       {
         path: '/article/edit/:articleId/:articleIndex',
         component: () => import('@/views/example_demo/article/edit'),
         name: 'articleEdit',
-        meta: { title: '编辑文章', hiddenInMenu: true, icon: 'el-icon-s-grid',noCache: true },
+        meta: { title: '编辑文章', hiddenInMenu: true, icon: 'el-icon-s-grid', noCache: true },
         props: true,
         beforeEnter: (to, from, next) => {
           to.meta.title = '编辑文章' + '-' + to.params.articleIndex
           next()
         }
       }
-  
+
     ]
   },
   { //  pdf处理
@@ -394,11 +394,11 @@ export const constantRouterMap = [
         path: '/pdf/perfect',
         component: () => import('@/views/example_demo/pdf/pdf-perfect'),
         name: 'PdfPerfect',
-        meta: { title: '所有功能', icon: 'el-icon-s-grid',noCache: true }
+        meta: { title: '所有功能', icon: 'el-icon-s-grid', noCache: true }
       }
     ]
   },
-  { // 其他功能 
+  { // 其他功能
     name: 'Other',
     path: '/other',
     component: Layout,
@@ -414,55 +414,55 @@ export const constantRouterMap = [
       {
         name: 'AMap',
         path: '/other/aMap',
-        component: () => import('@/views/example_demo/other/a-map'), 
-        meta: { title: '地图', icon: 'el-icon-s-grid',noCache: true }
+        component: () => import('@/views/example_demo/other/a-map'),
+        meta: { title: '地图', icon: 'el-icon-s-grid', noCache: true }
       },
       {
         name: 'Print',
         path: '/other/print',
-        component: () => import('@/views/example_demo/other/print'), 
-        meta: { title: '打印', icon: 'el-icon-s-grid',noCache: true }
+        component: () => import('@/views/example_demo/other/print'),
+        meta: { title: '打印', icon: 'el-icon-s-grid', noCache: true }
       },
       {
         name: 'DragDialog',
         path: '/other/dragDialog',
-        component: () => import('@/views/example_demo/other/drag-dialog'), 
-        meta: { title: '拖拽Dialog', icon: 'el-icon-s-grid',noCache: true }
+        component: () => import('@/views/example_demo/other/drag-dialog'),
+        meta: { title: '拖拽Dialog', icon: 'el-icon-s-grid', noCache: true }
       },
       {
         name: 'HtmlToCanvas',
         path: '/other/htmlToCanvas',
-        component: () => import('@/views/example_demo/other/html-to-canvas'), 
-        meta: { title: 'htmlToCanvas', icon: 'el-icon-s-grid',noCache: true }
+        component: () => import('@/views/example_demo/other/html-to-canvas'),
+        meta: { title: 'htmlToCanvas', icon: 'el-icon-s-grid', noCache: true }
       },
       {
         name: 'Copy',
         path: '/other/copy',
-        component: () => import('@/views/example_demo/other/copy'), 
-        meta: { title: '快捷复制', icon: 'el-icon-s-grid',noCache: true }
+        component: () => import('@/views/example_demo/other/copy'),
+        meta: { title: '快捷复制', icon: 'el-icon-s-grid', noCache: true }
       },
       {
         name: 'FileToBase64',
         path: '/other/fileToBase64',
-        component: () => import('@/views/example_demo/other/file-to-base64'), 
-        meta: { title: 'fileToBase64', icon: 'el-icon-s-grid',noCache: true }
+        component: () => import('@/views/example_demo/other/file-to-base64'),
+        meta: { title: 'fileToBase64', icon: 'el-icon-s-grid', noCache: true }
       },
       {
         name: 'TextOverflowDemo',
         path: '/other/text-overflow',
-        component: () => import('@/views/example_demo/other/text-overflow'), 
-        meta: { title: '文本溢出', icon: 'el-icon-s-grid',noCache: true }
+        component: () => import('@/views/example_demo/other/text-overflow'),
+        meta: { title: '文本溢出', icon: 'el-icon-s-grid', noCache: true }
       },
       {
         name: 'ScrollbarDemo',
         path: '/other/scrollbar',
-        component: () => import('@/views/example_demo/other/scrollbar'), 
-        meta: { title: '滚动条', icon: 'el-icon-s-grid',noCache: true }
+        component: () => import('@/views/example_demo/other/scrollbar'),
+        meta: { title: '滚动条', icon: 'el-icon-s-grid', noCache: true }
       }
     ]
   },
   { //  空白页
-   // name: 'Blank',
+    // name: 'Blank',
     path: '/blank',
     component: Layout,
     redirect: '/blank/index',
@@ -477,80 +477,80 @@ export const constantRouterMap = [
     ]
   },
   { //  echarts图标组件
-     name: 'Echarts',
-     path: '/echarts',
-     component: Layout,
-     redirect: '/echarts/bar',
-     meta: { title: 'echarts图标组件', icon: 'dashboard', noCache: true },
-     children: [
-       {
-         name: 'echarts_bar',
-         path: '/echarts/bar',
+    name: 'Echarts',
+    path: '/echarts',
+    component: Layout,
+    redirect: '/echarts/bar',
+    meta: { title: 'echarts图标组件', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        name: 'echarts_bar',
+        path: '/echarts/bar',
         // component: () => import('@/views/example_demo/blank'),
-         component: resolve => require(['@/views/example_demo/echarts/EchartsBar.vue'], resolve),
-         meta: { title: '柱状图',  icon: 'blank', noCache: true }
-       },
-       {
+        component: resolve => require(['@/views/example_demo/echarts/EchartsBar.vue'], resolve),
+        meta: { title: '柱状图', icon: 'blank', noCache: true }
+      },
+      {
         name: 'echarts_line',
         path: '/echarts/line',
-       // component: () => import('@/views/example_demo/blank'),
+        // component: () => import('@/views/example_demo/blank'),
         component: resolve => require(['@/views/example_demo/echarts/EchartsLine.vue'], resolve),
-        meta: { title: '折线图',  icon: 'blank', noCache: true }
+        meta: { title: '折线图', icon: 'blank', noCache: true }
       },
       {
         name: 'echarts_map',
         path: '/echarts/map',
-       // component: () => import('@/views/example_demo/blank'),
+        // component: () => import('@/views/example_demo/blank'),
         component: resolve => require(['@/views/example_demo/echarts/EchartsMap.vue'], resolve),
-        meta: { title: '地图',  icon: 'blank', noCache: true }
+        meta: { title: '地图', icon: 'blank', noCache: true }
       }
-     ]
-   },
-   { //  一些应用组件
+    ]
+  },
+  { //  一些应用组件
     name: 'Apply',
     path: '/apply',
     component: Layout,
     redirect: '/apply/goods',
     meta: { title: 'apply应用组件', icon: 'dashboard', noCache: true },
     children: [
-      //文章
+      // 文章
       {
         path: '/apply/article',
         name: 'apply_article',
         component: resolve => require(['@/views/example_demo/euiAdmin/apply/article/Article.vue'], resolve),
-        meta: { title: '文章撰写系统-文章',  icon: 'blank', noCache: true }
+        meta: { title: '文章撰写系统-文章', icon: 'blank', noCache: true }
       },
       {
         path: '/apply/article/label',
         name: 'apply_article_label',
         component: resolve => require(['@/views/example_demo/euiAdmin/apply/article/ArticleLabel.vue'], resolve),
-        meta: { title: '文章撰写系统-类别',  icon: 'blank', noCache: true }
+        meta: { title: '文章撰写系统-类别', icon: 'blank', noCache: true }
       },
       {
         path: '/apply/article/reply',
         name: 'article_reply',
         component: resolve => require(['@/views/example_demo/euiAdmin/apply/article/ArticleReply.vue'], resolve),
-        meta: { title: '文章评论回复',  icon: 'blank', noCache: true }
+        meta: { title: '文章评论回复', icon: 'blank', noCache: true }
       },
-    // 商品
+      // 商品
       {
         name: 'apply_goods',
         path: '/apply/goods',
         component: resolve => require(['@/views/example_demo/euiAdmin/apply/goods/Goods.vue'], resolve),
-        meta: { title: 'goods商品展示',  icon: 'blank', noCache: true }
+        meta: { title: 'goods商品展示', icon: 'blank', noCache: true }
       },
       {
         name: 'goods_release',
         path: '/apply/goods/release',
         component: resolve => require(['@/views/example_demo/euiAdmin/apply/goods/ReleaseGoods.vue'], resolve),
-        meta: { title: 'goods商品发布',  icon: 'blank', noCache: true }
+        meta: { title: 'goods商品发布', icon: 'blank', noCache: true }
       },
       // 邮箱
       {
         path: '/apply/email',
         name: 'email',
         component: resolve => require(['@/views/example_demo/euiAdmin/apply/email/Email.vue'], resolve),
-        meta: { title: '邮件管理',  icon: 'blank', noCache: true }
+        meta: { title: '邮件管理', icon: 'blank', noCache: true }
       }
 
     ]
@@ -559,26 +559,26 @@ export const constantRouterMap = [
     name: 'Page',
     path: '/page',
     component: Layout,
-    //redirect: '/apply/goods',
+    // redirect: '/apply/goods',
     meta: { title: '常用页面', icon: 'dashboard', noCache: true },
     children: [
       {
         name: 'message_list',
         path: '/page/message/list',
         component: resolve => require(['@/views/example_demo/euiAdmin/page/MessageList.vue'], resolve),
-        meta: { title: '留言',  icon: 'blank', noCache: true }
+        meta: { title: '留言', icon: 'blank', noCache: true }
       },
       {
         name: 'not_found',
         path: '/page/not/found',
         component: resolve => require(['@/views/example_demo/euiAdmin/page/NotFound.vue'], resolve),
-        meta: { title: '页面不存在',  icon: 'blank', noCache: true }
+        meta: { title: '页面不存在', icon: 'blank', noCache: true }
       },
       {
         name: 'warning',
         path: '/page/warning',
         component: resolve => require(['@/views/example_demo/euiAdmin/page/Warning.vue'], resolve),
-        meta: { title: '系统错误',  icon: 'blank', noCache: true }
+        meta: { title: '系统错误', icon: 'blank', noCache: true }
       }
     ]
   },
@@ -587,38 +587,38 @@ export const constantRouterMap = [
     name: 'Moudle',
     path: '/module',
     component: Layout,
-    //redirect: '/apply/goods',
+    // redirect: '/apply/goods',
     meta: { title: '其他Moudle组件', icon: 'dashboard', noCache: true },
     children: [
       {
         path: '/module/editor',
         name: 'editor',
         component: resolve => require(['@/views/example_demo/euiAdmin/module/Editor.vue'], resolve),
-        meta: { title: '富文本编辑器',  icon: 'dashboard', noCache: true }
+        meta: { title: '富文本编辑器', icon: 'dashboard', noCache: true }
       },
       {
         path: '/module/superform',
         name: 'superform',
         component: resolve => require(['@/views/example_demo/euiAdmin/module/SuperForm.vue'], resolve),
-        meta: { title: '超级表单',  icon: 'dashboard', noCache: true }
+        meta: { title: '超级表单', icon: 'dashboard', noCache: true }
       },
       {
         path: '/module/upload/image',
         name: 'image',
         component: resolve => require(['@/views/example_demo/euiAdmin/module/UploadImage.vue'], resolve),
-        meta: { title: '图片上传',  icon: 'dashboard', noCache: true }
+        meta: { title: '图片上传', icon: 'dashboard', noCache: true }
       },
       {
         path: '/module/upload/file',
         name: 'file',
         component: resolve => require(['@/views/example_demo/euiAdmin/module/UploadFile.vue'], resolve),
-        meta: { title: '文件上传',  icon: 'dashboard', noCache: true }
+        meta: { title: '文件上传', icon: 'dashboard', noCache: true }
       },
       {
         path: '/module/animate',
         name: 'animate',
         component: resolve => require(['@/views/example_demo/euiAdmin/module/Animate.vue'], resolve),
-        meta: { title: 'Eui动画',  icon: 'dashboard', noCache: true }
+        meta: { title: 'Eui动画', icon: 'dashboard', noCache: true }
       },
       {
         path: '/module/table',
@@ -636,7 +636,7 @@ export const constantRouterMap = [
         path: '/module/var/element',
         name: 'element',
         component: resolve => require(['@/views/example_demo/vue_beau/var/element/index.vue'], resolve),
-        meta: { title: '常用组件',  icon: 'dashboard', noCache: true }
+        meta: { title: '常用组件', icon: 'dashboard', noCache: true }
       }
     ]
   },
@@ -648,7 +648,7 @@ export const constantRouterMap = [
   //    children: []
   //  },
 
-   { //  eui首页
+  { //  eui首页
     path: '/euihome',
     name: 'euihome',
     component: Layout,
@@ -685,20 +685,20 @@ export const constantRouterMap = [
     name: 'Setting',
     path: '/setting',
     component: Layout,
-    //redirect: '/apply/goods',
+    // redirect: '/apply/goods',
     meta: { title: '设置', icon: 'dashboard', noCache: true },
     children: [
       {
         path: '/setting/web',
         name: 'setting_seb',
         component: resolve => require(['@/views/example_demo/euiAdmin/setting/WebSetting.vue'], resolve),
-        meta: { title: '系统设置',  icon: 'blank', noCache: true }
+        meta: { title: '系统设置', icon: 'blank', noCache: true }
       },
       {
         path: '/setting/email',
         name: 'setting_email',
         component: resolve => require(['@/views/example_demo/euiAdmin/setting/EmailSetting.vue'], resolve),
-        meta: { title: '邮箱设置',  icon: 'blank', noCache: true }
+        meta: { title: '邮箱设置', icon: 'blank', noCache: true }
       }
     ]
   },
@@ -706,24 +706,23 @@ export const constantRouterMap = [
     name: 'Mall',
     path: '/mall',
     component: Layout,
-    //redirect: '/apply/goods',
+    // redirect: '/apply/goods',
     meta: { title: '商城', icon: 'dashboard', noCache: true },
     children: [
       {
         path: '/mall/pay',
         name: 'Pay',
         component: () => import('@/views/example_demo/vue_beau/mall/pay/index'),
-        meta: { title: '支付',  icon: 'blank', noCache: true }
+        meta: { title: '支付', icon: 'blank', noCache: true }
       },
       {
         path: '/mall/goodsList',
         name: 'GoodsList',
         component: () => import('@/views/example_demo/vue_beau/mall/goodsList/index'),
-        meta: { title: '商品列表',  icon: 'blank', noCache: true }
+        meta: { title: '商品列表', icon: 'blank', noCache: true }
       }
     ]
-  },
-
+  }
 
 ]
 

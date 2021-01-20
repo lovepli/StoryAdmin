@@ -6,14 +6,17 @@
       </div>
       <div class="operation">
         <el-button
+          :loading="submitLoading"
           type="primary"
           icon="el-icon-s-promotion"
-          :loading="submitLoading"
           @click="handleSubmit"
-          >发布</el-button
+        >发布</el-button
         >
-        <el-button type="info" icon="el-icon-circle-close" @click="handleClose"
-          >取消</el-button
+        <el-button
+          type="info"
+          icon="el-icon-circle-close"
+          @click="handleClose"
+        >取消</el-button
         >
       </div>
     </div>
@@ -26,10 +29,10 @@
 
       <el-col :lg="8">
         <el-form
-          class="article-edit__form"
           ref="form"
           :model="articleDetail"
           :rules="formRules"
+          class="article-edit__form"
           label-width="90px"
         >
           <el-form-item label="文章标题:" prop="name">
@@ -37,7 +40,7 @@
               v-model="articleDetail.name"
               placeholder="请输入文章标题"
               clearable
-            ></el-input>
+            />
           </el-form-item>
 
           <el-form-item label="文章类型:" prop="type">
@@ -51,31 +54,31 @@
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"
-              ></el-option>
+              />
             </el-select>
           </el-form-item>
 
           <el-form-item label="文章简介:">
             <el-input
               v-model="articleDetail.brief"
-              type="textarea"
               :rows="3"
               :maxlength="100"
+              type="textarea"
               placeholder="请输入文章简介"
               clearable
-            ></el-input>
+            />
           </el-form-item>
 
           <el-form-item label="创建时间:" prop="createDate">
-            <el-input v-model="articleDetail.createDate" disabled></el-input>
+            <el-input v-model="articleDetail.createDate" disabled/>
           </el-form-item>
 
           <el-form-item label="标题图片:" prop="imageURL">
             <avatar-upload
               v-model="articleDetail.imageURL"
+              :round="false"
               action="https://sm.ms/api/v2/upload"
               name="smfile"
-              :round="false"
               width="80px"
             />
           </el-form-item>
@@ -94,14 +97,14 @@
 
 <script>
 import Mock from 'mockjs';
-import util from '@/utils/example_demo/wangluyao/util'
+import util from '@/utils/example_demo/wangluyao/util';
 // import api from '@/api'
-import bus from '@/utils/example_demo/wangluyao/bus' // 组件之间通信
+import bus from '@/utils/example_demo/wangluyao/bus'; // 组件之间通信
 // import tableMng from '@/utils/tableMng'
-import AvatarUpload from '@/components/example_demo/wangluyao/business/upload/avatar-upload'
-import DragUpload from '@/components/example_demo/wangluyao/business/upload/drag-upload'
-import SectionTitle from '@/components/example_demo/wangluyao/business/section-title'
-import Tinymce from '@/components/example_demo/wangluyao/business/tinymce' // 富文本
+import AvatarUpload from '@/components/example_demo/wangluyao/business/upload/avatar-upload';
+import DragUpload from '@/components/example_demo/wangluyao/business/upload/drag-upload';
+import SectionTitle from '@/components/example_demo/wangluyao/business/section-title';
+import Tinymce from '@/components/example_demo/wangluyao/business/tinymce'; // 富文本
 // import dayjs from 'dayjs'
 
 const defaultDetail = {
@@ -113,68 +116,82 @@ const defaultDetail = {
   imageURL: '',
   brief: '',
   accessory: []
-}
+};
 
-const articleType = [{
-  id: '1',
-  name: '新闻'
-}, {
-  id: '2',
-  name: '财经'
-}, {
-  id: '3',
-  name: '体育'
-}, {
-  id: '4',
-  name: '娱乐'
-}, {
-  id: '5',
-  name: '游戏'
-}]
+const articleType = [
+  {
+    id: '1',
+    name: '新闻'
+  },
+  {
+    id: '2',
+    name: '财经'
+  },
+  {
+    id: '3',
+    name: '体育'
+  },
+  {
+    id: '4',
+    name: '娱乐'
+  },
+  {
+    id: '5',
+    name: '游戏'
+  }
+];
 
 // 这个列表数据是list页面传递过来的
 const articleList = Mock.mock({
-  'list|213': [{
-    id: '@lower(@guid)',
-    name: '@ctitle',
-    author: '@cname',
-    createDate: '@datetime("yyyy-MM-dd HH:mm:ss")',
-    type: '@pick(["1", "2", "3", "4", "5"])',
-    browseNum: '@natural(1000,9999)',
-    imageURL: 'https://source.unsplash.com/random/200x200',
-    brief: '@cparagraph(1,3)',
-    content: '@cparagraph',
-    accessory: [{
-      id: '1',
-      name: '图片图片.jpg',
-      url: 'https://s2.ax1x.com/2019/08/02/edRc1P.jpg'
-    }, {
-      id: '2',
-      name: '营业执照副本.pdf',
-      url: 'http://www.xdocin.com/xdoc?_key=fedii4dtyfhmvgryqyntfjavte&_func=down&_dir=document.pdf'
-    }, {
-      id: '3',
-      name: '数据采集表',
-      url: 'http://www.xdocin.com/xdoc?_key=fedii4dtyfhmvgryqyntfjavte&_func=down&_dir=data.xlsx'
-    }]
-  }],
-})
-
+  'list|213': [
+    {
+      id: '@lower(@guid)',
+      name: '@ctitle',
+      author: '@cname',
+      createDate: '@datetime("yyyy-MM-dd HH:mm:ss")',
+      type: '@pick(["1", "2", "3", "4", "5"])',
+      browseNum: '@natural(1000,9999)',
+      imageURL: 'https://source.unsplash.com/random/200x200',
+      brief: '@cparagraph(1,3)',
+      content: '@cparagraph',
+      accessory: [
+        {
+          id: '1',
+          name: '图片图片.jpg',
+          url: 'https://s2.ax1x.com/2019/08/02/edRc1P.jpg'
+        },
+        {
+          id: '2',
+          name: '营业执照副本.pdf',
+          url:
+            'http://www.xdocin.com/xdoc?_key=fedii4dtyfhmvgryqyntfjavte&_func=down&_dir=document.pdf'
+        },
+        {
+          id: '3',
+          name: '数据采集表',
+          url:
+            'http://www.xdocin.com/xdoc?_key=fedii4dtyfhmvgryqyntfjavte&_func=down&_dir=data.xlsx'
+        }
+      ]
+    }
+  ]
+});
 
 const table = articleList.list;
 
 export default {
   name: 'ArticleEdit',
-  props: ['articleId'],
   components: {
     AvatarUpload,
     DragUpload,
     SectionTitle,
     Tinymce
   },
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['articleId'],
   data() {
     return {
-     articleType:[], // 文章类型
+      articleType: [], // 文章类型
       articleDetail: { ...defaultDetail },
       formRules: {
         name: [
@@ -204,11 +221,11 @@ export default {
         ]
       },
       submitLoading: false
-    }
+    };
   },
   created() {
-    this.getDetail()
-    this.articleType=articleType // 赋值文章类型下拉列表
+    this.getDetail();
+    this.articleType = articleType; // 赋值文章类型下拉列表
   },
   methods: {
     /** 获取详细信息 */
@@ -228,9 +245,9 @@ export default {
           brief: data.brief,
           content: data.content,
           accessory: data.accessory
-        }
+        };
       } else {
-        this.articleDetail = { ...defaultDetail }
+        this.articleDetail = { ...defaultDetail };
       }
     },
     // async getDetail() {
@@ -253,25 +270,25 @@ export default {
     //   }
     // },
     handleSubmit() {
-      this.$refs.form.validate(async (valid) => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
-          this.submitLoading = true
-        //  await api.article.update({ detail: this.articleDetail })
+          this.submitLoading = true;
+          //  await api.article.update({ detail: this.articleDetail })
 
-          this.submitLoading = false
-          this.$message.success('发布成功')
-          this.handleClose()
+          this.submitLoading = false;
+          this.$message.success('发布成功');
+          this.handleClose();
         } else {
-          this.$message.error('请按照正确格式填写')
+          this.$message.error('请按照正确格式填写');
         }
-      })
+      });
     },
     handleClose() {
-      bus.$emit('closeTag', this.$route.path)
-      this.$router.push('/article/list')
+      bus.$emit('closeTag', this.$route.path);
+      this.$router.push('/article/list');
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

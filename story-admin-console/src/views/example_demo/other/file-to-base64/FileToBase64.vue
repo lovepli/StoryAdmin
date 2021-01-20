@@ -1,54 +1,54 @@
 <template>
-  <div class="file-to-base64" ref="page">
+  <div ref="page" class="file-to-base64">
     <div class="operation-wrap">
       <span>如果是特别大的文件，推荐使用谷歌或者火狐浏览器(火狐表现最好)，不然解析会比较慢，也有可能复制不上。</span>
       <div class="operation">
         <el-button type="primary" @click="handleClear">清除</el-button>
-        <el-button type="primary" v-copy="text">复制</el-button>
+        <el-button v-copy="text" type="primary">复制</el-button>
       </div>
     </div>
 
-    <div class="empty" v-if="!hasFile">任意文件<br />拖到这里</div>
-    <div class="content" ref="content"></div>
+    <div v-if="!hasFile" class="empty">任意文件<br >拖到这里</div>
+    <div ref="content" class="content"/>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'FileToBase64',
-    data() {
-      return {
-        hasFile: false,
-        text: ''
-      }
+export default {
+  name: 'FileToBase64',
+  data() {
+    return {
+      hasFile: false,
+      text: ''
+    }
+  },
+  mounted() {
+    this.onDrop();
+  },
+  methods: {
+    onDrop() {
+      const page = this.$refs.page;
+      page.addEventListener('dragenter', (event) => { event.preventDefault() });
+      page.addEventListener('dragover', (event) => { event.preventDefault() });
+      page.addEventListener('drop', (event) => {
+        event.preventDefault();
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target.result;
+          this.$refs.content.insertAdjacentText('afterBegin', result);
+          this.text = result;
+          this.hasFile = true;
+        };
+        reader.readAsDataURL(event.dataTransfer.files[0]);
+      });
     },
-    mounted() {
-      this.onDrop();
-    },
-    methods: {
-      onDrop() {
-        const page = this.$refs.page;
-        page.addEventListener('dragenter', (event) => { event.preventDefault() });
-        page.addEventListener('dragover', (event) => { event.preventDefault() });
-        page.addEventListener('drop', (event) => {
-          event.preventDefault();
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const result = e.target.result;
-            this.$refs.content.insertAdjacentText('afterBegin', result);
-            this.text = result;
-            this.hasFile = true;
-          };
-          reader.readAsDataURL(event.dataTransfer.files[0]);
-        });
-      },
-      handleClear() {
-        this.$refs.content.innerText = '';
-        this.text = '';
-        this.hasFile = false;
-      }
-    },
+    handleClear() {
+      this.$refs.content.innerText = '';
+      this.text = '';
+      this.hasFile = false;
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>

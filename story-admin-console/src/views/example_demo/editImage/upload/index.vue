@@ -75,7 +75,7 @@ export default {
       //   }
       // })
 
-      this.processList = [{"id":"620000202008283422","title":"流程1","fileList":[]},{"id":"43000020170927270X","title":"流程2","fileList":[]},{"id":"450000197305145936","title":"流程3","fileList":[{"uid":"53000019801214183X","name":"测试文件1","url":"http://dummyimage.com/400x300/f279be/FFF&text=fjdkahf"}]},{"id":"370000199705194525","title":"流程4","fileList":[]}]
+      this.processList = [{ 'id': '620000202008283422', 'title': '流程1', 'fileList': [] }, { 'id': '43000020170927270X', 'title': '流程2', 'fileList': [] }, { 'id': '450000197305145936', 'title': '流程3', 'fileList': [{ 'uid': '53000019801214183X', 'name': '测试文件1', 'url': 'http://dummyimage.com/400x300/f279be/FFF&text=fjdkahf' }] }, { 'id': '370000199705194525', 'title': '流程4', 'fileList': [] }]
     },
 
     // 获取上传地址

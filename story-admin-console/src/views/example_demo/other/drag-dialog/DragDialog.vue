@@ -1,7 +1,7 @@
 <template>
   <div class="drag-dialog">
     <el-button type="primary" @click="dialogVisible = true">点击打开弹窗</el-button>
-    <el-dialog v-drag-dialog title="拖拽" :visible.sync="dialogVisible" width="35%">
+    <el-dialog v-drag-dialog :visible.sync="dialogVisible" title="拖拽" width="35%">
       <div>这是一段信息</div>
       <div>这是一段信息</div>
       <div>这是一段信息</div>
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'DragDialog',
-    data() {
-      return {
-        dialogVisible: false,
-      };
-    },
-  };
+export default {
+  name: 'DragDialog',
+  data() {
+    return {
+      dialogVisible: false
+    };
+  }
+};
 </script>

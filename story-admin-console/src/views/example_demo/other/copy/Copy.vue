@@ -17,22 +17,21 @@
 </template>
 
 <script>
-  import Directive from './components/Directive';
-  import Comp from './components/Comp';
-  import Bug from './components/Bug';
+import Directive from './components/Directive';
+import Comp from './components/Comp';
+import Bug from './components/Bug';
 
-
-  export default {
-    name: 'Copy',
-    components: {
-      Directive,
-      Comp,
-      Bug
-    },
-    data() {
-      return {
-        activeName: 'directive',
-      }
-    },
+export default {
+  name: 'Copy',
+  components: {
+    Directive,
+    Comp,
+    Bug
+  },
+  data() {
+    return {
+      activeName: 'directive'
+    }
   }
+}
 </script>

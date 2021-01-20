@@ -6,14 +6,19 @@
       </div>
 
       <div class="operation">
-        <el-button type="primary" icon="el-icon-plus" @click="handleAdd"
-          >新增文章</el-button
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          @click="handleAdd"
+        >新增文章</el-button
         >
-        <el-button type="danger" icon="el-icon-minus" @click="handleDelete"
-          >批量删除</el-button
+        <el-button
+          type="danger"
+          icon="el-icon-minus"
+          @click="handleDelete"
+        >批量删除</el-button
         >
         <export-excel
-          file-name="文章数据表"
           :header="['序号', '作者', '创建时间', '标题', '类型', '阅读数']"
           :filter-filed="[
             'index',
@@ -24,6 +29,7 @@
             'browseNum'
           ]"
           :data="articleList"
+          file-name="文章数据表"
         >
           导出表格
         </export-excel>
@@ -36,7 +42,7 @@
           v-model="queryCondition.name"
           placeholder="请输入文章标题关键字"
           clearable
-        ></el-input>
+        />
       </el-form-item>
       <el-form-item label="作者:">
         <!-- <el-select
@@ -48,12 +54,12 @@
           default-first-option
           :loading="userLoading"
         > -->
-         <el-select
+        <el-select
           v-model="queryCondition.author"
+          :loading="userLoading"
           placeholder="请输入作者姓名关键字"
           filterable
           default-first-option
-          :loading="userLoading"
         >
           <el-option
             v-for="(item, index) in userListOptions"
@@ -88,52 +94,52 @@
 
     <div class="article-list__table">
       <el-table
+        v-loading="articleTableLoading"
         :data="articleList"
         border
         highlight-current-row
-        v-loading="articleTableLoading"
         @selection-change="handleSelectedRows"
       >
-        <el-table-column type="selection" width="50"></el-table-column>
+        <el-table-column type="selection" width="50"/>
         <!-- <el-table-column
           prop="index"
           label="序号"
           width="80px"
         ></el-table-column> -->
-         <el-table-column
+        <el-table-column
           type="index"
           label="序号"
           width="80px"
-        ></el-table-column>
-        <el-table-column prop="name" label="标题"></el-table-column>
+        />
+        <el-table-column prop="name" label="标题"/>
         <el-table-column
           prop="author"
           label="作者"
           width="120px"
-        ></el-table-column>
+        />
         <el-table-column prop="type" label="类型" width="120px">
           <template slot-scope="scope">
-             <span v-if="scope.row.type === '1'">{{'新闻'}}</span>
-             <span v-if="scope.row.type === '2'">{{'财经'}}</span>
-             <span v-if="scope.row.type === '3'">{{'体育'}}</span>
-             <span v-if="scope.row.type === '4'">{{'娱乐'}}</span>
-             <span v-if="scope.row.type === '5'">{{'游戏'}}</span>
+            <span v-if="scope.row.type === '1'">{{ "新闻" }}</span>
+            <span v-if="scope.row.type === '2'">{{ "财经" }}</span>
+            <span v-if="scope.row.type === '3'">{{ "体育" }}</span>
+            <span v-if="scope.row.type === '4'">{{ "娱乐" }}</span>
+            <span v-if="scope.row.type === '5'">{{ "游戏" }}</span>
             <!-- <span>{{ this.getItemNameById(scope.row)}}</span> -->
-           <!-- <span>{{ tableMng.getNameById('article', scope.row.type) }}</span> -->
-          </template> 
+            <!-- <span>{{ tableMng.getNameById('article', scope.row.type) }}</span> -->
+          </template>
         </el-table-column>
         <el-table-column
           prop="browseNum"
           label="阅读数"
           sortable
           width="100px"
-        ></el-table-column>
+        />
         <el-table-column
           prop="createDate"
           label="创建时间"
           sortable
           width="180px"
-        ></el-table-column>
+        />
         <el-table-column label="操作" width="120px">
           <template slot-scope="scope">
             <router-link
@@ -141,7 +147,7 @@
             >
               <el-button type="text">编辑</el-button>
             </router-link>
-            <el-divider direction="vertical"></el-divider>
+            <el-divider direction="vertical"/>
             <el-button
               type="text"
               @click="handleDelete(scope.$index, scope.row)"
@@ -152,63 +158,75 @@
         </el-table-column>
       </el-table>
     </div>
-
   </div>
 </template>
 
 <script>
 import Mock from 'mockjs';
-//import api from '@/api'
+// import api from '@/api'
 // import { scroll } from '@/utils/core' // 滚动
 // import tableMng from '@/utils/tableMng' //初始化查询出字典数据
-import SectionTitle from '@/components/example_demo/wangluyao/business/section-title'
-import ExportExcel from '@/components/example_demo/wangluyao/business/excel/export-excel'
+import SectionTitle from '@/components/example_demo/wangluyao/business/section-title';
+import ExportExcel from '@/components/example_demo/wangluyao/business/excel/export-excel';
 
 const articleList = Mock.mock({
-  'list|10': [{
-    id: '@lower(@guid)',
-    name: '@ctitle',
-    author: '@cname',
-    createDate: '@datetime("yyyy-MM-dd HH:mm:ss")',
-    type: '@pick(["1", "2", "3", "4", "5"])',
-    browseNum: '@natural(1000,9999)',
-    imageURL: 'https://source.unsplash.com/random/200x200',
-    brief: '@cparagraph(1,3)',
-    content: '@cparagraph',
-    accessory: [{
-      id: '1',
-      name: '图片图片.jpg',
-      url: 'https://s2.ax1x.com/2019/08/02/edRc1P.jpg'
-    }, {
-      id: '2',
-      name: '营业执照副本.pdf',
-      url: 'http://www.xdocin.com/xdoc?_key=fedii4dtyfhmvgryqyntfjavte&_func=down&_dir=document.pdf'
-    }, {
-      id: '3',
-      name: '数据采集表',
-      url: 'http://www.xdocin.com/xdoc?_key=fedii4dtyfhmvgryqyntfjavte&_func=down&_dir=data.xlsx'
-    }]
-  }],
-})
+  'list|10': [
+    {
+      id: '@lower(@guid)',
+      name: '@ctitle',
+      author: '@cname',
+      createDate: '@datetime("yyyy-MM-dd HH:mm:ss")',
+      type: '@pick(["1", "2", "3", "4", "5"])',
+      browseNum: '@natural(1000,9999)',
+      imageURL: 'https://source.unsplash.com/random/200x200',
+      brief: '@cparagraph(1,3)',
+      content: '@cparagraph',
+      accessory: [
+        {
+          id: '1',
+          name: '图片图片.jpg',
+          url: 'https://s2.ax1x.com/2019/08/02/edRc1P.jpg'
+        },
+        {
+          id: '2',
+          name: '营业执照副本.pdf',
+          url:
+            'http://www.xdocin.com/xdoc?_key=fedii4dtyfhmvgryqyntfjavte&_func=down&_dir=document.pdf'
+        },
+        {
+          id: '3',
+          name: '数据采集表',
+          url:
+            'http://www.xdocin.com/xdoc?_key=fedii4dtyfhmvgryqyntfjavte&_func=down&_dir=data.xlsx'
+        }
+      ]
+    }
+  ]
+});
 
 // 下拉列表数据
-const articleType = [{
-  id: '1',
-  name: '新闻'
-}, {
-  id: '2',
-  name: '财经'
-}, {
-  id: '3',
-  name: '体育'
-}, {
-  id: '4',
-  name: '娱乐'
-}, {
-  id: '5',
-  name: '游戏'
-}]
-
+const articleType = [
+  {
+    id: '1',
+    name: '新闻'
+  },
+  {
+    id: '2',
+    name: '财经'
+  },
+  {
+    id: '3',
+    name: '体育'
+  },
+  {
+    id: '4',
+    name: '娱乐'
+  },
+  {
+    id: '5',
+    name: '游戏'
+  }
+];
 
 export default {
   name: 'ArticleList',
@@ -218,7 +236,7 @@ export default {
   },
   data() {
     return {
-      articleType:[], // 文章类型
+      articleType: [], // 文章类型
       userListOptions: [],
       userLoading: false,
       articleList: [],
@@ -229,36 +247,36 @@ export default {
         type: []
       },
       selectedRows: []
-    }
+    };
   },
   created() {
-    this.getArticleList()
-    this.articleType=articleType
-   // this.getItemNameById('1')
+    this.getArticleList();
+    this.articleType = articleType;
+    // this.getItemNameById('1')
   },
   methods: {
-    /**根绝字典ID查询列数据  可以根据ID查询出字典的额名字，例如查询出文章类型 */
-    getItemNameById(id){
+    /** 根绝字典ID查询列数据  可以根据ID查询出字典的额名字，例如查询出文章类型 */
+    getItemNameById(id) {
       // 数组的find 方法的使用
-     const result = this.articleType.find(item => item.id === id);
-     console.log("类型名称："+result.name) //获取结果对象中的name字段的值
-    return result ? result.name : '';
+      const result = this.articleType.find(item => item.id === id);
+      console.log('类型名称：' + result.name); // 获取结果对象中的name字段的值
+      return result ? result.name : '';
     },
     // 获取文章列表
-      getArticleList() {
-      this.articleTableLoading = true
+    getArticleList() {
+      this.articleTableLoading = true;
       this.articleList = articleList.list.map((item, index) => {
         return {
           id: item.id,
-          index:item.id,
+          index: item.id,
           author: item.author,
           createDate: item.createDate,
           name: item.name,
-          type: item.type, 
+          type: item.type,
           browseNum: item.browseNum
-        }
-      })
-      this.articleTableLoading = false
+        };
+      });
+      this.articleTableLoading = false;
       // const scrollElement = document.querySelector('.inner-layout__page')
       // scroll(scrollElement, 0, 800)
     },
@@ -290,37 +308,37 @@ export default {
     // },
     // 跳转到新建文章页面
     handleAdd() {
-      this.$router.push('/article/add')
+      this.$router.push('/article/add');
     },
     // 删除
     handleDelete(index, row) {
-      let id = []
-      let name = []
+      let id = [];
+      let name = [];
       if (row) {
-        id = [row.id]
-        name = [row.name]
+        id = [row.id];
+        name = [row.name];
       } else {
-        id = this.selectedRows.map((row) => row.id)
-        name = this.selectedRows.map((row) => row.name)
+        id = this.selectedRows.map(row => row.id);
+        name = this.selectedRows.map(row => row.name);
       }
       if (name.length === 0) {
-        this.$message.warning('请选择要删除的文章！')
+        this.$message.warning('请选择要删除的文章！');
       } else {
         this.$confirm(`确定删除文章：“${name.join('，')}”？`, '提示', {
           type: 'warning'
         })
-          .then(async () => {
-           // await api.article.remove({ id })
-            this.$message.success('删除成功！')
-            this.getArticleList()
+          .then(async() => {
+            // await api.article.remove({ id })
+            this.$message.success('删除成功！');
+            this.getArticleList();
           })
-          .catch(() => {})
+          .catch(() => {});
       }
     },
     // 多选
     handleSelectedRows(rows) {
-      this.selectedRows = rows
-    },
+      this.selectedRows = rows;
+    }
     // async getRemoteUserList(keyword) {
     //   this.userLoading = true
     // 根据key查询所有用户名，再进行map筛选
@@ -329,7 +347,7 @@ export default {
     //   this.userLoading = false
     // }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
