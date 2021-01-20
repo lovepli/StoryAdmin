@@ -595,6 +595,30 @@ export const constantRouterMap = [
 
     ]
   },
+  // { //  首页
+  //    path: '/home',
+  //    name: 'home',
+  //    component: resolve => require(['@/views/example_demo/euiAdmin/home/Home.vue'], resolve),
+  //    meta: { title: 'euiAdmin首页', icon: 'dashboard', noCache: true },
+  //    children: []
+  //  },
+
+   { //  eui首页
+    path: '/euihome',
+    name: 'euihome',
+    component: Layout,
+    redirect: '/euihome/index',
+    meta: { title: 'euiAdmin首页', icon: 'dashboard', noCache: true },
+    children: [
+      {
+        name: 'euiAdminhome',
+        path: '/euihome/index',
+       // component: () => import('@/views/example_demo/blank'),
+        component: resolve => require(['@/views/example_demo/euiAdmin/home/Home.vue'], resolve),
+        meta: { title: 'euiAdmin首页', activePath: '/euihome', noCache: true }
+      }
+    ]
+  },
 
 
 ]
