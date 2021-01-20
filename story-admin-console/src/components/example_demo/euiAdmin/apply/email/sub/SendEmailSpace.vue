@@ -31,6 +31,7 @@
             <template slot-scope="scope">
               <el-button size="mini" type="primary" @click="editor_user(scope.$index, scope.row)" icon="el-icon-position" :title="title=='草稿'?'发送该邮件':'再次向该用户发送邮件'">
               </el-button>
+              <!-- 报错，引入el-popconfirm组件没有注册？？ -->
               <el-popconfirm
                 confirmButtonText="确认删除"
                 cancelButtonText="取消"

@@ -4,7 +4,7 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui' // 引入element-ui的全部组件
 import './styles/element-variables.scss'
-// import 'element-ui/lib/theme-chalk/index.css' //element-ui的css
+//import 'element-ui/lib/theme-chalk/index.css' //element-ui的css
 import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 
 import '@/styles/index.scss' // 全局自定义的css样式
@@ -21,7 +21,7 @@ import './utils/constant.js'
 import LunarFullCalendar from 'vue-lunar-full-calendar'
 import Print from './utils/vue-print-nb/src' // import Print from 'vue-print-nb' //  这里引入的是本地的组件
 import filter from '@/utils/example_demo/filter' /* 引入公用filter */
-import echarts from 'echarts'
+import echarts from 'echarts' // 引入图表
 
 // 全局注册指令，包含copy和拖动的对话框
 import '@/directive';

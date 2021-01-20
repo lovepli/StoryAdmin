@@ -83,6 +83,7 @@
               >
                 <i class="el-icon-edit-outline" />
               </el-button>
+              <!-- 报错，引入el-popconfirm组件没有注册？？ -->
               <el-popconfirm
                 confirmButtonText="确认删除"
                 cancelButtonText="取消"

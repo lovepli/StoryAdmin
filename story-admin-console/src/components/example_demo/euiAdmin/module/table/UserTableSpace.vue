@@ -54,6 +54,7 @@
               <el-button size="mini" type="success" @click="editor_user(scope.$index, scope.row)">
                 <i class="el-icon-edit-outline" />
               </el-button>
+              <!-- 报错，引入el-popconfirm组件没有注册？？ -->
               <el-popconfirm
                 confirmButtonText="确认删除"
                 cancelButtonText="取消"
