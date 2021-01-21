@@ -15,6 +15,8 @@
 - 地图：高德
 - 邮箱：vue-cookies 保存草稿，本项目中使用的是js-cookies插件 https://www.cnblogs.com/NanKe-Studying/p/13952558.html
 - markdown: mavon-editor
+- 视频播放器 : "zx-player": "^1.0.2",
+- 滑动验证码："zx-verify": "^0.0.2"
 ## 项目地址
 
 - [github](https://github.com/Wluyao/vue-element-manage)

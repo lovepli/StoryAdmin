@@ -660,7 +660,20 @@ export const constantRouterMap = [
         name: 'errorLog',
         component: resolve => require(['@/views/example_demo/vue_beau/var/errorLog/index.vue'], resolve),
         meta: { title: '模拟错误日志', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        path: '/module/var/player',
+        name: 'Player',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/player/index.vue'], resolve),
+        meta: { title: '视频播放器', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        path: '/module/var/verify',
+        name: 'verify',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/verify/index.vue'], resolve),
+        meta: { title: '验证码', icon: 'el-icon-s-grid', noCache: true }
       }
+
     ]
   },
   // { //  首页
