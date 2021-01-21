@@ -655,6 +655,12 @@ export const constantRouterMap = [
         component: resolve => require(['@/views/example_demo/vue_beau/var/backToTop/index.vue'], resolve),
         meta: { title: 'BackTop返回顶部', icon: 'el-icon-s-grid', noCache: true }
       },
+      {
+        path: '/module/var/errorLog',
+        name: 'errorLog',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/errorLog/index.vue'], resolve),
+        meta: { title: '模拟错误日志', icon: 'el-icon-s-grid', noCache: true }
+      }
     ]
   },
   // { //  首页
