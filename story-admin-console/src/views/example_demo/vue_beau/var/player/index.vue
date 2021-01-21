@@ -47,21 +47,28 @@ export default {
     return {
       config1: {
         id: 'mse1',
-        url: 'https://cdn.jsdelivr.net/gh/chuzhixin/videos@master/video.mp4',
+        // url: 'https://cdn.jsdelivr.net/gh/chuzhixin/videos@master/video.mp4',
+        url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+        // http://vjs.zencdn.net/v/oceans.mp4
+        // https://media.w3.org/2010/05/sintel/trailer.mp4
+        // http://mirror.aarnet.edu.au/pub/TED-talks/911Mothers_2010W-480p.mp4
+        // https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218114723HDu3hhxqIT.mp4
         volume: 1,
         autoplay: false
       },
       Player1: null,
       config2: {
         id: 'mse2',
-        url: 'https://cdn.jsdelivr.net/gh/chuzhixin/videos@master/video.m3u8',
+        // url: 'https://cdn.jsdelivr.net/gh/chuzhixin/videos@master/video.m3u8',
+        url: 'https://zkcdn.wb699.com/2018/10/24/2PY1YaEdbzuReOkd/playlist.m3u8',
         volume: 1,
         autoplay: false
       },
       Player2: null,
       config3: {
         id: 'mse3',
-        url: 'https://cdn.jsdelivr.net/gh/chuzhixin/videos@master/video.flv',
+        // url: 'https://cdn.jsdelivr.net/gh/chuzhixin/videos@master/video.flv',
+        url: 'http://www.chplayer.com/examples/player.html?videourl=http://img.ksbbs.com/asset/Mon_1704/15868902d399b87.flv',
         volume: 1,
         autoplay: false
       },
