@@ -23,14 +23,20 @@ import Print from './utils/vue-print-nb/src' // import Print from 'vue-print-nb'
 import filter from '@/utils/example_demo/filter' /* 引入公用filter */
 import echarts from 'echarts' // 引入图表
 
-// 全局注册指令，包含copy和拖动的对话框
-import '@/directive';
+// 引入Markdown 依赖
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+// 全局注册指令和依赖
+import '@/directive'; // 引入指令，包含copy和拖动的对话框
+// import '@/plugins' // 引入依赖
 
 // 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成
 Vue.use(ElementUI, { locale }) //使用elementUI
 Vue.use(LunarFullCalendar)
 Vue.use(Print)
-Vue.mixin(filter) // 混入公用filter
+Vue.mixin(filter) // 混入公用filter 组件方法复用，参考：https://www.cnblogs.com/wjw1014/p/11757452.html
+Vue.use(mavonEditor)
 
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission

@@ -124,8 +124,7 @@ export const constantRouterMap = [
       title: '官网地址',
       target: '_blank',
       icon: 'dashboard',
-      noCache: true,
-      badge: 'New'
+      noCache: true
     },
     children: []
   },
@@ -637,7 +636,25 @@ export const constantRouterMap = [
         name: 'element',
         component: resolve => require(['@/views/example_demo/vue_beau/var/element/index.vue'], resolve),
         meta: { title: '常用组件', icon: 'dashboard', noCache: true }
-      }
+      },
+      {
+        path: '/module/var/markdownEditor',
+        name: 'markdownEditor',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/markdownEditor/index.vue'], resolve),
+        meta: { title: 'markdown编辑器', icon: 'dashboard', noCache: true }
+      },
+      {
+        path: '/module/var/advertising',
+        name: 'advertising',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/advertising/index.vue'], resolve),
+        meta: { title: 'collapse走马灯广告', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        path: '/module/var/backTop',
+        name: 'backTop',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/backToTop/index.vue'], resolve),
+        meta: { title: 'BackTop返回顶部', icon: 'el-icon-s-grid', noCache: true }
+      },
     ]
   },
   // { //  首页

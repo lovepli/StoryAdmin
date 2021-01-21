@@ -14,7 +14,7 @@
 - 数据：axios、Mock
 - 地图：高德
 - 邮箱：vue-cookies 保存草稿，本项目中使用的是js-cookies插件 https://www.cnblogs.com/NanKe-Studying/p/13952558.html
-
+- markdown: mavon-editor
 ## 项目地址
 
 - [github](https://github.com/Wluyao/vue-element-manage)
@@ -118,13 +118,20 @@ npm install --registry=https://registry.npm.taobao.org
 
 #### 运行
 ```
-npm run devdev
+npm run dev
 ```
 
 #### 构建
 ```
 npm run build
 ```
+
+#### 新增依赖保存在package.json中
+```
+npm install xxx --save
+```
+
+ 
 ###*********************############
 
 > 以下为此框架所用模板，可供参考使用
