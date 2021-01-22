@@ -434,6 +434,12 @@ export const constantRouterMap = [
         component: () => import('@/views/example_demo/other/html-to-canvas'),
         meta: { title: 'htmlToCanvas', icon: 'el-icon-s-grid', noCache: true }
       },
+      { 
+        name: 'HtmlToCanvas2',
+        path: '/other/htmlToCanvas2',
+        component: resolve => require(['@/views/example_demo/other/html-to-canvas2'], resolve),
+        meta: { title: 'html2canvas截图', icon: 'el-icon-s-grid', noCache: true }
+      },
       {
         name: 'Copy',
         path: '/other/copy',
@@ -672,7 +678,19 @@ export const constantRouterMap = [
         name: 'verify',
         component: resolve => require(['@/views/example_demo/vue_beau/var/verify/index.vue'], resolve),
         meta: { title: '验证码', icon: 'el-icon-s-grid', noCache: true }
-      }
+      },
+      {
+        path: '/module/var/dplayer',
+        name: 'dplayer',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/dplayer/index.vue'], resolve),
+        meta: { title: '弹幕视频播放器dplayer', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        path: '/module/var/aplayer',
+        name: 'aplayer',
+        component: resolve => require(['@/views/example_demo/vue_beau/var/aplayer/index.vue'], resolve),
+        meta: { title: '音乐插件aplayer', icon: 'el-icon-s-grid', noCache: true }
+      },
 
     ]
   },

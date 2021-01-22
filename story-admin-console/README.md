@@ -17,6 +17,10 @@
 - markdown: mavon-editor
 - 视频播放器 : "zx-player": "^1.0.2",
 - 滑动验证码："zx-verify": "^0.0.2"
+- 视频播放插件：zx-player
+- 滚动条验证码：zx-verify
+- 弹幕播放插件: vue-dplayer
+- 音乐播放插件："vue-aplayer": "^1.6.1", 可能会报错，需要 npm install --save hls.js 添加"hls.js": "^0.14.17"依赖
 ## 项目地址
 
 - [github](https://github.com/Wluyao/vue-element-manage)
@@ -130,7 +134,7 @@ npm run build
 
 #### 新增依赖保存在package.json中
 ```
-npm install xxx --save
+npm install xxx --save 或者 npm install xxx -S
 ```
 
  
