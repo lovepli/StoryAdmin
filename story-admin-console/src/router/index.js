@@ -481,6 +481,12 @@ export const constantRouterMap = [
         path: '/other/worldCloud',
         component: () => import('@/views/example_demo/other/world-cloud'),
         meta: { title: 'worldCloud词云', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        name: 'JsonEditor',
+        path: '/other/jsonEditor',
+        component: () => import('@/views/example_demo/other/jsonEditor'),
+        meta: { title: 'jsonEditor格式化', icon: 'el-icon-s-grid', noCache: true }
       }
     ]
   },

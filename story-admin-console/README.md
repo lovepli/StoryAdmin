@@ -24,6 +24,7 @@
 - 词云: echarts-wordcloud
 - 三级分类树形结构插件:vue-table-with-tree-grid
 - 文本复制：
+- json格式化： "vue-json-editor": "^1.4.3", https://www.cnblogs.com/handk/p/4766271.html
 ## 项目地址
 
 - [github](https://github.com/Wluyao/vue-element-manage)
