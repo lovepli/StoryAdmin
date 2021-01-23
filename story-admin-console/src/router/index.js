@@ -434,7 +434,7 @@ export const constantRouterMap = [
         component: () => import('@/views/example_demo/other/html-to-canvas'),
         meta: { title: 'htmlToCanvas', icon: 'el-icon-s-grid', noCache: true }
       },
-      { 
+      {
         name: 'HtmlToCanvas2',
         path: '/other/htmlToCanvas2',
         component: resolve => require(['@/views/example_demo/other/html-to-canvas2'], resolve),
@@ -702,7 +702,7 @@ export const constantRouterMap = [
         name: 'aplayer',
         component: resolve => require(['@/views/example_demo/vue_beau/var/aplayer/index.vue'], resolve),
         meta: { title: '音乐插件aplayer', icon: 'el-icon-s-grid', noCache: true }
-      },
+      }
 
     ]
   },

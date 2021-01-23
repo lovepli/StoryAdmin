@@ -1,69 +1,73 @@
 
 <template>
   <div>
-    <div style="padding:10px 0;">
-      <a-player :music="songList" :showlrc="3" :narrow="false" theme="#b7daff" mode="circulation" v-if="flag" listmaxheight='96px' ref="player"></a-player>
+    <div style="padding:30px 200px;">
+      <aplayer
+        :music="{
+          title: '给我一个理由忘记',
+          artist: 'A-Lin',
+          src: 'http://music.163.com/song/media/outer/url?id=25640799.mp3',
+          pic: 'http://p2.music.126.net/0POVOSSjqgVoOUGc5haWBQ==/109951163392311918.jpg'
+        }"
+        :list="musicList"
+        style="margin-top:20px;margin-bottom:30px;"
+        autoplay
+      />
     </div>
-    
   </div>
 </template>
- 
+
 <script>
-import axios from 'axios'
-import VueAplayer from 'vue-aplayer'
- 
+import aplayer from 'vue-aplayer';
 export default {
+  name: 'Aplayer',
   components: {
-    //别忘了引入组件
-    'a-player': VueAplayer
+    // 别忘了引入组件
+    aplayer: aplayer
   },
-   name: "aplayer",
-  data () {
-  	return {
-      flag:false,
-      musicList:'',
-      songList:[]
-  	}
-  },
-  async mounted () {
-    console.log("hello world!")
-    //异步加载，先加载出player再使用
-   // await this.init();
-   // let aplayer = this.$refs.player.control;
-   // aplayer.play();
-  },
-  methods:{
-    async init () {
-      //这边是引入了axios然后使用的get请求的一个音乐列表接口
-      const getMusicList = url => axios.get(url);
-      //这边url随大家更改了
-      let url = '';
-      let data = await getMusicList(url);
-      //以下就是这边对请求的一个处理，看接口了
-      if(data && data.data.showapi_res_code==0){
-        this.musicList = data.data.showapi_res_body.pagebean.songlist;
-        
-        for(let i=0;i<=this.musicList.length;i++){
-          if(i<=9){
-            let obj={};
-            //url=>歌曲地址 title=>头部 author=>歌手 pic=>写真图片 lrc=>歌词
-            //其中url必须有，其他的都是非必须
-            obj.title = this.musicList[i].songname;
-            obj.author = this.musicList[i].singername;
-            obj.url = this.musicList[i].url;
-            obj.pic = this.musicList[i].albumpic_small;
-            obj.lrc = this.musicList[i].irl;
-            //把数据一个个push到songList数组中，在a-player标签中使用 :music="songList" 就OK了
-            this.songList.push(obj);
-          }
-        }
-        //因为是异步请求，所以一开始播放器中是没有歌曲的，所有给了个v-if不然会插件默认会先生成播放器，导致报错(这个很重要)
-        this.flag = true;
-      };
+  data() {
+    return {
+      musicList: [{
+        'artist': 'Eminem',
+        'lrc': '',
+        'title': 'Airplanes',
+        'src': 'http://music.163.com/song/media/outer/url?id=26714821.mp3',
+        'pic': 'http://p4.music.126.net/H9HJibEzTL34aIT6nsqKsQ==/5682276092402519.jpg'
+      }, {
+        'artist': 'Tinashe',
+        'lrc': '',
+        'title': 'Story of Us',
+        'src': 'http://music.163.com/song/media/outer/url?id=1403428061.mp3',
+        'pic': 'http://p3.music.126.net/l2XttTpEa14IEZtUsQX1HA==/109951164486978461.jpg'
+      }, {
+        'artist': 'Chris Brown',
+        'lrc': '',
+        'title': 'War For You',
+        'src': 'http://music.163.com/song/media/outer/url?id=30431534.mp3',
+        'pic': 'http://p3.music.126.net/YWkl1JXVKm7bOBAew72lGg==/109951163958771792.jpg'
+      }, {
+        'artist': 'Sarah Darling',
+        'lrc': '',
+        'title': 'Jack of Hearts',
+        'src': 'http://music.163.com/song/media/outer/url?id=19132440.mp3',
+        'pic': 'http://p4.music.126.net/4q3kpn5VLo3x7hVWttj0QA==/109951164802108652.jpg'
+      }, {
+        'artist': 'Benjamin Ingrosso',
+        'lrc': '',
+        'title': 'Costa Rica',
+        'src': 'http://music.163.com/song/media/outer/url?id=1372897252.mp3',
+        'pic': 'http://p4.music.126.net/mmm97zC81t73rToPFuXXnw==/109951164159882466.jpg'
+      }, {
+        'artist': 'Yo Trane',
+        'lrc': '',
+        'title': 'Affection',
+        'src': 'http://music.163.com/song/media/outer/url?id=1393553542.mp3',
+        'pic': 'http://p4.music.126.net/T_vdbfQPO4HE4zVE_8rgCQ==/109951164389023010.jpg'
+      }]
     }
   }
 }
 </script>
- 
+
 <style scoped>
 </style>
