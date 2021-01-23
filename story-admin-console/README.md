@@ -22,6 +22,7 @@
 - 弹幕播放插件: vue-dplayer
 - 音乐播放插件："vue-aplayer": "^1.6.1", 可能会报错，需要 npm install --save hls.js 添加"hls.js": "^0.14.17"依赖
 - 词云: echarts-wordcloud
+- 三级分类树形结构插件:vue-table-with-tree-grid
 - 文本复制：
 ## 项目地址
 

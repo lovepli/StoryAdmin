@@ -207,6 +207,12 @@ export const constantRouterMap = [
         meta: { title: '树形表格', icon: 'el-icon-s-grid' }
       },
       {
+        path: 'treeGridTable',
+        component: () => import('@/views/example_demo/Table/with-tree-grid-table'),
+        name: 'treeGridTable',
+        meta: { title: '多级树形表格', icon: 'el-icon-s-grid' }
+      },
+      {
         path: 'validate',
         component: () => import('@/views/example_demo/Table/validateTable'),
         name: 'validateTable',

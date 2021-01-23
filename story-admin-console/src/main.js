@@ -22,6 +22,7 @@ import LunarFullCalendar from 'vue-lunar-full-calendar'
 import Print from './utils/vue-print-nb/src' // import Print from 'vue-print-nb' //  这里引入的是本地的组件
 import filter from '@/utils/example_demo/filter' /* 引入公用filter */
 import echarts from 'echarts' // 引入图表
+import TreesTable from 'vue-table-with-tree-grid' // 引入分级树形表格
 
 // 全局引入Markdown 依赖
 import mavonEditor from 'mavon-editor'
@@ -36,6 +37,7 @@ Vue.use(LunarFullCalendar)
 Vue.use(Print)
 Vue.mixin(filter) // 混入公用filter 组件方法复用，参考：https://www.cnblogs.com/wjw1014/p/11757452.html
 Vue.use(mavonEditor)
+Vue.component('tree-table', TreesTable) // 树形表格组件
 
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission
