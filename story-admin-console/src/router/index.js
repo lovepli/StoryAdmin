@@ -463,6 +463,18 @@ export const constantRouterMap = [
         path: '/other/scrollbar',
         component: () => import('@/views/example_demo/other/scrollbar'),
         meta: { title: '滚动条', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        name: 'ElementIcon',
+        path: '/other/elementIcon',
+        component: () => import('@/views/example_demo/other/element_icon'),
+        meta: { title: 'element图标管理', icon: 'el-icon-s-grid', noCache: true }
+      },
+      {
+        name: 'WorldCloud',
+        path: '/other/worldCloud',
+        component: () => import('@/views/example_demo/other/world-cloud'),
+        meta: { title: 'worldCloud词云', icon: 'el-icon-s-grid', noCache: true }
       }
     ]
   },
@@ -481,12 +493,12 @@ export const constantRouterMap = [
       }
     ]
   },
-  { //  echarts图标组件
+  { //  echarts图表组件
     name: 'Echarts',
     path: '/echarts',
     component: Layout,
     redirect: '/echarts/bar',
-    meta: { title: 'echarts图标组件', icon: 'dashboard', noCache: true },
+    meta: { title: 'echarts图表组件', icon: 'dashboard', noCache: true },
     children: [
       {
         name: 'echarts_bar',

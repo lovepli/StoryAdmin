@@ -37,10 +37,10 @@ Vue.use(Print)
 Vue.mixin(filter) // 混入公用filter 组件方法复用，参考：https://www.cnblogs.com/wjw1014/p/11757452.html
 Vue.use(mavonEditor)
 
-
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission
 Vue.prototype.$echarts = echarts
+require('echarts-wordcloud') // 使用词云
 
 Vue.config.productionTip = false
 

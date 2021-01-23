@@ -12,12 +12,12 @@ export default {
   },
   created() {},
   mounted() {
-     setWaterMark('lovepli', '李二狗');
+    setWaterMark('lovepli', '李二狗');
   },
   updated() {},
   destroyed() {
     removeWatermark();
-},
+  },
   methods: {}
 };
 </script>
