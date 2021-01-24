@@ -7,6 +7,7 @@
       </el-header> -->
       <el-main id="main" :style="{backgroundColor:main_background_color}">
         <ChinaMapSpace />
+        <WorldMapSpace />
       </el-main>
     </el-container>
   </el-container>
@@ -14,7 +15,8 @@
 <script>
 export default {
   components: {
-    ChinaMapSpace: resolve => { require(['@/components/example_demo/euiAdmin/echarts/ChinaMapSpace'], resolve) }
+    ChinaMapSpace: resolve => { require(['@/components/example_demo/euiAdmin/echarts/ChinaMapSpace'], resolve) },
+    WorldMapSpace: resolve => { require(['@/components/example_demo/euiAdmin/echarts/WorldMapSpace'], resolve) }
   },
   data() {
     return {
