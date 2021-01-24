@@ -1,25 +1,25 @@
 <template>
   <div style="width:200px">
     <el-upload
-      class="avatar-uploader"
-      action
       :show-file-list="false"
       :auto-upload="false"
       :on-change="change_upload"
+      class="avatar-uploader"
+      action
     >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-      <i v-else class="el-icon-plus avatar-uploader-icon" id="icon"></i>
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" >
+      <i v-else id="icon" class="el-icon-plus avatar-uploader-icon"/>
     </el-upload>
-    <div v-show="image_link" id="link">后端链接：<br/>{{image_link}}</div>
+    <div v-show="image_link" id="link">后端链接：<br>{{ image_link }}</div>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      file: "",
-      imageUrl: "",
-      image_link: "",
+      file: '',
+      imageUrl: '',
+      image_link: ''
     };
   },
   methods: {
@@ -29,8 +29,8 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw);
       console.log(this.file)
       this.$message.success('上传图片成功')
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

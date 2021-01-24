@@ -2,20 +2,20 @@
   <!-- 文件拖拽上传 -->
   <div>
     <el-upload
-      class="drag-upload"
       :action="action"
       :name="name"
-      drag
-      multiple
       :file-list="value"
       :before-upload="beforeUpload"
       :before-remove="beforeRemove"
       :on-success="handleSuccess"
       :on-remove="handleRemove"
-      :on-preview="handlePreview">
-      <i class="drag-upload__icon" :class="loading ? 'el-icon-loading' : 'el-icon-upload ' "></i>
+      :on-preview="handlePreview"
+      class="drag-upload"
+      drag
+      multiple>
+      <i :class="loading ? 'el-icon-loading' : 'el-icon-upload ' " class="drag-upload__icon"/>
       <p class="drag-upload__text">点击或直接将文件拖到此处上传</p>
-      <p class="drag-upload__tip">文件大小不能超过{{sizeLimit}}MB！{{tip}}</p>
+      <p class="drag-upload__tip">文件大小不能超过{{ sizeLimit }}MB！{{ tip }}</p>
     </el-upload>
 
   </div>
@@ -23,74 +23,74 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      // 文件列表
-      value: {
-        type: Array,
-        default () {
-          return [];
-        }
-      },
-      //上传地址
-      action: {
-        required: true,
-        type: String,
-        default: '',
-      },
-      // 对应inpu控件的name属性，后端依据这个字段获取文件。
-      name: {
-        type: String,
-        default: 'file'
-      },
+export default {
+  props: {
+    // 文件列表
+    value: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
+    // 上传地址
+    action: {
+      required: true,
+      type: String,
+      default: ''
+    },
+    // 对应inpu控件的name属性，后端依据这个字段获取文件。
+    name: {
+      type: String,
+      default: 'file'
+    },
 
-      // 文件的大小限制,单位为MB
-      sizeLimit: {
-        type: Number,
-        default: 10
-      },
-      // 提示信息
-      tip: {
-        type: String,
-        default: ''
-      }
+    // 文件的大小限制,单位为MB
+    sizeLimit: {
+      type: Number,
+      default: 10
     },
-    data() {
-      return {
-        loading: false,
+    // 提示信息
+    tip: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      loading: false
+    }
+  },
+  methods: {
+    beforeUpload(file) {
+      const limit = file.size / 1024 / 1024 < this.sizeLimit;
+      if (!limit) {
+        this.$message.error(`上传的文件小不能超过 ${this.sizeLimit}MB!`);
       }
+      if (limit) {
+        this.loading = true;
+      }
+      return limit;
     },
-    methods: {
-      beforeUpload(file) {
-        const limit = file.size / 1024 / 1024 < this.sizeLimit;
-        if (!limit) {
-          this.$message.error(`上传的文件小不能超过 ${this.sizeLimit}MB!`);
-        }
-        if (limit) {
-          this.loading = true;
-        }
-        return limit;
-      },
-      beforeRemove(file, fileList) {
-        return this.$confirm(`确定删除“${ file.name }”？`);
-      },
-      handleSuccess(res, file, fileList) {
-        this.loading = false;
-        //根据实际开发情况处理响应
-        if (true) {
-          this.$emit('input', fileList);
-        } else {
-          this.$message.error(res.message || '上传失败');
-        }
-      },
-      handleRemove(file, fileList) {
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定删除“${file.name}”？`);
+    },
+    handleSuccess(res, file, fileList) {
+      this.loading = false;
+      // 根据实际开发情况处理响应
+      if (true) {
         this.$emit('input', fileList);
-      },
-      handlePreview(file) {
-        window.open(file.url);
+      } else {
+        this.$message.error(res.message || '上传失败');
       }
     },
+    handleRemove(file, fileList) {
+      this.$emit('input', fileList);
+    },
+    handlePreview(file) {
+      window.open(file.url);
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>

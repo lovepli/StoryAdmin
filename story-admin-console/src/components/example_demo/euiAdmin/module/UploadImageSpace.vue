@@ -29,14 +29,14 @@
 <script>
 export default {
   components: {
-    ImageUploadOne:resolve=>{require(['@/components/example_demo/euiAdmin/module/imageUpload/ImageUploadOne'],resolve)},
-    ImageUploadTwo:resolve=>{require(['@/components/example_demo/euiAdmin/module/imageUpload/ImageUploadTwo'],resolve)},
-    ImageUploadThree:resolve=>{require(['@/components/example_demo/euiAdmin/module/imageUpload/ImageUploadThree'],resolve)},
-    ImageUploadFour:resolve=>{require(['@/components/example_demo/euiAdmin/module/imageUpload/ImageUploadFour'],resolve)},
+    ImageUploadOne: resolve => { require(['@/components/example_demo/euiAdmin/module/imageUpload/ImageUploadOne'], resolve) },
+    ImageUploadTwo: resolve => { require(['@/components/example_demo/euiAdmin/module/imageUpload/ImageUploadTwo'], resolve) },
+    ImageUploadThree: resolve => { require(['@/components/example_demo/euiAdmin/module/imageUpload/ImageUploadThree'], resolve) },
+    ImageUploadFour: resolve => { require(['@/components/example_demo/euiAdmin/module/imageUpload/ImageUploadFour'], resolve) }
   },
   data() {
     return {};
-  },
+  }
 };
 </script>
 <style scoped>

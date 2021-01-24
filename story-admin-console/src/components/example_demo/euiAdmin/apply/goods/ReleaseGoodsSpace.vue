@@ -10,26 +10,26 @@
             <el-input
               v-model="form.goods_title"
               placeholder="请输入内容"
-            ></el-input>
+            />
           </el-form-item>
           <el-form-item label="商品介绍">
             <EditorSpace v-model="form.goods_adress" />
           </el-form-item>
           <el-form-item label="商品封面">
             <el-upload
-              class="upload-demo"
-              drag
-              action=""
               :on-change="image_change"
               :auto-upload="false"
               :show-file-list="false"
-              
+              class="upload-demo"
+              drag
+              action=""
+
             >
-              <i class="el-icon-upload" v-show="form.goods_src==''"></i>
-              <div class="el-upload__text" v-show="form.goods_src==''">
+              <i v-show="form.goods_src==''" class="el-icon-upload"/>
+              <div v-show="form.goods_src==''" class="el-upload__text">
                 将文件拖到此处，或<em>点击上传</em>
               </div>
-              <el-image :src="form.goods_src" v-show="form.goods_src!=''"></el-image>
+              <el-image v-show="form.goods_src!=''" :src="form.goods_src"/>
             </el-upload>
           </el-form-item>
           <el-form-item label="商品数量">
@@ -38,7 +38,7 @@
               :min="1"
               :max="1000"
               label="数值"
-            ></el-input-number>
+            />
           </el-form-item>
           <el-form-item label="商品价格">
             <el-input-number
@@ -46,8 +46,7 @@
               :min="1"
               :max="1000"
               label="数值"
-            ></el-input-number
-            >￥
+            />￥
           </el-form-item>
         </el-form>
         <div align="center">
@@ -60,25 +59,25 @@
 <script>
 import EditorSpace from '@/components/example_demo/euiAdmin/module/EditorSpace'
 export default {
-      components: { EditorSpace },
+  components: { EditorSpace },
   data() {
     return {
-      title: "商品发布中心",
+      title: '商品发布中心',
       form: {
-        goods_title: "",
-        goods_adress: "",
+        goods_title: '',
+        goods_adress: '',
         goods_surplus_num: 0,
         goods_price: 0,
-        goods_src: "",
-      },
+        goods_src: ''
+      }
     };
   },
   methods: {
     image_change(file) {
-      this.form.goods_src=URL.createObjectURL(file.raw)
+      this.form.goods_src = URL.createObjectURL(file.raw)
       console.log(file);
-      this.$message.success("上传图片成功");
-    },
-  },
+      this.$message.success('上传图片成功');
+    }
+  }
 };
 </script>

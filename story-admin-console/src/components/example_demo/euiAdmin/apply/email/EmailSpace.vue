@@ -28,78 +28,77 @@ import Cookies from 'js-cookie'
 export default {
   components: {
     SettingSpace: (resolve) => {
-      require(["@/components/example_demo/euiAdmin/apply/email/sub/SettingSpace"], resolve);
+      require(['@/components/example_demo/euiAdmin/apply/email/sub/SettingSpace'], resolve);
     },
     SendEmailSpace: (resolve) => {
-      require(["@/components/example_demo/euiAdmin/apply/email/sub/SendEmailSpace"], resolve);
+      require(['@/components/example_demo/euiAdmin/apply/email/sub/SendEmailSpace'], resolve);
     },
     EditorEmailSpace: (resolve) => {
-      require(["@/components/example_demo/euiAdmin/apply/email/sub/EditorEmailSpace"], resolve);
-    },
+      require(['@/components/example_demo/euiAdmin/apply/email/sub/EditorEmailSpace'], resolve);
+    }
   },
   data() {
     return {
-      email_title:'已发送邮件',
-      email_data: [],
+      email_title: '已发送邮件',
+      email_data: []
     };
+  },
+  mounted() {
+    this.send_email_data();
   },
   methods: {
     send_email_data() {
-      this.email_title='已发送邮件'
+      this.email_title = '已发送邮件'
       this.email_data = [
         {
           id: 1,
-          email_send_user_name: "张三",
-          to_email: "zhangsan@163.com",
-          to_email_title: "邮件测试标题",
-          send_email_time: "2020-10-13 15:02:52",
+          email_send_user_name: '张三',
+          to_email: 'zhangsan@163.com',
+          to_email_title: '邮件测试标题',
+          send_email_time: '2020-10-13 15:02:52'
         },
         {
           id: 1,
-          email_send_user_name: "张三",
-          to_email: "zhangsan@163.com",
-          to_email_title: "邮件测试标题",
-          send_email_time: "2020-10-13 15:02:52",
+          email_send_user_name: '张三',
+          to_email: 'zhangsan@163.com',
+          to_email_title: '邮件测试标题',
+          send_email_time: '2020-10-13 15:02:52'
         },
         {
           id: 1,
-          email_send_user_name: "张三",
-          to_email: "zhangsan@163.com",
-          to_email_title: "邮件测试标题",
-          send_email_time: "2020-10-13 15:02:52",
+          email_send_user_name: '张三',
+          to_email: 'zhangsan@163.com',
+          to_email_title: '邮件测试标题',
+          send_email_time: '2020-10-13 15:02:52'
         },
         {
           id: 1,
-          email_send_user_name: "张三",
-          to_email: "zhangsan@163.com",
-          to_email_title: "邮件测试标题",
-          send_email_time: "2020-10-13 15:02:52",
+          email_send_user_name: '张三',
+          to_email: 'zhangsan@163.com',
+          to_email_title: '邮件测试标题',
+          send_email_time: '2020-10-13 15:02:52'
         },
         {
           id: 1,
-          email_send_user_name: "张三",
-          to_email: "zhangsan@163.com",
-          to_email_title: "邮件测试标题",
-          send_email_time: "2020-10-13 15:02:52",
-        },
+          email_send_user_name: '张三',
+          to_email: 'zhangsan@163.com',
+          to_email_title: '邮件测试标题',
+          send_email_time: '2020-10-13 15:02:52'
+        }
       ];
     },
     // draft_email_data() {
     //   this.email_title='草稿'
     //   this.email_data =JSON.parse(this.$cookies.get('draft'))
     //   console.log(this.email_data)
-    // }, 
+    // },
 
-     draft_email_data() {
-      this.email_title='草稿'
-      this.email_data =JSON.parse(Cookies.get('draft'))
+    draft_email_data() {
+      this.email_title = '草稿'
+      this.email_data = JSON.parse(Cookies.get('draft'))
       console.log(this.email_data)
-    },
+    }
 
-
-  },
-  mounted() {
-    this.send_email_data();
-  },
+  }
 };
 </script>

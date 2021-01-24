@@ -4,7 +4,7 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui' // 引入element-ui的全部组件
 import './styles/element-variables.scss'
-// import 'element-ui/lib/theme-chalk/index.css' //element-ui的css
+import 'element-ui/lib/theme-chalk/index.css' // element-ui的css
 import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 
 import '@/styles/index.scss' // 全局自定义的css样式

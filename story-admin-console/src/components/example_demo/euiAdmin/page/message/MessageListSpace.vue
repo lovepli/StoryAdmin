@@ -2,23 +2,23 @@
   <div>
     <el-card shadow="never">
       <div slot="header">
-        <el-input placeholder="请输入要查询的留言" v-model="user_data" clearable style="width:500px"></el-input>
+        <el-input v-model="user_data" placeholder="请输入要查询的留言" clearable style="width:500px"/>
       </div>
       <div>
         <el-collapse accordion>
           <el-collapse-item v-for="(user,index) in user_list_data" :key="index">
             <template slot="title">
-              <el-avatar :src="user.user_avatar_src"></el-avatar>
-              {{user.user_pet_name}}
+              <el-avatar :src="user.user_avatar_src"/>
+              {{ user.user_pet_name }}
               <el-tag
-                size="small"
                 :type="user.user_message_state=='no'?'danger':'success'"
+                size="small"
                 style="margin-left:20px"
-              >{{user.user_message_state=='no'?'未回复':'已回复'}}</el-tag>
+              >{{ user.user_message_state=='no'?'未回复':'已回复' }}</el-tag>
             </template>
             <div>
-              <p style="word-break:break-all;">{{user.user_message_content}}</p>
-              <p style="color:#909399">留言时间：{{user.user_message_time}}</p>
+              <p style="word-break:break-all;">{{ user.user_message_content }}</p>
+              <p style="color:#909399">留言时间：{{ user.user_message_time }}</p>
             </div>
             <div style="margin-top:10px">
               <el-button
@@ -45,7 +45,7 @@
       </div>
     </el-card>
     <el-dialog :title="'正在回复《'+dialog_title+'》的留言'" :visible.sync="dialog_visible_state" align="center">
-      <el-input type="textarea" :rows="5" placeholder="请输入回复内容" v-model="reply_message"></el-input>
+      <el-input :rows="5" v-model="reply_message" type="textarea" placeholder="请输入回复内容"/>
       <el-button type="primary" style="margin-top:20px" @click="send">确认回复</el-button>
     </el-dialog>
   </div>
@@ -54,81 +54,81 @@
 export default {
   data() {
     return {
-      user_data: "",
+      user_data: '',
       dialog_visible_state: false,
-      dialog_title: "",
-      reply_message:'',
+      dialog_title: '',
+      reply_message: '',
       user_list_data: [
         {
           user_avatar_src:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          user_pet_name: "小明",
-          user_message_content: "这是第一条留言内容",
-          user_message_time: "2020/9/21 13:45:01",
-          user_message_state: "no",
+            'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          user_pet_name: '小明',
+          user_message_content: '这是第一条留言内容',
+          user_message_time: '2020/9/21 13:45:01',
+          user_message_state: 'no'
         },
         {
           user_avatar_src:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          user_pet_name: "李四",
+            'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          user_pet_name: '李四',
           user_message_content:
-            "如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。",
-          user_message_time: "2020/9/21 13:15:01",
-          user_message_state: "yes",
+            '如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。',
+          user_message_time: '2020/9/21 13:15:01',
+          user_message_state: 'yes'
         },
         {
           user_avatar_src:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          user_pet_name: "小明",
-          user_message_content: "这是第一条留言内容",
-          user_message_time: "2020/9/21 13:45:01",
-          user_message_state: "no",
+            'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          user_pet_name: '小明',
+          user_message_content: '这是第一条留言内容',
+          user_message_time: '2020/9/21 13:45:01',
+          user_message_state: 'no'
         },
         {
           user_avatar_src:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          user_pet_name: "李四",
+            'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          user_pet_name: '李四',
           user_message_content:
-            "如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。",
-          user_message_time: "2020/9/21 13:15:01",
-          user_message_state: "yes",
+            '如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。',
+          user_message_time: '2020/9/21 13:15:01',
+          user_message_state: 'yes'
         },
         {
           user_avatar_src:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          user_pet_name: "小明",
-          user_message_content: "这是第一条留言内容",
-          user_message_time: "2020/9/21 13:45:01",
-          user_message_state: "no",
+            'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          user_pet_name: '小明',
+          user_message_content: '这是第一条留言内容',
+          user_message_time: '2020/9/21 13:45:01',
+          user_message_state: 'no'
         },
         {
           user_avatar_src:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          user_pet_name: "李四",
+            'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          user_pet_name: '李四',
           user_message_content:
-            "如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。",
-          user_message_time: "2020/9/21 13:15:01",
-          user_message_state: "yes",
+            '如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。',
+          user_message_time: '2020/9/21 13:15:01',
+          user_message_state: 'yes'
         },
         {
           user_avatar_src:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          user_pet_name: "小明",
-          user_message_content: "这是第一条留言内容",
-          user_message_time: "2020/9/21 13:45:01",
-          user_message_state: "no",
+            'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          user_pet_name: '小明',
+          user_message_content: '这是第一条留言内容',
+          user_message_time: '2020/9/21 13:45:01',
+          user_message_state: 'no'
         },
         {
           user_avatar_src:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          user_pet_name: "李四",
+            'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          user_pet_name: '李四',
           user_message_content:
-            "如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。",
-          user_message_time: "2020/9/21 13:15:01",
-          user_message_state: "yes",
-        },
-        
-      ],
+            '如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。如果输入的文字没有空格，是连续性的，那么这个时候默认不会换行的，这个时候需要拖拉到右边查看内容。',
+          user_message_time: '2020/9/21 13:15:01',
+          user_message_state: 'yes'
+        }
+
+      ]
     };
   },
   methods: {
@@ -136,19 +136,18 @@ export default {
       this.dialog_visible_state = true;
       this.dialog_title = this.user_list_data[index].user_pet_name;
     },
-    send(){
-        this.$message.success("回复成功");
-        setTimeout(() => {
-         this.dialog_visible_state = false;
+    send() {
+      this.$message.success('回复成功');
+      setTimeout(() => {
+        this.dialog_visible_state = false;
       }, 1500);
-       
     },
     delete_message(index) {
-      this.$message.success("删除成功");
+      this.$message.success('删除成功');
       setTimeout(() => {
         this.user_list_data.splice(index, 1);
       }, 1500);
-    },
-  },
+    }
+  }
 };
 </script>

@@ -1,13 +1,13 @@
 <template>
   <transition name="fade">
     <div
-      class="rocket"
-      ref="rocket"
       v-show="visible"
+      ref="rocket"
+      class="rocket"
       @click.stop="clickRocket"
       @mouseenter="enterRocket"
       @mouseleave="leaveRocket"
-    ></div>
+    />
   </transition>
 </template>
 
@@ -17,7 +17,7 @@ import Animate from '@/utils/wangluyao/animate'
 
 export default {
   props: {
-    //滚动容器
+    // 滚动容器
     container: {
       type: String,
       default: '.inner-layout__page'
@@ -97,7 +97,7 @@ export default {
       }
       scroll(this.scrollElem, 0, 800)
       const animate = new Animate(this.$refs.rocket)
-      //设置火箭移动花费的时间比页面要慢点，然后在火箭运动结束后执行回调
+      // 设置火箭移动花费的时间比页面要慢点，然后在火箭运动结束后执行回调
       animate.start('bottom', window.innerHeight, 850, 'easeIn', callback)
     },
     enterRocket() {

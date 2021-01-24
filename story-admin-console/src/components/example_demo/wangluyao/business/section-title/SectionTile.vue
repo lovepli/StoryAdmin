@@ -1,19 +1,19 @@
 <template>
   <div class="section-title">
-    <span class="section-title__tag"></span>
-    <span class="section-title__name">{{name}}</span>
+    <span class="section-title__tag"/>
+    <span class="section-title__name">{{ name }}</span>
   </div>
 </template>
 
 <script>
-  export default {
-    props: {
-      name: {
-        type: String,
-        default: ''
-      },
+export default {
+  props: {
+    name: {
+      type: String,
+      default: ''
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

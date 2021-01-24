@@ -1,35 +1,35 @@
 <template>
   <div>
     <el-upload
-      action="#"
       :on-change="choose_file"
       :file-list="fileList"
-      list-type="picture-card"
       :auto-upload="false"
+      action="#"
+      list-type="picture-card"
       style="float:left"
     >
-      <i slot="default" class="el-icon-plus"></i>
+      <i slot="default" class="el-icon-plus"/>
       <div slot="file" slot-scope="{file}">
-        <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
+        <img :src="file.url" class="el-upload-list__item-thumbnail" alt >
         <span class="el-upload-list__item-actions">
           <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-            <i class="el-icon-zoom-in"></i>
+            <i class="el-icon-zoom-in"/>
           </span>
           <span v-if="!disabled" class="el-upload-list__item-delete" @click="image_down(file)">
-            <i class="el-icon-download"></i>
+            <i class="el-icon-download"/>
           </span>
           <span v-if="!disabled" class="el-upload-list__item-delete" @click="upload_image(file)">
-            <i class="el-icon-top"></i>
+            <i class="el-icon-top"/>
           </span>
           <span v-if="!disabled" class="el-upload-list__item-delete" @click="image_delete(file)">
-            <i class="el-icon-delete"></i>
+            <i class="el-icon-delete"/>
           </span>
         </span>
       </div>
     </el-upload>
-    <el-button type="primary" @click="upload_image_all" style="float:left;margin-left:20px">上传所有选择图片</el-button>
+    <el-button type="primary" style="float:left;margin-left:20px" @click="upload_image_all">上传所有选择图片</el-button>
     <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt />
+      <img :src="dialogImageUrl" width="100%" alt >
     </el-dialog>
   </div>
 </template>
@@ -37,11 +37,11 @@
 export default {
   data() {
     return {
-      dialogImageUrl: "",
+      dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
-      file: "",
-      fileList: [],
+      file: '',
+      fileList: []
     };
   },
   methods: {
@@ -73,7 +73,7 @@ export default {
       for (let index = 0; index < this.fileList.length; index++) {
         this.file = this.fileList[index];
       }
-    },
-  },
+    }
+  }
 };
 </script>

@@ -9,7 +9,7 @@
             type="success"
             icon="el-icon-plus"
             @click="add_article()"
-            >新增</el-button
+          >新增</el-button
           >
         </div>
       </div>
@@ -22,17 +22,17 @@
             <template slot="title">
               <i class="el-icon-notebook-2" />《{{ article.article_title }}》
               <el-tag
-                size="small"
                 :type="article.article_state == 2 ? 'danger' : 'success'"
+                size="small"
                 style="margin-left: 20px"
-                >{{ article.article_state == 2 ? "未发布" : "已发布" }}</el-tag
+              >{{ article.article_state == 2 ? "未发布" : "已发布" }}</el-tag
               >
             </template>
             <div>
               <div
                 style="word-break: break-all"
                 v-html="article.article_content"
-              ></div>
+              />
               <p style="color: #909399">
                 作者{{ article.article_author }} |作者：{{
                   article.article_editor_time
@@ -47,10 +47,9 @@
                 size="mini"
                 plain
                 style="margin-left: 10px"
-                @click="editor_article(index)"
                 icon="el-icon-edit"
-              >
-              </el-button>
+                @click="editor_article(index)"
+              />
               <el-button
                 type="success"
                 size="mini"
@@ -68,8 +67,7 @@
                 icon="el-icon-delete"
                 style="margin-left: 10px"
                 @click="delete_message(index)"
-              >
-              </el-button>
+              />
             </div>
           </el-collapse-item>
         </el-collapse>
@@ -81,7 +79,7 @@
             <el-input
               v-model="article_form.article_title"
               placeholder="请输入文章标题"
-            ></el-input>
+            />
           </el-form-item>
           <el-form-item label="文章内容">
             <EditorSpace v-model="article_form.article_content" />
@@ -90,7 +88,7 @@
             <el-input
               v-model="article_form.article_author"
               placeholder="请输入作者名称"
-            ></el-input>
+            />
           </el-form-item>
           <el-form-item label="文章状态">
             <el-radio-group v-model="article_form.article_state">
@@ -108,22 +106,22 @@
                 :key="rad.id"
                 :label="rad.label_name"
                 :value="rad.label"
-              ></el-option>
+              />
             </el-select>
           </el-form-item>
           <div align="center">
             <el-button type="warning" @click="cancel()">取消</el-button>
             <el-button
-              type="success"
               v-show="change_button_sate"
+              type="success"
               @click="save_article()"
-              >保存</el-button
+            >保存</el-button
             >
             <el-button
-              type="success"
               v-show="!change_button_sate"
+              type="success"
               @click="change_article()"
-              >确认修改</el-button
+            >确认修改</el-button
             >
           </div>
         </el-form>
@@ -134,109 +132,109 @@
 <script>
 import EditorSpace from '@/components/example_demo/euiAdmin/module/EditorSpace'
 export default {
-   components: { EditorSpace },
+  components: { EditorSpace },
   data() {
     return {
-      user_data: "",
-      title: "文章管理系统",
+      user_data: '',
+      title: '文章管理系统',
       editor_state: false,
       change_button_sate: false,
       article_form: {
-        article_title: "",
-        article_content: "",
-        article_author: "",
-        article_state: "2",
-        article_label: "",
+        article_title: '',
+        article_content: '',
+        article_author: '',
+        article_state: '2',
+        article_label: ''
       },
       radio: [
         {
           id: 1,
-          label: "科技",
-          label_name: "科技",
+          label: '科技',
+          label_name: '科技'
         },
         {
           id: 2,
-          label: "美食",
-          label_name: "美食",
+          label: '美食',
+          label_name: '美食'
         },
         {
           id: 3,
-          label: "文化",
-          label_name: "文化",
-        },
+          label: '文化',
+          label_name: '文化'
+        }
       ],
       article_data: [
         {
           id: 1,
-          article_title: "什么是Vue",
-          article_content: "这是“什么是Vue的内容，是直接可以显示的数据",
-          article_author: "Radish",
-          article_editor_time: "2020/9/21 13:45:01",
-          article_label: "美食",
-          article_state: "1",
-          article_comment_num: 5,
+          article_title: '什么是Vue',
+          article_content: '这是“什么是Vue的内容，是直接可以显示的数据',
+          article_author: 'Radish',
+          article_editor_time: '2020/9/21 13:45:01',
+          article_label: '美食',
+          article_state: '1',
+          article_comment_num: 5
         },
         {
           id: 2,
-          article_title: "让你快速了解EuiAdmin",
-          article_content: "快速让你了解EuiAdmin内容",
-          article_author: "李四",
-          article_editor_time: "2020/9/21 13:45:01",
-          article_label: "科技",
-          article_state: "2",
-          article_comment_num: 5,
-        },
-      ],
+          article_title: '让你快速了解EuiAdmin',
+          article_content: '快速让你了解EuiAdmin内容',
+          article_author: '李四',
+          article_editor_time: '2020/9/21 13:45:01',
+          article_label: '科技',
+          article_state: '2',
+          article_comment_num: 5
+        }
+      ]
     };
   },
   methods: {
     cancel() {
-      this.title = "文章管理系统";
+      this.title = '文章管理系统';
       this.editor_state = false;
     },
     add_article() {
-      this.title = "新增文章";
+      this.title = '新增文章';
       this.editor_state = true;
       this.change_button_sate = true;
     },
     save_article() {
       this.article_data.splice(0, 0, this.article_form);
-      this.$message.success("已打印表单数据，请您打开检查查看");
+      this.$message.success('已打印表单数据，请您打开检查查看');
       console.log(this.article_form);
-      this.title = "文章管理系统";
+      this.title = '文章管理系统';
       setTimeout(() => {
         this.editor_state = false;
       }, 1500);
     },
     editor_article(index) {
-      this.title = "正在修改《" + this.article_data[index].article_title + "》";
+      this.title = '正在修改《' + this.article_data[index].article_title + '》';
       this.article_form = this.article_data[index];
       this.editor_state = true;
       this.change_button_sate = false;
     },
     change_article() {
       console.log(this.article_form);
-      this.$message.success("已打印表单数据，请您打开检查查看");
-      this.title = "文章管理系统";
+      this.$message.success('已打印表单数据，请您打开检查查看');
+      this.title = '文章管理系统';
       setTimeout(() => {
         this.editor_state = false;
       }, 1500);
     },
-    reply_message(index){
-        this.$router.push({
-          path:'/apply/article/reply',
-          query:{
-            article_id:this.article_data[index].id,
-            article_title:this.article_data[index].article_title,
-          }
-        })
+    reply_message(index) {
+      this.$router.push({
+        path: '/apply/article/reply',
+        query: {
+          article_id: this.article_data[index].id,
+          article_title: this.article_data[index].article_title
+        }
+      })
     },
     delete_message(index) {
-      this.$message.success("删除成功");
+      this.$message.success('删除成功');
       setTimeout(() => {
         this.article_data.splice(index, 1);
       }, 1500);
-    },
-  },
+    }
+  }
 };
 </script>

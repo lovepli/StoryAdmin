@@ -29,14 +29,14 @@
 <script>
 export default {
   components: {
-    FileUploadOne:resolve=>{require(['@/components/example_demo/euiAdmin/module/fileUpload/FileUploadOne'],resolve)},
-    FileUploadTwo:resolve=>{require(['@/components/example_demo/euiAdmin/module/fileUpload/FileUploadTwo'],resolve)},
-    FileUploadThree:resolve=>{require(['@/components/example_demo/euiAdmin/module/fileUpload/FileUploadThree'],resolve)},
-    FileUploadFour:resolve=>{require(['@/components/example_demo/euiAdmin/module/fileUpload/FileUploadFour'],resolve)}
+    FileUploadOne: resolve => { require(['@/components/example_demo/euiAdmin/module/fileUpload/FileUploadOne'], resolve) },
+    FileUploadTwo: resolve => { require(['@/components/example_demo/euiAdmin/module/fileUpload/FileUploadTwo'], resolve) },
+    FileUploadThree: resolve => { require(['@/components/example_demo/euiAdmin/module/fileUpload/FileUploadThree'], resolve) },
+    FileUploadFour: resolve => { require(['@/components/example_demo/euiAdmin/module/fileUpload/FileUploadFour'], resolve) }
   },
-  data(){
-    return{
-      adress_one:'点击后自动上传，已经与后台成功交互'
+  data() {
+    return {
+      adress_one: '点击后自动上传，已经与后台成功交互'
     }
   }
 };

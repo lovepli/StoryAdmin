@@ -13,7 +13,7 @@
         <el-table-column prop="content" label="内容" />
       </el-table>
 
-     <!-- <el-badge :value="unreadCount" :max="99" >
+      <!-- <el-badge :value="unreadCount" :max="99" >
      <el-tooltip content="通知" effect="dark" placement="bottom">
       <el-button slot="reference"  type="text"  icon="el-icon-bell">
      </el-button>

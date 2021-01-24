@@ -10,7 +10,7 @@
       {{ content }}
     </div>
 
-    <div :class="ellipsisClass" :style="ellipsisStyle" ref="lineLimit" v-else>
+    <div v-else ref="lineLimit" :class="ellipsisClass" :style="ellipsisStyle">
       {{ text }}
     </div>
     <!-- </el-tooltip> -->

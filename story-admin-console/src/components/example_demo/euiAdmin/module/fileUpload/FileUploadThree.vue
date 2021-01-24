@@ -1,14 +1,14 @@
 <template>
   <div>
     <el-upload
-      class="upload-demo"
-      action
       :auto-upload="false"
       :show-file-list="false"
       :on-change="choose_file"
+      class="upload-demo"
+      action
       drag
     >
-      <i class="el-icon-upload"></i>
+      <i class="el-icon-upload"/>
       <div class="el-upload__text">
         将文件拖到此处自动上传，或
         <em>点击上传</em>
@@ -20,7 +20,7 @@
 export default {
   data() {
     return {
-      file: "",
+      file: ''
     };
   },
   methods: {
@@ -28,7 +28,7 @@ export default {
       this.file = file;
       this.$message.success('上传成功')
       console.log(file)
-    },
-  },
+    }
+  }
 };
 </script>

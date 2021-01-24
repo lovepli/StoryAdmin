@@ -2,7 +2,7 @@
   <div>
     <el-card shadow="never" class="card" style="min-height:70vh">
       <div slot="header" class="clearfix">
-        <span>动画 class名({{class_name}})</span>
+        <span>动画 class名({{ class_name }})</span>
         <el-button type="success" style="float:right" size="small" @click="setting_dialog_state = true">
           <i class="el-icon-setting" />
         </el-button>
@@ -17,26 +17,26 @@
               <el-menu-item
                 v-for="(ani,index) in class_data"
                 :key="index"
-                @click="class_name=ani.class_name+class_delay_time+class_speed+class_repeat_num"
                 :index="ani.class_name"
+                @click="class_name=ani.class_name+class_delay_time+class_speed+class_repeat_num"
               >
-                <i :class="ani.class_title_icon"></i>
-                <span slot="title">{{ani.class_title}}</span>
+                <i :class="ani.class_title_icon"/>
+                <span slot="title">{{ ani.class_title }}</span>
               </el-menu-item>
             </el-menu>
           </div>
         </el-col>
         <el-col :span="14" align="center">
           <div align="center">
-            <div id="animate_sapce" :class="class_name"></div>
+            <div id="animate_sapce" :class="class_name"/>
           </div>
         </el-col>
       </el-row>
       <div>
-          <el-link type="info" href="https://animate.style/" target="_blank">更多动画请参考Animate（单击我）</el-link>
+        <el-link type="info" href="https://animate.style/" target="_blank">更多动画请参考Animate（单击我）</el-link>
       </div>
     </el-card>
-    <el-dialog title="动画设置" :visible.sync="setting_dialog_state" width="30%">
+    <el-dialog :visible.sync="setting_dialog_state" title="动画设置" width="30%">
       <el-radio-group v-model="class_delay_time">
         <el-radio label>动画不延迟</el-radio>
         <el-radio label=" animate__delay-2s">动画延迟2秒</el-radio>
@@ -61,21 +61,21 @@
       </el-radio-group>
     </el-dialog>
     <!-- 新增动画 -->
-    <el-dialog title="新增动画" :visible.sync="add_dialog_state">
-     <el-form ref="form" :model="animate_form" label-width="100px">
-  <el-form-item label="动画列表图标">
-    <el-input v-model="animate_form.class_title_icon" placeholder="请输入动画列表图标"></el-input>
-  </el-form-item>
-  <el-form-item label="动画标题">
-    <el-input v-model="animate_form.class_title" placeholder="请输入动画标题"></el-input>
-  </el-form-item>
-  <el-form-item label="动画名称">
-    <el-input v-model="animate_form.class_name" placeholder="请输入动画名称"></el-input>
-  </el-form-item>
-  <div align="center">
-    <el-button type="success" @click="add_animate">确认新增</el-button>
-  </div>
-     </el-form>
+    <el-dialog :visible.sync="add_dialog_state" title="新增动画">
+      <el-form ref="form" :model="animate_form" label-width="100px">
+        <el-form-item label="动画列表图标">
+          <el-input v-model="animate_form.class_title_icon" placeholder="请输入动画列表图标"/>
+        </el-form-item>
+        <el-form-item label="动画标题">
+          <el-input v-model="animate_form.class_title" placeholder="请输入动画标题"/>
+        </el-form-item>
+        <el-form-item label="动画名称">
+          <el-input v-model="animate_form.class_name" placeholder="请输入动画名称"/>
+        </el-form-item>
+        <div align="center">
+          <el-button type="success" @click="add_animate">确认新增</el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -84,67 +84,67 @@ export default {
   data() {
     return {
       setting_dialog_state: false,
-      add_dialog_state:false,
-      animate_form:{
-          class_title_icon:'',
-          class_title:'',
-          class_name:'',
+      add_dialog_state: false,
+      animate_form: {
+        class_title_icon: '',
+        class_title: '',
+        class_name: ''
       },
-      class_name: "animate__animated animate__bounce",
-      class_delay_time: "",
-      class_speed: "",
-      class_repeat_num: " animate__repeat-1",
+      class_name: 'animate__animated animate__bounce',
+      class_delay_time: '',
+      class_speed: '',
+      class_repeat_num: ' animate__repeat-1',
       class_data: [
         {
-          class_title_icon: "el-icon-picture-outline-round",
-          class_title: "弹跳",
-          class_name: "animate__animated animate__bounce",
+          class_title_icon: 'el-icon-picture-outline-round',
+          class_title: '弹跳',
+          class_name: 'animate__animated animate__bounce'
         },
         {
-          class_title_icon: "el-icon-c-scale-to-original",
-          class_title: "闪烁",
-          class_name: "animate__animated animate__flash ",
+          class_title_icon: 'el-icon-c-scale-to-original',
+          class_title: '闪烁',
+          class_name: 'animate__animated animate__flash '
         },
         {
-          class_title_icon: "el-icon-mobile",
-          class_title: "脉冲",
-          class_name: "animate__animated animate__pulse ",
+          class_title_icon: 'el-icon-mobile',
+          class_title: '脉冲',
+          class_name: 'animate__animated animate__pulse '
         },
         {
-          class_title_icon: "el-icon-pie-chart",
-          class_title: "左右抖动",
-          class_name: "animate__animated animate__shakeX ",
+          class_title_icon: 'el-icon-pie-chart',
+          class_title: '左右抖动',
+          class_name: 'animate__animated animate__shakeX '
         },
         {
-          class_title_icon: "el-icon-data-analysis",
-          class_title: "上下抖动",
-          class_name: "animate__animated animate__shakeY ",
+          class_title_icon: 'el-icon-data-analysis',
+          class_title: '上下抖动',
+          class_name: 'animate__animated animate__shakeY '
         },
         {
-          class_title_icon: "el-icon-sort-down",
-          class_title: "自上入场",
-          class_name: "animate__animated animate__backInDown ",
+          class_title_icon: 'el-icon-sort-down',
+          class_title: '自上入场',
+          class_name: 'animate__animated animate__backInDown '
         },
         {
-          class_title_icon: "el-icon-sort-up",
-          class_title: "下滑退出",
-          class_name: "animate__animated animate__backOutDown ",
+          class_title_icon: 'el-icon-sort-up',
+          class_title: '下滑退出',
+          class_name: 'animate__animated animate__backOutDown '
         },
         {
-          class_title_icon: "el-icon-news",
-          class_title: "淡出",
-          class_name: "animate__animated animate__fadeOut ",
-        },
-      ],
+          class_title_icon: 'el-icon-news',
+          class_title: '淡出',
+          class_name: 'animate__animated animate__fadeOut '
+        }
+      ]
     };
   },
-  methods:{
-      add_animate(){
-          this.animate_form.class_name='animate__animated '+this.animate_form.class_name
-          this.class_data.splice(this.class_data.length,0,this.animate_form)
-          this.$message.success('新增成功')
-          this.add_dialog_state=false
-      }
+  methods: {
+    add_animate() {
+      this.animate_form.class_name = 'animate__animated ' + this.animate_form.class_name
+      this.class_data.splice(this.class_data.length, 0, this.animate_form)
+      this.$message.success('新增成功')
+      this.add_dialog_state = false
+    }
   }
 };
 </script>

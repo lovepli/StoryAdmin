@@ -15,12 +15,9 @@ const filterFieldByRow = (row, fields) => {
   return newRow;
 }
 
-
 const filterFieldByTable = (table, fields) => {
   return table.map(row => filterFieldByRow(row, fields))
 }
-
-
 
 /**
  * 新增/修改
@@ -35,7 +32,6 @@ const update = (table, row) => {
   }
 }
 
-
 /**
  * 单个删除/批量删除
  * @param {Array} ids   要删除的项的id组成的数组
@@ -47,7 +43,6 @@ const remove = (table, ids) => {
   })
 }
 
-
 /**
  * 根据id查找表的某一项
  */
@@ -55,11 +50,10 @@ const find = (table, id) => {
   return table.find(row => row.id === id);
 }
 
-
 export default {
   filterFieldByRow,
   filterFieldByTable,
   update,
   remove,
-  find,
+  find
 }
