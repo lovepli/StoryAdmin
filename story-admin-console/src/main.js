@@ -37,7 +37,7 @@ Vue.use(LunarFullCalendar)
 Vue.use(Print)
 Vue.mixin(filter) // 混入公用filter 组件方法复用，参考：https://www.cnblogs.com/wjw1014/p/11757452.html
 Vue.use(mavonEditor)
-Vue.component('tree-table', TreesTable) // 树形表格组件
+Vue.component('tree-table', TreesTable) // 引入使用树形表格组件，或者另一种写法Vue.use(TreesTable)
 
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission
