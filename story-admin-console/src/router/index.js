@@ -201,6 +201,12 @@ export const constantRouterMap = [
         meta: { title: '基础表格', icon: 'el-icon-s-grid' }
       },
       {
+        path: 'excelToTable',
+        component: () => import('@/views/example_demo/Table/excel-to-table'),
+        name: 'excelToTable',
+        meta: { title: 'excel导出为表格', icon: 'el-icon-s-grid' }
+      },
+      {
         path: 'tree',
         component: () => import('@/views/example_demo/Table/treeTable'),
         name: 'treeTable',
