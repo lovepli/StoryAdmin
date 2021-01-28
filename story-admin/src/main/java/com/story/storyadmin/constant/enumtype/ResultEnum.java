@@ -39,6 +39,7 @@ public enum ResultEnum {
     SERVER_ERROR(50000,"服务端错误"),
 
     UNKNOWN_EXCEPTION(10000, "未知异常"),
+    API_REQUEST_EXCEPTION(10001, "API接口请求失败!"),
 
     TIME_OUT(70001, "超时"),
 
