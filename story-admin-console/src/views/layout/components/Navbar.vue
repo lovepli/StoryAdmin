@@ -124,6 +124,7 @@ export default {
               window.location = process.env.ERP_LOGOUT_HREF
             } else {
               location.reload() // 为了重新实例化vue-router对象 避免bug
+              this.$message.success('退出登录成功！') // 前端处理登录成功进行的提示
             }
           })
         })
