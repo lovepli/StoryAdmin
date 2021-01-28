@@ -70,6 +70,7 @@ service.interceptors.response.use(response => {
      */
     console.log('service.interceptors.response res code=' + res.code)
     // 状态已过期 或者 HTTP 状态码为404
+    // 为什么过期了，这里的这个提示没有显示出来？？
     if(res.code === 60003){
       MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
         confirmButtonText: '重新登录',
@@ -78,8 +79,8 @@ service.interceptors.response.use(response => {
       }
     ).then(() => {
       store.dispatch('FedLogOut').then(() => {
-        // location.reload() // 为了重新实例化vue-router对象 避免bug
-        location.href = '/index';
+        location.reload() // 为了重新实例化vue-router对象,刷新页面, 避免bug
+       // location.href = '/index';
       })
     })
     } else if(res.code === 50000){
