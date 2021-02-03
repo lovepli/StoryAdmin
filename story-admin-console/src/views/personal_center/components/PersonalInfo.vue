@@ -18,7 +18,7 @@ export default {
       roles: []
     }
   },
-  // 动态计算属性
+  // 动态计算属性,计算属性的结果会被缓存，除非依赖的响应式 property 变化才会重新计算。注意，如果某个依赖 (比如非响应式 property) 在该实例范畴之外，则计算属性是不会被更新的。
   computed: {
     name() { return this.$store.getters.name }
     // roles() {

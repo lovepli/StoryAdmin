@@ -278,7 +278,7 @@ export default {
         children: [] // 子节点为空
       };
 
-      if (!data.children) { // 如果子节点不为空，设置为空
+      if (!data.children) { // 如果没有字节点，添加一个子节点
         this.$set(data, 'children', []);
       }
       // 添加临时子节点对象到菜单对象

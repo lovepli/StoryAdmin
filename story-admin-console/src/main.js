@@ -31,20 +31,22 @@ import 'mavon-editor/dist/css/index.css'
 // 全局注册指令和依赖
 import '@/directive'; // 引入指令，包含copy和拖动的对话框
 
-// 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成
-Vue.use(ElementUI, { locale }) // 使用elementUI
+// 通过全局方法 Vue.use() 安装 Vue.js 插件。它需要在你调用 new Vue() 启动应用之前完成
+Vue.use(ElementUI, { locale }) // 安装使用elementUI插件，调用 `ElementUI.install(Vue)`
 Vue.use(LunarFullCalendar)
 Vue.use(Print)
+// Vue.mixin 全局注册一个混入。混入也可以进行全局注册。使用时格外小心！一旦使用全局混入，它将影响每一个之后创建的 Vue 实例。使用恰当时，这可以用来为自定义选项注入处理逻辑。
+// 请谨慎使用全局混入，因为它会影响每个单独创建的 Vue 实例 (包括第三方组件)。大多数情况下，只应当应用于自定义选项，就像上面示例一样。推荐将其作为插件发布，以避免重复应用混入。
 Vue.mixin(filter) // 混入公用filter 组件方法复用，参考：https://www.cnblogs.com/wjw1014/p/11757452.html
-Vue.use(mavonEditor)
-Vue.component('tree-table', TreesTable) // 引入使用树形表格组件，或者另一种写法Vue.use(TreesTable)
+Vue.use(mavonEditor) // 
+Vue.component('tree-table', TreesTable) // Vue.component 全局注册组件,注册树形表格组件为全局组件，注册还会自动使用给定的 id 设置组件的名称,局部注册组件就是到需要的vue页面中import组件
 
 // 全局的常量
 Vue.prototype.hasPerm = hasPermission
 Vue.prototype.$echarts = echarts
 require('echarts-wordcloud') // 使用词云
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false //阻止向控制台打印启动生产消息
 
 // 全局方法挂载
 Vue.prototype.$getById = getById
@@ -58,7 +60,7 @@ new Vue({
   // 为了在 Vue 组件中访问 this.$store property，你需要为 Vue 实例提供创建好的 store。Vuex 提供了一个从根组件向所有子组件，以 store 选项的方式“注入”该 store 的机制：
   // 通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到
   store, // 这样就能全局使用vuex了,Vuex是一个专为Vue.js 应用程序开发的状态管理模式。主要方便用于状态记录以及各组件通信。
-  render: h => h(App) // 渲染函数render, 运行时构建
+  render: h => h(App) // 渲染函数render, 运行时构建   // 将 h 作为 createElement 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的，如果在作用域中 h 失去作用，在应用中会触发报错。
 })
 
 // VUE基础语法复习：https://docs.tumo.tycoding.cn/#/docs/vue/vue-2
@@ -121,9 +123,10 @@ new Vue({
 // {{ 过滤器名称 | function }}
 // 定义:
 // Vue提供了两种方式创建过滤器：
-// 1、全局过滤器
+// 1、全局过滤器 https://cn.vuejs.org/v2/guide/filters.html
 // Vue.filter('过滤器名称', function(){}) ,Vue提供的全局过滤器，直接使用Vue调用，而不是定义在Vue实例中
-// 2、私有过滤器, 私有过滤器和全局过滤器用法基本相同，仅仅是作用于不同而已。
+// Vue.js 允许你自定义过滤器，可被用于一些常见的文本格式化。过滤器可以用在两个地方：双花括号插值和 v-bind 表达式 (后者从 2.1.0+ 开始支持)。过滤器应该被添加在 JavaScript 表达式的尾部，由“管道”符号指示：
+// 2、局部过滤器, 私有过滤器和全局过滤器用法基本相同，仅仅是作用于不同而已。
 // new Vue()({
 //   el: '',
 //   data: {},

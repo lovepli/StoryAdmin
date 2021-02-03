@@ -1,7 +1,8 @@
-/* 公用的filter集合，使用mixin的方式 */
+/* 公用的filter集合，使用mixin混入的方式 */
 import common from '@/utils/example_demo/common'
 
 export default {
+  // 局部过滤器
   filters: {
     // 格式化金钱
     formatUSD(val, currency) {

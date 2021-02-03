@@ -27,6 +27,7 @@ Vue.use(Vuex)
 // 由于使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store 对象就有可能变得相当臃肿。
 // 为了解决以上问题，Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割：
 // 这里（创建了）一个包含了modules文件夹（包含子目录）下面的，所有文件名以 `.js` 结尾的、能被 require 请求到的文件的上下文。
+// require.context：基础组件的自动化全局注册, 三个参数分别为 其组件目录的相对路径、是否查询其子目录、匹配基础组件文件名的正则表达式
 const modulesFiles = require.context('./modules', true, /\.js$/)
 
 // you do not need `import app from './modules/app'`

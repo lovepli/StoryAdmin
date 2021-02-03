@@ -29,7 +29,7 @@ export default {
     focus(el, { value }, { context }) {
       if (value) {
         context.$nextTick(() => {
-          el.focus()
+          el.focus() // // 聚焦元素
         })
       }
     }

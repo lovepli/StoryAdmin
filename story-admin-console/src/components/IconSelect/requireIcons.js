@@ -1,4 +1,4 @@
-
+// require.context：基础组件的自动化全局注册
 const req = require.context('../../assets/icons/svg', false, /\.svg$/)
 const requireAll = requireContext => requireContext.keys()
 

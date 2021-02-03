@@ -20,6 +20,7 @@
     </div>
     <el-steps :active="active" align-center>
       <el-step>
+        <!-- 具名插槽 slot -->
         <div slot="title">
           <span v-if="isSignIn">已签到</span>
           <span v-else>未签到</span>
@@ -77,8 +78,10 @@ export default {
       currentTime: new Date()
     };
   },
+  // computed 计算属性的结果会被缓存，除非依赖的响应式 property 变化才会重新计算。注意，如果某个依赖 (比如非响应式 property) 在该实例范畴之外，则计算属性是不会被更新的。
   computed: {
     isSignIn() {
+      // 值改变了，动态进行改变，相当于监听到了值改变了，然后立即调用isSignIn方法
       return this.attendance != null;
     },
     isSignOut() {

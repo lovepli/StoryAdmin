@@ -27,6 +27,7 @@
             <span slot-scope="{ node, data }" class="custom-tree-node">
               <span>{{ node.label }}</span>
               <span>
+                <!--在父级组件监听这个loadData事件的时候，我们可以通过 $event 访问到被抛出的这个值，如果这个事件处理函数是一个方法，那么这个值将会作为第一个参数传入这个方法  -->
                 <el-button
                   v-show="data.id==0"
                   type="text"
@@ -187,9 +188,16 @@ export default {
         parentName: data.label,
         children: []
       };
-
+      // 如果没有字节点，添加一个子节点
       if (!data.children) {
-        this.$set(data, 'children', []);
+      // 使用 Vue.set(object, propertyName, value) 方法向嵌套对象添加响应式 property,例如：Vue.set(vm.someObject, 'b', 2)
+      // 还可以使用 vm.$set 实例方法，这也是全局 Vue.set 方法的别名：this.$set(this.someObject,'b',2)
+        // vue响应式原理的使用
+        this.$set(data, 'children', []); // 将data对象添加property属性为"children",值为null的数组
+        // 
+        // 有时你可能需要为已有对象赋值多个新 property，比如使用 Object.assign() 或 _.extend()。但是，这样添加到对象上的新 property 不会触发更新。在这种情况下，你应该用原对象与要混合进去的对象的 property 一起创建一个新的对象。
+        // 代替 `Object.assign(this.someObject, { a: 1, b: 2 })`
+        //this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
       }
       data.children.push(newChild);
       this.modifyVisible = true;

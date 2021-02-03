@@ -105,7 +105,7 @@ import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 
 export default {
   name: 'Files',
-  // eslint-disable-next-line vue/require-prop-types
+  // props 简单语法 。props 可以是简单的数组，或者使用对象作为替代，对象允许配置高级选项，如类型检测、自定义验证和设置默认值。这里是数组形式
   props: ['personal'],
   data() {
     return {

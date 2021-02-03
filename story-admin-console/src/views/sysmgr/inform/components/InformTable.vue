@@ -25,6 +25,13 @@
       :filter-method="filterTag"
       filter-placement="bottom-end"
       >
+      <!-- 作用域插槽 slot-scope-->
+      <!-- slot-scope 的值可以接收任何有效的可以出现在函数定义的参数位置上的 JavaScript 表达式。这意味着在支持的环境下 (单文件组件或现代浏览器)，你也可以在表达式中使用 ES2015 解构，如下 -->
+       <!-- 
+         <span slot-scope="{ msg }">
+        {{ msg }}
+        </span>
+         -->
         <template slot-scope="{row}">
           <el-tag :type="statusType[row.status]" size="mini">
             {{ statusLabel[row.status] }}

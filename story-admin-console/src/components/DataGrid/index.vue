@@ -83,6 +83,9 @@ export default {
   // 单向数据流：所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。
   // 这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。
   // 额外的，每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值。这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告
+
+  //官方文档： props 可以是数组或对象，用于接收来自父组件的数据。props 可以是简单的数组，或者使用对象作为替代，对象允许配置高级选项，如类型检测、自定义验证和设置默认值。这里显然是一个对象
+  // 在组件实例中访问url、dataName、searchHandlerVisibleSet...这些值，就像访问 data 中的值一样！！！
   props: { // 获取到<data-grid></data-grid> 组件内url和dataName和searchHandlerVisibleSet的值，即得到父组件中传过来的值
     url: {}, // 后端访问列表的api的url地址
     dataName: {}, // 查询参数对象 在<data-grid></data-grid>组件中对应data-name下划线命名方式
@@ -93,8 +96,8 @@ export default {
     },
     // 系统日志有用到
     filterStatus: { // 查询条件验证通过状态，在<data-grid></data-grid>组件中对应filter-status下划线命名方式
-      default: true,
-      type: Boolean
+      default: true, //为该 prop 指定一个默认值
+      type: Boolean // type:可以是下列原生构造函数中的一种：String、Number、Boolean、Array、Object、Date、Function、Symbol、任何自定义构造函数、或上述内容组成的数组。会检查一个 prop 是否是给定的类型，否则抛出警告。
     }
   },
   data() {
@@ -134,6 +137,7 @@ export default {
       // 触发一个dataRest名字的事件，触发的事件名dataRest需要完全匹配监听这个事件所用的名称，监听这个名字的事件是@dataRest
       // 触发事件that.$emit('dataRest'); 对应的监听事件@dataRest="onDataRest"
       // 现在，你已经知道了 $emit 的用法，它可以被 v-on 侦听
+      // 官方说明：父级组件可以像处理 native DOM 事件一样通过 v-on 监听子组件实例的任意事件,同时子组件可以通过调用内建的 $emit 方法并传入事件名称来触发一个事件,有了这个 v-on 监听器，父级组件就会接收该事件并更新
       that.$emit('dataRest', undefined);
       return false;
     },
