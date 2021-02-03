@@ -38,10 +38,10 @@ export default {
       avatarUrl: defaultAvatar
     }
   },
+  // watch：在选项参数中指定 immediate: true 将立即以表达式的当前值触发回调
   watch: {
-
     image: {
-      immediate: true,
+      immediate: true, // 立即以 `image` 的当前值触发回调
       handler(val) {
         if (val === undefined) {
           this.avatarUrl = defaultAvatar

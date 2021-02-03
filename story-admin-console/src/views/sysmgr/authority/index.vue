@@ -194,10 +194,12 @@ export default {
       // 还可以使用 vm.$set 实例方法，这也是全局 Vue.set 方法的别名：this.$set(this.someObject,'b',2)
         // vue响应式原理的使用
         this.$set(data, 'children', []); // 将data对象添加property属性为"children",值为null的数组
-        // 
+        // 官方解释vm.$set：向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新。它必须用于向响应式对象上添加新 property，因为 Vue 无法探测普通的新增 property (比如 this.myObject.newProperty = 'hi')
+        // vm.$delete:删除对象的 property。如果对象是响应式的，确保删除能触发更新视图。这个方法主要用于避开 Vue 不能检测到 property 被删除的限制，但是你应该很少会使用它。
+
         // 有时你可能需要为已有对象赋值多个新 property，比如使用 Object.assign() 或 _.extend()。但是，这样添加到对象上的新 property 不会触发更新。在这种情况下，你应该用原对象与要混合进去的对象的 property 一起创建一个新的对象。
         // 代替 `Object.assign(this.someObject, { a: 1, b: 2 })`
-        //this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
+        // this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
       }
       data.children.push(newChild);
       this.modifyVisible = true;

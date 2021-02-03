@@ -1,6 +1,8 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
+      <!-- 知识点：事件处理--内联处理器中的方法 -->
+      <!-- 有时也需要在内联语句处理器中访问原始的 DOM 事件。可以用特殊变量 $event 把它传入方法： -->
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
@@ -178,7 +180,9 @@ export default {
         }
       }
     },
+    // 内联处理器中的方法
     openMenu(tag, e) {
+      // 现在我们可以访问原生事件对象
       const menuMinWidth = 105
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
       const offsetWidth = this.$el.offsetWidth // container width

@@ -123,7 +123,12 @@ export default {
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
-       console.log(this.$el.textContent) // => 页面显示的文本内容未更新
+      // this.$el 表示Vue 实例使用的根 DOM 元素 、
+      // this.$parent表示父实例，如果当前实例有的话、
+      // this.$root当前组件树的根 Vue 实例。如果当前实例没有父实例，此实例将会是其自己。
+      // 访问父级组件实例:和 $root 类似，$parent property 可以用来从一个子组件访问父组件的实例。它提供了一种机会，可以在后期随时触达父级组件，以替代将数据以 prop 的方式传入子组件的方式
+      // this.$children当前实例的直接子组件。需要注意 $children 并不保证顺序，也不是响应式的。如果你发现自己正在尝试使用 $children 来进行数据绑定，考虑使用一个数组配合 v-for 来生成子组件，并且使用 Array 作为真正的来源
+      console.log(this.$el.textContent) // => 页面显示的文本内容未更新
       this.$nextTick(() => {
         console.log(this.$el.textContent) // => '页面显示的文本内容已更新
         this.$refs['dataForm'].clearValidate()
@@ -144,7 +149,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       console.log(this.$el.textContent) // => 'create' 页面显示的文本内容未更新
-     //Vue.nextTick( [callback, context] )  在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+      // Vue.nextTick( [callback, context] )  在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
       this.$nextTick(() => {
         console.log(this.$el.textContent) // => 'update' 页面显示的文本内容已更新
         this.$refs['dataForm'].clearValidate()

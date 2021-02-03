@@ -330,8 +330,8 @@ export default {
       this.uploadLoading = true;
       var that = this;
       setTimeout(function() {
-      // eslint-disable-next-line eqeqeq
-        if (that.$refs.upload.$children[0].fileList.length == 1) {
+      // this.$children当前实例的直接子组件。需要注意 $children 并不保证顺序，也不是响应式的。如果你发现自己正在尝试使用 $children 来进行数据绑定，考虑使用一个数组配合 v-for 来生成子组件，并且使用 Array 作为真正的来源
+        if (that.$refs.upload.$children[0].fileList.length === 1) {
           that.$refs.upload.submit();
         } else {
           that.uploadLoading = false;

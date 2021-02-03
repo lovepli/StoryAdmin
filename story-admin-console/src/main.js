@@ -101,11 +101,26 @@ new Vue({
 // 2、v-show的特点：每次不会重建进行DOM的删除和创建操作，只是切换了元素的display:none样式，具有较高的初始渲染消耗（即每次都只是将元素隐藏了，并没有真正的删除掉）
 
 // 事件修饰符
-// .stop 阻止冒泡
+// .stop 阻止单击事件继续传播
 // .prevent 阻止默认事件
 // .capture 添加时间侦听器时使用时间捕获模式
 // .self 只当事件在该元素本身（比如不是子元素）触发时触发回调
 // .once 事件只触发一次
+// .passive
+
+// 按键修饰符
+// .enter
+// .tab
+// .delete (捕获“删除”和“退格”键)
+// .esc
+// .space
+// .up
+// .down
+// .left
+// .right
+// 在监听键盘事件时，我们经常需要检查详细的按键。Vue 允许为 v-on 在监听键盘事件时添加按键修饰符
+// 只有在 `key` 是 `Enter` 时调用 `vm.submit()`
+// <input v-on:keyup.enter="submit"></input>
 
 // 外联样式
 // 1、数组 <h2 :class="['italic','color']">涂陌</h2> 其中的italic、color是自定义的类名，需在外部定义CSS样式

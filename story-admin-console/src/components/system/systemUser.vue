@@ -109,7 +109,9 @@ export default {
       selectCurentUserId: undefined
     }
   },
+  // 一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个 property。
   watch: {
+    //  该回调将会在侦听开始之后被立即调用
     value: {
       immediate: true,
       handler(val) {

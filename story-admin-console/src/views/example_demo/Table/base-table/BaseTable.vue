@@ -76,6 +76,8 @@ export default {
     }
   },
   watch: {
+    // 观察 Vue 实例上的一个表达式或者一个函数计算结果的变化。回调函数得到的参数为新值和旧值。表达式只接受简单的键路径。对于更复杂的表达式，用一个函数取代。
+    // 注意：在变更 (不是替换) 对象或数组时，旧值将与新值相同，因为它们的引用指向同一个对象/数组。Vue 不会保留变更之前值的副本。
     colOptions(newVal, oldVal) {
       if (newVal) { // 如果有值发生变化，即多选框的已选项变化
         var arr = this.colSelect.filter(i => newVal.indexOf(i) < 0) 	// 未选中
