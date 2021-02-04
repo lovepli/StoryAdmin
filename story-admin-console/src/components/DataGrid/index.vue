@@ -59,8 +59,9 @@
       <slot name="body"/>
     </el-table>
     <!-- 分页组件 -->
-    <!--:page.sync 是v-on:update:page的简写 是对应自定义组件pagination中触发事件this.$emit('update:page')事件对监听  -->
-    <!--:limit.sync 是v-on:update:limit的简写 是对应自定义组件pagination中触发事件this.$emit('update:limit')事件对监听  -->
+    <!-- .sync (2.3.0+) 语法糖，会扩展成一个更新父组件绑定值的 v-on 侦听器。能够实现父子组件双向绑定 -->
+    <!--:page.sync 是v-on:update:page的简写(语法糖：@update:page) 是对应自定义组件pagination中触发事件this.$emit('update:page')事件对监听  -->
+    <!--:limit.sync 是v-on:update:limit的简写(语法糖：@update:limit)  是对应自定义组件pagination中触发事件this.$emit('update:limit')事件对监听  -->
     <pagination
       v-show="total>0"
       :total="total"
@@ -138,6 +139,15 @@ export default {
       // 触发事件that.$emit('dataRest'); 对应的监听事件@dataRest="onDataRest"
       // 现在，你已经知道了 $emit 的用法，它可以被 v-on 侦听
       // 官方说明：父级组件可以像处理 native DOM 事件一样通过 v-on 监听子组件实例的任意事件,同时子组件可以通过调用内建的 $emit 方法并传入事件名称来触发一个事件,有了这个 v-on 监听器，父级组件就会接收该事件并更新
+      // vm.$on用法：监听当前实例上的自定义事件。事件可以由 vm.$emit 触发。回调函数会接收所有传入事件触发函数的额外参数。例子如下：
+      // vm.$on('test', function (msg) {
+      //   console.log(msg)
+      // })
+      // vm.$emit('test', 'hi')
+      // // => "hi"
+      // vm.$once用法：监听一个自定义事件，但是只触发一次。一旦触发之后，监听器就会被移除。
+      // vm.$off用法： 移除自定义事件监听器。 1、如果没有提供参数，则移除所有的事件监听器；2、如果只提供了事件，则移除该事件所有的监听器；3、如果同时提供了事件与回调，则只移除这个回调的监听器。
+      // vm.$emit用法： 触发当前实例上的事件。附加参数都会传给监听器回调。
       that.$emit('dataRest', undefined);
       return false;
     },

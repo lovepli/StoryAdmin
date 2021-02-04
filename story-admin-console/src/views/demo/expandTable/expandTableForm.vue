@@ -145,13 +145,18 @@ export default {
       })
     },
     handleUpdate(id) {
+      // 1、 修改数据
       this.resetTemp()
-      this.dialogStatus = 'update'
+      this.dialogStatus = 'update' 
       this.dialogFormVisible = true
+      // 2、DOM 还没有更新
       console.log(this.$el.textContent) // => 'create' 页面显示的文本内容未更新
-      // Vue.nextTick( [callback, context] )  在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+      // Vue.nextTick( [callback, context] )用法： 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+      // vm.$nextTick( [callback] ) 用法：将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。它跟全局方法 Vue.nextTick 一样，不同的是回调的 this 自动绑定到调用它的实例上。
       this.$nextTick(() => {
+        // 3、 DOM 现在更新了
         console.log(this.$el.textContent) // => 'update' 页面显示的文本内容已更新
+        // 3、`this` 绑定到当前实例
         this.$refs['dataForm'].clearValidate()
       })
       const params = {};

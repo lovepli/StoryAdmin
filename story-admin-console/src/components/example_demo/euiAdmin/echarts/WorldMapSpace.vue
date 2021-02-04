@@ -1,5 +1,11 @@
 <template>
   <div class="echarts">
+    <!-- Class 与 Style 绑定 -->
+    <!-- 对象语法:我们可以传给 v-bind:class 一个对象，以动态地切换 class： -->
+    <!--  v-bind指令绑定 HTML Class :class="className" :style="{height:height,width:width}" -->
+    <!-- v-bind:class 指令也可以与普通的 class attribute 共存。 -->
+    <!-- v-bind:style 绑定内联样式 -->
+    <!-- v-bind:style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。CSS property 名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用引号括起来) 来命名 -->
     <div ref="myEchart" :class="className" :id="id" :style="{height:height,width:width}"/>
   </div>
 </template>

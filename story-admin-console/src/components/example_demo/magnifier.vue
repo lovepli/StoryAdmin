@@ -110,6 +110,7 @@ export default {
     this.itemWidth = (this.middleImgWidth - 50) / 4;
   },
   mounted() {
+    // 注意 mounted 不会保证所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以在 mounted 内部使用 vm.$nextTick：
     this.$nextTick(() => {
       // 容器的高
       const imgWidth = this.middleImgHeight + this.thumbnailHeight + 20;

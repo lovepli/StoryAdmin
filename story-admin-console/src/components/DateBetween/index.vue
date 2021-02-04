@@ -1,4 +1,6 @@
 <template>
+<!-- Class 与 Style 绑定 -->
+<!-- 绑定 HTML Class :class="dateClass"完全写法为 v-bind:class="dateClass" -->
   <el-date-picker
     v-model="myValue"
     :start-placeholder="`${start}`"

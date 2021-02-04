@@ -29,6 +29,14 @@
               >
             </template>
             <div>
+              <!-- 双大括号会将数据解释为普通文本，而非 HTML 代码。为了输出真正的 HTML，你需要使用 v-html -->
+              <!-- 指令v-html用法：更新元素的 innerHTML。注意：内容按普通 HTML 插入 - 不会作为 Vue 模板进行编译。如果试图使用 v-html 组合模板，可以重新考虑是否通过使用组件来替代。 -->
+              <!-- 例子如下： -->
+              <!-- 
+                <p>Using mustaches: {{ rawHtml }}</p>
+                <p>Using v-html directive: <span style="color:red" v-html="rawHtml"></span></p> 
+              -->
+              <!-- 这个 span 的内容将会被替换成为 property 值 rawHtml，直接作为 HTML——会忽略解析 property 值中的数据绑定。注意，你不能使用 v-html 来复合局部模板，因为 Vue 不是基于字符串的模板引擎。反之，对于用户界面 (UI)，组件更适合作为可重用和可组合的基本单位。 -->
               <div
                 style="word-break: break-all"
                 v-html="article.article_content"

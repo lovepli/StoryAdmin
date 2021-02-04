@@ -5,6 +5,7 @@
     type="info"
     icon="el-icon-download"
     @click="handleExport">
+    <!-- 插槽 -->
     <slot/>
   </el-button>
 </template>

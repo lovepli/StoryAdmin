@@ -5,9 +5,11 @@
         <el-card shadow="never">
           <div slot="header" class="clearfix">
             <span>
+              <!-- v-bind:class 绑定 HTML Class -->
               <i :class="car.card_title_icon" />
               {{ car.card_title }}
             </span>
+              <!-- v-bind:style 绑定内联样式 -->
             <div id="cycle" :style="{backgroundColor:car.card_cycle_back_color}">{{ car.card_cycle }}</div>
           </div>
           <div>

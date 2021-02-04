@@ -1,6 +1,17 @@
 <template>
   <div class="form-dynamic">
     <el-form ref="form" :model="form" label-position="top">
+<!-- vue内置组件transition-group -->
+<!-- Props: -->
+      <!-- 1、tag - string，默认为 span -->
+      <!-- 2、move-class - 覆盖移动过渡期间应用的 CSS 类 -->
+      <!-- 3、除了 mode，其他 attribute 和 <transition> 相同 -->
+<!-- 事件：事件和 <transition> 相同 -->
+<!-- 用法：-->
+<!-- 1、<transition-group> 元素作为多个元素/组件的过渡效果。<transition-group> 渲染一个真实的 DOM 元素。默认渲染 <span>，可以通过 tag attribute 配置哪个元素应该被渲染。 -->
+<!-- 2、注意，每个 <transition-group> 的子节点必须有独立的 key，动画才能正常工作 -->
+<!-- 3、<transition-group> 支持通过 CSS transform 过渡移动。当一个子节点被更新，从屏幕上的位置发生变化，它会被应用一个移动中的 CSS 类 (通过 name attribute 或配置 move-class attribute 自动生成)。如果 CSS transform property 是“可过渡”property，当应用移动类时，将会使用 FLIP 技术使元素流畅地到达动画终点。 -->
+<!-- 结果：影响的组件的css表现 过渡 & 动画 -->
       <transition-group name="block" tag="div">
         <div v-for="(item,index) in form.workItem" :key="item.id" class="block-item">
           <div class="block-item__index">{{ index + 1 }}</div>

@@ -1,8 +1,12 @@
 <template>
+<!-- Class 与 Style 绑定 -->
+<!-- 我们可以传给 v-bind:class 一个对象，以动态地切换 class： -->
+<!-- 上面的语法表示 show 这个 class 存在与否将取决于数据 property show 的 truthiness。
+你可以在对象中传入更多字段来动态切换多个 class。此外，v-bind:class 指令也可以与普通的 class attribute 共存。 -->
   <div ref="rightPanel" :class="{show:show}" class="rightPanel-container">
     <div class="rightPanel-background" />
     <div class="rightPanel">
-      <!-- :style="{}"内联样式：将样式对象定义到data中，并在:style中引用 -->
+      <!-- :style="{}"绑定内联样式：将样式对象定义到data中，并在:style中引用 -->
       <div :style="{'top':buttonTop+'px','background-color':theme}" class="handle-button" @click="show=!show">
         <i :class="show?'el-icon-close':'el-icon-setting'" />
       </div>
