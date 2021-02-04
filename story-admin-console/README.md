@@ -5,7 +5,7 @@
 
 ## 技术依赖
 
-- 主体：Vue、ElementUI、webpack
+- 主体：Vue、ElementUI、webpack (部分vue-loader vue-router  vuex)
 - 图表：Antv/G2
 - Excel：js-xlsx
 - pdf：pdf.js
