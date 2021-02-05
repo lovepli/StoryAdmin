@@ -56,7 +56,10 @@ export default {
     }
   },
   watch: {
+    // 响应路由参数的变化
+    //复用组件时，想对路由参数的变化作出响应的话，你可以简单地 watch (监测变化) $route 对象
     $route() {
+       // 对路由变化作出响应...
       this.addTags()
       this.moveToCurrentTag()
     },
@@ -75,7 +78,7 @@ export default {
   },
   methods: {
     isActive(route) {
-      return route.path === this.$route.path
+      return route.path === this.$route.path // 字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
     },
     filterAffixTags(routes, basePath = '/') {
       let tags = []
@@ -124,6 +127,7 @@ export default {
           if (tag.to.path === this.$route.path) {
             this.$refs.scrollPane.moveToTarget(tag)
             // when query is different then update
+            // 路由对象属性 $route.fullPath:完成解析后的 URL，包含查询参数和 hash 的完整路径。
             if (tag.to.fullPath !== this.$route.fullPath) {
               this.$store.dispatch('tagsView/updateVisitedView', this.$route)
             }

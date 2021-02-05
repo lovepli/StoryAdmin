@@ -101,7 +101,7 @@
 |	|-- App.vue               根组件
 |	|-- main.js               入口文件，加载各种组件
 |-- static              第三方纯静态资源，不会被webpack处理
-|-- .babelrc            babel-loader 配置
+|-- .babelrc            babel-loader 配置 (javaScript 转译器)
 |-- .editorconfig       IDE配置
 |-- .gitignore          git提交时忽略的文件
 |--	package.json        项目基本信息

@@ -49,7 +49,10 @@ export default {
     }
   },
   watch: {
+    // 响应路由参数的变化
+    //复用组件时，想对路由参数的变化作出响应的话，你可以简单地 watch (监测变化) $route 对象
     $route() {
+      // 对路由变化作出响应...
       this.getNotices();
     }
   },

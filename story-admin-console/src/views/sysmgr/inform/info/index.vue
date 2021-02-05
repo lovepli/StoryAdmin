@@ -45,6 +45,8 @@ export default {
     }
   },
   computed: {
+    // 路由对象属性 $route.params:一个 key/value 对象，包含了动态片段和全匹配片段，如果没有路由参数，就是一个空对象。
+    // 一个“路径参数”使用冒号 : 标记。当匹配到一个路由时，参数值会被设置到 this.$route.params，可以在每个组件内使用。于是，我们可以更新 inform 的模板，输出当前公告的 ID
     id() { return this.$route.params.id } // 返回路径参数
   },
   created() {

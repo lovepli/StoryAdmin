@@ -284,7 +284,7 @@ export default {
       });
     },
     handleClose() {
-      bus.$emit('closeTag', this.$route.path);
+      bus.$emit('closeTag', this.$route.path);  // 字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
       this.$router.push('/article/list');
     }
   }

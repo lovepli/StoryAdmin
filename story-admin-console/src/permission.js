@@ -10,10 +10,10 @@ import { getToken } from '@/utils/auth' // 验权
 // 简单说就是：用户登录之后会返回一个权限凭证Token，用户在根据这个Token去问服务端询问自己的权限，辟如服务端返回权限是['editor']，前端再根据这个权限动态生成他能访问的路由，再通过addRoutes进行动态的路由挂载
 
 const whiteList = ['/login', '/login_erp'] // 不重定向白名单
-// router.beforeEach 注册一个全局前置守卫
+// router.beforeEach 注册一个全局导航前置守卫
 // 当一个导航触发时，全局前置守卫按照创建顺序调用。守卫是异步解析执行，此时导航在所有守卫 resolve 完之前一直处于 等待中。
-// to: Route: 即将要进入的目标 路由对象
-// from: Route: 当前导航正要离开的路由
+// to: Route: 即将要进入的目标的路由对象
+// from: Route: 当前导航正要离开的路由对象
 // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
 router.beforeEach((to, from, next) => {
   NProgress.start()

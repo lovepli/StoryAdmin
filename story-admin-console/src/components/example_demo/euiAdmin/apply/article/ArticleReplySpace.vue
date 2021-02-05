@@ -54,6 +54,7 @@
 export default {
   data() {
     return {
+      //路由对象属性 $route.query:一个 key/value 对象，表示 URL 查询参数。例如，对于路径 /foo?user=1，则有 $route.query.user == 1，如果没有查询参数，则是个空对象
       article_id: this.$route.query.article_id,
       article_title: this.$route.query.article_title,
       dialog_visible_state: false,

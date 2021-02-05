@@ -101,7 +101,7 @@ export default {
   },
   // 侦听属性
   watch: {
-    $route: {
+    $route: { // 当前路由
       handler: function(route) {
         this.redirect = route.query && route.query.redirect;
       },

@@ -32,7 +32,7 @@ export const constantRouterMap = [
     path: '/login',
     // 在本地注册组件的时候，你可以使用 webpack 的异步 import,下面这样写就是路由懒加载,把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了
     // 这个动态导入会返回一个 `Promise` 对象。
-    component: () => import('@/views/login/index'), // 链接到index界面
+    component: () => import('@/views/login/index'), // 链接到index界面 组件与路由进行映射
     hidden: true
   },
   {
@@ -45,8 +45,9 @@ export const constantRouterMap = [
     path: '/me',
     component: Layout,
     hidden: true,
+    // redirect 重定向, 这里面是从 /me 重定向到 /me/index
     redirect: '/me/index',
-    children: [
+    children: [   
       {
         path: 'index',
         name: 'PersonalCenter',
@@ -58,12 +59,16 @@ export const constantRouterMap = [
     ]
   },
   // 进入公告页面
+ // 动态路由匹配：我们经常需要把某种模式匹配到的所有路由，全都映射到同个组件。例如，我们有一个 inform 详情组件，对于所有 ID 各不相同的公告，都要使用这个组件来渲染。那么，我们可以在 vue-router 的路由路径中使用“动态路径参数”(dynamic segment) 来达到这个效果
+  // 一个“路径参数”使用冒号 : 标记。当匹配到一个路由时，参数值会被设置到 this.$route.params，可以在每个组件内使用。于是，我们可以更新 inform 的模板，输出当前公告的 ID
   {
     path: '/inform',
     component: Layout,
     hidden: true,
+     // 动态路径参数 以冒号开头 ，现在呢，像 /inform/001 和 /inform/002 都将映射到相同的路由。
     redirect: '/inform/:id',
     children: [{
+      // 动态路径参数 以冒号开头
       path: ':id',
       name: 'InformInfo',
       component: () => import('@/views/sysmgr/inform/info'),
@@ -105,10 +110,13 @@ export const constantRouterMap = [
     redirect: '/pwd/edit', // 从/pwd重定向到/pwd/edit
     // “重定向”的意思是，当用户访问 /a时，URL 将会被替换成 /b，然后匹配路由为 /b
     hidden: true,
-    children: [ // 子路由
+    // 嵌套路由知识点：
+    // children子路由,也叫嵌套路由 
+    // 要注意，以 / 开头的嵌套路径会被当作根路径。 这让你充分的使用嵌套组件而无须设置嵌套的路径。
+    // 你会发现，children 配置就是像 routes 配置一样的路由配置数组，所以呢，你可以嵌套多层路由。
+    children: [ 
       {
-        // 当 /pwd 匹配成功，
-        // editpassword 会被渲染在 Layout 的 <router-view> 中
+        // 当 /pwd 匹配成功，editpassword组件 会被渲染在 Layout(父级组件) 的 <router-view> 中
         path: 'edit',
         component: () => import('@/views/sysmgr/user/editpassword'),
         name: '修改密码',
@@ -821,11 +829,12 @@ const createRouter = () => new Router({
 const router = createRouter()
 
 /**
- * 最终无法匹配到相应路由，重定向到404
+ * 最终无法匹配到相应路由，则重定向到404
  * 异步加载路由时，在生成完异步路由准备挂载时，需要将重定向404的匹配规则定义在最后面，否则刷新会出错。
+ * 当使用通配符路由时，请确保路由的顺序是正确的，也就是说含有通配符的路由应该放在最后。路由 { path: '*' } 通常用于客户端 404 错误
  */
 const notFoundRoutes = [
-  {
+  {             // 常规参数只会匹配被 / 分隔的 URL 片段中的字符。如果想匹配任意路径，我们可以使用通配符 (*)：
     path: '*', // 会匹配所有路径, // path: '/user-*', 会匹配以 `/user-` 开头的任意路径
     redirect: '/404',
     hidden: true,
@@ -834,7 +843,7 @@ const notFoundRoutes = [
     }
   }
 ]
-// 路由里添加404路由
+// 最后再在路由对象里添加404路由！！
 router.addRoutes(notFoundRoutes)
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
