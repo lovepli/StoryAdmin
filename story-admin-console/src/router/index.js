@@ -47,7 +47,7 @@ export const constantRouterMap = [
     hidden: true,
     // redirect 重定向, 这里面是从 /me 重定向到 /me/index
     redirect: '/me/index',
-    children: [   
+    children: [
       {
         path: 'index',
         name: 'PersonalCenter',
@@ -59,13 +59,13 @@ export const constantRouterMap = [
     ]
   },
   // 进入公告页面
- // 动态路由匹配：我们经常需要把某种模式匹配到的所有路由，全都映射到同个组件。例如，我们有一个 inform 详情组件，对于所有 ID 各不相同的公告，都要使用这个组件来渲染。那么，我们可以在 vue-router 的路由路径中使用“动态路径参数”(dynamic segment) 来达到这个效果
+  // 动态路由匹配：我们经常需要把某种模式匹配到的所有路由，全都映射到同个组件。例如，我们有一个 inform 详情组件，对于所有 ID 各不相同的公告，都要使用这个组件来渲染。那么，我们可以在 vue-router 的路由路径中使用“动态路径参数”(dynamic segment) 来达到这个效果
   // 一个“路径参数”使用冒号 : 标记。当匹配到一个路由时，参数值会被设置到 this.$route.params，可以在每个组件内使用。于是，我们可以更新 inform 的模板，输出当前公告的 ID
   {
     path: '/inform',
     component: Layout,
     hidden: true,
-     // 动态路径参数 以冒号开头 ，现在呢，像 /inform/001 和 /inform/002 都将映射到相同的路由。
+    // 动态路径参数 以冒号开头 ，现在呢，像 /inform/001 和 /inform/002 都将映射到相同的路由。
     redirect: '/inform/:id',
     children: [{
       // 动态路径参数 以冒号开头
@@ -111,10 +111,10 @@ export const constantRouterMap = [
     // “重定向”的意思是，当用户访问 /a时，URL 将会被替换成 /b，然后匹配路由为 /b
     hidden: true,
     // 嵌套路由知识点：
-    // children子路由,也叫嵌套路由 
+    // children子路由,也叫嵌套路由
     // 要注意，以 / 开头的嵌套路径会被当作根路径。 这让你充分的使用嵌套组件而无须设置嵌套的路径。
     // 你会发现，children 配置就是像 routes 配置一样的路由配置数组，所以呢，你可以嵌套多层路由。
-    children: [ 
+    children: [
       {
         // 当 /pwd 匹配成功，editpassword组件 会被渲染在 Layout(父级组件) 的 <router-view> 中
         path: 'edit',
@@ -386,12 +386,17 @@ export const constantRouterMap = [
         path: '/article/edit/:articleId/:articleIndex',
         component: () => import('@/views/example_demo/article/edit'),
         name: 'articleEdit',
+        // 知识点：路由元信息 https://blog.csdn.net/cofecode/article/details/79181894
         meta: { title: '编辑文章', hiddenInMenu: true, icon: 'el-icon-s-grid', noCache: true },
+        // 知识点：路由组件传参
         props: true,
         beforeEnter: (to, from, next) => {
           to.meta.title = '编辑文章' + '-' + to.params.articleIndex
           next()
         }
+        // 定义路由的时候可以配置 meta 字段， 我们可以在这里设置一些自定义信息，供页面组件或者路由钩子函数中使用。
+        //  路由前置守卫：（我们可以通过 $route.meta.xxxx 获取路由元信息中的数据）
+        // 我们可以在钩子函数 router.beforeEach 中获取 meta 中的 title 数据，并设置为页面标题
       }
 
     ]
@@ -834,7 +839,7 @@ const router = createRouter()
  * 当使用通配符路由时，请确保路由的顺序是正确的，也就是说含有通配符的路由应该放在最后。路由 { path: '*' } 通常用于客户端 404 错误
  */
 const notFoundRoutes = [
-  {             // 常规参数只会匹配被 / 分隔的 URL 片段中的字符。如果想匹配任意路径，我们可以使用通配符 (*)：
+  { // 常规参数只会匹配被 / 分隔的 URL 片段中的字符。如果想匹配任意路径，我们可以使用通配符 (*)：
     path: '*', // 会匹配所有路径, // path: '/user-*', 会匹配以 `/user-` 开头的任意路径
     redirect: '/404',
     hidden: true,
