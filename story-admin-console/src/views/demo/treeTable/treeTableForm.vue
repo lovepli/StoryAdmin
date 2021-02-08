@@ -166,8 +166,9 @@ export default {
           this.temp2.geocoding = this.temp.geocoding;
           this.temp2.remark = this.temp.remark;
           this.temp2.postalCode = this.temp.postalCode;
-          const tempData2 = Object.assign({}, this.temp)
-          console.log('提交新增的数据：' + tempData2)
+         // const tempData2 = Object.assign({}, this.temp)
+         // console.log('提交新增的数据：' + tempData2)
+          console.log("添加"+JSON.stringify(this.temp2))
           add(this.temp2).then(() => {
             this.getList()
             this.dialogFormVisible = false
@@ -237,7 +238,7 @@ export default {
             this.temp.parent = undefined
           }
           const tempData = Object.assign({}, this.temp)
-          console.log("提交修改的数据："+tempData)
+          console.log("提交修改的数据："+JSON.stringify(tempData))
           update(tempData).then(() => {
             this.getList()
             this.dialogFormVisible = false
