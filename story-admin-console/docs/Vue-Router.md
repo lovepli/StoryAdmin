@@ -75,3 +75,108 @@ export default {
 
 要注意，当 <router-link> 对应的路由匹配成功，将自动设置 class 属性值 .router-link-active。查看 API 文档 学习更多相关内容。
 
+<router-view> 组件是一个 functional 组件，渲染路径匹配到的视图组件。<router-view> 渲染的组件还可以内嵌自己的 <router-view>，根据嵌套路径，渲染嵌套组件。
+
+其他属性 (非 router-view 使用的属性) 都直接传给渲染的组件， 很多时候，每个路由的数据都是包含在路由参数中。
+
+因为它也是个组件，所以可以配合 <transition> 和 <keep-alive> 使用。如果两个结合一起用，要确保在内层使用 <keep-alive>：
+
+<transition>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
+</transition>
+
+# Router 构建选项
+## routes
+类型: Array<RouteConfig>
+
+RouteConfig 的类型定义：
+
+interface RouteConfig = {
+  path: string,
+  component?: Component,
+  name?: string, // 命名路由
+  components?: { [name: string]: Component }, // 命名视图组件
+  redirect?: string | Location | Function,
+  props?: boolean | Object | Function,
+  alias?: string | Array<string>,
+  children?: Array<RouteConfig>, // 嵌套路由
+  beforeEnter?: (to: Route, from: Route, next: Function) => void,
+  meta?: any,
+
+  // 2.6.0+
+  caseSensitive?: boolean, // 匹配规则是否大小写敏感？(默认值：false)
+  pathToRegexpOptions?: Object // 编译正则的选项
+}
+
+# 路由滚动行为
+使用前端路由，当切换到新路由时，想要页面滚到顶部，或者是保持原先的滚动位置，就像重新加载页面那样。 vue-router 能做到，而且更好，它让你可以自定义路由切换时页面如何滚动。
+
+注意: 这个功能只在支持 history.pushState 的浏览器中可用。
+
+当创建一个 Router 实例，你可以提供一个 scrollBehavior 方法：
+
+const router = new VueRouter({
+  routes: [...],
+  scrollBehavior (to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+  }
+})
+scrollBehavior 方法接收 to 和 from 路由对象。第三个参数 savedPosition 当且仅当 popstate 导航 (通过浏览器的 前进/后退 按钮触发) 时才可用。
+
+这个方法返回滚动位置的对象信息，长这样：
+
+{ x: number, y: number }
+{ selector: string, offset? : { x: number, y: number }} (offset 只在 2.6.0+ 支持)
+如果返回一个 falsy (译者注：falsy 不是 false，参考这里)的值，或者是一个空对象，那么不会发生滚动。
+
+# 路由元信息
+定义路由的时候可以配置 meta 字段：
+
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/foo',
+      component: Foo,
+      children: [
+        {
+          path: 'bar',
+          component: Bar,
+          // a meta field
+          meta: { requiresAuth: true }
+        }
+      ]
+    }
+  ]
+})
+那么如何访问这个 meta 字段呢？
+首先，我们称呼 routes 配置中的每个路由对象为 路由记录。路由记录可以是嵌套的，因此，当一个路由匹配成功后，他可能匹配多个路由记录
+例如，根据上面的路由配置，/foo/bar 这个 URL 将会匹配父路由记录以及子路由记录。
+一个路由匹配到的所有路由记录会暴露为 $route 对象 (还有在导航守卫中的路由对象) 的 $route.matched 数组。因此，我们需要遍历 $route.matched 来检查路由记录中的 meta 字段。
+下面例子展示在全局导航守卫中检查元字段：
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // 此路由需要认证，检查是否登录
+    // 如果不是，重定向到登录页面。
+    if (!auth.loggedIn()) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
+})
+
+对于vue-router中的 next()方法最简单的理解：
+next()实际上就是起到“执行”或者说“放行”的作用。
+router.beforeEach((to, from, next) => {
+    next()
+})
+如上述代码，注册一个路由前置守卫。
+当需要从‘from’跳转至‘to’时，路由守卫会监控到这一举动，若不执行next()，则相当于没有放行，会依然留在from对应的路由。只有当执行了next()之后，才会进行跳转。
+

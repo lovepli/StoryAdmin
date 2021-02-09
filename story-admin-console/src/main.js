@@ -11,7 +11,7 @@ import '@/styles/index.scss' // 全局自定义的css样式
 
 import App from './App'
 import router from './router' // 全局引入路由
-import store from './store' // 全局引入本地存储store,中央存储,store是vuex的核心
+import store from './store' // 全局引入本地存储store,中央存储,每一个 Vuex 应用的核心就是 store（仓库）。“store”基本上就是一个容器，它包含着你的应用中大部分的状态 (state)。Vuex是一个专为Vue.js 应用程序开发的状态管理模式。主要方便用于状态记录以及各组件通信。
 
 import '@/icons' // icon图标
 import '@/permission' // permission control权限控制
@@ -59,6 +59,6 @@ new Vue({
   router, // 路由分发处理（为了保证路由模块的职能单一，router.js只负责分发路由，不负责具体的好业务逻辑处理）
   // 为了在 Vue 组件中访问 this.$store property，你需要为 Vue 实例提供创建好的 store。Vuex 提供了一个从根组件向所有子组件，以 store 选项的方式“注入”该 store 的机制：
   // 通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到
-  store, // 这样就能全局使用vuex了,Vuex是一个专为Vue.js 应用程序开发的状态管理模式。主要方便用于状态记录以及各组件通信。
+  store, //把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件,这样就能全局使用vuex了
   render: h => h(App) // 渲染函数render, 运行时构建   // 将 h 作为 createElement 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的，如果在作用域中 h 失去作用，在应用中会触发报错。
 })

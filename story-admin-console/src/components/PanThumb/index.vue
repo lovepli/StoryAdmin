@@ -40,8 +40,12 @@ export default {
   },
   // watch：在选项参数中指定 immediate: true 将立即以表达式的当前值触发回调
   watch: {
-    image: {
-      immediate: true, // 立即以 `image` 的当前值触发回调
+    // 这里的image是指props对象里的`image`属性对象，方法名必须为属性名，与计算属性的getter方法名称不同，计算属性的getter方法名可以随便取一个
+   // 父组件传到子组件的prop，在子组件监听变化。
+  // 监听对象内部的属性avatarUrl变化。
+   image: {
+      immediate: true, // 立即以 `image` 的当前值触发回调 为true表示该回调将会在侦听开始之后被立即调用，
+      // handler 为回调函数
       handler(val) {
         if (val === undefined) {
           this.avatarUrl = defaultAvatar

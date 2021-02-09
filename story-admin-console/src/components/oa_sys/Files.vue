@@ -124,10 +124,14 @@ export default {
   // computed 计算属性
   // 定义：当其依赖的属性的值发生变化的时，计算属性会重新计算。反之则使用缓存中的属性值。
   computed: {
+    // currentPath 表示计算属性的 getter，根据你想表示的意思，名字是可以取
     currentPath() {
+      // 一旦属性path改变了，立即执行path属性的getter方法currentPath()获取重新计算的path值，这里是在数组中添加'/'
+      // 我的理解是：computed钩子里添加的都是data对象里的属性的getter方法的具体实现，相当于重写了属性的getter方法，因为重写了getter方法，所以你的属性值能够在页面上响应式动态渲染
       return this.path.join(' / ');
     },
     parentId() {
+       // 一旦current改变了，响应式的动态改变current
       return this.current[this.current.length - 1];
     }
   },
