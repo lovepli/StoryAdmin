@@ -75,7 +75,9 @@ router.afterEach(() => {
   */
 export const formatRoutes = (routes) => {
   const fmRoutes = [];
+  // 遍历routes
   routes.forEach(router => {
+    // 自定义路由属性
     let {
       // eslint-disable-next-line prefer-const
       url,
@@ -87,8 +89,9 @@ export const formatRoutes = (routes) => {
       // eslint-disable-next-line prefer-const
       component
     } = router;
-
+    
     if (children && children instanceof Array && children.length > 0) {
+       // 定义children属性，判断children是否存在，且children为数组，children不为空，则递归遍历children路由菜单
       children = formatRoutes(children);
     }
 
@@ -103,7 +106,7 @@ export const formatRoutes = (routes) => {
         require(['./views' + component + '.vue'], resolve)
       },
       name: label,
-      // 路由元数据，里面可以存储一些自定义的属性，不光只有title和icon,还可以是一些其他的属性
+      // 路由元数据，里面可以存储一些自自定义的属性，不光只有title和icon,还可以定义一些其他的属性
       meta: {
         title: label,
         icon: iconClass
