@@ -123,19 +123,94 @@ export const constantRouterMap = [
         meta: { title: '修改密码', icon: 'edit', noCache: true }
       }]
   },
+  // {
+  //   path: 'Http://ruoyi.vip',
+  //   // component: Layout,
+  //   // redirect: 'Http://ruoyi.vip',
+  //   name: 'Http://ruoyi.vip',
+  //   meta: {
+  //     title: '官网地址',
+  //     target: '_blank',
+  //     icon: 'dashboard',
+  //     noCache: true
+  //   },
+  //   children: []
+  // },
+
+  // 嵌套多级路由666
   {
-    path: 'Http://ruoyi.vip',
-    // component: Layout,
-    // redirect: 'Http://ruoyi.vip',
-    name: 'Http://ruoyi.vip',
+    path: '/nested',
+    component: Layout,
+    redirect: '/nested/menu1/menu1-1',
+    name: 'Nested',
     meta: {
-      title: '官网地址',
-      target: '_blank',
-      icon: 'dashboard',
-      noCache: true
+      title: 'Nested',
+      icon: 'nested'
     },
-    children: []
+    children: [
+      {
+        path: 'menu1',
+        component: () => import('@/views/nested/menu1/index'),
+        name: 'Menu1',
+        meta: { title: 'Menu1' },
+        redirect: '/nested/menu1/menu1-1',
+        children: [
+          {
+            path: 'menu1-1',
+            component: () => import('@/views/nested/menu1/menu1-1'),
+            name: 'Menu1-1',
+            meta: { title: 'Menu1-1' }
+          },
+          {
+            path: 'menu1-2',
+            component: () => import('@/views/nested/menu1/menu1-2'),
+            name: 'Menu1-2',
+            redirect: '/nested/menu1/menu1-2/menu1-2-1',
+            meta: { title: 'Menu1-2' },
+            children: [
+              {
+                path: 'menu1-2-1',
+                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+                name: 'Menu1-2-1',
+                meta: { title: 'Menu1-2-1' }
+              },
+              {
+                path: 'menu1-2-2',
+                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+                name: 'Menu1-2-2',
+                meta: { title: 'Menu1-2-2' }
+              }
+            ]
+          },
+          {
+            path: 'menu1-3',
+            component: () => import('@/views/nested/menu1/menu1-3'),
+            name: 'Menu1-3',
+            meta: { title: 'Menu1-3' }
+          }
+        ]
+      },
+      {
+        path: 'menu2',
+        name: 'Menu2',
+        component: () => import('@/views/nested/menu2/index'),
+        meta: { title: 'Menu2' }
+      }
+    ]
   },
+
+   //外链
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://github.com/PanJiaChen/vue-element-admin',
+        meta: { title: 'External Link', icon: 'link' }
+      }
+    ]
+  },
+
   // 静态菜单功能页面展示 参考：https://github.com/shengbid/vue-demo
   // 例子
   {

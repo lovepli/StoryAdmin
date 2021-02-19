@@ -1,5 +1,8 @@
 <template>
   <div>
+     <el-row>
+    <el-tag :key="tag" v-for="tag in dynamicTags" type="danger"  style="width:100%" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
+    </el-row>
     <el-table :data="tableData" border highlight-current-row @header-contextmenu="contextmenu">
       <el-table-column v-if="colData[0].istrue" type="index" label="序号" width="80px"/>
       <el-table-column v-if="colData[1].istrue" prop="date" label="日期"/>
@@ -58,7 +61,7 @@ export default {
     return {
       // tableMng,
       tableData: [],
-
+     dynamicTags: ['!提示：鼠标放在表格栏右键单击可以对列表数据进行筛选显示'], // 动态标签
       // vue——动态控制表格列的显示和隐藏 参考：https://blog.csdn.net/qq_44450612/article/details/99715181
       menuVisible: false, // 右键菜单的显示与隐藏
       top: 0,		// 右键菜单的位置
@@ -95,9 +98,15 @@ export default {
   },
   created() {
     this.tableData = data.tableData;
-    console.log('表格数“' + JSON.stringify(this.tableData))
+    console.log('表格数：' + JSON.stringify(this.tableData))
   },
   methods: {
+     /**
+     * 关闭提示标签
+     */
+    handleClose(tag) {
+        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+      },
     contextmenu(row, event) {
       // 先把菜单关闭，目的是第二次或者第n次右键鼠标的时候 它默认的是true
       this.menuVisible = false
