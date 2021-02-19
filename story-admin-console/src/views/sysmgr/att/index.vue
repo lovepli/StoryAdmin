@@ -343,6 +343,8 @@ export default {
           });
         }
       }, 100);
+      // 知识点：Vue中使用定时器setInterval和setTimeout https://www.cnblogs.com/jin-zhe/p/10001236.html
+      //
     },
     // 上传成功
     handleSuccess(response, file, fileList) {

@@ -430,6 +430,16 @@ export default {
       this.$nextTick(() => {
         this.$refs['form'].resetFields();
       })
+      // 知识点：Vue.js中this.$nextTick()的使用 https://www.cnblogs.com/jin-zhe/p/9985436.html
+      // this.$nextTick()将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。它跟全局方法 Vue.nextTick 一样，不同的是回调的 this 自动绑定到调用它的实例上。
+      // this.$nextTick()在页面交互，尤其是从后台获取数据后重新生成dom对象之后的操作有很大的优势
+
+      // 知识点：Vue中获取dom元素
+      // Vue.js虽然说是数据驱动页面的，但是有时候我们也要获取dom对象进行一些操作。
+      // vue的不同版本获取dom对象的方法不一样
+      // Vue.js  1.0版本中，通过v-el绑定，然后通过this.els.XXX来获取
+      // Vue.js  2.0版本中。我们通过给元素绑定ref=“XXX”，然后通过this.$refs.XXX或者this.refs['XXX']来获取
+      // 注意：vue中操作dom需要谨慎，尤其是添加或删除dom的时候，特别是mounted()和created()的时候，此时dom对象还没有生成，要放在this.nextTick()的回调函数中。
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -468,6 +478,7 @@ export default {
         this.open = true;
         this.$nextTick(() => {
           roleMenu.then(res => {
+            // this.$refs.menu操作menu元素，相当与this.$refs.['menu']
             this.$refs.menu.setCheckedKeys(res.checkedKeys);
           });
         });

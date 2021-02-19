@@ -109,8 +109,11 @@ export default {
                //如果 history 记录不够用，那就默默地失败呗
                //router.go(-100)
                //router.go(100)
-           //  补充一个知识点：
-           //  强制刷新当前页面 使用this.$router.go(0);或者location.reload();
+           //  补充一个知识点：Vue.js刷新当前页面
+           // Vue.js的路由跳转很强大，类似ajax的局部刷新，路由跳转时候页面是不刷新的，刷新当前页面的功能不建议用，但是有的时候确实需要刷新当前页面来实现某些需求，这个时候，我们有三 种方法可以实现。
+           // 第一种就是传统的的方法 window.location.reload();这里的window可以省略不写
+           // 第二种是通过vue.js的路由来实现 this.$router.go(0);
+           //  第三种是使用浏览器自带的刷新功能，window.history.go(0)，这里的window可以省略不写
     }
   }
 };
