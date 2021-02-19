@@ -180,3 +180,11 @@ router.beforeEach((to, from, next) => {
 如上述代码，注册一个路由前置守卫。
 当需要从‘from’跳转至‘to’时，路由守卫会监控到这一举动，若不执行next()，则相当于没有放行，会依然留在from对应的路由。只有当执行了next()之后，才会进行跳转。
 
+// 博客补充知识点：this.$router.push、replace、go的区别
+// 1.this.$router.push()
+描述：跳转到不同的url，但这个方法会向history栈添加一个记录，点击后退会返回到上一个页面。
+// 2.this.$router.replace()
+描述：同样是跳转到指定的url，但是这个方法不会向history里面添加新的记录，点击返回，会跳转到上上一个页面。上一个记录是不存在的。
+// 3.this.$router.go(n)
+相对于当前页面向前或向后跳转多少个页面,类似 window.history.go(n)。n可为正数可为负数。正数返回上一个页面
+

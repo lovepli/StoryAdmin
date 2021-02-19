@@ -1,5 +1,7 @@
 <template>
-  <div/>
+  <div>
+    <p> 你复制不了这句话，哈哈哈 </p>
+  </div>
 </template>
 
 <script>
@@ -10,7 +12,14 @@ export default {
   data() {
     return {};
   },
-  created() {},
+  created() {
+    this.$nextTick(() => {
+      // 禁用右键
+      document.oncontextmenu = new Function('event.returnValue=false');
+      // 禁用选择
+      document.onselectstart = new Function('event.returnValue=false');
+    });
+  },
   mounted() {
     setWaterMark('lovepli', '李二狗');
   },

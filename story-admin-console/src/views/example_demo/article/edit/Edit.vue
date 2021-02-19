@@ -99,7 +99,7 @@
 import Mock from 'mockjs';
 import util from '@/utils/example_demo/wangluyao/util';
 // import api from '@/api'
-import bus from '@/utils/example_demo/wangluyao/bus'; // 组件之间通信
+import bus from '@/utils/example_demo/wangluyao/bus'; // bus飞父子组件之间通信
 // import tableMng from '@/utils/tableMng'
 import AvatarUpload from '@/components/example_demo/wangluyao/business/upload/avatar-upload';
 import DragUpload from '@/components/example_demo/wangluyao/business/upload/drag-upload';
@@ -284,7 +284,7 @@ export default {
       });
     },
     handleClose() {
-      bus.$emit('closeTag', this.$route.path);  // 字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
+      bus.$emit('closeTag', this.$route.path); // 字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
       this.$router.push('/article/list');
     }
   }
