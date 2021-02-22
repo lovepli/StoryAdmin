@@ -183,6 +183,7 @@ export default {
     delete_label(index) {
       this.$message.warning('删除' + this.article_label_data[index].label_name + '成功');
       setTimeout(() => {
+        // 删除数组中index位置的元素
         this.article_label_data.splice(index, 1);
       }, 1500);
     },
