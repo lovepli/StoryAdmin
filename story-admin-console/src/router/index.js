@@ -466,7 +466,8 @@ export const constantRouterMap = [
         meta: { title: '编辑文章', hiddenInMenu: true, icon: 'el-icon-s-grid', noCache: true },
         // 知识点：路由组件传参
         props: true,
-        beforeEnter: (to, from, next) => {
+        // 导航钩子
+        beforeEnter: (to, from, next) => { // 跳转前进行判断拦截
           to.meta.title = '编辑文章' + '-' + to.params.articleIndex
           next()
         }

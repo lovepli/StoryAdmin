@@ -31,6 +31,7 @@ const router = new VueRouter({
 一、全局路由钩子：
 router.beforeEach((to, from, next) => {
     //会在任意路由跳转前执行，next一定要记着执行，不然路由不能跳转了
+    // 参数：有to（去的那个路由）、from（离开的路由）、next（一定要用这个函数才能去到下一个路由，如果不用就拦截）
   console.log('beforeEach')
   console.log(to,from)
   //
