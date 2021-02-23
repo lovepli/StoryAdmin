@@ -177,7 +177,7 @@ vue-router 模块的 router-link 组件。
 *   mounted : 挂载元素，获取到 DOM 节点
 *   updated : 如果对数据统一处理，在这里写上相应函数
 *   beforeDestroy : 可以做一个确认停止事件的确认框
-*   nextTick : 更新数据后立即操作 dom
+*   nextTick : 更新数据后立即操作 dom    参考理解：https://www.cnblogs.com/jin-zhe/p/9985436.html
 
 #### （7）、请详细说下你对vue生命周期的理解？
 
