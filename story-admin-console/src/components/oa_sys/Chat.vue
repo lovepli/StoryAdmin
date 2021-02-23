@@ -90,6 +90,7 @@ export default {
     messages() {
       if (this.chatDialog === true) {
         const div = this.$refs['elscrollbar'].$refs['wrap'];
+        // 消息长度增长
         this.$nextTick(() => {
           div.scrollTop = div.scrollHeight;
         });
