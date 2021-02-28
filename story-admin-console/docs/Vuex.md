@@ -125,5 +125,44 @@ methods: {
 
 由于 store 中的状态是响应式的，在组件中调用 store 中的状态简单到仅需要在计算属性中返回即可。触发变化也仅仅是在组件的 methods 中提交 mutation。
 
-# 核心概念
+# state简单例子 记事本
+html:
+
+<div id='app'>
+<p>{{ count }}</p>
+<p>
+<button @click='add'>+</button>
+<button @click='delete'>-</button>
+</p>
+</div>
+
+js:
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+  	increment: state => state.count++,
+    decrement: state => state.count--
+  }
+})
+
+new Vue({
+  el: '#app',
+  computed: {
+    count () {
+	    return store.state.count
+    }
+  },
+  methods: {
+    add () {
+      store.commit('increment')
+    },
+    delete () {
+    	store.commit('decrement')
+    }
+  }
+})
+
 
