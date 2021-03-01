@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
     } else {
       // Getter 会暴露为 store.getters 对象，你可以以属性的形式访问这些值，这里是通过属性访问roles的值
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
-      // 通过 store.dispatch(type)方法触发action，参数为事件类型，需要和action中函数名称一致。
+      // 通过 store.dispatch(type)方法触发分发action，实现异步执行，参数为事件类型，需要和action中函数名称一致。
       // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
           const menus = res.data.menus;

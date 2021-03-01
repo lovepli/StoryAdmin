@@ -203,6 +203,13 @@ export default {
         // 有时你可能需要为已有对象赋值多个新 property，比如使用 Object.assign() 或 _.extend()。但是，这样添加到对象上的新 property 不会触发更新。在这种情况下，你应该用原对象与要混合进去的对象的 property 一起创建一个新的对象。
         // 代替 `Object.assign(this.someObject, { a: 1, b: 2 })`
         // this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
+
+        // 补充,在vuex知识点mutations中提到：
+        // 当需要在对象上添加新属性时，你应该
+        // 使用 Vue.set(obj, 'newProp', 123), 或者
+        // 以新对象替换老对象。例如，利用对象展开运算符 (opens new window)我们可以这样写：
+        // state.obj = { ...state.obj, newProp: 123 }
+        //
       }
       data.children.push(newChild);
       this.modifyVisible = true;
