@@ -583,7 +583,15 @@ export const constantRouterMap = [
         path: '/other/jsonEditor',
         component: () => import('@/views/example_demo/other/jsonEditor'),
         meta: { title: 'jsonEditor格式化', icon: 'el-icon-s-grid', noCache: true }
+      },
+      // 快捷导航栏跳转
+      {
+        path: '/other/mixin',
+        component: () => import('@/views/example_demo/mixin/mixin'),
+        name: 'ComponentMixinDemo',
+        meta: { title: '快捷导航栏' }
       }
+      
     ]
   },
   { //  空白页

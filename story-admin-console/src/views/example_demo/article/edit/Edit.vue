@@ -228,6 +228,15 @@ export default {
     this.articleType = articleType; // 赋值文章类型下拉列表
   },
   methods: {
+        // 获取系统当前时间
+   async getNowTime(){
+    //当前设定的日期时间
+      let d = new Date
+      let year,month,day,hour,minute,second;
+      [year,month,day,hour,minute,second] = [d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes(),d.getSeconds()]
+      let dateTime = new Date(year, month, day,hour,minute,second)
+       console.log("获取系统当前时间："+dateTime)
+    },
     /** 获取详细信息 */
     async getDetail() {
       if (this.articleId) {
