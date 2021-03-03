@@ -3,10 +3,13 @@
   <div class="dashboard-container">
     <div class="dashboard-text">{{ name }}，你好！</div>
     <div class="dashboard-text">欢迎登录 STORY-ADMIN </div>
-    <!-- 动态组件 -->
-    <!-- v-bind:is="currentRole"
-    我们之前曾经在一个多标签的界面中使用 is attribute 来切换不同的组件-->
+    <!-- 动态组件说明： -->
+    <!-- :is 用于动态组件且基于 DOM 内模板的限制来工作 -->
+    <!-- v-bind:is="currentRole" 我们之前曾经在一个多标签的界面中使用 is attribute 来切换不同的组件-->
+    <!-- 当 `currentRole` 改变时，组件也跟着改变 -->
+    <!-- vue内置组件component用法：渲染一个“元组件”为动态组件。依 is 的值，来决定哪个组件被渲染。 -->
     <component :is="currentRole"/>
+    <!-- 其他内置组件：transition、transition-group、keep-alive、slot -->
   </div>
 </template>
 

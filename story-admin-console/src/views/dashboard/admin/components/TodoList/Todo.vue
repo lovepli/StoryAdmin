@@ -1,4 +1,8 @@
 <template>
+<!-- Class 与 Style 绑定 -->
+<!--  对象语法 -->
+<!-- 我们可以传给 v-bind:class 一个对象，以动态地切换 class： -->
+<!-- 我们还可以在对象中传入更多字段来动态切换多个 class -->
   <li :class="{ completed: todo.done, editing: editing }" class="todo">
     <div class="view">
       <input
@@ -7,6 +11,11 @@
         type="checkbox"
         @change="toggleTodo( todo)"
       >
+      <!-- v-text指令用法：更新元素的 textContent。如果要更新部分的 textContent，需要使用 {{ Mustache }} 插值。 -->
+      <!-- 例子如下：  -->
+      <!-- <span v-text="msg"></span> -->
+      <!-- 和下面的一样 -->
+      <!-- <span>{{msg}}</span> -->
       <label @dblclick="editing = true" v-text="todo.text" />
       <button class="destroy" @click="deleteTodo( todo )" />
     </div>
@@ -29,7 +38,7 @@ export default {
     focus(el, { value }, { context }) {
       if (value) {
         context.$nextTick(() => {
-          el.focus()
+          el.focus() // // 聚焦元素
         })
       }
     }

@@ -36,6 +36,14 @@
         <el-table-column align="center" prop="name" label="名称"/>
         <el-table-column align="center" prop="roleDesc" label="描述"/>
         <el-table-column align="center" prop="createdTime" label="创建时间">
+             <!-- 作用域插槽 slot-scope 的使用-->
+             <!--在 <template> 上使用特殊的 slot-scope attribute，可以接收传递给插槽的 prop,例如： -->
+              <!-- 
+                  <template slot="default" slot-scope="slotProps">
+                {{ slotProps.msg }}
+                  </template>
+              -->
+            <!-- 这里的 slot-scope 声明了被接收的 prop 对象会作为 slotProps 变量存在于 <template> 作用域中。你可以像命名 JavaScript 函数参数一样随意命名 slotProps -->
           <template slot-scope="scope">{{ scope.row.createdTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</template>
         </el-table-column>
         <el-table-column align="center" label="操作" width="230" class-name="small-padding fixed-width">

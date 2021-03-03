@@ -76,6 +76,7 @@
           />
         </el-form-item>
         <div align="center">
+          <!-- v-show指令用法：根据表达式之真假值，切换元素的 display CSS property。当条件变化时该指令触发过渡效果。 -->
           <el-button
             v-show="!password_input_state"
             type="danger"
@@ -182,6 +183,7 @@ export default {
     delete_label(index) {
       this.$message.warning('删除' + this.article_label_data[index].label_name + '成功');
       setTimeout(() => {
+        // 删除数组中index位置的元素
         this.article_label_data.splice(index, 1);
       }, 1500);
     },

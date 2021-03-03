@@ -1,12 +1,11 @@
 /* 核心工具 */
 
-
-//生成guid
+// 生成guid
 export function guid() {
-  let S4 = function() {
+  const S4 = function() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
   }
-  return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+  return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
 }
 
 // 生成随机数
@@ -15,8 +14,6 @@ export function random(min, max) {
   return Math.floor(min + Math.random() * choice);
 }
 var num = random(2, 10);
-
-
 
 /**
  * 滚动,先慢后快，缓动的效果比easeIn动画明显
@@ -43,7 +40,6 @@ export function scroll(element, target, duration = 500, callback = () => {}) {
   move();
 }
 
-
 /**
  * 动画，可改变多个属性
  * @param {HTMLDOM} element  要发生动画的元素
@@ -53,6 +49,7 @@ export function scroll(element, target, duration = 500, callback = () => {}) {
  */
 export function animate(element, properties, interval = 20, callback = () => {}) {
   clearInterval(element.timer);
+  // setInterval定时器，一直循环执行
   element.timer = setInterval(() => {
     let flag = true;
     for (const property in properties) {
@@ -60,19 +57,17 @@ export function animate(element, properties, interval = 20, callback = () => {})
       const target = properties[property];
       let step = (target - current) / 10;
       step = step > 0 ? Math.ceil(step) : Math.floor(step);
-      element.style[property] = current + step + "px";
-      if (current != target) {
+      element.style[property] = current + step + 'px';
+      if (current !== target) {
         flag = false;
       }
-    };
+    }
     if (flag) {
       clearInterval(element.timer);
       callback();
     }
   }, interval);
-};
-
-
+}
 
 // 用于需要在get请求中传递数组的情况
 export function paramsSerializer(params = {}) {
@@ -87,8 +82,6 @@ export function paramsSerializer(params = {}) {
   return paramArr.join('&');
 }
 
-
-
 /**
  * 获取url中的查询字符串参数
  * @param {String} url  url字符串
@@ -101,8 +94,6 @@ export function getURLParams(url) {
   return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
 }
 
-
-
 // 深克隆
 export function deepClone(source) {
   if (typeof source !== 'object' || source === null) {
@@ -114,7 +105,6 @@ export function deepClone(source) {
   }
   return target;
 }
-
 
 // 获取元素相对于浏览器窗口边缘的的距离
 export function getOffset(elem) {
@@ -166,11 +156,8 @@ export function debounce(fn, interval = 100) {
   }
 }
 
-
-
 // 判断数据类型
 export const getType = value => value ? value.constructor.name.toLowerCase() : value;
-
 
 // 加载第三方脚本
 export function loadScript(src, callback = (err, res) => {}) {

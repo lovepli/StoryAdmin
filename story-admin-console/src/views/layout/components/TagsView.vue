@@ -1,6 +1,8 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
+      <!-- 知识点：事件处理--内联处理器中的方法 -->
+      <!-- 有时也需要在内联语句处理器中访问原始的 DOM 事件。可以用特殊变量 $event 把它传入方法： -->
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
@@ -54,7 +56,10 @@ export default {
     }
   },
   watch: {
+    // 响应路由参数的变化
+    //复用组件时，想对路由参数的变化作出响应的话，你可以简单地 watch (监测变化) $route 对象
     $route() {
+       // 对路由变化作出响应...
       this.addTags()
       this.moveToCurrentTag()
     },
@@ -73,7 +78,7 @@ export default {
   },
   methods: {
     isActive(route) {
-      return route.path === this.$route.path
+      return route.path === this.$route.path // 字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
     },
     filterAffixTags(routes, basePath = '/') {
       let tags = []
@@ -116,11 +121,13 @@ export default {
     },
     moveToCurrentTag() {
       const tags = this.$refs.tag
+       // Vue.nextTick( [callback, context] ) : 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
       this.$nextTick(() => {
         for (const tag of tags) {
           if (tag.to.path === this.$route.path) {
             this.$refs.scrollPane.moveToTarget(tag)
             // when query is different then update
+            // 路由对象属性 $route.fullPath:完成解析后的 URL，包含查询参数和 hash 的完整路径。
             if (tag.to.fullPath !== this.$route.fullPath) {
               this.$store.dispatch('tagsView/updateVisitedView', this.$route)
             }
@@ -177,7 +184,9 @@ export default {
         }
       }
     },
+    // 内联处理器中的方法
     openMenu(tag, e) {
+      // 现在我们可以访问原生事件对象
       const menuMinWidth = 105
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
       const offsetWidth = this.$el.offsetWidth // container width

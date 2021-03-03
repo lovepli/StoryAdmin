@@ -45,7 +45,7 @@ const user = {
         // 具体可以看：src/utils/request.js中这段代码：config.headers['Authorization'] = getToken()
         // 这是全局配置axios实例，因为所有的API请求都需要经过这个request.js文件，所以其中的配置项对所有的请求都有效。
         login(username, password, code, uuid, rememberMe).then(response => {
-          // 这里前端登录的时候不要存储token，因为在request.js中已经存储了token
+          // 这里前端登录的时候不要存储token，因为在request.js中已经存储了token，在登录成功的response响应拦截器中存储了token
           // const data = response.data
           // setToken(data.token)  //登录成功后将token存储在cookie之中，这个方法是定义在auth.js中，这个是前端处理存储用户信息的方式，后台是使用jwt验证
           // commit('SET_TOKEN', data.token)

@@ -93,15 +93,22 @@ export default {
     StoryAdminSearch
   },
   // 官方说明文档：计算属性是基于它们的响应式依赖进行缓存的。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 erp 还没有发生改变，多次访问 isErp 计算属性会立即返回之前的计算结果，而不必再次执行函数。
-  computed: { // 动态计算属性，相当于this.$store.getters.name, this.$store.getters.sidebar,
-  // 使用对象展开运算符 ...mapGetters 将 getter 混入 computed 对象中
+  // 说明：当映射的计算属性的名称与 state 的子节点名称相同时，我们也可以给 mapState 传一个字符串数组。举例如下：（这里是...mapGetters对象展开运算符，同样也是适用的！！）
+  // computed: mapState([
+  // 映射 this.count 为 store.state.count
+  //'count'
+  //])
+ computed: { // 动态计算属性，相当于this.$store.getters.name, this.$store.getters.sidebar,
+   // 使用对象展开运算符将 getter 混入 computed 对象中
+   //当映射的计算属性的名称与 state 的子节点名称相同时，我们也可以给 mapGetters 传一个字符串数组
     ...mapGetters([
+      //把 `this.name` 映射为 `this.$store.getters.name`
       'name',
       'sidebar',
       'avatar',
       'erp'
     ]),
-    // 这里的计算属性是调用了一个方法，当这个erp值改变的时候，方法才调用
+    // 计算属性isRrp值依赖属性erp,当erp值改变的时候，返回isRrp的值，在第二次改变之前，缓存isErp的值
     isErp() {
       return this.erp === '0'
     }

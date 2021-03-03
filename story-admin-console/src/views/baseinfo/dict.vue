@@ -11,6 +11,13 @@
       1、如果在HTML中定义了 ref="xx" 那么在Vue实例中通过this.$refs.xx就能获取到当前定义ref="xx"的DOM元素
       2、如果在组件引用上（比如<son ref="xx">）上使用了ref，那么在父组件Vue实例中通过this.$refs获取到的是整个子组件的对象，可以通过.的方式调用子组件data和methods中绑定数据
     -->
+    <!--
+      ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例：
+      <p ref="p">hello</p> `vm.$refs.p` will be the DOM node
+      <child-component ref="child"></child-component>`vm.$refs.child` will be the child component instance
+      当 v-for 用于元素或组件的时候，引用信息将是包含 DOM 节点或组件实例的数组
+     -->
+
     <data-grid
       ref="dataList"
       url="/baseinfo/dict/list"

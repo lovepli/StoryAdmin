@@ -66,4 +66,11 @@ export default {
   update(el, binding) {
     el._conetnt = binding.value;
   }
+
+  //  学习说明：自定义指令，提供如下几个钩子函数
+  // bind: function () {},
+  // inserted: function () {},
+  // update: function () {},
+  // componentUpdated: function () {},
+  // unbind: function () {}
 }

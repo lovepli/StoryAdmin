@@ -27,6 +27,7 @@
         type="text"
         @keyup.enter="sendText()"
       >
+      <!-- Class 与 Style 绑定 -->
       <div
         :class="{ ['btn-active']: contentText }"
         class="btn"

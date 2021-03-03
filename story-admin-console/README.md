@@ -5,7 +5,7 @@
 
 ## 技术依赖
 
-- 主体：Vue、ElementUI、webpack
+- 主体：Vue、ElementUI、webpack (部分vue-loader vue-router  vuex)
 - 图表：Antv/G2
 - Excel：js-xlsx
 - pdf：pdf.js
@@ -101,7 +101,7 @@
 |	|-- App.vue               根组件
 |	|-- main.js               入口文件，加载各种组件
 |-- static              第三方纯静态资源，不会被webpack处理
-|-- .babelrc            babel-loader 配置
+|-- .babelrc            babel-loader 配置 (javaScript 转译器)
 |-- .editorconfig       IDE配置
 |-- .gitignore          git提交时忽略的文件
 |--	package.json        项目基本信息
@@ -184,5 +184,6 @@ npm run build --report
 https://www.jianshu.com/p/e1c0cbbfb599
 # vue开源项目库汇总
 https://www.jianshu.com/p/f5a5c70013d4
+https://www.cnblogs.com/jin-zhe/p/10050052.html
 
 

@@ -9,7 +9,10 @@
     <div v-if="limit > 0">
       {{ content }}
     </div>
-
+       <!-- 指令绑定  Class 与 Style  -->
+       <!-- v-bind:class 绑定 HTML Class -->
+       <!-- 我们也可以在这里绑定一个返回对象的计算属性。这是一个常用且强大的模式： -->
+       <!-- v-bind:style 绑定内联样式 -->
     <div v-else ref="lineLimit" :class="ellipsisClass" :style="ellipsisStyle">
       {{ text }}
     </div>

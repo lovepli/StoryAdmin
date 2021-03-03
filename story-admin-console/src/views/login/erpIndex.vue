@@ -9,6 +9,7 @@ export default {
   },
   // 只要执行完了mounted，表示整个Vue实例已经初始化完毕了，此时组件已经进入了运行阶段。
   mounted() {
+    //路由对象属性 $route.query:一个 key/value 对象，表示 URL 查询参数。例如，对于路径 /foo?user=1，则有 $route.query.user == 1，如果没有查询参数，则是个空对象
     var ticket = this.$route.query.sso_service_ticket;
     // 分发Action 通过 store.dispatch(type)方法触发action，参数为事件类型，需要和action中函数名称一致。
     this.$store

@@ -123,7 +123,14 @@ export default {
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
+      // this.$el 表示Vue 实例使用的根 DOM 元素 、
+      // this.$parent表示父实例，如果当前实例有的话、
+      // this.$root当前组件树的根 Vue 实例。如果当前实例没有父实例，此实例将会是其自己。
+      // 访问父级组件实例:和 $root 类似，$parent property 可以用来从一个子组件访问父组件的实例。它提供了一种机会，可以在后期随时触达父级组件，以替代将数据以 prop 的方式传入子组件的方式
+      // this.$children当前实例的直接子组件。需要注意 $children 并不保证顺序，也不是响应式的。如果你发现自己正在尝试使用 $children 来进行数据绑定，考虑使用一个数组配合 v-for 来生成子组件，并且使用 Array 作为真正的来源
+      console.log(this.$el.textContent) // => 页面显示的文本内容未更新
       this.$nextTick(() => {
+        console.log(this.$el.textContent) // => '页面显示的文本内容已更新
         this.$refs['dataForm'].clearValidate()
       })
     },
@@ -138,10 +145,18 @@ export default {
       })
     },
     handleUpdate(id) {
+      // 1、 修改数据
       this.resetTemp()
-      this.dialogStatus = 'update'
+      this.dialogStatus = 'update' 
       this.dialogFormVisible = true
+      // 2、DOM 还没有更新
+      console.log(this.$el.textContent) // => 'create' 页面显示的文本内容未更新
+      // Vue.nextTick( [callback, context] )用法： 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+      // vm.$nextTick( [callback] ) 用法：将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。它跟全局方法 Vue.nextTick 一样，不同的是回调的 this 自动绑定到调用它的实例上。
       this.$nextTick(() => {
+        // 3、 DOM 现在更新了
+        console.log(this.$el.textContent) // => 'update' 页面显示的文本内容已更新
+        // 3、`this` 绑定到当前实例
         this.$refs['dataForm'].clearValidate()
       })
       const params = {};

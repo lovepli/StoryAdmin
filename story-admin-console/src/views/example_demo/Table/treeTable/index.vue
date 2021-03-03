@@ -19,8 +19,16 @@
       show-checkbox
       default-expand-all
       @check-change="handleCheckChange">
-      <!-- 使用自定义,需要加slot-scope,返回两个值,node是当前节点指定的对象
-    data是当前节点的数据 -->
+      <!-- 使用自定义,需要加slot-scope,返回两个值,node是当前节点指定的对象data是当前节点的数据 -->
+     <!-- 作用域插槽slot-scope="scope"的使用-->
+     <!-- v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式。所以在支持的环境下 (单文件组件或现代浏览器)，你也可以使用 ES2015 解构来传入具体的插槽 prop，如下： -->
+     <!-- <current-user v-slot="{ user }">
+            {{ user.firstName }}
+       </current-user> -->
+   <!--这样可以使模板更简洁，尤其是在该插槽提供了多个 prop 的时候。它同样开启了 prop 重命名等其它可能，例如将 user 重命名为 person：  -->
+   <!-- <current-user v-slot="{ user: person }">
+          {{ person.firstName }}
+   </current-user> -->
       <div slot-scope="{ node, data }" class="custom-tree-node">
         <div v-if="data.span" class="total_info_box clearfix">
           <span><i>对账单号:</i> {{ data.accountNo | isEmptyVal }}</span>

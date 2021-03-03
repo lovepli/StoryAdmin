@@ -1,5 +1,8 @@
 <template>
   <div>
+     <el-row>
+    <el-tag :key="tag" v-for="tag in dynamicTags" type="danger"  style="width:100%" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
+    </el-row>
     <el-table :data="tableData" border highlight-current-row @header-contextmenu="contextmenu">
       <el-table-column v-if="colData[0].istrue" type="index" label="序号" width="80px"/>
       <el-table-column v-if="colData[1].istrue" prop="date" label="日期"/>
@@ -58,7 +61,7 @@ export default {
     return {
       // tableMng,
       tableData: [],
-
+     dynamicTags: ['!提示：鼠标放在表格栏右键单击可以对列表数据进行筛选显示'], // 动态标签
       // vue——动态控制表格列的显示和隐藏 参考：https://blog.csdn.net/qq_44450612/article/details/99715181
       menuVisible: false, // 右键菜单的显示与隐藏
       top: 0,		// 右键菜单的位置
@@ -75,7 +78,11 @@ export default {
       ]
     }
   },
+  // Vue 提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：侦听属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的做法是使用计算属性computed而不是命令式的 watch 回调
+  // 虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。这就是为什么 Vue 通过 watch 选项提供了一个更通用的方法，来响应数据的变化。当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。
   watch: {
+    // 观察 Vue 实例上的一个表达式或者一个函数计算结果的变化。回调函数得到的参数为新值和旧值。表达式只接受简单的键路径。对于更复杂的表达式，用一个函数取代。
+    // 注意：在变更 (不是替换) 对象或数组时，旧值将与新值相同，因为它们的引用指向同一个对象/数组。Vue 不会保留变更之前值的副本。
     colOptions(newVal, oldVal) {
       if (newVal) { // 如果有值发生变化，即多选框的已选项变化
         var arr = this.colSelect.filter(i => newVal.indexOf(i) < 0) 	// 未选中
@@ -91,9 +98,15 @@ export default {
   },
   created() {
     this.tableData = data.tableData;
-    console.log('表格数“' + JSON.stringify(this.tableData))
+    console.log('表格数：' + JSON.stringify(this.tableData))
   },
   methods: {
+     /**
+     * 关闭提示标签
+     */
+    handleClose(tag) {
+        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+      },
     contextmenu(row, event) {
       // 先把菜单关闭，目的是第二次或者第n次右键鼠标的时候 它默认的是true
       this.menuVisible = false

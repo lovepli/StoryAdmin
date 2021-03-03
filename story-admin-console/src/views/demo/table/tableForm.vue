@@ -104,6 +104,7 @@ export default {
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
+     // Vue.nextTick( [callback, context] ) : 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
@@ -122,7 +123,10 @@ export default {
       this.resetTemp()
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
+      console.log(this.$el.textContent) // => 'create' 未更新
+     //Vue.nextTick( [callback, context] )  在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
       this.$nextTick(() => {
+        console.log(this.$el.textContent) // => 'update' 已更新
         this.$refs['dataForm'].clearValidate()
       })
       const params = {};

@@ -33,7 +33,7 @@ module.exports = {
         ? config.build.assetsPublicPath
         : config.dev.assetsPublicPath
   },
-  // alias的使用
+  // alias别名的使用
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

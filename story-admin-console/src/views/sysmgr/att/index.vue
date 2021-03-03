@@ -330,8 +330,8 @@ export default {
       this.uploadLoading = true;
       var that = this;
       setTimeout(function() {
-      // eslint-disable-next-line eqeqeq
-        if (that.$refs.upload.$children[0].fileList.length == 1) {
+      // this.$children当前实例的直接子组件。需要注意 $children 并不保证顺序，也不是响应式的。如果你发现自己正在尝试使用 $children 来进行数据绑定，考虑使用一个数组配合 v-for 来生成子组件，并且使用 Array 作为真正的来源
+        if (that.$refs.upload.$children[0].fileList.length === 1) {
           that.$refs.upload.submit();
         } else {
           that.uploadLoading = false;
@@ -343,6 +343,15 @@ export default {
           });
         }
       }, 100);
+      // 知识点：Vue中使用定时器setInterval和setTimeout https://www.cnblogs.com/jin-zhe/p/10001236.html
+      // js中定时器有两种，一个是循环执行setInterval，另一个是定时执行setTimeout
+      // 一、循环执行（setInterval）
+      // 顾名思义，循环执行就是设置一个时间间隔，每过一段时间都会执行一次这个方法,直到这个定时器被销毁掉
+      // 用法是setInterval（“方法名或方法”，“延时”）， 第一个参数为方法名或者方法，注意为方法名的时候不要加括号,第二个参数为时间间隔
+      // 实例：有时候我们需要在页面上添加一个类似时钟的东西来实时显示当前时间，这个时候我们可以利用定时器来完成这个功能
+      // 二、定时执行 （setTimeout）
+      // 定时执行setTimeout是设置一个时间，等待时间到达的时候只执行一次，但是执行完以后定时器还在，只是没有运行
+      // 用法是setTimeout(“方法名或方法”, “延时”); 第一个参数为方法名或者方法，注意为方法名的时候不要加括号,第二个参数为时间间隔
     },
     // 上传成功
     handleSuccess(response, file, fileList) {

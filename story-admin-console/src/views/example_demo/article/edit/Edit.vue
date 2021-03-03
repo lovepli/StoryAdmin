@@ -99,7 +99,7 @@
 import Mock from 'mockjs';
 import util from '@/utils/example_demo/wangluyao/util';
 // import api from '@/api'
-import bus from '@/utils/example_demo/wangluyao/bus'; // 组件之间通信
+import bus from '@/utils/example_demo/wangluyao/bus'; // bus飞父子组件之间通信
 // import tableMng from '@/utils/tableMng'
 import AvatarUpload from '@/components/example_demo/wangluyao/business/upload/avatar-upload';
 import DragUpload from '@/components/example_demo/wangluyao/business/upload/drag-upload';
@@ -228,6 +228,15 @@ export default {
     this.articleType = articleType; // 赋值文章类型下拉列表
   },
   methods: {
+        // 获取系统当前时间
+   async getNowTime(){
+    //当前设定的日期时间
+      let d = new Date
+      let year,month,day,hour,minute,second;
+      [year,month,day,hour,minute,second] = [d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes(),d.getSeconds()]
+      let dateTime = new Date(year, month, day,hour,minute,second)
+       console.log("获取系统当前时间："+dateTime)
+    },
     /** 获取详细信息 */
     async getDetail() {
       if (this.articleId) {
@@ -284,7 +293,7 @@ export default {
       });
     },
     handleClose() {
-      bus.$emit('closeTag', this.$route.path);
+      bus.$emit('closeTag', this.$route.path); // 字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
       this.$router.push('/article/list');
     }
   }
