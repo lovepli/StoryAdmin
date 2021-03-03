@@ -48,6 +48,7 @@ export function scroll(element, target, duration = 500, callback = () => {}) {
  * @param {Function} callback  动画完成之后的回调
  */
 export function animate(element, properties, interval = 20, callback = () => {}) {
+  // 清空定时器
   clearInterval(element.timer);
   // setInterval定时器，一直循环执行
   element.timer = setInterval(() => {
@@ -63,6 +64,7 @@ export function animate(element, properties, interval = 20, callback = () => {})
       }
     }
     if (flag) {
+      // 清空定时器
       clearInterval(element.timer);
       callback();
     }
