@@ -204,7 +204,9 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 if (throwable != null && throwable instanceof SignatureVerificationException) {
                     msg = String.format("Token或者密钥不正确(%s)",throwable.getMessage());
                 } else if (throwable != null && throwable instanceof TokenExpiredException) {
-                    msg = String.format("Token已过期(%s)",throwable.getMessage());
+                    // TODO 为什么总是一会儿就过期了？
+                   // msg = String.format("Token已过期(%s)",throwable.getMessage());
+                    msg = String.format("Token已过期,请刷新页面重新登录！");
                 } else {
                     if (throwable != null) {
                         msg = throwable.getMessage();
