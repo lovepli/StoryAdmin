@@ -12,10 +12,10 @@
         <span v-show="!canDo" class="disabledClass">筛选</span>
         <span v-show="canDo" class="filterFuncClass" @click="handlerFilterFunc('cancel')">取消</span>
         <span v-show="!canDo" class="disabledClass">取消</span>
-        <span></span>
+        
         <span class="filterClass" slot="reference">筛选
           <!-- <i class="fa fa-filter"></i>  -->
-           <i class="el-icon-edit" />
+           <i class="el-icon-s-tools" />
           <!-- 筛选的图标样式 -->
         </span>
     </el-popover>

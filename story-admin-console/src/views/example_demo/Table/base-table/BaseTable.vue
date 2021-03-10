@@ -5,9 +5,9 @@
     </el-row>
     <el-table :data="tableData" border highlight-current-row @header-contextmenu="contextmenu">
       <el-table-column v-if="colData[0].istrue" type="index" label="序号" width="80px"/>
-      <el-table-column v-if="colData[1].istrue" prop="date" label="日期"/>
-      <el-table-column v-if="colData[2].istrue" prop="name" label="姓名"/>
-      <el-table-column v-if="colData[3].istrue" prop="age" label="年龄" sortable/>
+      <el-table-column v-if="colData[1].istrue" prop="date" label="日期" width="120" align="center" />
+      <el-table-column v-if="colData[2].istrue" prop="name" label="姓名" width="120" align="center" />
+      <el-table-column v-if="colData[3].istrue" prop="age" label="年龄" width="120" align="center" sortable/>
       <!-- <el-table-column
       prop="gender"
       label="性别"
@@ -19,6 +19,7 @@
     </el-table-column> -->
 
       <el-table-column
+       width="120" align="center"
         v-if="colData[4].istrue"
         :filters="[{ text: '男', value: '1' }, { text: '女', value: '2' }]"
         :filter-method="handleFilter"
@@ -31,6 +32,34 @@
       <el-tag type="success" v-if="scope.row.gender === '2'">女</el-tag> -->
         </template>
       </el-table-column>
+     <el-table-column label="任务包标签详情" width="120" align="center">
+            <template slot-scope="scope">
+               <el-dropdown   placement="bottom" >   
+                 <span class="el-dropdown-link">
+                  <el-tag type="success" ><i class="el-icon-s-tools"></i></el-tag>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                   <el-dropdown-item v-for="(item,index) in scope.row.taskTags" v-text="item"  :key="index"></el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </template>
+      </el-table-column>
+      <el-table-column label="操作" width="120" align="center" v-if="colData[5].istrue">
+            <template slot-scope="scope">
+              <!-- placement=""bottom"  这是弹出的位置，详情可见参数配置  trigger="click" 为点击方式，删除为hover方式 -->
+              <el-dropdown placement="bottom" trigger="click">   
+                <span class="el-dropdown-link">
+                  <i class="el-icon-s-tools"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <!--  //注意：直接写@click是无效的，需要加上修饰符 .native    括号里面的就是点击当条数据的所有参数 -->
+                  <el-dropdown-item  @click.native="handleDetails(scope.$index,scope.row)">编辑</el-dropdown-item>  
+                  <el-dropdown-item  @click.native="handleDetails(scope.$index,scope.row)">详情</el-dropdown-item>
+                  <el-dropdown-item @click.native="deletes(scope.$index,scope.row)">删除</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </template>
+          </el-table-column>
     </el-table>
     <!--右键弹出的菜单内容-->
     <!--动态计算菜单出现的位置-->
@@ -51,7 +80,8 @@ const data = Mock.mock({
     date: '@datetime("yyyy-MM-dd HH:mm:ss")',
     name: '@cname',
     age: '@natural(20,40)',
-    gender: '@pick(["1", "2"])'
+    gender: '@pick(["1", "2"])',
+    taskTags:['标签1', '标签2', '标签3']
   }]
 })
 
@@ -66,15 +96,16 @@ export default {
       menuVisible: false, // 右键菜单的显示与隐藏
       top: 0,		// 右键菜单的位置
       left: 0,
-      colOptions: ['序号', '日期', '姓名', '年龄', '性别'], // 多选框的选择项
-      colSelect: ['序号', '日期', '姓名', '年龄', '性别'], 	// 多选框已选择的内容，即表格中显示的列
+      colOptions: ['序号', '日期', '姓名', '年龄', '性别','操作'], // 多选框的选择项
+      colSelect: ['序号', '日期', '姓名', '年龄', '性别','操作'], 	// 多选框已选择的内容，即表格中显示的列
       // istrue属性存放列的状态
       colData: [
     	  { title: '序号', istrue: true },
         { title: '日期', istrue: true },
         { title: '姓名', istrue: true },
         { title: '年龄', istrue: true },
-        { title: '性别', istrue: true }
+        { title: '性别', istrue: true },
+        { title: '操作', istrue: true }
       ]
     }
   },
@@ -101,6 +132,12 @@ export default {
     console.log('表格数：' + JSON.stringify(this.tableData))
   },
   methods: {
+    deletes(index, row) {
+     console.log(index,row)  
+    },
+    handleDetails (index, row) {
+      console.log(index,row)  
+    },
      /**
      * 关闭提示标签
      */
