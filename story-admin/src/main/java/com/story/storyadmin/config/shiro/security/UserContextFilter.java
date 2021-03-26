@@ -1,7 +1,10 @@
 package com.story.storyadmin.config.shiro.security;
 
+import com.alibaba.fastjson.JSONObject;
 import com.story.storyadmin.config.shiro.LoginUser;
 import com.story.storyadmin.constant.SecurityConsts;
+import com.story.storyadmin.filter.BodyRequestWrapper;
+import com.story.storyadmin.filter.xss.XssHttpServletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +12,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Springboot中实现Filter实现的途径
@@ -25,6 +31,9 @@ import java.io.IOException;
 /** 应用上下文filter  拦截所有url*/
 @WebFilter(filterName = "userContextFilter", urlPatterns = "/*")
 public class UserContextFilter implements Filter {
+   // private static final  String [] serviceApi={"/captchaImage","/user/login","/user/info"};
+    // 接口白名单
+   // private static final Set<String> ALLOW_PATHS = new HashSet<>(Arrays.asList(serviceApi));
 
     private  Logger logger = LoggerFactory.getLogger(UserContextFilter.class);
     /**
@@ -38,6 +47,18 @@ public class UserContextFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         logger.info("####AnnoantationFilter init……"+filterConfig.getFilterName());
     }
+
+
+
+    /**
+     * 销毁
+     * Web容器调用destroy方法销毁Filter。destroy方法在Filter的生命周期中仅执行一次。在destroy方法中，可以释放过滤器使用的资源。
+     */
+    @Override
+    public void destroy() {
+        logger.info("####Annoantation destory-------");
+    }
+
 
     /**
      * 执行filter
@@ -64,7 +85,7 @@ public class UserContextFilter implements Filter {
             //将登录用户对象存入到ThreadLocal线程内部属性中
             try (UserContext context = new UserContext(loginUser)) {
                 logger.info("####AnnoantationFilter doFilter 执行前");
-                // 让目标资源执行，放行
+                //让目标资源执行，放行
                 filterChain.doFilter(servletRequest, servletResponse);
                 logger.info("####AnnoantationFilter doFilter 执行后");
             }
@@ -75,11 +96,67 @@ public class UserContextFilter implements Filter {
     }
 
     /**
-     * 销毁
-     * Web容器调用destroy方法销毁Filter。destroy方法在Filter的生命周期中仅执行一次。在destroy方法中，可以释放过滤器使用的资源。
+     * 执行filter,前端增加防sql注入 xssHttpServletRequestWrapper TODO 没有成功？？
+     * 参考：https://my.oschina.net/wangnian/blog/647976
+     * @param servletRequest
+     * @param servletResponse
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
      */
-    @Override
-    public void destroy() {
-        logger.info("####Annoantation destory-------");
-    }
+    //@Override
+    //public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    //    HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+    //    String authorization = httpServletRequest.getHeader(SecurityConsts.REQUEST_AUTH_HEADER);
+    //    if(authorization!=null){
+    //        String account = JwtUtil.getClaim(authorization, SecurityConsts.ACCOUNT);
+    //        LoginUser loginUser = new LoginUser(account);
+    //        try (UserContext context = new UserContext(loginUser)) {
+    //            logger.info("####AnnoantationFilter doFilter 执行前");
+    //            //sql,xss过滤
+    //            logger.info("CrosXssFilter.......orignal url:{},ParameterMap:{}",httpServletRequest.getRequestURI(), JSONObject.toJSONString(httpServletRequest.getParameterMap()));
+    //            XssHttpServletRequestWrapper xssHttpServletRequestWrapper=new XssHttpServletRequestWrapper(httpServletRequest);
+    //            filterChain.doFilter(xssHttpServletRequestWrapper, servletResponse);
+    //            logger.info("CrosXssFilter..........doFilter url:{},ParameterMap:{}",xssHttpServletRequestWrapper.getRequestURI(), JSONObject.toJSONString(xssHttpServletRequestWrapper.getParameterMap()));
+    //            logger.info("####AnnoantationFilter doFilter 执行后");
+    //        }
+    //    }else{
+    //        filterChain.doFilter(servletRequest, servletResponse);
+    //    }
+    //}
+
+
+    /**
+     * 执行filter，后端增加防sql注入 BodyRequestWrapper TODO 没有成功？？
+     * 参考：https://my.oschina.net/wangnian/blog/647976
+     * @param servletRequest
+     * @param servletResponse
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
+    //@Override
+    //public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    //    String path = ((HttpServletRequest)servletRequest).getRequestURI().substring(((HttpServletRequest) servletRequest).getContextPath().length());
+    //    HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+    //    String authorization = httpServletRequest.getHeader(SecurityConsts.REQUEST_AUTH_HEADER);
+    //    if(authorization!=null){
+    //        String account = JwtUtil.getClaim(authorization, SecurityConsts.ACCOUNT);
+    //        LoginUser loginUser = new LoginUser(account);
+    //        try (UserContext context = new UserContext(loginUser)) {
+    //            logger.info("####AnnoantationFilter doFilter 执行前");
+    //            //如果是在ALLOW_PATHS的集合中，那么就允许这种请求直接通过
+    //            // if (ALLOW_PATHS.contains(path)){
+    //            //增加处理sql注入，对Request对象外层再封装一层
+    //            //HttpServletRequest没有提供相关的set方法来修改body，所以需要用修饰类
+    //            ServletRequest requestWrapper = new BodyRequestWrapper((HttpServletRequest) servletRequest);
+    //            filterChain.doFilter(requestWrapper, servletResponse);
+    //            //  }
+    //            logger.info("####AnnoantationFilter doFilter 执行后");
+    //        }
+    //    }else{
+    //        filterChain.doFilter(servletRequest, servletResponse);
+    //    }
+    //}
+
 }

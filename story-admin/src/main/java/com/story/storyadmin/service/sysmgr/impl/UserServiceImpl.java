@@ -144,7 +144,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result login2(LoginBody user, HttpServletResponse response) {
         // TODO 最好养成一个习惯，进行日志输出的时候，判断日志级别再打印出来
         if (logger.isInfoEnabled()) {
-            logger.info("登录成功！！！");
+          //  logger.info("登录成功！！！");
         }
 
         //使用断言校验判断 TODO 这里的断言的作用是什么？没有从日志输出来
