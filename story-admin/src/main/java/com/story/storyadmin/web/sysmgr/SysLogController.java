@@ -43,6 +43,7 @@ public class SysLogController extends BaseController {
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit){
         Result result = new Result();
+        // TODO 系统中使用到了两种分页对象，一种是mybatis-plus的Page分页对象，一种是PageHelper第三方插件的分页方法
         Page<SysLog> page = new Page(pageNo, limit);
         IPage<SysLog> list = sysLogService.findPage(page, sysLog);
         result.setData(list);
