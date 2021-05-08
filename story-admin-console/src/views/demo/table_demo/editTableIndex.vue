@@ -57,8 +57,8 @@
 </style>
 
 <script>
-import { newCode } from '@/views/sysmgr/user/newCode';
-import { erp } from '@/views/sysmgr/user/erp';
+import newCode  from '@/components/demo/newCode';
+import erp  from '@/components/demo/erp';
 
 export default {
 
