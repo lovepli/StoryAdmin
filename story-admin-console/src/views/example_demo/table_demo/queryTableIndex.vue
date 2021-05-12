@@ -43,7 +43,7 @@
         :key="num"
         :selectDate="selectDate"
         :tableId = "tableId"
-        v-if="showTable1"
+        v-if="showTable2"
         ></erp>
 
 
