@@ -57,12 +57,12 @@
 </style>
 
 <script>
-import newCode  from '@/components/demo/newCode';
-import erp  from '@/components/demo/erp';
+import newCode  from '@/components/demo/editTable/newCode';
+import erp  from '@/components/demo/editTable/erp';
 
 export default {
 
-  name: 'UserIndex',
+  name: 'editTableIndex',
   components: { newCode, erp },
   // 定义本地过滤器
   filters: {

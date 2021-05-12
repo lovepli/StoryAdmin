@@ -330,6 +330,18 @@ export const constantRouterMap = [
         component: () => import('@/views/example_demo/tab'),
         name: 'Tab',
         meta: { title: 'Tab选项卡', icon: 'el-icon-s-grid' }
+      },
+      {
+        path: 'TableQueryDemo',
+        component: () => import('@/views/example_demo/table_demo/queryTableIndex'),
+        name: 'TableQueryDemo',
+        meta: { title: 'Table的查询表格', icon: 'el-icon-s-grid' }
+      },
+      {
+        path: 'TableEditDemo',
+        component: () => import('@/views/example_demo/table_demo/editTableIndex'),
+        name: 'TableEditDemo',
+        meta: { title: 'Table的编辑表格', icon: 'el-icon-s-grid' }
       }
     ]
   },
