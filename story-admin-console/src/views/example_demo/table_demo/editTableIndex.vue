@@ -26,6 +26,20 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
+
+        <el-form-item label="机构号：" placeholder="请选择">
+         <el-select v-model="netSiteNumber" filterable placeholder="请输入" clearable @change="selectNetSite"> 
+           <el-option  label="全部"  value="all" ></el-option> 
+           <el-option
+                    v-for="item in netList"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+          </el-select>
+        </el-form-item>
+
+
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
         </el-form-item>
@@ -45,7 +59,7 @@
         :tableId = "tableId"
         v-if="showTable2"
         ></erp>
-        
+
   </div>
 </template>
 
@@ -75,6 +89,18 @@ export default {
       showTable2:false,
       tableId:'', // 表格id
       tableName:'',// 表格名称
+      netSiteNumber:'',
+      // netList:[],
+      netList:[
+        {
+          value:'1',
+          label:'网点1'
+        },
+        {
+          value:'2',
+          label:'网点2'
+        }
+      ],
       tablelList:[
         {
           value:'1',
@@ -109,6 +135,9 @@ export default {
           return (this.tableName = item.label);
         }
       });
+    },
+    selectNetSite(val){
+     this.netSiteNumber = val === 'all' ? '全部' : val;
     },
     search(){
       this.showTableList();
