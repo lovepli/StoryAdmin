@@ -5,7 +5,7 @@
     v-loading="isLoading"
      border 
      stripe
-     @select-change="handleSelectionChange"
+     @selection-change="handleSelectionChange"
      >
         <el-table-column
           type="selection"

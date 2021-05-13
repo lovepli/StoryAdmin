@@ -45,10 +45,7 @@
         :tableId = "tableId"
         v-if="showTable2"
         ></erp>
-
-
-
-
+        
   </div>
 </template>
 

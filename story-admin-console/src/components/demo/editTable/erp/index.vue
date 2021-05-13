@@ -7,13 +7,14 @@
         :row-key="getRowKey"
         border
         stripe
-        @select-change="handleSelectChange"
+        @selection-change="handleSelectionChange"
+        :header-cell-style="{background:'#eef1f6',color:'#606266',fontweight:600}"
       >
         <el-table-column
           type="selection"
           width="40px"
-          :reserve-selection="true"
         ></el-table-column>
+        <!--     :reserve-selection="true" -->
 
         <el-table-column label="序号" fixed width="70px">
           <template slot-scope="scope">
@@ -200,7 +201,7 @@
             style="width:220px"
           ></el-input>
         </el-form-item>
-        <div slot="footer">
+        <div slot="footer" class="dialog-footer">
           <el-button @click="isShowDailog = false">取消</el-button>
           <el-button type="primary" @click="changeLossRatio">确定</el-button>
         </div>
@@ -258,12 +259,21 @@ export default {
   // 侦听属性
   watch: {},
   mounted() {
-    this.getTableList(); // 页面未显示之前进行数据渲染
+    this.init();
+
   },
   // created 钩子可以用来在一个实例被创建之后执行代码
-  created() {},
+  created() {
+   // this.tableForm.tableData = [];
+  },
   // methods是Vue内置的对象，用于存放一些自定义的方法函数
   methods: {
+    init(){
+    this.getTableList(); // 页面未显示之前进行数据渲染
+    setTimeout(() => { //异步读取函数setTimeout()
+       this.editTable();
+    }, 100);
+    },
     // 删除
     handleDelete(index, rows, row) {
       console.log("删除数据！");
@@ -272,7 +282,8 @@ export default {
       console.log(rows, index);
     },
     handleDetail(index, rows) {},
-    handleSelectChange(val) {
+
+    handleSelectionChange(val) {
       this.multipleSelection = val;
       console.log(this.multipleSelection,"this.multipleSelection")
     },
@@ -306,7 +317,7 @@ export default {
       //     this.isLoading = false;
       //     console.log(res);
       //   })
-      (this.tableForm.tableData = [
+      this.tableForm.tableData = [
         {
           id: "001",
           orgNumber: "1",
@@ -325,8 +336,8 @@ export default {
           centManageDep: "归口管理部门2",
           remarks: "备注2"
         }
-      ]),
-        (this.total = 2);
+      ],
+      this.total = 2;
       this.isLoading = false;
       this.showPagination = this.tableForm.tableData.length < 1 ? false : true;
      // this.editTable();
@@ -355,6 +366,7 @@ export default {
       }
     },
     save(formName) {
+         console.log(this.multipleSelection,"this.multipleSelection")
       // 校验数组非空
       // if(!this.multipleSelection){
       //    this.$message.error("请先勾选需要保存的数据！")
