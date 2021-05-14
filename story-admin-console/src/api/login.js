@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import Secret from "@/utils/Secret"
 
 // 登录接口
 // export function login(username, password) {
@@ -27,6 +28,32 @@ export function login(username, password, code, uuid, rememberMe) {
     data: data
   })
 }
+
+/**
+ * post 方法(加密传输)
+ */
+export function secretLogin(username, password, code, uuid, rememberMe) {
+  const data = {
+    username,
+    password,
+    code,
+    uuid,
+    rememberMe
+  }
+   // 对业务参数进行base64加密处理（需将业务参数转为string文本处理，否则加解密异常）
+ var secretString = Secret.encode(JSON.stringify(data));
+ let params={
+  encryptData:secretString
+ }
+
+  return request({
+    url: '/user/login',
+    method: 'post',
+    data: params
+  })
+}
+
+
 // 用户信息
 export function getInfo() {
   return request({

@@ -76,6 +76,19 @@ public class LoginController extends BaseController{
     }
 
     /**
+     * 验证码登录 通过jsonObject对象接收入参，解密base64加密的请求参数
+     * @param jsonObject
+     * @return
+     */
+    //@ApiOperation(value = "登录接口" ,  notes="登录")
+    //@ResponseBody
+    //@RequestMapping(value="/login",method = {RequestMethod.POST})
+    //public Result login2(HttpServletResponse response, @RequestBody  JSONObject jsonObject) {
+    //    // 进行base64解密处理参数
+    //    return userService.login3(jsonObject,response);
+    //}
+
+    /**
      * erp登录验证ticket，生成本地token，由本地来管理token生命周期
      * @return
      */

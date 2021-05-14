@@ -1,5 +1,6 @@
 package com.story.storyadmin.service.sysmgr;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
@@ -36,6 +37,8 @@ public interface UserService extends IService<User> {
     Result login(UserVo user, HttpServletResponse response);
 
     Result login2(LoginBody user, HttpServletResponse response);
+
+    Result login3(JSONObject jsonObject, HttpServletResponse response);
 
     /**
      * ERP登录

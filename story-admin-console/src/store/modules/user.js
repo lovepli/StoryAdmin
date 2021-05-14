@@ -1,4 +1,4 @@
-import { login, logout, getInfo, loginerp } from '@/api/login'
+import { login, logout, getInfo, loginerp,secretLogin } from '@/api/login'
 // eslint-disable-next-line no-unused-vars
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
@@ -31,6 +31,7 @@ const user = {
   // 通过 store.dispatch(type)方法触发action，参数为事件类型，需要和action中函数名称一致。
   // 在组件中分发Action: 在组件中使用 this.$store.dispatch('xxx') 分发 action，或者使用 mapActions 辅助函数将组件的 methods 映射为 store.dispatch 调用
   actions: {
+    
     // 1、通过验证码登录后台
     Login({ commit }, userInfo) { // commit提交调用mutation；userInfo即为点击后传递过来的参数，此时是 用户登录信息
       const username = userInfo.username.trim()
@@ -44,7 +45,9 @@ const user = {
         // 一旦登录接口响应成功，会将返回的Token信息全局设置再请求头中，这样以后所有的请求中都携带这个请求头信息。
         // 具体可以看：src/utils/request.js中这段代码：config.headers['Authorization'] = getToken()
         // 这是全局配置axios实例，因为所有的API请求都需要经过这个request.js文件，所以其中的配置项对所有的请求都有效。
+       
         login(username, password, code, uuid, rememberMe).then(response => {
+        //  secretLogin(username, password, code, uuid, rememberMe).then(response => { // TODO base64加密接口参数
           // 这里前端登录的时候不要存储token，因为在request.js中已经存储了token，在登录成功的response响应拦截器中存储了token
           // const data = response.data
           // setToken(data.token)  //登录成功后将token存储在cookie之中，这个方法是定义在auth.js中，这个是前端处理存储用户信息的方式，后台是使用jwt验证
@@ -54,6 +57,8 @@ const user = {
           reject(error)
         })
       })
+
+
     },
 
     // 登录ERP

@@ -1,8 +1,10 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.shiro.ShiroKit;
 import com.story.storyadmin.config.shiro.security.JwtProperties;
 import com.story.storyadmin.config.shiro.security.JwtToken;
@@ -31,8 +33,10 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -193,6 +197,64 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //登录成功
         return new Result(true, "登录成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
+
+    @Override
+    public Result login3(JSONObject jsonObject, HttpServletResponse response) {
+        // A、明文方式处理
+        //String userName= jsonObject.getString("username");
+        //String password= jsonObject.getString("password");
+        //String code= jsonObject.getString("code");
+        //String uuid= jsonObject.getString("uuid");
+
+        // B、密文方式处理
+        String encryptData = jsonObject.getString("encryptData");
+        String userName;
+        String password;
+        String code;
+        String uuid;
+        String rememberMe;
+        if(StringUtils.isEmpty(encryptData)){
+            throw new CustomException("请求加密参数不能为空");
+        }
+        String decryptStr = decode(encryptData);
+        logger.info("登录入参校验-解析明文字符串:{}",decryptStr);
+        JSONObject requestParam =JSONObject.parseObject(decryptStr);
+        if(requestParam !=null){
+            userName= requestParam.getString("username");
+            password= requestParam.getString("password");
+            code= requestParam.getString("code");
+            uuid= requestParam.getString("uuid");
+            rememberMe= requestParam.getString("rememberMe");
+        } else {
+            throw new CustomException("解析后的请求参数为空");
+        }
+
+        if(StringUtils.isEmpty(userName)){
+            throw new CustomException("登录账号不能为空");
+        }
+        logger.info("登录账号userName：",userName);
+
+        //登录成功
+        return new Result(true, "登录成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
+    private String decode(String text){
+        String result="";
+        //倒序处理字符
+        for(int i = text.length()-1;i>=0;i--){
+            result +=text.charAt(i);
+        }
+        String decodeString ="";
+        try{
+            // 通过base64进行解密
+            decodeString = new String(Base64.getDecoder().decode(result),"utf-8");
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+       // System.out.println(decodeString);
+        return  decodeString;
+    }
+
 
     /**
      * ERP登录
