@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -83,13 +82,10 @@ public class NewGeneration extends Model<NewGeneration> {
     private Integer deleted;
 
 
-
     @Override
     protected Serializable pkVal(){
         return this.id;
     }
-
-
 
 
 }

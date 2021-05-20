@@ -2,4 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.story.storyadmin.mapper.bank.NewGenerationMapper">
 
+
+
+    <resultMap type="com.story.storyadmin.domain.entity.bank.NewGeneration" id="BaseResultMap">
+        <id     property="id"     column="ID"     />
+        <result property="subjectCode"   column="SUBJECT_CODE"   />
+        <result property="orgName"  column="ORG_NAME"   />
+        <result property="bookBalance"   column="BOOK_BALANCE"   />
+        <result property="exchangeRate"   column="EXCHANGE_RATE"   />
+        <result property="accountDate"     column="ACCOUNT_DATE"      />
+        <result property="accountDays"      column="ACCOUNT_DAYS"       />
+        <result property="uploadDate"      column="UPLOAD_DATE"       />
+        <result property="deleted"     column="DELETED"      />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,SUBJECT_CODE,ORG_NAME,BOOK_BALANCE,EXCHANGE_RATE,ACCOUNT_DATE,ACCOUNT_DAYS,UPLOAD_DATE,DELETED
+    </sql>
+
+    <select id="findByPage" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        JTKF_NEW_GENERATION
+        where
+        <if test="jsonObject.uploadDate !=null and jsonObject.uploadDate !='' ">
+            upload_date =to_date("yyyy-MM-dd",#{jsonObject.uploadDate})
+        </if>
+    </select>
+
+    <select id="findByPage2"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        JTKF_NEW_GENERATION
+        where
+        <if test="uploadDate !=null and uploadDate !='' ">
+        upload_date =to_date("yyyy-MM-dd",#{uploadDate})
+        </if>
+    </select>
 </mapper>

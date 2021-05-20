@@ -1,5 +1,7 @@
 package com.story.storyadmin.service.bank;
 
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.story.storyadmin.domain.entity.bank.NewGeneration;
 
@@ -9,4 +11,6 @@ import com.story.storyadmin.domain.entity.bank.NewGeneration;
  * @description:
  */
 public interface NewGenerationService extends IService<NewGeneration> {
+
+    public Page<NewGeneration> findByPage(JSONObject jsonObject);
 }
