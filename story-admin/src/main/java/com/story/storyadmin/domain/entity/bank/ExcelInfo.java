@@ -18,12 +18,12 @@ import java.util.Date;
 /**
  * @author: 59688
  * @date: 2021/5/20
- * @description: 新一代表
+ * @description: 上传文件表
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("JTKF_NEW_GENERATION")
-public class NewGeneration extends Model<NewGeneration> {
+@TableName("JTKF_EXCEL_INFO")
+public class ExcelInfo extends Model<ExcelInfo> {
 
     private static final  long serialVersionUID =1L;
 
@@ -34,36 +34,30 @@ public class NewGeneration extends Model<NewGeneration> {
     @TableId(value = "ID",type = IdType.INPUT)
     private String id;
 
-    @TableField("SUBJECT_CODE")
-    private String subjectCode;
-
-    @TableField("ORG_NAME")
-    private String orgName;
+    /**
+     * 业务id (值取新一代表的id)
+     */
+    @TableField("BUSINESS_ID")
+    private String businessId;
 
     /**
-     * 账面余额 对应Oracle数据库字段：NUMBER(12,2)
+     * 附件名称
      */
-    @TableField("BOOK_BALANCE")
-    private BigDecimal bookBalance;
+    @TableField("FILE_NAME")
+    private String fileName;
 
     /**
-     * 汇率 对应Oracle数据库字段：NUMBER(20,8)
+     * 附件路径
      */
-    @TableField("EXCHANGE_RATE")
-    private BigDecimal exchangeRate;
+    @TableField("FILE_PATH")
+    private String filePath;
 
     /**
-     * 记账日期 对应Oracle数据库字段：DATE
+     * 附件格式
      */
-    @JsonFormat(pattern ="yyyy-MM-dd",timezone = "GMT+8")
-    @TableField("ACCOUNT_DATE")
-    private Date accountDate;
+    @TableField("FILE_Format")
+    private String fileFormat;
 
-    /**
-     * 挂账天数 对应Oracle数据库字段：INTEGER
-     */
-    @TableField("ACCOUNT_DAYS")
-    private Integer accountDays;
 
 
     /**
@@ -117,6 +111,18 @@ public class NewGeneration extends Model<NewGeneration> {
      */
     @TableField("DELETE_DATE")
     private Date deleteDate;
+
+    /**
+     *  发布季度
+     */
+    @TableField("UPLOAD_JD")
+    private String uploadJd;
+
+    /**
+     * 发布状态
+     */
+    @TableField("STATUS")
+    private Integer status;
 
 
     @Override

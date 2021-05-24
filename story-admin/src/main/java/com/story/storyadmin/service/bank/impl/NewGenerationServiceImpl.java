@@ -54,4 +54,14 @@ public class NewGenerationServiceImpl extends ServiceImpl<NewGenerationMapper, N
        // page.setRecords(newGenerationMapper.findByPage3(page,uploadDate,accountDays,netCodeList));
         return page;
     }
+
+    @Transactional
+    @Override
+    public void updateNewGeneration(List<NewGeneration> NewGenerations){
+        if(CollectionUtils.isEmpty(NewGenerations)){
+            throw new RuntimeException("参数为空！");
+        }
+        newGenerationMapper.updateNewGeneration(NewGenerations);
+
+    }
 }

@@ -28,6 +28,7 @@ public interface NewGenerationMapper extends BaseMapper<NewGeneration> {
 
     public List<NewGeneration> findByPage3(Page page, @Param("uploadDate") Date uploadDate, @Param("accountDays") Integer accountDays, @Param("netCodeList") List<String> netCodeList);
 
+    void updateNewGeneration(@Param("list") List<NewGeneration> newGenerations);
     // 批量插入
     void idsertNewGenerations(@Param("list") List<NewGeneration> list,@Param("creator") String creator);
 
