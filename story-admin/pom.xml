@@ -22,6 +22,7 @@
 	<properties>
         <!--项目名称-->
 		<appName>story-admin</appName>
+        <sping.boot.version>2.1.2.RELEASE</sping.boot.version>
         <!-- 项目编译相关 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -39,7 +40,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-        <!--mongodb-->
+
+<!-- devtools热部署-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+<!--            <version>${spring.boot.version}</version>-->
+            <optional>true</optional>
+            <scope>true</scope>
+        </dependency>
+
+      <!--mongodb-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>

@@ -7,6 +7,7 @@ import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.bank.NewGeneration;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.bank.NewGenerationService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +26,11 @@ public class NewGenerationController {
         result.setData(pageData);
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+
+        //BeanUtils.copyProperties(); // TODO 对象拷贝的使用
         return result;
         // return Result.success("pageDate",pageData);
+
     }
 
 

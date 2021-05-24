@@ -81,6 +81,43 @@ public class NewGeneration extends Model<NewGeneration> {
     @TableField("DELETED")
     private Integer deleted;
 
+    /**
+     * 创建者
+     */
+    @TableField("CREATOR")
+    private String creator;
+
+    /**
+     * 修改者
+     */
+    @TableField("UPDATOR")
+    private String updator;
+
+    /**
+     * 删除者
+     */
+    @TableField("DELETOR")
+    private  String deletor;
+
+    /**
+     * 创建日期
+     *  new Date() 存贮日期，当前系统日期
+     */
+    @TableField("CREATE_DATE")
+    private  Date createDate;
+
+    /**
+     *  修改日期
+     */
+    @TableField("UPDATE_DATE")
+    private Date updateDate;
+
+    /**
+     * 删除日期
+     */
+    @TableField("DELETE_DATE")
+    private Date deleteDate;
+
 
     @Override
     protected Serializable pkVal(){

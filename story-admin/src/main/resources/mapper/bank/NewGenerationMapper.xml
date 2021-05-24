@@ -17,8 +17,77 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,SUBJECT_CODE,ORG_NAME,BOOK_BALANCE,EXCHANGE_RATE,ACCOUNT_DATE,ACCOUNT_DAYS,UPLOAD_DATE,DELETED
+        ID,SUBJECT_CODE,ORG_NAME,BOOK_BALANCE,EXCHANGE_RATE,ACCOUNT_DATE,ACCOUNT_DAYS, DELETE,CREATOR,UPLOADOR,DELETOR,CREATE_DATE,UPDATE_DATE,UPLOAD_DATE,DELETE_DATE
     </sql>
+
+<!--    批量插入-->
+    <insert id="idsertNewGenerations" >
+        insert into JTKF_NEW_GENERATION(
+        <include refid="Base_Column_List" />
+        )
+        <foreach collection="list" item="item" index="index" separator=" union all">
+            select
+            #{item.id,jdbcType = VARCHAR},
+            #{item.subjectCode,jdbcType = VARCHAR},
+            #{item.orgName,jdbcType = VARCHAR},
+            #{item.bookBalance,jdbcType = DOUBLE},
+            #{item.exchangeRate,jdbcType = DOUBLE},
+<!--            #{item.exchangeRate,jdbcType = DECIMAL},-->
+            #{item.accountDate,jdbcType = Date},
+            #{item.accountDays,jdbcType = INTEGER},
+<!--            #{item.uploadDate,jdbcType = Date},-->
+            to_date(to_char(#{item,uploadDate},'yyyy-MM-dd'),'yyyy/mm/dd'),
+            0,
+            #{creator},
+            '',
+            '',
+            sysdate,
+            null,
+            null
+            form dual
+        </foreach>
+
+    </insert>
+
+     <!--批量删除 物理删除-->
+    <delete id="deleteNewGenerations" parameterType="java.util.List">
+        delet form JTKF_NEW_GENERATION
+        where
+        deleted =0
+        <if test="ids !=null and ids.size()>0">
+            and id in
+            <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
+
+<!--    逻辑删除-->
+    <delete id="deleteNewGenerations2" >
+        update JTKF_NEW_GENERATION
+        set
+        deleted = 1,
+        deletor = #{deletor},
+        delete_date =sysdate
+        where
+        deleted =0
+        <if test="ids !=null and ids.size()>0">
+            and id in
+            <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
+
+    <delete id="deleteNewGenerationByUploadDate" parameterType="java.util.Date">
+        delete form JTKF_NEW_GENERATION
+        where deleted = 0
+        and upload_date = #{uploadDate}
+    </delete>
+
+
+
+
 
     <select id="findByPage" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
         select
@@ -26,8 +95,12 @@
         from
         JTKF_NEW_GENERATION
         where
+         org.number in
+        <foreach collection="jsonObject.netCodeList" separator="," open="(" close=")" item="netCode">
+          #{netCode}
+        </foreach>
         <if test="jsonObject.uploadDate !=null and jsonObject.uploadDate !='' ">
-            upload_date =to_date("yyyy-MM-dd",#{jsonObject.uploadDate})
+          and  upload_date =to_date(#{jsonObject.uploadDate},"yyyy-MM-dd")
         </if>
     </select>
 
@@ -37,8 +110,25 @@
         from
         JTKF_NEW_GENERATION
         where
+        <foreach collection="netCodeList" separator="," open="(" close=")" item="netCode">
+            #{netCode}
+        </foreach>
         <if test="uploadDate !=null and uploadDate !='' ">
-        upload_date =to_date("yyyy-MM-dd",#{uploadDate})
+         and upload_date =to_date(#{uploadDate},"yyyy-MM-dd")
+        </if>
+    </select>
+
+    <select id="findByPage3"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        JTKF_NEW_GENERATION
+        where
+        <foreach collection="netCodeList" separator="," open="(" close=")" item="netCode">
+            #{netCode}
+        </foreach>
+        <if test="uploadDate !=null and uploadDate !='' ">
+            and  upload_date = #{uploadDate}
         </if>
     </select>
 </mapper>
