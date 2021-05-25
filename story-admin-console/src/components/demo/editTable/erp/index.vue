@@ -1,19 +1,20 @@
 <template>
   <div class="app-container">
-    <el-form :model="tableForm" ref="tableForm">
+    <el-form ref="tableForm" :model="tableForm">
       <el-table
-        :data="tableForm.tableData"
         v-loading="isLoading"
+        :data="tableForm.tableData"
         :row-key="getRowKey"
+        :header-cell-style="{
+          background: '#eef1f6',
+          color: '#606266',
+          fontweight: 600
+        }"
         border
         stripe
         @selection-change="handleSelectionChange"
-        :header-cell-style="{background:'#eef1f6',color:'#606266',fontweight:600}"
       >
-        <el-table-column
-          type="selection"
-          width="40px"
-        ></el-table-column>
+        <el-table-column type="selection" width="40px"/>
         <!--     :reserve-selection="true" -->
 
         <el-table-column label="序号" fixed width="70px">
@@ -29,33 +30,32 @@
           prop="orgNumber"
           fixed
           width="100"
-        ></el-table-column>
+        />
 
         <el-table-column
           label="机构名称"
           prop="orgName"
           show-overflow-tooltip
           width="200"
-        >
-        </el-table-column>
+        />
 
+        <!-- 使用template块，可以在字段下面放一个输入框，也可以是下拉框，日期选择框 -->
         <el-table-column label="归口管理部门" width="100">
           <template slot-scope="{ row, $index }">
             <span v-if="drawRates.showEdit[$index] || row.isSet">
               <el-tooltip
                 :disabled="drawRates.showToolTip[$index]"
-                effect="dark"
                 :content="row.centManageDep"
+                effect="dark"
                 placement="top"
               >
                 <el-input
+                  v-model="row.centManageDep"
                   size="mini"
                   placeholder="请输入内容"
-                  v-model="row.centManageDep"
-                  @input="showToolTip($index, row.centManageDep)"
                   style="width:160px"
-                >
-                </el-input>
+                  @input="showToolTip($index, row.centManageDep)"
+                />
               </el-tooltip>
             </span>
             <span v-else>{{ row.centManageDep }}</span>
@@ -81,10 +81,10 @@
                 type="date"
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
-                @change="calclossDayChange($index, row)"
                 placeholder="选择日期"
                 style="width:220px"
-              ></el-date-picker>
+                @change="calclossDayChange($index, row)"
+              />
             </el-form-item>
           </template>
         </el-table-column>
@@ -108,10 +108,10 @@
                 type="date"
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
-                @change="calclossDayChange($index, row)"
                 placeholder="选择日期"
                 style="width:220px"
-              ></el-date-picker>
+                @change="calclossDayChange($index, row)"
+              />
             </el-form-item>
           </template>
         </el-table-column>
@@ -119,10 +119,10 @@
         <el-table-column label="挂账天数" width="100">
           <template slot-scope="scope">
             <el-input
-              type="text"
               v-if="scope.row.isSet"
               v-model="scope.row.accountDays"
-            ></el-input>
+              type="text"
+            />
             <span v-else>{{ scope.row.accountDays }}</span>
           </template>
         </el-table-column>
@@ -130,11 +130,11 @@
         <el-table-column label="备注" width="100">
           <template slot-scope="scope">
             <el-input
-              type="textarea"
               v-if="scope.row.isSet"
               v-model="scope.row.remarks"
               :autosize="{ minRows: 2, maxRows: 4 }"
-            ></el-input>
+              type="textarea"
+            />
             <span v-else>{{ scope.row.remarks }}</span>
           </template>
         </el-table-column>
@@ -147,20 +147,20 @@
         >
           <template slot-scope="scope">
             <el-button
-              @click="
-                handleDelete(scope.$index, tableForm.tableData, scope.row)
-              "
               type="danger"
               size="mini"
               style="margin-left:0px;"
+              @click="
+                handleDelete(scope.$index, tableForm.tableData, scope.row)
+              "
             >
               删除
             </el-button>
             <el-button
-              @click="handleDetail(scope.$index, tableForm.tableData)"
               type="info"
               size="mini"
               style="margin-left:0px;"
+              @click="handleDetail(scope.$index, tableForm.tableData)"
             >
               详情
             </el-button>
@@ -171,35 +171,38 @@
 
     <el-pagination
       v-if="showPagination"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
       :current-page="queryInfo.pageNumber"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="queryInfo.pageSize"
-      layout="total, sizes, prev,pager,next,jumper"
       :total="total"
+      layout="total, sizes, prev,pager,next,jumper"
       background
-    ></el-pagination>
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
 
     <div class="btnGroup">
       <el-row>
         <el-button size="small" @click="goBack">返回</el-button>
         <el-button size="small" @click="editTable">编辑</el-button>
         <el-button size="small" @click="bulkUpdate">批量更新</el-button>
-        <el-button type="primary" size="small" @click="save('tableForm')"
-          >提交</el-button
+        <el-button
+          type="primary"
+          size="small"
+          @click="save('tableForm')"
+        >提交</el-button
         >
       </el-row>
     </div>
 
-    <el-dialog title="批量更新" :visible.sync="isShowDailog">
+    <el-dialog :visible.sync="isShowDailog" title="批量更新">
       <el-form :model="submitForm">
         <el-form-item label="资产减值比率" label-width="120">
           <el-input
             v-model="submitForm.lossRatio"
             auto-complete="off"
             style="width:220px"
-          ></el-input>
+          />
         </el-form-item>
         <div slot="footer" class="dialog-footer">
           <el-button @click="isShowDailog = false">取消</el-button>
@@ -214,13 +217,15 @@
 
 <script>
 export default {
-  name: "erp",
+  name: 'Erp',
   // 定义本地过滤器
   filters: {},
   components: {},
   // 接受父组件传递的参数
   props: {
+    // eslint-disable-next-line vue/require-default-prop
     selectDate: String,
+    // eslint-disable-next-line vue/require-default-prop
     tableId: String
   },
   // data中存放的是el中需要的数据
@@ -234,7 +239,7 @@ export default {
       fileList: [[]],
       curRowIndex: null,
       queryInfo: {
-        dateSelect: "",
+        dateSelect: '',
         pageNumber: 1,
         pageSize: 10
       },
@@ -243,15 +248,15 @@ export default {
       showPagination: false,
       isShowDailog: false, // 是否显示批量更新弹框
       submitForm: {
-        lossRatio: ""
+        lossRatio: ''
       },
       // 储存编辑数据
       drawRates: {
         showEdit: [],
         showBtn: [],
         showTooltip: [],
-        editIndex: "",
-        editData: ""
+        editIndex: '',
+        editData: ''
       },
       lossRatioList: []
     };
@@ -260,23 +265,23 @@ export default {
   watch: {},
   mounted() {
     this.init();
-
   },
   // created 钩子可以用来在一个实例被创建之后执行代码
   created() {
-   // this.tableForm.tableData = [];
+    // this.tableForm.tableData = [];
   },
   // methods是Vue内置的对象，用于存放一些自定义的方法函数
   methods: {
-    init(){
-    this.getTableList(); // 页面未显示之前进行数据渲染
-    setTimeout(() => { //异步读取函数setTimeout()
-       this.editTable();
-    }, 100);
+    init() {
+      this.getTableList(); // 页面未显示之前进行数据渲染
+      setTimeout(() => {
+        // 异步读取函数setTimeout()
+        this.editTable();
+      }, 100);
     },
     // 删除
     handleDelete(index, rows, row) {
-      console.log("删除数据！");
+      console.log('删除数据！');
       console.log(row.id);
       console.log(row);
       console.log(rows, index);
@@ -285,13 +290,13 @@ export default {
 
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      console.log(this.multipleSelection,"this.multipleSelection")
+      console.log(this.multipleSelection, 'this.multipleSelection');
     },
     goBack() {
       // this.$router.push({path:""})
     },
     async getTableList() {
-      console.log("查询表格！");
+      console.log('查询表格！');
       this.isLoading = true; // 查询结果没有出来前进行转圈，查询结果出来后结束转圈
       this.queryInfo.dateSelect = this.selectDate;
       // 给后端传递json数据,调用后台接口
@@ -319,28 +324,28 @@ export default {
       //   })
       this.tableForm.tableData = [
         {
-          id: "001",
-          orgNumber: "1",
-          orgName: "机构名称1",
-          accountDate: "2021-04-12",
-          accDate: "2021-05-12",
-          centManageDep: "归口管理部门1",
-          remarks: "备注1"
+          id: '001',
+          orgNumber: '1',
+          orgName: '机构名称1',
+          accountDate: '2021-04-12',
+          accDate: '2021-05-12',
+          centManageDep: '归口管理部门1',
+          remarks: '备注1'
         },
         {
-          id: "002",
-          orgNumber: "2",
-          orgName: "机构名称2",
-          accountDate: "2021-04-12",
-          accDate: "2021-05-12",
-          centManageDep: "归口管理部门2",
-          remarks: "备注2"
+          id: '002',
+          orgNumber: '2',
+          orgName: '机构名称2',
+          accountDate: '2021-04-12',
+          accDate: '2021-05-12',
+          centManageDep: '归口管理部门2',
+          remarks: '备注2'
         }
       ],
       this.total = 2;
       this.isLoading = false;
-      this.showPagination = this.tableForm.tableData.length < 1 ? false : true;
-     // this.editTable();
+      this.showPagination = !(this.tableForm.tableData.length < 1);
+      // this.editTable();
     },
     handleSizeChange(newSize) {
       this.queryInfo.pageSize = newSize;
@@ -353,20 +358,20 @@ export default {
     // 校验规则
     validateAccDate(rule, value, callback) {
       if (!value) {
-        callback(new Error("请输入计提日！"));
+        callback(new Error('请输入计提日！'));
       } else {
         callback();
       }
     },
     validateAccountDate(rule, value, callback) {
       if (!value) {
-        callback(new Error("请输入挂账日期！"));
+        callback(new Error('请输入挂账日期！'));
       } else {
         callback();
       }
     },
     save(formName) {
-         console.log(this.multipleSelection,"this.multipleSelection")
+      console.log(this.multipleSelection, 'this.multipleSelection');
       // 校验数组非空
       // if(!this.multipleSelection){
       //    this.$message.error("请先勾选需要保存的数据！")
@@ -379,7 +384,7 @@ export default {
         });
       }
 
-      let params = this.multipleSelection
+      const params = this.multipleSelection
         ? this.multipleSelection
         : this.tableForm.tableData;
       this.$refs[formName].validate(valid => {
@@ -419,7 +424,7 @@ export default {
         i.isSet = true;
         // i.disabledTooltip = true;
         this.$set(this.tableForm.tableData, index, i);
-        this.$set(this.drawRates.showTooltip, index, true);
+        this.$set(this.drawRates.showTooltip, index, true); // 归口管理部门
       });
     },
     // 显示提示框
@@ -439,11 +444,11 @@ export default {
       this.isShowDailog = true;
     },
 
-    //挂账天数计算，计提日减去挂账日期,结果调用接口查询返回的减值计提分类和计提标准
+    // 挂账天数计算，计提日减去挂账日期,结果调用接口查询返回的减值计提分类和计提标准
     async calclossDayChange(index, val) {
       if (val.accountDate && val.accDate) {
         val.accountDays = this.getDaysBetween(val);
-        let params = {
+        const params = {
           subjectCode: val.subjectCode,
           currency: val.currency
         };
@@ -467,7 +472,7 @@ export default {
         //   })
 
         this.drawRates.editIndex = index;
-        let obj = JSON.parse(JSON.stringify(val));
+        const obj = JSON.parse(JSON.stringify(val));
         this.drawRates.editData = obj;
         this.handleUpdate(this.drawRates.editIndex, this.drawRates.editData);
       }
@@ -484,7 +489,7 @@ export default {
       // this.drawRates.showBtn[index] = false
       // this.$set(this.drawRates.showEdit,index,false);
       // this.$set(this.drawRates.showBtn,index,false);
-      let obj1 = JSON.parse(JSON.stringify(row));
+      const obj1 = JSON.parse(JSON.stringify(row));
       this.drawRates.editData = obj1;
     },
 
