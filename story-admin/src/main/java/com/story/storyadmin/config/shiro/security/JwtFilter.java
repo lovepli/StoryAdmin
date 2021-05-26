@@ -258,6 +258,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             // 将结果响应给前端
             out.append(JSON.toJSONString(result));
         } catch (IOException e) {
+            // TODO 代码规范：catch中捕获的异常日志级别为error级别！！
             logger.error("返回Response信息出现IOException异常:" + e.getMessage());
         } finally {
             if (out != null) {
