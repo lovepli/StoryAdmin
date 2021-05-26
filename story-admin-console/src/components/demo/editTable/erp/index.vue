@@ -139,6 +139,13 @@
           </template>
         </el-table-column>
 
+        <!-- 流程状态、结束备注,多个状态使用前端枚举来区别，也可以使用filter过滤器，也可以使用 v-if来写，这些都不好维护，而且代码量多 -->
+        <el-table-column label="流程状态" prop="flowStatus" width=150 sortable>
+          <template slot-scope="scope">
+            <el-tag type="success">{{enumSet.wechatFlowStatusEnum.getLabelByValue(scope.row.flowStatus)}}</el-tag>
+          </template>
+        </el-table-column>
+
         <el-table-column
           label="操作"
           fixed="right"
@@ -226,6 +233,10 @@ export default {
   // data中存放的是el中需要的数据
   data() {
     return {
+      // 相关枚举定义
+      enumSet:{
+        wechatFlowStatusEnum:this.$enums.wechatFlowStatusEnum
+      },
       multipleSelection: [],
       tableForm: {
         tableData: []
