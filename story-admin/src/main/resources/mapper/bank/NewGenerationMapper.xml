@@ -56,7 +56,7 @@
             #{item.accountDate,jdbcType = Date},
             #{item.accountDays,jdbcType = INTEGER},
 <!--            #{item.uploadDate,jdbcType = Date},-->
-            to_date(to_char(#{item,uploadDate},'yyyy-MM-dd'),'yyyy/mm/dd'),
+            to_date(to_char(#{item.uploadDate},'yyyy-MM-dd'),'yyyy/mm/dd'),
             0,
             #{creator},
             '',
@@ -132,13 +132,20 @@
         <include refid="Base_Column_List"/>
         from
         JTKF_NEW_GENERATION
-        where
-         org.number in
+        where 1=1
+        and org.number in
         <foreach collection="jsonObject.netCodeList" separator="," open="(" close=")" item="netCode">
           #{netCode}
         </foreach>
         <if test="jsonObject.uploadDate !=null and jsonObject.uploadDate !='' ">
           and  upload_date =to_date(#{jsonObject.uploadDate},"yyyy-MM-dd")
+        </if>
+        <if test="jsonObject.orgName !=null and jsonObject.orgName !='' ">
+            and  ORG_NAME like concat(concat('%',#{jsonObject.orgName}),'%')
+        </if>
+        <if test="jsonObject.beginDateStr !=null and jsonObject.endDateStr !='' ">
+            and  ORG_NAME  between (to_date(#{jsonObject.beginDateStr},'yyyy-MM-dd'))
+            and (to_date(#{jsonObject.endDateStr},'yyyy-MM-dd'))
         </if>
     </select>
 
