@@ -22,7 +22,7 @@ spring:
       enabled: true # 设置开启热部署
       additional-paths: src/mian/java # 重启目录
       exclude: WEB-INF/** # WEB-INF下的文件内容不重启
-  # 文件上传配置
+  # 文件上传配置 在springboot+tomcat架构下的文件上传校验，需做如下配置：
   servlet:
     multipart:
       max-file-size: 10MB

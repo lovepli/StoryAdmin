@@ -2,6 +2,10 @@ package com.story.storyadmin.utils.bank;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author: 59688
  * @date: 2021/5/24
@@ -22,6 +26,24 @@ public class JsonObjectUtils {
         }
         jsonObject.put("startTime",startTime);
         jsonObject.put("endTime",endTime);
+    }
+
+    /**
+     * 将实体类转换为Map
+     * @param obj
+     * @return
+     * @throws IllegalAccessException
+     */
+    public static Map<String,Object> objectToMap(Object obj) throws IllegalAccessException{
+        Map<String,Object> map =new HashMap<>();
+        Class<?> clazz =obj.getClass();
+        for (Field field:clazz.getDeclaredFields()){
+            field.setAccessible(true);
+            String fieldName=field.getName();
+            Object value=field.get(obj);
+            map.put(fieldName,value);
+        }
+        return map;
     }
 
 

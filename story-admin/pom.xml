@@ -41,7 +41,7 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
-<!-- devtools热部署-->
+<!-- devtools热部署，快捷键 Ctrl + b-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -289,7 +289,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.0.1.Final</version>
+            <version>6.1.6.Final</version>
         </dependency>
 
          <!--参数校验-->

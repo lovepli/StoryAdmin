@@ -8,12 +8,21 @@ import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,6 +131,32 @@ public class ExceptionController extends BaseController{
 //     logger.error("Exception:{}", ex);
 //     return new Result<String>(false, "系统异常，请稍后重试", null, getStatus(request).value());
 //     }
+
+
+// ################################ 处理参数校验异常 #################### 参考： https://gitee.com/lovepli_cn/validation-spring-boot-demo
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Result handler(ConstraintViolationException e) {
+        StringBuffer errorMsg = new StringBuffer();
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        violations.forEach(x -> errorMsg.append(x.getMessage()).append(";"));
+        return new Result<String>(false, "参数异常，请稍后重试", errorMsg.toString(),ResultEnum.FORMAT_ERROR.getCode());
+    }
+
+    //处理校验异常，对于对象类型的数据的校验异常
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result handler(MethodArgumentNotValidException e) {
+        StringBuffer sb = new StringBuffer();
+        List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+        allErrors.forEach(msg -> sb.append(msg.getDefaultMessage()).append(";"));
+        return new Result<String>(false, "参数异常，请稍后重试", sb.toString(),ResultEnum.FORMAT_ERROR.getCode());
+    }
+
+    //文件上传文件大小超出限制
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public Result fileSizeException(MaxUploadSizeExceededException exception) {
+        logger.error("文件太大，上传失败",exception);
+        return new Result<String>(false, "只允许上传不大于"+exception.getMaxUploadSize()+"的文件", null,ResultEnum.SERVER_ERROR.getCode());
+    }
 
 
 }
