@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.story</groupId>
-	<artifactId>story-admin</artifactId>
-	<version>0.1</version>
-    <packaging>jar</packaging>
+	<groupId>com.story</groupId> <!--组织标识（包名），一般常用公司域名的反序，比如com.alibaba-->
+	<artifactId>story-admin</artifactId><!--项目名称，项目的具体名称-->
+	<version>0.1</version><!--项目的当前版本 ，一般版本号为 大版本.小版本.小版本序号-->
+    <packaging>jar</packaging><!--项目的打包方式，最为常见的jar和war两种-->
 
 	<name>story-admin</name>
 	<description>一个基础的权限管理系统</description>
@@ -29,8 +29,9 @@
         <java.version>1.8</java.version>
 	</properties>
 
-	<dependencies>
-        <!-- spring boot 官方相关 -->
+
+	<dependencies><!--dependencies：依赖-->
+        <!-- spring boot 官方相关: spring-boot-starter-xxx -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -311,8 +312,9 @@
         </repository>
     </repositories>
 
+
     <build>
-        <plugins>
+        <plugins><!--plugins：插件-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
