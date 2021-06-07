@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Slf4j
 @RequestMapping("/validationuser")
 @Validated
-public class UserController {
+public class ValidationUserController {
 
     /**
      * 根据id查询用户信息
