@@ -144,9 +144,20 @@
             and  ORG_NAME like concat(concat('%',#{jsonObject.orgName}),'%')
         </if>
         <if test="jsonObject.beginDateStr !=null and jsonObject.endDateStr !='' ">
-            and  ORG_NAME  between (to_date(#{jsonObject.beginDateStr},'yyyy-MM-dd'))
+            and  CREATE_DATE  between (to_date(#{jsonObject.beginDateStr},'yyyy-MM-dd'))
             and (to_date(#{jsonObject.endDateStr},'yyyy-MM-dd'))
         </if>
+<!--另一种查询时间范围 选择>= <= -->
+<!--        <if test="jsonObject.beginDateStr !=null and jsonObject.beginDateStr !='' ">-->
+<!--            and CREATE_DATE >= to_date(#{jsonObject.beginDateStr},'yyyy-MM-dd hh24:mi:ss')-->
+<!--        </if>-->
+<!--        <if test="jsonObject.beginDateStr !=null and jsonObject.beginDateStr !='' ">-->
+<!--            and CREATE_DATE >= trunc(sysdate) and  CREATE_DATE < trunc(sysdate)+1-->
+<!--        </if>-->
+<!--        <if test="jsonObject.endDateStr !=null and jsonObject.endDateStr !='' ">-->
+<!--            and CREATE_DATE <= to_date(#{jsonObject.endDateStr},'yyyy-MM-dd hh24:mi:ss')-->
+<!--        </if>-->
+<!--        -->
     </select>
 
     <select id="findByPage2"  resultMap="BaseResultMap">
