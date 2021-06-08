@@ -5,11 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.domain.entity.bank.NewGeneration;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -38,4 +40,29 @@ public interface NewGenerationMapper extends BaseMapper<NewGeneration> {
     public void deleteNewGenerations2(@Param("ids") List<String> ids,@Param("deletor") String deletor);
    // 根据日期删除
     void deleteNewGenerationByUploadDate(@Param("uploadDate") Date uploadDate);
+
+    /**
+     *获取新一代表所有记录，封装为Map<String,NewGeneration>形式，其中机构号和机构名称作为唯一性校验
+     * @return
+     */
+    @MapKey("newGenUniqueKy")
+    Map<String,NewGeneration> getNewGenerationMap();
+
+    /**
+     * @MapKey注解表示表中那个字段作为map的key
+     * @return
+     */
+    @MapKey("id")
+    Map<String,NewGeneration> getNewGenerationMap2();
+
+    //@MapKey("id")
+    Map<String,NewGeneration> getNewGenerationMap22();
+
+    /**
+     * 获取新一代表所有记录，封装为Map<String,String>形式：对应机构号和对应的机构名称
+     *
+     * @return
+     */
+    @MapKey("orgNumber")
+    Map<String,Map<String,Object>> getNewGenerationMap3();
 }

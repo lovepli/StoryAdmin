@@ -1,9 +1,6 @@
 package com.story.storyadmin.domain.entity.bank;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -23,7 +20,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("JTKF_NEW_GENERATION")
-public class NewGeneration extends Model<NewGeneration> {
+public class NewGeneration extends Model<NewGeneration> { //mybatis-plus的AR模式可以直接通过操作实体类来操作数据库。让实体类继承自Model即可
 
     private static final  long serialVersionUID =1L;
 
@@ -76,10 +73,12 @@ public class NewGeneration extends Model<NewGeneration> {
 
     /**
      * 是否有效（0：否，1:是） 对应Oracle数据库字段：NUMBER(1)
-     *
+     *逻辑删除可在application.yml中进行全局配置，也可在实体类中用@TableLogic进行局部配置。
      */
     @TableField("DELETED")
+    @TableLogic(value = "0", delval = "1")
     private Integer deleted;
+
 
     /**
      * 创建者

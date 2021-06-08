@@ -123,10 +123,6 @@
         and upload_date = #{uploadDate}
     </delete>
 
-
-
-
-
     <select id="findByPage" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -187,4 +183,38 @@
             and  upload_date = #{uploadDate}
         </if>
     </select>
+
+    <select id="getNewGenerationMap" resultType="java.util.Map">
+        select
+        concat(concat(gen.ORG_NUMBER,‘-’),gen.ORG_NANME) "newGenUniqueKy",
+        gen.id "id",
+        gen.ORG_NUMBER "orgNumber",
+        gen.ORG_NANME "orgName"
+        from JTKF_NEW_GENERATION gen
+    </select>
+
+<!--    getNewGenerationMap2与方法getNewGenerationMap22比较，该方法查询出来的map的value是map,而方法22查询出来的map的value是Java对象-->
+    <select id="getNewGenerationMap2" resultType="java.util.Map">
+        select
+        gen.ID "id",
+        gen.ORG_NUMBER "orgNumber",
+        gen.ORG_NANME "orgName"
+        from JTKF_NEW_GENERATION gen
+    </select>
+
+    <select id="getNewGenerationMap22"  resultMap="BaseResultMap">
+        select
+        *
+        from
+        JTKF_NEW_GENERATION
+    </select>
+
+
+    <select id="getNewGenerationMap3" resultType="java.util.Map">
+        select
+        gen.ORG_NUMBER "orgNumber",
+        gen.ORG_NANME "orgName"
+        from JTKF_NEW_GENERATION gen
+    </select>
+
 </mapper>
