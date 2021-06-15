@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.story.storyadmin.mapper.sysmgr.UserMapper">
 
-    <!-- 用户信息：开启二级缓存 -->
+    <!-- 用户信息：开启mybatis二级缓存 -->
+<!-- 参考：https://blog.csdn.net/vcj1009784814/article/details/102978287-->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
 
     <!--根据角色ID获取权限 角色为有效的-->

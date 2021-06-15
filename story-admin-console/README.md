@@ -170,6 +170,8 @@ npm install
 # 建议不要直接使用 cnpm 安装依赖，会有各种诡异的 bug。可以通过如下操作解决 npm 下载速度慢的问题
 npm install --registry=https://registry.npm.taobao.org
 
+#【模块缺失可以切换一下淘宝安装源 npm config set registry https://registry.npm.taobao.org，然后再重新npm install --registry=https://registry.npm.taobao.org】
+
 # Serve with hot reload at localhost:9528
 npm run dev
 

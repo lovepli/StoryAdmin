@@ -69,6 +69,7 @@ mybatis-plus:
   configuration:
     # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
     map-underscore-to-camel-case: true
+    # 是否开启耳机缓存
     cache-enabled: false
     # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
     # call-setters-on-nulls: true
