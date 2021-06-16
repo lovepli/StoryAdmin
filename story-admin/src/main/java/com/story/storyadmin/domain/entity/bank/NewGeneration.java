@@ -27,6 +27,7 @@ public class NewGeneration extends Model<NewGeneration> { //mybatis-plus的AR模
     /**
      * 主键
      * 对应Oracle数据库字段：VARCHAR2(50)
+     * TODO oracle数据库id没有自增属性，所有必须要自己生成ID
      */
     @TableId(value = "ID",type = IdType.INPUT)
     private String id;
