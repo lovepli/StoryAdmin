@@ -314,6 +314,8 @@
 
 
     <build>
+     <!--finalName：打包的jar包名字-->
+        <finalName>story-admin</finalName>
         <plugins><!--plugins：插件-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
