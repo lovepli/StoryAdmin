@@ -7,14 +7,19 @@ import com.story.storyadmin.config.upload.entity.CategorialFileSlot;
 import com.story.storyadmin.config.upload.entity.FileSlot;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
+import com.story.storyadmin.domain.entity.bank.ExcelInfo;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.mapper.sysmgr.AttMapper;
 import com.story.storyadmin.service.common.StorageService;
 import com.story.storyadmin.service.sysmgr.AttService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+
 import com.story.storyadmin.utils.DateUtils;
 import com.story.storyadmin.utils.StringUtils;
+import com.story.storyadmin.utils.bank.IdUtils;
+import com.sun.jna.platform.unix.solaris.LibKstat;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
@@ -23,12 +28,14 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
@@ -48,6 +55,9 @@ import java.util.List;
 public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttService {
 
     private static Logger logger = LoggerFactory.getLogger(AttServiceImpl.class);
+
+    @Value("${file.multipart.baseDir}")
+    private String baseDir;
 
     @Autowired
     StorageService storageService;
@@ -162,6 +172,53 @@ public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttSe
             }
         }
 
+    }
+
+    @Override
+    public Result uploadFile(MultipartFile file, String id) {
+        // 根据文件入参获取文件备份到配置好的文件路径
+        String fileName = file.getOriginalFilename();
+        // 为上传文件路径添加日期子文件（日期为系统日期，便于阅览）
+        String timeStr = DateUtils.getCurrentDateWithMilliSecond();
+        // 构建上传文件存放的路径
+        String targetPath = baseDir+"/"+timeStr;
+        // 如果文件不为空，写入上传路径，进行文件上传
+       if(!file.isEmpty()){
+           // 获取上传的文件名称，并结合存放的路径，构建新的文件名称
+           File filePath = new File(new File(targetPath).getAbsolutePath() +'/',fileName);
+           // 判断路径是否存在，不存在则新建一个
+           if(!filePath.getParentFile().exists()){
+               filePath.getParentFile().mkdirs();
+           }
+           // 重新上传前删除旧文件
+           //if(filePath.exists()){
+           //    filePath.delete();
+           //}
+           try {
+               // 将上传文件保存到目标文件目录
+               file.transferTo(filePath);
+           }catch (IOException e){
+               e.printStackTrace();
+           }
+       }
+
+       File uploadFile=new File(targetPath+"/"+fileName);
+        ExcelInfo excelInfo = new ExcelInfo();
+        String filePathStr =uploadFile.getAbsolutePath();
+        int index =filePathStr.lastIndexOf(".");
+        String format =filePathStr.substring(index);
+
+        excelInfo.setId(IdUtils.getRandomId());
+        excelInfo.setFileName(fileName);
+        excelInfo.setFilePath(filePathStr);
+        excelInfo.setFileFormat(format);
+
+        excelInfo.setBusinessId(id); // 业务id
+        excelInfo.setUpdateDate(DateUtils.currentDate());
+        // excelInfo存入数据库
+        //int i =excelInfoMapper.excelInfoInsert(excelInfo);
+        //return  i;
+        return null;
     }
 
     @Override

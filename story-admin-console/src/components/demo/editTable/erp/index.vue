@@ -58,9 +58,40 @@
                 />
               </el-tooltip>
             </span>
-            <span v-else>{{ row.centManageDep }}</span>
+            <!-- <span v-else>{{ row.centManageDep }}</span> -->
           </template>
         </el-table-column>
+
+<!-- 下拉框 -->
+        <!-- <el-table-column label="机构名称" width="100">
+          <template slot-scope="{ row, $index }">
+            <el-form-item
+              :ref="`centManageDep.${row.id}`"
+              :prop="`tableData.${$index}.centManageDep`"
+              :rules="[
+                {
+                  required: true,
+                  validator: validateCentManageDep,
+                  trigger: ['change', 'blur'],
+                  id: row.id
+                }
+              ]"
+            >
+              <span>
+                <el-tooltip
+                  :disabled="drawRates.showToolTip[$index]"
+                  :content="row.centManageDep"
+                  effect="dark"
+                  placement="top"
+                >
+                  <el-select v-model="row.centManageDep" filterable clearable placeholder="请选择归口管理部门" style="width:200px" @change="showTooltip($index,row.centManageDep)">
+                    <el-option v-for="item in centManageDepList" :key ="item.value" :label="item.label" :value="item.vlaue" :disabled="item.disabled"/>
+                  </el-select>
+                </el-tooltip>
+              </span>
+            </el-form-item>
+          </template>
+        </el-table-column> 
 
         <el-table-column label="计提日" width="200">
           <template slot-scope="{ row, $index }">
@@ -140,9 +171,9 @@
         </el-table-column>
 
         <!-- 流程状态、结束备注,多个状态使用前端枚举来区别，也可以使用filter过滤器，也可以使用 v-if来写，这些都不好维护，而且代码量多 -->
-        <el-table-column label="流程状态" prop="flowStatus" width=150 sortable>
+        <el-table-column label="流程状态" prop="flowStatus" width="150" sortable>
           <template slot-scope="scope">
-            <el-tag type="success">{{enumSet.wechatFlowStatusEnum.getLabelByValue(scope.row.flowStatus)}}</el-tag>
+            <el-tag type="success">{{ enumSet.wechatFlowStatusEnum.getLabelByValue(scope.row.flowStatus) }}</el-tag>
           </template>
         </el-table-column>
 
@@ -239,8 +270,8 @@ export default {
   data() {
     return {
       // 相关枚举定义
-      enumSet:{
-        wechatFlowStatusEnum:this.$enums.wechatFlowStatusEnum
+      enumSet: {
+        wechatFlowStatusEnum: this.$enums.wechatFlowStatusEnum
       },
       multipleSelection: [],
       tableForm: {
@@ -269,7 +300,16 @@ export default {
         editIndex: '',
         editData: ''
       },
-      lossRatioList: []
+      lossRatioList: [],
+      centManageDepList: [
+        {
+          value: '1',
+          label: '归口管理部门1'
+        }, {
+          value: '2',
+          label: '归口管理部门2'
+        }
+      ]
     };
   },
   // 侦听属性
@@ -356,7 +396,7 @@ export default {
       this.total = 2;
       this.isLoading = false;
       this.showPagination = !(this.tableForm.tableData.length < 1);
-      // this.editTable();
+      //this.editTable();
     },
     handleSizeChange(newSize) {
       this.queryInfo.pageSize = newSize;
@@ -377,6 +417,13 @@ export default {
     validateAccountDate(rule, value, callback) {
       if (!value) {
         callback(new Error('请输入挂账日期！'));
+      } else {
+        callback();
+      }
+    },
+    validateCentManageDep(rule, value, callback) {
+      if (!value) {
+        callback(new Error('请输入归口管理部门！'));
       } else {
         callback();
       }
