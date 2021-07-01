@@ -25,6 +25,8 @@ import echarts from 'echarts' // 引入图表
 import TreesTable from 'vue-table-with-tree-grid' // 引入分级树形表格
 import enums from '@/utils/customEnum' // 引入自定义枚举配置并全局挂载
 
+import axios from 'axios'
+
 // 全局引入Markdown 依赖
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -47,7 +49,7 @@ Vue.prototype.hasPerm = hasPermission
 Vue.prototype.$echarts = echarts
 require('echarts-wordcloud') // 使用词云
 
-Vue.config.productionTip = false //阻止向控制台打印启动生产消息
+Vue.config.productionTip = false // 阻止向控制台打印启动生产消息
 
 // 全局方法挂载
 Vue.prototype.$getById = getById
@@ -56,6 +58,8 @@ Vue.prototype.download = download
 
 // 引入自定义枚举配置并全局挂载
 Vue.prototype.$enums = enums
+Vue.prototype.$http = axios // 将axios 映射到this.$http
+
 
 // 创建根vue实例，每个vue组件，都是一个vue实例
 // 创建Vue实例，这个实例其实就是MVVM中的vm调度者

@@ -1,10 +1,13 @@
 package com.story.storyadmin.service.sysmgr;
 
+import com.alibaba.fastjson.JSONObject;
 import com.story.storyadmin.config.upload.entity.FileSlot;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.story.storyadmin.domain.vo.Result;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -59,5 +62,7 @@ public interface AttService extends IService<Att> {
     List<Att> findBySlotId(String slotId);
 
     List<Att> findBySlotId(String slotId, String category);
+
+    Result export(JSONObject jsonObject, HttpServletResponse response);
 
 }

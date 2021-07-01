@@ -1,6 +1,7 @@
 package com.story.storyadmin.web.sysmgr;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -14,6 +15,7 @@ import com.story.storyadmin.utils.MethodUtil;
 import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.kafka.common.protocol.types.Field;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,4 +151,14 @@ public class AttController extends BaseController {
             response.setStatus(404);
         }
     }
+
+    @ApiOperation(value = "附件管理" ,  notes="导出附件列表")
+   // @RequiresPermissions("sysmgr.att.export")
+    @RequiresPermissions("sysmgr.att.download")
+    @RequestMapping(value="/export",method = {RequestMethod.POST})
+    public Result export(@RequestBody JSONObject jsonObject,HttpServletResponse response) throws IOException {
+       // String fileName=jsonObject.getString("fileName");
+        return attService.export(jsonObject,response);
+    }
+
 }

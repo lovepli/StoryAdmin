@@ -45,6 +45,13 @@
           icon="el-icon-download"
           @click="showDownloadForm()"
         >导出当页数据</el-button>
+        <el-button
+          class="filter-item"
+          type="success"
+          size="small"
+          icon="el-icon-download"
+          @click="DownloadForm()"
+        >导出表格</el-button>
       </template>
       <!--body-->
       <template slot="body">
@@ -189,7 +196,10 @@ export default {
       downLoadLoading: '',
       fileUploadParam: {
         sourceDir: 'temp'
-      }
+      },
+      url: '',
+      jsonParam: {},
+      downLoadName: ''
     };
   },
   methods: {
@@ -266,6 +276,34 @@ export default {
       // 将表格数据复制到信息弹框中
       this.list = this.$refs.dataList.list;
       this.showDownloadDialog = true;
+    },
+    // 导出表格
+    async DownloadForm() {
+      this.url = '/sysmgr/att/export'
+      // this.jsonParam = this.queryInfo
+      this.downLoadName = '报表数据'
+      await this.$http.post(this.url, this.jsonParam,
+        {
+          responseType: 'blob' // 设置响应类型
+        })
+        .then(res => {
+          if (res.status === 200) {
+            const url = window.URL.createObjectURL(new Blob([res.data]))
+            const link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = url
+            link.setAttribute('download', this.downLoadName) // 自定义喜爱在文件名
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link) // 下载完移除元素
+            window.URL.revokeObjectURL(url)
+          } else {
+            this.$message.error('下载失败！')
+          }
+        })
+        .catch(() => {
+          this.$message.error('获取失败，请检查网络连接！')
+        })
     },
     handleExceed(files, fileList) {
       this.$message.warning('只能选择1个文件!');
