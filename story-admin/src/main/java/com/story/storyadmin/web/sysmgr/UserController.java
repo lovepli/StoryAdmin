@@ -229,7 +229,7 @@ public class UserController extends BaseController {
         String data = userService.findFileInfoDetail(jsonObject);
         //Map<String, Object> map = new HashMap<>();
         //map.put("result", data);
-        return  new Result(true, "查询成功", data ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return  new Result(true, null, data ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
 

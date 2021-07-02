@@ -69,7 +69,7 @@ public interface AttService extends IService<Att> {
 
     Result export(JSONObject jsonObject, HttpServletResponse response);
 
-    Result uploadFile(MultipartFile file, String id);
+    int uploadFile(MultipartFile file);
 
     String findFileInfoDetail(JSONObject jsonObject);
 

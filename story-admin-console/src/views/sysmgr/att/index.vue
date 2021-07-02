@@ -44,14 +44,22 @@
           size="small"
           icon="el-icon-download"
           @click="showDownloadForm()"
-        >导出当页数据</el-button>
+        >导出当页数据为pdf</el-button>
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          type="primary"
+          size="small"
+          icon="el-icon-upload2"
+          @click="showUploadForm2()"
+        >上传图片和pdf文件展示</el-button>
         <el-button
           class="filter-item"
           type="success"
           size="small"
           icon="el-icon-download"
           @click="DownloadForm()"
-        >导出表格</el-button>
+        >导出数据为Excel表格</el-button>
       </template>
       <!--body-->
       <template slot="body">
@@ -169,7 +177,7 @@
 </template>
 
 <script>
-import { drop, uploadFile, downloadFile, findFileInfoDetail } from '@/api/sysmgr/att';
+import { drop, uploadFile, downloadFile, findFileInfoDetail, uploadFile2 } from '@/api/sysmgr/att';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
@@ -227,7 +235,8 @@ export default {
       imgList: [],
       // pdf展示
       pdfList: [],
-      dialogVisible: false
+      dialogVisible: false,
+      uploadFileStatus: ''
     };
   },
   methods: {
@@ -238,6 +247,7 @@ export default {
        * 查看附件
        */
     async showPdf(row) {
+      this.imgList = []
       this.dialogVisible = true
       await findFileInfoDetail({
         'attId': row.id
@@ -266,11 +276,19 @@ export default {
     },
     // 上传文件
     uploadFile(content) {
-      uploadFile(content.file).then(r => { content.onSuccess(r, content.file) })
-        .catch(e => {
-          this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
-          content.onError(e.message)
-        })
+      if (this.uploadFileStatus === '1') {
+        uploadFile(content.file).then(r => { content.onSuccess(r, content.file) })
+          .catch(e => {
+            this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
+            content.onError(e.message)
+          })
+      } else {
+        uploadFile2(content.file).then(r => { content.onSuccess(r, content.file) })
+          .catch(e => {
+            this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
+            content.onError(e.message)
+          })
+      }
     },
     // 删除接口
     dropRow(row) {
@@ -319,6 +337,13 @@ export default {
 
     // 上传
     showUploadForm() {
+      this.uploadFileStatus = '1'
+      this.uploadVisible = true;
+      // this.fileList = null;
+    },
+    // 上传
+    showUploadForm2() {
+      this.uploadFileStatus = '2'
       this.uploadVisible = true;
       // this.fileList = null;
     },

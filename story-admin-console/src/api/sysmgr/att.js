@@ -29,6 +29,16 @@ export function uploadFile(file, data) {
     data: formData
   })
 }
+export function uploadFile2(file, data) {
+  var formData = new FormData()
+  formData.append('file', file)
+  return request({
+    url: '/sysmgr/att/upload2?' + search(data),
+    method: 'post',
+    data: formData
+  })
+}
+
 
 export function downloadFile(id) {
   return request({

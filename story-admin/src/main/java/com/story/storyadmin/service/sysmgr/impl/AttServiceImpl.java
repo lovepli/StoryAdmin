@@ -221,11 +221,11 @@ public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttSe
     }
 
     @Override
-    public Result uploadFile(MultipartFile file, String id) {
+    public int uploadFile(MultipartFile file) {
         // 根据文件入参获取文件备份到配置好的文件路径
         String fileName = file.getOriginalFilename();
-        // 为上传文件路径添加日期子文件（日期为系统日期，便于阅览）
-        String timeStr = DateUtils.getCurrentDateWithMilliSecond();
+        // 为上传文件路径添加日期子文件（日期为系统日期，便于阅览） TODO 文件目录格式必须为：D:/upload/sysmgr/att/upload/2021/07/20210702100846395_.pdf
+        String timeStr =DateUtils.formatDate(DateUtils.currentDate()) ;
         // 构建上传文件存放的路径
         String targetPath = baseDir+"/"+timeStr;
         // 如果文件不为空，写入上传路径，进行文件上传
@@ -249,22 +249,33 @@ public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttSe
        }
 
        File uploadFile=new File(targetPath+"/"+fileName);
-        ExcelInfo excelInfo = new ExcelInfo();
+
         String filePathStr =uploadFile.getAbsolutePath();
         int index =filePathStr.lastIndexOf(".");
         String format =filePathStr.substring(index);
 
-        excelInfo.setId(IdUtils.getRandomId());
-        excelInfo.setFileName(fileName);
-        excelInfo.setFilePath(filePathStr);
-        excelInfo.setFileFormat(format);
+        Att att =new Att();
+        att.setName(fileName);
+        att.setOriginName(fileName);
+        att.setPath(filePathStr);
+        att.setType(format);
+        att.setFileSize(file.getSize());
+        att.setYnFlag(YNFlagStatusEnum.VALID.getCode());
+        if (UserContext.getCurrentUser() != null) {
+            att.setCreator(UserContext.getCurrentUser().getAccount());
+        }
+        att.setCreatedTime(DateUtils.currentDate());
+        int i =attMapper.insert(att);
+        return i;
 
-        excelInfo.setBusinessId(id); // 业务id
-        excelInfo.setUpdateDate(DateUtils.currentDate());
-        // excelInfo存入数据库
-        //int i =excelInfoMapper.excelInfoInsert(excelInfo);
-        //return  i;
-        return null;
+        //ExcelInfo excelInfo = new ExcelInfo();
+        //excelInfo.setId(IdUtils.getRandomId());
+        //excelInfo.setFileName(fileName);
+        //excelInfo.setFilePath(filePathStr);
+        //excelInfo.setFileFormat(format);
+        //
+        //excelInfo.setBusinessId(id); // 业务id
+        //excelInfo.setUpdateDate(DateUtils.currentDate());
     }
 
     @Override
@@ -315,10 +326,10 @@ public class AttServiceImpl extends ServiceImpl<AttMapper, Att> implements AttSe
         fileEntity.setYnFlag(YNFlagStatusEnum.VALID.getCode());
         if (UserContext.getCurrentUser() != null) {
             fileEntity.setCreator(UserContext.getCurrentUser().getAccount());
-            fileEntity.setEditor(fileEntity.getCreator());
+            //fileEntity.setEditor(fileEntity.getCreator());
         }
         fileEntity.setCreatedTime(DateUtils.currentDate());
-        fileEntity.setModifiedTime(fileEntity.getCreatedTime());
+        //fileEntity.setModifiedTime(fileEntity.getCreatedTime());
         if (fileSlot instanceof CategorialFileSlot) {
             fileEntity.setFileCate(((CategorialFileSlot) fileSlot).getSlotFileCategoryOnUploading());
         }

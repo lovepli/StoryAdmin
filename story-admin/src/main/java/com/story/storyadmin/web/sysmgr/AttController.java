@@ -105,8 +105,21 @@ public class AttController extends BaseController {
     @RequiresPermissions("sysmgr.att.upload")
     @RequestMapping(value="/upload",method = {RequestMethod.POST})
     public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+        // 上传附件方式1
         Att att= attService.save(request.getRequestURI(),file,"第一批次");
         return new Result(true,"上传成功",att,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
+    @ApiOperation(value = "附件管理" ,  notes="上传附件")
+    @RequiresPermissions("sysmgr.att.upload")
+    @RequestMapping(value="/upload2",method = {RequestMethod.POST})
+    public Result upload2(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+        int i=  attService.uploadFile(file);
+        if(i<1){
+            return new Result(true,"上传失败",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        }else {
+            return new Result(true,"上传成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        }
     }
 
 
@@ -128,19 +141,7 @@ public class AttController extends BaseController {
         return attService.export(jsonObject,response);
     }
 
-    @ApiOperation(value = "附件管理" ,  notes="上传附件")
-    @RequiresPermissions("sysmgr.att.upload")
-    @RequestMapping(value="/upload2",method = {RequestMethod.POST})
-    public Result upload2(@RequestParam("file") MultipartFile file,@RequestParam("id") String id) throws IOException {
-        //int i=  attService.uploadFile(file,id);
-        //  if(i<1){
-        //      return new Result(true,"上传失败",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        //  }else {
-        //      return new Result(true,"上传成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-        //  }
-        return attService.uploadFile(file,id);
-        // return new Result(true,"上传成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-    }
+
 
     /**
      * 在线展示员工上传的pdf信息

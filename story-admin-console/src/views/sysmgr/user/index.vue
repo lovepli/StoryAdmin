@@ -364,9 +364,10 @@ export default {
        */
     async showImg(row) {
       this.dialogVisible = true
+      this.imgList = []
       await findFileInfoDetail({
         'userId': row.id
-      }).then(res => {
+      }).then(res => { 
         // eslint-disable-next-line no-array-constructor
         var arr = new Array()
         arr = res.data.split('&&&')
