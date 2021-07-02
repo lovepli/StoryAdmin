@@ -6,6 +6,26 @@
 <!-- 参考：https://blog.csdn.net/vcj1009784814/article/details/102978287-->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
 
+    <resultMap type="com.story.storyadmin.domain.entity.sysmgr.User"  id="BaseResultMap" >
+        <id     property="id"     column="id"     />
+        <result property="account"   column="account"   />
+        <result property="name"  column="name"   />
+        <result property="avatar"   column="avatar"   />
+        <result property="password"   column="password"   />
+        <result property="email"     column="email"      />
+        <result property="lastPwdModifiedTime"      column="last_pwd_modified_time"       />
+        <result property="status"      column="status"       />
+        <result property="erpFlag"     column="erp_flag"      />
+        <result property="ynFlag"      column="yn_flag"       />
+        <result property="creator"     column="creator"      />
+        <result property="editor"      column="editor"       />
+        <result property="createdTime"     column="created_time"      />
+        <result property="modifiedTime"      column="modified_time"       />
+    </resultMap>
+
+    <resultMap type="map"  id="BaseResultMap2" >
+    </resultMap>
+
     <!--根据角色ID获取权限 角色为有效的-->
     <select id="selectRoleByUserId" resultType="Long">
         SELECT
@@ -56,6 +76,60 @@
           u.id,u.name
         FROM   st_user u
         where  u.yn_flag='1'
+    </select>
+
+    <select id="getUserMap" resultType="java.util.Map">
+        select
+        concat(concat(gen.id,'-'),gen.name) "userUniqueKey",
+        gen.id "id",
+        gen.name "name",
+        gen.avatar "avatar"
+        from st_user gen
+    </select>
+
+
+    <!--    getUserMap2与方法getUserMap22比较，该方法查询出来的map的value是map,而方法22查询出来的map的value是Java对象-->
+    <select id="getUserMap2" resultType="java.util.Map">
+        select
+        gen.id "id",
+        gen.name "name",
+        gen.avatar "avatar"
+        from st_user gen
+    </select>
+
+    <!--查询返回一条数据，结果为一个对象-->
+    <select id="getUserMap21" resultMap="BaseResultMap">
+        select
+        gen.*
+        from st_user gen where gen.id=1
+    </select>
+
+    <!--查询返回所有数据，结果为list集合的对象-->
+    <select id="getUserMap211" resultMap="BaseResultMap">
+        select
+        gen.*
+        from st_user gen
+    </select>
+
+<!--查询返回一条数据，结果为一个map-->
+    <select id="getUserMap22" resultMap="BaseResultMap2">
+        select
+        gen.*
+        from st_user gen where gen.id=1
+    </select>
+
+<!--查询返回所有数据，结果为list集合的map-->
+    <select id="getUserMap23" resultMap="BaseResultMap2">
+        select
+        gen.*
+        from st_user gen
+    </select>
+
+    <select id="getUserMap3" resultType="java.util.Map">
+        select
+        gen.id "id",
+        gen.name "name"
+        from st_user gen
     </select>
 
 

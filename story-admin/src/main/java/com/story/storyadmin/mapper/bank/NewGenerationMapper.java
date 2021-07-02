@@ -45,7 +45,7 @@ public interface NewGenerationMapper extends BaseMapper<NewGeneration> {
      *获取新一代表所有记录，封装为Map<String,NewGeneration>形式，其中机构号和机构名称作为唯一性校验
      * @return
      */
-    @MapKey("newGenUniqueKy")
+    @MapKey("newGenUniqueKey")
     Map<String,NewGeneration> getNewGenerationMap();
 
     /**

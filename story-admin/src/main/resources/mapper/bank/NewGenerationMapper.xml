@@ -186,7 +186,7 @@
 
     <select id="getNewGenerationMap" resultType="java.util.Map">
         select
-        concat(concat(gen.ORG_NUMBER,‘-’),gen.ORG_NANME) "newGenUniqueKy",
+        concat(concat(gen.ORG_NUMBER,‘-’),gen.ORG_NANME) "newGenUniqueKey",
         gen.id "id",
         gen.ORG_NUMBER "orgNumber",
         gen.ORG_NANME "orgName"

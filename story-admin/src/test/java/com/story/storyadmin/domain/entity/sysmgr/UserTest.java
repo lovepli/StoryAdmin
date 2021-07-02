@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.story.storyadmin.mapper.sysmgr.UserMapper;
 import com.story.storyadmin.service.sysmgr.UserService;
 import junit.framework.TestCase;
+import org.apache.ibatis.annotations.MapKey;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -44,6 +45,7 @@ public class UserTest extends TestCase {
         List<Map<String,Object>> maps =userMapper.selectMaps(wrapper);
         maps.forEach(System.out::println);
     }
+
 
 
 
