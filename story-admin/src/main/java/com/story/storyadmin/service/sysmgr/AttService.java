@@ -5,6 +5,7 @@ import com.story.storyadmin.config.upload.entity.FileSlot;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.story.storyadmin.domain.vo.Result;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,8 +65,12 @@ public interface AttService extends IService<Att> {
 
     List<Att> findBySlotId(String slotId, String category);
 
+    void downloadFile(HttpServletResponse response, Long fileId);
+
     Result export(JSONObject jsonObject, HttpServletResponse response);
 
     Result uploadFile(MultipartFile file, String id);
+
+    String findFileInfoDetail(JSONObject jsonObject);
 
 }

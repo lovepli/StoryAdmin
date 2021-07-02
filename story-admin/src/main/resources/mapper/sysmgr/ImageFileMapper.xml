@@ -9,4 +9,7 @@
     <delete id="deleteImage">
         delete from st_image_file where url =#{url,jdbcType=VARCHAR}
     </delete>
+    <select id="selectImageByUrl" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.sysmgr.ImageFile">
+        select * from st_image_file where url =#{url,jdbcType=VARCHAR}
+    </select>
 </mapper>

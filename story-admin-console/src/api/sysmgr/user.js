@@ -85,6 +85,15 @@ export function findAllUserList() {
   })
 }
 
+export function findFileInfoDetail(param) {
+  return request({
+    url: '/sysmgr/user/findFileInfoDetail',
+    method: 'post',
+    data: param
+  })
+}
+
+
 /**
  * 修改用户信息
  * @param {*} temp 

@@ -69,7 +69,12 @@
         </el-table-column>
         <!-- element ui 表格数据溢出隐藏，鼠标hover显示tip设置 参考：https://blog.csdn.net/qq_44879525/article/details/102521486-->
         <!-- 给需要处理的列加show-overflow-tooltip属性 -->
-        <el-table-column :show-overflow-tooltip="true" align="center" prop="path" label="路径" />
+        <el-table-column :show-overflow-tooltip="true" align="center" prop="path" label="路径">
+          <!-- 作用域插槽 -->
+          <template slot-scope="scope">
+            <span @click="showPdf(scope.row)" >{{ scope.row.path }}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="description" label="描述" />
         <el-table-column label="创建时间">
           <template slot-scope="scope">
@@ -142,11 +147,29 @@
     <el-dialog :visible.sync="showDownloadDialog" width="695px" title="请选择打印内容">
       <file-export :data="list" :cols="downloadColomns" table-name="用户附件管理数据导出" file-name="附件管理数据" />
     </el-dialog>
+
+    <!--      展示附件pdf的对话框-->
+    <el-dialog
+      :title="'上传的文件'"
+      :visible.sync="dialogVisible"
+      :before-close="handleClose"
+      width="70%">
+      <el-image v-for="(item, index) in imgList" :key="index" :src="item" style="width: 50%;height: 50%"/>
+      <el-divider style="margin-top: 100px"/>
+      <div v-for="(item, index) in pdfList" :key="index">
+        <!--          <embed :src="item" width="100%" height="300px">-->
+        <!--          <iframe :src="item" width="100%" height="100%"></iframe>-->
+        <object :data="item" type="application/pdf" width="100%" height="800px"/>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleClose">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { drop, uploadFile, downloadFile } from '@/api/sysmgr/att';
+import { drop, uploadFile, downloadFile, findFileInfoDetail } from '@/api/sysmgr/att';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
@@ -199,10 +222,38 @@ export default {
       },
       url: '',
       jsonParam: {},
-      downLoadName: ''
+      downLoadName: '',
+      // 图片展示
+      imgList: [],
+      // pdf展示
+      pdfList: [],
+      dialogVisible: false
     };
   },
   methods: {
+    handleClose() {
+      this.dialogVisible = false
+    },
+     	/**
+       * 查看附件
+       */
+    async showPdf(row) {
+      this.dialogVisible = true
+      await findFileInfoDetail({
+        'attId': row.id
+      }).then(res => {
+        // eslint-disable-next-line no-array-constructor
+        var arr = new Array()
+        arr = res.data.split('&&&')
+        for (var i = 0; i < arr.length - 1; i++) {
+          if (arr[i].indexOf('data:application/pdf;base64,') !== -1) {
+            this.pdfList.push(arr[i])
+          } else {
+            this.imgList.push(arr[i])
+          }
+        }
+      })
+    },
     // 格式化时间
     dateFormat(d) { return parseTime(d, '{y}-{m}-{d} {h}:{i}:{s}') },
     // 数据重置

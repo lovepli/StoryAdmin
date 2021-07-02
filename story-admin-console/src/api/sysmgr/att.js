@@ -38,3 +38,10 @@ export function downloadFile(id) {
   })
 }
 
+export function findFileInfoDetail(param) {
+  return request({
+    url: '/sysmgr/att/findFilePdfDetail',
+    method: 'post',
+    data: param
+  })
+}
