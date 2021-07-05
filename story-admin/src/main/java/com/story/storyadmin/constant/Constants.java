@@ -5,6 +5,7 @@ package com.story.storyadmin.constant;
  */
 public final class Constants {
 
+
 	/**********************通用代码 start***********************/
 
 	//获取条线的角色标识
@@ -32,4 +33,10 @@ public final class Constants {
 		public static final int TWELVE_HOURS =  60 * 60 * 12;//十二小时，单位s
 		public static final int ONE_DAY = 60 * 60 * 24;//二十四小时
 	}
+
+
+
+
+
+
 }

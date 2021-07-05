@@ -26,6 +26,60 @@
     <resultMap type="map"  id="BaseResultMap2" >
     </resultMap>
 
+    <!-- 查询字段 -->
+    <sql id="Base_Column_List">
+        ID,account,name,avatar,password,email,last_pwd_modified_time,status,erp_flag,yn_flag,creator,editor,created_time,modified_time
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null ">
+                and id = #{id}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="avatar != null and avatar != '' ">
+                and avatar = #{avatar}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="lastPwdModifiedTime != null and lastPwdModifiedTime != ''">
+                and last_pwd_modified_time = #{lastPwdModifiedTime}
+            </if>
+            <if test="status != null and status != '' ">
+                and status = #{status}
+            </if>
+            <if test="erpFlag != null and erpFlag != ''">
+                and erp_flag = #{erpFlag}
+            </if>
+            <if test="ynFlag != null and ynFlag != ''">
+                and yn_flag = #{ynFlag}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="editor != null and editor != '' ">
+                and editor = #{editor}
+            </if>
+            <if test="createdTime != null ">
+                and created_time = #{createdTime}
+            </if>
+            <if test="modifiedTime != null ">
+                and modified_time = #{modifiedTime}
+            </if>
+        </trim>
+    </sql>
+
     <!--根据角色ID获取权限 角色为有效的-->
     <select id="selectRoleByUserId" resultType="Long">
         SELECT
@@ -130,6 +184,317 @@
         gen.id "id",
         gen.name "name"
         from st_user gen
+    </select>
+
+
+<!-- #{}里面的数字代表你传入参数的顺序。这种方法不建议使用，sql层表达不直观，且一旦顺序调整容易出错。-->
+<!--   select gen.* from st_user gen where gen.name = #{0} and gen.id = #{1} 实际测试执行这样的sql语句会报错！！-->
+    <select id="selectUserByNameAndId" resultMap="BaseResultMap">
+        select
+        gen.*
+        from st_user gen where gen.name = #{name} and gen.id = #{id}
+    </select>
+
+<!-- #{}里面的名称对应的是注解 @Param括号里面修饰的名称。这种方法在参数不多的情况还是比较直观的，推荐使用。-->
+    <select id="selectUserByNameAndId2" resultMap="BaseResultMap">
+        select
+        gen.*
+        from st_user gen where gen.name = #{name} and gen.id = #{id}
+    </select>
+
+
+    <select id="selectUserMapByNameAndId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        gen.*
+        from st_user gen where gen.name = #{name} and gen.id = #{id}
+    </select>
+
+    <select id="selectUserBeanByNameAndId" parameterType="com.story.storyadmin.domain.entity.sysmgr.User" resultMap="BaseResultMap">
+        select
+        gen.*
+        from st_user gen where gen.name = #{name} and gen.id = #{id}
+    </select>
+
+
+    <select id="selectJsonObjectByNameAndId" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
+        select
+        gen.*
+        from st_user gen where gen.name = #{jsonObject.name} and gen.id = #{jsonObject.id}
+    </select>
+
+    <!--
+    item	表示在迭代过程中每一个元素的别名
+    index	表示在迭代过程中每次迭代到的位置（下标）
+    open	前缀
+    close	后缀
+    separator	分隔符，表示迭代时每个元素之间以什么分隔
+    -->
+    <select id="selectUserArrayByIds"  resultMap="BaseResultMap">
+        select gen.* from st_user gen where 1=1
+        and gen.id in
+        <foreach collection="array" item="item" open="(" separator="," close=")" >
+            #{item}
+        </foreach>
+    </select>
+
+
+    <select id="selectUserList"  resultMap="BaseResultMap">
+        select gen.* from st_user gen
+        where 1=1
+        and gen.id in
+        <foreach collection="list" item="item" separator="," open="(" close=")" >
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectUserListByNameOrEmail"  resultMap="BaseResultMap">
+        select gen.* from st_user gen
+        where gen.id=8
+        <!--前端传来的name不为null，表示需要根据email筛选，此时Where语句就需要加上这个条件-->
+        <if test="name!=null">
+            and gen.name=#{name}
+        </if>
+        <!--email筛选-->
+        <if test="email!=null">
+            and gen.email=#{email}
+        </if>
+        <!-- and连接多个判断条件-->
+        <if test="account!=null and account!=''">
+            and gen.account=#{account}
+        </if>
+    </select>
+
+<!-- 在 MySQL 中， concat函数支持多参数， 但在 Oracle 中只支持两个参数。那么我们可以使用 bind 来让该 SQL 达到支持两个数据库的作用   -->
+<!-- <if test="name != null and name !=''">
+       and name like concat('%', #{name}, '%')
+     </if>-->
+    <select id="selectUserByNameLike"  resultMap="BaseResultMap">
+        select * from st_user
+        where 1=1
+        <if test="name != null and name !=''">
+            <bind name="nameLike" value="'%'+name+'%'"/>
+            and name like #{nameLike}
+        </if>
+
+    </select>
+
+    <select id="selectUserListByNameOrEmail2" resultMap="BaseResultMap">
+        select gen.* from st_user gen
+        where 1=1
+        <choose>
+            <!--name不为null时，根据name查找-->
+            <when test="name != null">
+                AND gen.name=#{name}
+            </when>
+            <!--email不是null时，根据email查找-->
+            <when test="email != null">
+                AND gen.email = #{email}
+            </when>
+            <!--account不是null或者不为‘’时，根据account查找-->
+            <when  test="account!=null and account!=''">
+                and gen.account=#{account}
+            </when >
+            <!--如果什么都没传，就筛选id值等于8的数据-->
+            <otherwise>
+                AND gen.id=8
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <select id="selectUserListByNameOrEmail3"  resultMap="BaseResultMap">
+        select gen.* from st_user gen
+        where gen.id=8
+        <!--前端传来的name不为null，表示需要根据email筛选，此时Where语句就需要加上这个条件-->
+        <if test="name!=null">
+            and gen.name=#{name}
+        </if>
+        <!--email筛选-->
+        <if test="email!=null">
+            and gen.email=#{email}
+        </if>
+        <!-- and连接多个判断条件-->
+        <if test="account!=null and account!=''">
+            and gen.account=#{account}
+        </if>
+    </select>
+
+    <!--使用 set+if 标签修改后，如果某项为 null 则不进行插入-->
+    <insert id="insertUserListByNameOrEmail" parameterType="com.story.storyadmin.domain.entity.sysmgr.User">
+        insert into st_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="lastPwdModifiedTime != null">
+                last_pwd_modified_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="ynflag != null">
+                yn_flag,
+            </if>
+            <if test="erpFlag != null">
+                erp_flag,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="editor != null">
+                editor,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="modifiedTime != null">
+                modified_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id}},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR}},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR}},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="lastPwdModifiedTime != null">
+                #{lastPwdModifiedTime},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="ynflag != null">
+                #{ynflag},
+            </if>
+            <if test="erpFlag != null">
+                #{erpFlag},
+            </if>
+            <if test="creator != null">
+                #{creator},
+            </if>
+            <if test="editor != null">
+                #{editor},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime},
+            </if>
+            <if test="modifiedTime != null">
+                #{modifiedTime},
+            </if>
+        </trim>
+    </insert>
+
+<!--使用 set+if 标签修改后，如果某项为 null 则不进行更新，而是保持数据库原值-->
+    <update id="updateUserByNameOrEmail" parameterType="com.story.storyadmin.domain.entity.sysmgr.User">
+        UPDATE st_user
+        <set>
+            <if test="name!=null and name!='' ">
+                NAME = #{name},
+            </if>
+            <if test="email!=null and email!='' ">
+                EMAIL = #{email},
+            </if>
+            <if test="account!=null and account!='' ">
+                account = #{account}
+            </if>
+        </set>
+        WHERE ID = #{id};
+    </update>
+
+<!--批量插入  collection="list" 默认collection的值list,如果增加了注解@Param("userLists")，那么collection的值就是取注解里面的值userLists-->
+    <insert id="insertUserLists" parameterType="java.util.List">
+        insert into st_user(account,name, email)
+        values
+        <foreach collection="list" item="user" separator=",">
+            (
+             #{user.account},#{user.name},#{user.email}
+            )
+        </foreach>
+    </insert>
+
+<!--批量需改-->
+    <update id="updateUserLists" parameterType="java.util.List" >
+        <foreach collection="userLists" separator=";" open="begin" close=";end;" item="user" index="index" >
+            update st_user
+            <set>
+                <if test="user.name !=null and user.name !='' ">
+                    NAME =#{user.name}
+                </if>
+                <if test="user.account !=null and user.account !='' ">
+                    ACCOUNT =#{user.account}
+                </if>
+                <if test="user.email !=null and user.email !='' ">
+                    EMAIL =#{user.email}
+                </if>
+                modified_time =sysdate
+            </set>
+            where
+            ID =#{user.id}
+        </foreach>
+    </update>
+
+    <!--批量删除 物理删除-->
+    <delete id="deleteUserLists" parameterType="java.util.List">
+        delet form st_user
+        where
+        1=1
+        <if test="ids !=null and ids.size()>0">
+            and id in
+            <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
+
+
+<!--refid这个属性就是指定<sql>标签中的id值（唯一标识）。-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM st_user
+        <include refid="Example_Where_Clause" />
+    </select>
+
+<!--    调用常量类中的常量，就是@+全类名+@+常量。-->
+    <select id="selectUseByYnFlag" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM st_user
+        where id=8
+        <if test="ynFlag!=null and ynFlag==@com.story.storyadmin.constant.CommonConstants@DELETE">
+            and yn_flag=#{ynFlag}
+        </if>
+        <if test="ynFlag!=null and ynFlag==@com.story.storyadmin.constant.CommonConstants@NOT_DELETE">
+            and yn_flag=#{ynFlag}
+        </if>
     </select>
 
 
