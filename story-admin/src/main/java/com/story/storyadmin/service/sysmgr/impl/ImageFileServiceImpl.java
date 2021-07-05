@@ -18,4 +18,9 @@ public class ImageFileServiceImpl extends ServiceImpl<ImageFileMapper, ImageFile
     public void deleteImage(String url) {
        baseMapper.deleteImage(url);
     }
+
+    @Override
+    public ImageFile selectImageByUrl(String url) {
+        return  baseMapper.selectImageByUrl(url);
+    }
 }

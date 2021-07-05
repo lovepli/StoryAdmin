@@ -56,7 +56,7 @@
         <el-table-column align="center" prop="name" label="姓名"/>
         <el-table-column align="center" prop="avatar" label="用户头像">
           <template slot-scope="scope">
-            <img v-if="scope.row.avatar" :src="scope.row.avatar" width="40">
+            <img v-if="scope.row.avatar" :src="scope.row.avatar" width="40" @click="showImg(scope.row)">
           </template>
         </el-table-column>
         <el-table-column align="center" prop="email" label="邮箱" />
@@ -90,7 +90,7 @@
           <template slot-scope="scope">
             <!-- 按钮权限控制 -->
             <!-- <el-button v-if="hasPerm('sysmgr.user.save')" type="primary" size="mini" @click="modify(scope.row)">编辑</el-button> -->
-            <el-button  type="primary" size="mini" @click="modify(scope.row)">编辑</el-button>
+            <el-button type="primary" size="mini" @click="modify(scope.row)">编辑</el-button>
             <el-button size="mini" @click="modifyUserRole(scope.row)">角色</el-button>
             <el-button type="danger" size="mini" @click="dropRow(scope.row)">删除</el-button>
           </template>
@@ -194,34 +194,26 @@
       </span>
     </el-dialog>
 
+    <!--      展示附件图片的对话框-->
+    <el-dialog
+      :title="'上传的文件'"
+      :visible.sync="dialogVisible"
+      :before-close="handleClose"
+      width="70%">
+      <el-image v-for="(item, index) in imgList" :key="index" :src="item" style="width: 50%;height: 50%"/>
+      <el-divider style="margin-top: 100px"/>
+      <div v-for="(item, index) in pdfList" :key="index">
+        <!--          <embed :src="item" width="100%" height="300px">-->
+        <!--          <iframe :src="item" width="100%" height="100%"></iframe>-->
+        <object :data="item" type="application/pdf" width="100%" height="800px"/>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleClose">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
-
-<style>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #20a0ff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 120px;
-  height: 120px;
-  line-height: 120px;
-  text-align: center;
-}
-.avatar {
-  width: 145px;
-  height: 145px;
-  display: block;
-}
-</style>
 
 <script>
 import {
@@ -233,6 +225,7 @@ import {
 } from '@/api/sysmgr/user';
 
 import { findAllRoleList } from '@/api/sysmgr/role';
+import { findFileInfoDetail } from '@/api/sysmgr/user';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 // import Pagination from "@/components/Pagination"; // 分页组件
 import DataGrid from '@/components/DataGrid'; // 引入表格子组件
@@ -338,7 +331,12 @@ export default {
       defaultProps: {
         children: 'children', // 子节点
         label: 'name' // 节点名称 这里是角色名称，这个name值应该要与返回的json中的name字段保持一致
-      }
+      },
+      // 图片展示
+      imgList: [],
+      // pdf展示
+      pdfList: [],
+      dialogVisible: false
     };
   },
   // 侦听属性
@@ -358,6 +356,30 @@ export default {
   created() {},
   // methods是Vue内置的对象，用于存放一些自定义的方法函数
   methods: {
+    handleClose() {
+      this.dialogVisible = false
+    },
+     	/**
+       * 查看附件
+       */
+    async showImg(row) {
+      this.dialogVisible = true
+      this.imgList = []
+      await findFileInfoDetail({
+        'userId': row.id
+      }).then(res => { 
+        // eslint-disable-next-line no-array-constructor
+        var arr = new Array()
+        arr = res.data.split('&&&')
+        for (var i = 0; i < arr.length - 1; i++) {
+          if (arr[i].indexOf('data:application/pdf;base64,') !== -1) {
+            this.pdfList.push(arr[i])
+          } else {
+            this.imgList.push(arr[i])
+          }
+        }
+      })
+    },
     // onDataRest() {}这是ES6的简写方式,之前是 methodName:function(){} 这种写法
     // 重置按钮
     onDataRest() {
@@ -519,3 +541,29 @@ export default {
   }
 };
 </script>
+
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #20a0ff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+}
+.avatar {
+  width: 145px;
+  height: 145px;
+  display: block;
+}
+</style>

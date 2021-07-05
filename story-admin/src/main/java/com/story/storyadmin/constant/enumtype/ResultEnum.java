@@ -51,7 +51,10 @@ public enum ResultEnum {
 
     /**********************shiro/接口权限相关***********************/
     API_DO_NOT_UNAUTHORIZED(80001,"接口没有权限，权限不足"),
-    SHIRO_UNAUTHORIZED_EXCEPTION(80002,"shiro权限异常")
+    SHIRO_UNAUTHORIZED_EXCEPTION(80002,"shiro权限异常"),
+
+    /**********************上传下载导出相关***********************/
+    EXPORT_EROOR(90001,"导出错误")
 
     ;
 

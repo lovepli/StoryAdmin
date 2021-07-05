@@ -3,6 +3,7 @@ package com.story.storyadmin.web.sysmgr;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -14,6 +15,7 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
+import com.story.storyadmin.ruoyidomain.AjaxResult;
 import com.story.storyadmin.ruoyidomain.entity.SysUser;
 import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.service.sysmgr.UserService;
@@ -33,10 +35,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Api(description = "用户管理")
 @RestController
@@ -215,6 +214,22 @@ public class UserController extends BaseController {
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
+    }
+
+    /**
+     * 在线展示员工上传的照片或pdf信息
+     *
+     * @param jsonObject
+     * @return
+     */
+    @ApiOperation(value = "用户信息" ,  notes="在线展示员工上传的照片或pdf信息")
+    @RequiresPermissions("sysmgr.user.query")
+    @PostMapping("/findFileInfoDetail")
+    public Result findFileInfoDetail(@RequestBody JSONObject jsonObject){
+        String data = userService.findFileInfoDetail(jsonObject);
+        //Map<String, Object> map = new HashMap<>();
+        //map.put("result", data);
+        return  new Result(true, null, data ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
 

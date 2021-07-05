@@ -13,12 +13,14 @@ import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.SecurityConsts;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
+import com.story.storyadmin.domain.entity.sysmgr.ImageFile;
 import com.story.storyadmin.domain.entity.sysmgr.LoginLog;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.entity.sysmgr.UserRole;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.*;
 import com.story.storyadmin.mapper.sysmgr.UserMapper;
+import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.service.sysmgr.LoginLogService;
 import com.story.storyadmin.service.sysmgr.UserService;
 import com.story.storyadmin.utils.JedisUtils;
@@ -31,14 +33,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -66,6 +68,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     LoginLogService loginLogService;
+
+    @Autowired
+    ImageFileService imageFileService;
 
     /**
      * 通过账户名查询用户
@@ -495,6 +500,70 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<User> selectUserNameList() {
         return baseMapper.selectUserNameList();
+    }
+
+    /**
+     * 在线展示员工上传的照片或pdf信息
+     *
+     * @param jsonObject
+     * @return
+     */
+    @Override
+    public String findFileInfoDetail(JSONObject jsonObject) {
+        // 获取请求参数
+        String userId = jsonObject.getString("userId");
+
+        if(StringUtils.isEmpty(userId)){
+            throw new CustomException(ResultEnum.PARAMETERS_MISSING.getCode(), "前端请求参数userId不能为空");
+        }
+        // 查找
+        QueryWrapper<User> condition = new QueryWrapper<>();
+        condition.eq("id", userId);
+        User user = baseMapper.selectOne(condition);
+        if (user == null){
+            return null;
+        }
+
+
+        ImageFile imageFile = imageFileService.selectImageByUrl(user.getAvatar());
+        List<String> pathList = new ArrayList<String>();
+        if(!StringUtils.isEmpty(imageFile.getLujing())){
+            pathList.addAll(Arrays.asList(imageFile.getLujing().split(";")));
+        }
+        //if(!StringUtils.isEmpty(crjRecord.getPdfPath())){
+        //    pathList.addAll(Arrays.asList(crjRecord.getPdfPath().split(";")));
+        //}
+
+        //将图片和pdf转base64格式
+        List<String> base64ImgList = new ArrayList<String>();
+        BASE64Encoder encoder = new BASE64Encoder();
+        try{
+            for(int i=0; i<pathList.size(); i++) {
+                String fileType = pathList.get(i).split("\\.")[1];
+                InputStream in = new FileInputStream(pathList.get(i));
+                byte[] data = new byte[in.available()];
+                in.read(data);
+                in.close();
+                String base64str = encoder.encode(data);
+                String img = null;
+                // 文件格式只考虑 pdf 和 一般的图片(jpg/jpeg/png等)
+                if(fileType.equals("pdf")) {
+                    img = "data:application/"+fileType+";base64,"+base64str;
+                }
+                else{
+                    img = "data:image/"+fileType+";base64,"+base64str;
+                }
+                base64ImgList.add(img);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        StringBuilder result = new StringBuilder("");
+        for(int i=0;i<base64ImgList.size();i++) {
+            result.append(base64ImgList.get(i)).append("&&&");
+        }
+        return result.toString();
     }
 
 

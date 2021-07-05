@@ -29,7 +29,7 @@ public class ExcelInfo extends Model<ExcelInfo> {
 
     /**
      * 主键
-     * 对应Oracle数据库字段：VARCHAR2(50)
+     * 对应Oracle数据库字段：VARCHAR2(50) 全局设置ID生成为UUID
      */
     @TableId(value = "ID",type = IdType.INPUT)
     private String id;

@@ -44,7 +44,22 @@
           size="small"
           icon="el-icon-download"
           @click="showDownloadForm()"
-        >导出当页数据</el-button>
+        >导出当页数据为pdf</el-button>
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          type="primary"
+          size="small"
+          icon="el-icon-upload2"
+          @click="showUploadForm2()"
+        >上传图片和pdf文件展示</el-button>
+        <el-button
+          class="filter-item"
+          type="success"
+          size="small"
+          icon="el-icon-download"
+          @click="DownloadForm()"
+        >导出数据为Excel表格</el-button>
       </template>
       <!--body-->
       <template slot="body">
@@ -62,7 +77,12 @@
         </el-table-column>
         <!-- element ui 表格数据溢出隐藏，鼠标hover显示tip设置 参考：https://blog.csdn.net/qq_44879525/article/details/102521486-->
         <!-- 给需要处理的列加show-overflow-tooltip属性 -->
-        <el-table-column :show-overflow-tooltip="true" align="center" prop="path" label="路径" />
+        <el-table-column :show-overflow-tooltip="true" align="center" prop="path" label="路径">
+          <!-- 作用域插槽 -->
+          <template slot-scope="scope">
+            <span @click="showPdf(scope.row)" >{{ scope.row.path }}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="description" label="描述" />
         <el-table-column label="创建时间">
           <template slot-scope="scope">
@@ -135,11 +155,29 @@
     <el-dialog :visible.sync="showDownloadDialog" width="695px" title="请选择打印内容">
       <file-export :data="list" :cols="downloadColomns" table-name="用户附件管理数据导出" file-name="附件管理数据" />
     </el-dialog>
+
+    <!--      展示附件pdf的对话框-->
+    <el-dialog
+      :title="'上传的文件'"
+      :visible.sync="dialogVisible"
+      :before-close="handleClose"
+      width="70%">
+      <el-image v-for="(item, index) in imgList" :key="index" :src="item" style="width: 50%;height: 50%"/>
+      <el-divider style="margin-top: 100px"/>
+      <div v-for="(item, index) in pdfList" :key="index">
+        <!--          <embed :src="item" width="100%" height="300px">-->
+        <!--          <iframe :src="item" width="100%" height="100%"></iframe>-->
+        <object :data="item" type="application/pdf" width="100%" height="800px"/>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleClose">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { drop, uploadFile, downloadFile } from '@/api/sysmgr/att';
+import { drop, uploadFile, downloadFile, findFileInfoDetail, uploadFile2 } from '@/api/sysmgr/att';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
@@ -189,10 +227,43 @@ export default {
       downLoadLoading: '',
       fileUploadParam: {
         sourceDir: 'temp'
-      }
+      },
+      url: '',
+      jsonParam: {},
+      downLoadName: '',
+      // 图片展示
+      imgList: [],
+      // pdf展示
+      pdfList: [],
+      dialogVisible: false,
+      uploadFileStatus: ''
     };
   },
   methods: {
+    handleClose() {
+      this.dialogVisible = false
+    },
+     	/**
+       * 查看附件
+       */
+    async showPdf(row) {
+      this.imgList = []
+      this.dialogVisible = true
+      await findFileInfoDetail({
+        'attId': row.id
+      }).then(res => {
+        // eslint-disable-next-line no-array-constructor
+        var arr = new Array()
+        arr = res.data.split('&&&')
+        for (var i = 0; i < arr.length - 1; i++) {
+          if (arr[i].indexOf('data:application/pdf;base64,') !== -1) {
+            this.pdfList.push(arr[i])
+          } else {
+            this.imgList.push(arr[i])
+          }
+        }
+      })
+    },
     // 格式化时间
     dateFormat(d) { return parseTime(d, '{y}-{m}-{d} {h}:{i}:{s}') },
     // 数据重置
@@ -205,11 +276,19 @@ export default {
     },
     // 上传文件
     uploadFile(content) {
-      uploadFile(content.file).then(r => { content.onSuccess(r, content.file) })
-        .catch(e => {
-          this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
-          content.onError(e.message)
-        })
+      if (this.uploadFileStatus === '1') {
+        uploadFile(content.file).then(r => { content.onSuccess(r, content.file) })
+          .catch(e => {
+            this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
+            content.onError(e.message)
+          })
+      } else {
+        uploadFile2(content.file).then(r => { content.onSuccess(r, content.file) })
+          .catch(e => {
+            this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
+            content.onError(e.message)
+          })
+      }
     },
     // 删除接口
     dropRow(row) {
@@ -258,6 +337,13 @@ export default {
 
     // 上传
     showUploadForm() {
+      this.uploadFileStatus = '1'
+      this.uploadVisible = true;
+      // this.fileList = null;
+    },
+    // 上传
+    showUploadForm2() {
+      this.uploadFileStatus = '2'
       this.uploadVisible = true;
       // this.fileList = null;
     },
@@ -266,6 +352,34 @@ export default {
       // 将表格数据复制到信息弹框中
       this.list = this.$refs.dataList.list;
       this.showDownloadDialog = true;
+    },
+    // 导出表格
+    async DownloadForm() {
+      this.url = '/sysmgr/att/export'
+      // this.jsonParam = this.queryInfo
+      this.downLoadName = '报表数据'
+      await this.$http.post(this.url, this.jsonParam,
+        {
+          responseType: 'blob' // 设置响应类型
+        })
+        .then(res => {
+          if (res.status === 200) {
+            const url = window.URL.createObjectURL(new Blob([res.data]))
+            const link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = url
+            link.setAttribute('download', this.downLoadName) // 自定义喜爱在文件名
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link) // 下载完移除元素
+            window.URL.revokeObjectURL(url)
+          } else {
+            this.$message.error('下载失败！')
+          }
+        })
+        .catch(() => {
+          this.$message.error('获取失败，请检查网络连接！')
+        })
     },
     handleExceed(files, fileList) {
       this.$message.warning('只能选择1个文件!');

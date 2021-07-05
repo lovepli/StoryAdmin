@@ -39,10 +39,10 @@ public class NewGenerationController {
         //NewGeneration newGeneration=newGenerationService.getById(id); // 根据床查询
         //Map<String,Object> map= JsonObjectUtils.objectToMap(newGeneration); // 将对象转为map
         //// TODO 将map对象转对象，相同内容复制到newGenerationRelease中？？  JSONObject.parseObject()作用：json字符串转对象
-        //NewGenerationRelease newGenerationRelease=JSONObject.parseObject(JSONObject.toJSONString(map),NewGenerationRelease.class);
+        //NewGenerationRelease newGeneration=JSONObject.parseObject(JSONObject.toJSONString(map),NewGenerationRelease.class);
 
         // 对象拷贝2
-        //BeanUtils.copyProperties(); // TODO 对象拷贝的使用
+        //BeanUtils.copyProperties(newGeneration,newGeneration); // TODO 对象拷贝的使用
         return result;
         // return Result.success("pageDate",pageData);
 
