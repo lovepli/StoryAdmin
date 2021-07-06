@@ -100,14 +100,36 @@ select:使用另一个查询封装的结果-->
     <select id="getCourse33" parameterType="java.lang.String" resultMap="CourseResultMap33">
         select * from d_course c, d_teacher t,d_student s , d_score ds where c.teacher_id=t.t_id and ds.course_id=c.c_id and ds.ds_id= s.s_id and c.c_id=#{id}
     </select>
-    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO3" id="CourseResultMap33">
+    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO33" id="CourseResultMap33">
         <id property="id" column="c_id"/>
         <result property="name" column="c_name"/>
         <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher">
             <id property="id" column="t_id"/>
             <result property="name" column="t_name"/>
         </association>
-        <association property="score" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DScore">
+        <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore">
+            <id property="id" column="ds_id"/>
+            <result property="score" column="ds_score"/>
+            <result property="courseId" column="course_id"/>
+        </association>
+        <!-- ofType指定students集合中的对象类型 -->
+        <collection property="students" ofType="com.story.storyadmin.domain.entity.children.DStudent">
+            <id property="id" column="s_id"/>
+            <result property="name" column="s_name"/>
+            <result property="birthday"   column="s_birthday"   />
+            <result property="sex"  column="s_sex"   />
+        </collection>
+    </resultMap>
+
+    <select id="getCourse34" parameterType="java.lang.String" resultMap="CourseResultMap34">
+        select * from d_course c, d_teacher t,d_student s , d_score ds where c.teacher_id=t.t_id and ds.course_id=c.c_id and ds.ds_id= s.s_id and c.c_id=#{id}
+    </select>
+    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO4" id="CourseResultMap34" extends="BaseResultMap">
+        <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher">
+            <id property="id" column="t_id"/>
+            <result property="name" column="t_name"/>
+        </association>
+        <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore">
             <id property="id" column="ds_id"/>
             <result property="score" column="ds_score"/>
             <result property="courseId" column="course_id"/>
@@ -136,16 +158,16 @@ select:使用另一个查询封装的结果-->
           <result property="name" column="c_name"/>
           <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher" select="getTeacher2">
           </association>
-          <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore" select="getScore">
-
-          </association>
+<!--          <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore" select="getScore"></association>-->
+           <collection property="score" column="c_id" ofType="com.story.storyadmin.domain.entity.children.DScore"  select="getScore"></collection>
           <collection property="students" column="ds_id" ofType="com.story.storyadmin.domain.entity.children.DStudent"  select="getStudent"></collection>
        </resultMap>
+
        <select id="getTeacher2" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DTeacher">
           SELECT t_id, t_name FROM d_teacher WHERE t_id=#{id}
        </select>
     <select id="getScore" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DScore">
-        SELECT ds_id, ds_score, course_id FROM d_score WHERE ds_id=#{id}
+        SELECT ds_id, ds_score, course_id FROM d_score WHERE course_id=#{id}
     </select>
        <select id="getStudent" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DStudent">
           SELECT s_id, s_name FROM d_student WHERE s_id=#{id}

@@ -1,10 +1,6 @@
 package com.story.storyadmin.domain.entity.children;
 
-import com.story.storyadmin.domain.entity.sysmgr.User;
-import com.story.storyadmin.domain.entity.sysmgr.UserTest;
 import com.story.storyadmin.mapper.children.DCourseMapper;
-import com.story.storyadmin.mapper.sysmgr.UserMapper;
-import com.story.storyadmin.service.sysmgr.UserService;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +50,7 @@ public class DCourseTest extends TestCase {
 
     /**
      * 一对多关联查询
-     *  根据班级Id查询对应的班级信息,包括学生,老师
+     *  根据课程Id查询对应的课程信息,包括学生,老师
      */
     @Test
     public void Test3() {
@@ -63,16 +59,30 @@ public class DCourseTest extends TestCase {
         logger.info("查询班级信息：{}",course.toString());
     }
 
+    /**
+     * 根据课程Id查询对应的课程信息,包括学生,分数,老师
+     */
     @Test
     public void Test33() {
-        // 查询出所有数据
-        CourseDTO3 course = dCourseMapper.getCourse33("0001");
+        CourseDTO33 course = dCourseMapper.getCourse33("0001");
         logger.info("查询班级信息：{}",course.toString());
     }
 
+    /**
+     * TODO 报错
+     */
+    @Test
+    public void Test34() {
+        CourseDTO4 course = dCourseMapper.getCourse34("0001");
+        logger.info("查询班级信息：{}",course.toString());
+    }
+
+    /**
+     * TODO 报错
+     */
     @Test
     public void Test31() {
-        // 查询出所有数据
+
         CourseDTO3 course = dCourseMapper.getCourse4("0001");
         logger.info("查询班级信息：{}",course.toString());
     }

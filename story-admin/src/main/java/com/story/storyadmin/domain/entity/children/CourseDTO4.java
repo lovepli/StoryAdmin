@@ -10,12 +10,9 @@ import java.util.List;
  * @description: 课程对象
  */
 @Data
-public class CourseDTO3 {
+public class CourseDTO4 extends DCourse{
 
-    //定义实体类的属性，与DCourse表中的字段对应
-    private String id;
 
-    private String name;
 
     /**
      * DCourse表中有一个teacher_id字段，所以在CourseDTO类中定义一个teacher属性，
@@ -24,16 +21,10 @@ public class CourseDTO3 {
     private DTeacher teacher;
 
     // 分数对象
-   // private DScore score;
     private List<DScore> score;
 
     //使用一个List<DStudent>集合属性表示班级拥有的学生
     private List<DStudent> students;
 
-
-    @Override
-     public String toString() {
-             return "CourseDTO2 [id=" + id + ", name=" + name + ", teacher=" + teacher
-                        + ", score=" + score+", students=" + students + "]";}
 
 }
