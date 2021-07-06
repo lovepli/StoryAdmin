@@ -3,13 +3,14 @@
 
 <mapper namespace="com.story.storyadmin.mapper.children.DStudentMapper">
     <resultMap type="com.story.storyadmin.domain.entity.children.DStudent" id="BaseResultMap">
-        <id     property="id"     column="ID"     />
-        <result property="birthday"   column="birthday"   />
-        <result property="sex"  column="sex"   />
+        <id     property="id"     column="s_ID"     />
+        <id     property="name"     column="s_name"     />
+        <result property="birthday"   column="s_birthday"   />
+        <result property="sex"  column="s_sex"   />
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,birthday,sex
+        s_ID,s_birthday,s_sex
     </sql>
 
 

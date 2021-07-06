@@ -20,12 +20,14 @@ public class DScore extends Model<DScore> {
 
         private static final  long serialVersionUID =1L;
 
-        @TableId(value = "ID",type = IdType.INPUT)
+        @TableId(value = "ds_id",type = IdType.INPUT)
         private String id;
 
-        @TableField("course")
-        private int course;
+        /**分数 **/
+        @TableField("ds_score")
+        private int score;
 
+        // 课程id
         @TableField("course_id")
         private String courseId;
 

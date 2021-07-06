@@ -3,13 +3,13 @@
 <mapper namespace="com.story.storyadmin.mapper.children.DScoreMapper">
 
     <resultMap type="com.story.storyadmin.domain.entity.children.DScore" id="BaseResultMap">
-        <id     property="id"     column="ID"     />
-        <result property="course"   column="course"   />
+        <id     property="id"     column="ds_id"     />
+        <result property="score"   column="ds_score"   />
         <result property="courseId"  column="course_id"   />
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,course,course_id
+        ds_ID,ds_course,ds_course_id
     </sql>
 
 

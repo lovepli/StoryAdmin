@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * @author: lipan
  * @date: 2021/7/5
- * @description: 班级表
+ * @description: 课程表
  */
 @Data
 @TableName("d_course")
@@ -20,10 +20,10 @@ public class DCourse extends Model<DCourse> {
 
     private static final  long serialVersionUID =1L;
 
-    @TableId(value = "ID",type = IdType.INPUT)
+    @TableId(value = "c_ID",type = IdType.INPUT)
     private String id;
 
-    @TableField("name")
+    @TableField("c_name")
     private String name;
 
     /**

@@ -18,4 +18,6 @@ import java.util.List;
 @Repository
 public interface DTeacherMapper extends BaseMapper<DTeacher> {
     public List<DTeacher> findByPage(Page page, @Param("jsonObject") JSONObject jsonObject);
+
+    DTeacher getTeacher(String id);
 }

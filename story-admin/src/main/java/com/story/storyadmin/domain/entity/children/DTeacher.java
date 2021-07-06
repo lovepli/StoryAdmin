@@ -20,10 +20,10 @@ public class DTeacher extends Model<DTeacher> {
 
     private static final  long serialVersionUID =1L;
 
-    @TableId(value = "ID",type = IdType.INPUT)
+    @TableId(value = "t_ID",type = IdType.INPUT)
     private String id;
 
-    @TableField("name")
+    @TableField("t_name")
     private String name;
 
     @Override

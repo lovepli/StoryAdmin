@@ -23,18 +23,18 @@ public class DStudent extends Model<DStudent> {
 
     private static final  long serialVersionUID =1L;
 
-    @TableId(value = "ID",type = IdType.INPUT)
+    @TableId(value = "s_ID",type = IdType.INPUT)
     private String id;
 
-    @TableField("name")
+    @TableField("s_name")
     private String name;
 
     @JsonFormat(pattern ="yyyy-MM-dd",timezone = "GMT+8")
     @DateTimeFormat(pattern ="yyyy-MM-dd")
-    @TableField("birthday")
+    @TableField("s_birthday")
     private Date birthday;
 
-    @TableField("sex")
+    @TableField("s_sex")
     private char sex;
 
     @Override

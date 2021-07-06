@@ -3,12 +3,12 @@
 <mapper namespace="com.story.storyadmin.mapper.children.DTeacherMapper">
 
     <resultMap type="com.story.storyadmin.domain.entity.children.DTeacher" id="BaseResultMap">
-        <id     property="id"     column="ID"     />
-        <result property="name"   column="name"   />
+        <id     property="id"     column="t_ID"     />
+        <result property="name"   column="t_name"   />
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,name
+        t_ID,t_name
     </sql>
 
 
@@ -17,6 +17,10 @@
         <include refid="Base_Column_List"/>
         from
         d_teacher
+    </select>
+
+    <select id="getTeacher" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DTeacher">
+        SELECT t_id, t_name FROM d_teacher WHERE t_id=#{id}
     </select>
 
 </mapper>
