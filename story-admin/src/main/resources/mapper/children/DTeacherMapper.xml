@@ -2,4 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.story.storyadmin.mapper.children.DTeacherMapper">
 
+    <resultMap type="com.story.storyadmin.domain.entity.children.DTeacher" id="BaseResultMap">
+        <id     property="id"     column="ID"     />
+        <result property="name"   column="name"   />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,name
+    </sql>
+
+
+    <select id="findByPage" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        d_teacher
+    </select>
+
 </mapper>

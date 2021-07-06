@@ -2,4 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.story.storyadmin.mapper.children.DScoreMapper">
 
+    <resultMap type="com.story.storyadmin.domain.entity.children.DScore" id="BaseResultMap">
+        <id     property="id"     column="ID"     />
+        <result property="course"   column="course"   />
+        <result property="courseId"  column="course_id"   />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,course,course_id
+    </sql>
+
+
+    <select id="findByPage" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        d_score
+    </select>
+
 </mapper>

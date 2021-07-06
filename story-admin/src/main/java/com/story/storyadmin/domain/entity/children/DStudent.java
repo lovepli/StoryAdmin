@@ -1,4 +1,4 @@
-package com.story.storyadmin.web.children;
+package com.story.storyadmin.domain.entity.children;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

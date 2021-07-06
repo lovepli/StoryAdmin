@@ -1,9 +1,14 @@
 package com.story.storyadmin.mapper.children;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.story.storyadmin.web.children.DStudent;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.domain.entity.children.DStudent;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author: lipan
@@ -12,4 +17,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface DStudentMapper extends BaseMapper<DStudent> {
+
+    public List<DStudent> findByPage(Page page, @Param("jsonObject") JSONObject jsonObject);
 }
