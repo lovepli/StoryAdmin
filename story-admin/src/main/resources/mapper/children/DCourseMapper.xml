@@ -20,14 +20,15 @@
         d_course
     </select>
 
-
+    <!--#####################################################一对一关联查询##############################################################-->
 
 <!--1、根据课程id查询课程信息(带老师的信息)-->
     <!--
-19     方式一：嵌套结果：使用嵌套结果映射来处理重复的联合结果的子集
-20              封装联表查询的数据(去除重复的数据)
-21         select * from d_course c, d_teacher t where c.teacher_id=t.t_id and c.c_id=1
-22     -->
+    方式一：嵌套结果：使用嵌套结果映射来处理重复的联合结果的子集
+             封装联表查询的数据(去除重复的数据)
+        select * from d_course c, d_teacher t where c.teacher_id=t.t_id and c.c_id=1
+    -->
+<!--查询方式1、使用内连接+association内联result设置-->
         <select id="getCourse" parameterType="java.lang.String" resultMap="CourseResultMap">
             select * from d_course c, d_teacher t where c.teacher_id=t.t_id and c.c_id=#{id}
         </select>
@@ -35,17 +36,58 @@
         <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO" id="CourseResultMap">
             <id property="id" column="c_id"/>
             <result property="name" column="c_name"/>
+            <!-- 一对一关联：单向；方式二：使用内联方式直接列出。 -->
             <association property="teacher" javaType="com.story.storyadmin.domain.entity.children.DTeacher">
                 <id property="id" column="t_id"/>
                 <result property="name" column="t_name"/>
             </association>
         </resultMap>
 
+<!-- 查询方式2、使用内连接+association引用resultMap-->
+    <select id="getCourse22" parameterType="java.lang.String" resultMap="CourseResultMap22">
+        select c.*,t.* from d_course c inner join d_teacher t on c.teacher_id = t.t_id  and c.c_id=#{id}
+    </select>
+    <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
+    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO" id="CourseResultMap22">
+        <id property="id" column="c_id"/>
+        <result property="name" column="c_name"/>
+        <!-- 一对一关联：单向；方式三：使用resultMap引用。 -->
+        <association property="teacher" column="teacher_id" resultMap="com.story.storyadmin.mapper.children.DTeacherMapper.BaseResultMap" />
+    </resultMap>
+
+<!--查询方式3、使用内连接+级联属性（不使用association）-->
+    <select id="getCourse24" parameterType="java.lang.String" resultMap="CourseResultMap24">
+        select c.*,t.* from d_course c inner join d_teacher t on c.teacher_id = t.t_id  and c.c_id=#{id}
+    </select>
+    <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
+    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO" id="CourseResultMap24">
+        <id property="id" column="c_id"/>
+        <result property="name" column="c_name"/>
+        <!-- 一对一关联：单向; 方式：使用级联属性 -->
+        <result property="teacher.id" column="t_id"/>
+        <result property="teacher.name" column="t_name"/>
+    </resultMap>
+
+<!--查询方式4、使用内连接+扩展类（不推荐）-->
+    <select id="getCourse25" parameterType="java.lang.String" resultMap="CourseResultMap25">
+        select c.*,t.* from d_course c inner join d_teacher t on c.teacher_id = t.t_id  and c.c_id=#{id}
+    </select>
+    <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
+    <resultMap type="com.story.storyadmin.domain.entity.children.dto.CourseTeacherResult" id="CourseResultMap25">
+        <id property="id" column="c_id"/>
+        <result property="name" column="c_name"/>
+        <!-- 一对一关联：单向；方式一：使用扩展类，必须重写setter方式，并且父类必须将字段修改成protected,同时修改type。不推荐 -->
+        <result property="teacherId" column="t_id" />
+        <result property="teacherName" column="t_name" />
+    </resultMap>
+
+
     <!--
-37     方式二：嵌套查询：通过执行另外一个SQL映射语句来返回预期的复杂类型
-38         SELECT * FROM class WHERE c_id=1;
-39         SELECT * FROM teacher WHERE t_id=1   //1 是上一个查询得到的teacher_id的值
-40     -->
+    方式二：嵌套查询：通过执行另外一个SQL映射语句来返回预期的复杂类型 分步查询
+        SELECT * FROM class WHERE c_id=1;
+        SELECT * FROM teacher WHERE t_id=1   //1 是上一个查询得到的teacher_id的值
+    -->
+<!--查询方式、使用单表查询+association引用select方式，不用inner查询（以避免再次查询），可以利用延迟加载-->
         <select id="getCourse2" parameterType="java.lang.String" resultMap="CourseResultMap2">
            select * from d_course where c_id=#{id}
         </select>
@@ -53,14 +95,13 @@
         <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO" id="CourseResultMap2">
            <id property="id" column="c_id"/>
            <result property="name" column="c_name"/>
-<!--            怎么引入teacher.xml中的这个getTeacher方法？-->
-           <association property="teacher" column="teacher_id" select="getTeacher"/>
+          <!-- 引入DTeacherMapper.xml中的这个getTeacher方法-->
+            <!-- 一对一关联：单向；使用select引用,可以设置延迟加载方式 -->
+           <association property="teacher" column="teacher_id" select="com.story.storyadmin.mapper.children.DTeacherMapper.getTeacher" fetchType="lazy"/>
         </resultMap>
 
-<!--    这里复制一份getTeacher方法-->
-    <select id="getTeacher" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DTeacher">
-        SELECT t_id, t_name FROM d_teacher WHERE t_id=#{id}
-    </select>
+
+<!--#####################################################一对多关联查询##############################################################-->
 
 <!--    MyBatis一对一关联查询总结
 　　MyBatis中使用association标签来解决一对一的关联查询，association标签可用的属性如下：
@@ -72,6 +113,7 @@ select:使用另一个查询封装的结果-->
 
     <!--
          根据课程Id查询对应的课程信息,包括学生,老师
+         分析：课程-老师：一对一，课程-学生：一对多，课程-分数：一对一
       -->
     <!--
      方式一: 嵌套结果: 使用嵌套结果映射来处理重复的联合结果的子集
@@ -96,6 +138,26 @@ select:使用另一个查询封装的结果-->
            </collection>
        </resultMap>
 
+    <select id="getCourse31" parameterType="java.lang.String" resultMap="CourseResultMap31">
+        select * from d_course c, d_teacher t,d_student s , d_score ds where c.teacher_id=t.t_id and ds.course_id=c.c_id and ds.ds_id= s.s_id and c.c_id=#{id}
+    </select>
+    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO2" id="CourseResultMap31" extends="BaseResultMap">
+        <!-- 一对一关联：使用select引用方式 -->
+        <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher" select="com.story.storyadmin.mapper.children.DTeacherMapper.getTeacher" fetchType="lazy" />
+        <!-- ofType指定students集合中的对象类型 -->
+        <!-- 一对多关联：使用select引用方式 -->
+<!--        <collection property="students" column="c_id"  ofType="com.story.storyadmin.domain.entity.children.DStudent" select="com.story.storyadmin.mapper.children.DStudentMapper.getStudent" fetchType="lazy"></collection>-->
+        <collection property="students" ofType="com.story.storyadmin.domain.entity.children.DStudent">
+            <id property="id" column="s_id"/>
+            <result property="name" column="s_name"/>
+            <result property="birthday"   column="s_birthday"   />
+            <result property="sex"  column="s_sex"   />
+        </collection>
+    </resultMap>
+
+
+
+
 <!--     根据课程Id查询对应的课程信息,包括学生,分数,老师-->
     <select id="getCourse33" parameterType="java.lang.String" resultMap="CourseResultMap33">
         select * from d_course c, d_teacher t,d_student s , d_score ds where c.teacher_id=t.t_id and ds.course_id=c.c_id and ds.ds_id= s.s_id and c.c_id=#{id}
@@ -107,11 +169,12 @@ select:使用另一个查询封装的结果-->
             <id property="id" column="t_id"/>
             <result property="name" column="t_name"/>
         </association>
-        <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore">
-            <id property="id" column="ds_id"/>
-            <result property="score" column="ds_score"/>
-            <result property="courseId" column="course_id"/>
-        </association>
+<!--      score表的course_id的外键是course的主键id,所以这里不能这样写  -->
+<!--        <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore">-->
+<!--            <id property="id" column="ds_id"/>-->
+<!--            <result property="score" column="ds_score"/>-->
+<!--            <result property="courseId" column="course_id"/>-->
+<!--        </association>-->
         <!-- ofType指定students集合中的对象类型 -->
         <collection property="students" ofType="com.story.storyadmin.domain.entity.children.DStudent">
             <id property="id" column="s_id"/>

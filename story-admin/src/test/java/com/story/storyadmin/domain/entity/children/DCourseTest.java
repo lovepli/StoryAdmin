@@ -1,5 +1,6 @@
 package com.story.storyadmin.domain.entity.children;
 
+import com.story.storyadmin.domain.entity.children.dto.CourseTeacherResult;
 import com.story.storyadmin.mapper.children.DCourseMapper;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -43,8 +44,27 @@ public class DCourseTest extends TestCase {
 
     @Test
     public void Test21() {
-        // 查询出所有数据
         CourseDTO course = dCourseMapper.getCourse2("0001");
+        logger.info("查询班级信息：{}",course.toString());
+    }
+
+    @Test
+    public void Test22() {
+        CourseDTO course = dCourseMapper.getCourse22("0001");
+        logger.info("查询班级信息：{}",course.toString());
+    }
+
+    @Test
+    public void Test24() {
+        // 查询出所有数据
+        CourseDTO course = dCourseMapper.getCourse24("0001");
+        logger.info("查询班级信息：{}",course.toString());
+    }
+
+    @Test
+    public void Test25() {
+        // 查询出所有数据
+        CourseTeacherResult course = dCourseMapper.getCourse25("0001");
         logger.info("查询班级信息：{}",course.toString());
     }
 
@@ -56,6 +76,14 @@ public class DCourseTest extends TestCase {
     public void Test3() {
         // 查询出所有数据
         CourseDTO2 course = dCourseMapper.getCourse3("0001");
+        logger.info("查询班级信息：{}",course.toString());
+    }
+
+    // 报错
+    @Test
+    public void Test311() {
+        // 查询出所有数据
+        CourseDTO2 course = dCourseMapper.getCourse31("0001");
         logger.info("查询班级信息：{}",course.toString());
     }
 

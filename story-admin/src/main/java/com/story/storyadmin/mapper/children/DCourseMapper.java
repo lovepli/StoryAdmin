@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.domain.entity.children.*;
+import com.story.storyadmin.domain.entity.children.dto.CourseTeacherResult;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,15 @@ public interface DCourseMapper extends BaseMapper<DCourse> {
 
     CourseDTO getCourse2(String id);
 
+    CourseDTO getCourse22(String id);
+
+    CourseDTO getCourse24(String id);
+
+    CourseTeacherResult getCourse25(String id);
+
     CourseDTO2 getCourse3(String id);
+
+    CourseDTO2 getCourse31(String id);
 
     CourseDTO33 getCourse33(String id);
 

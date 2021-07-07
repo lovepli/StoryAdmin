@@ -19,4 +19,6 @@ import java.util.List;
 public interface DStudentMapper extends BaseMapper<DStudent> {
 
     public List<DStudent> findByPage(Page page, @Param("jsonObject") JSONObject jsonObject);
+
+    DStudent getStudent(String id);
 }
