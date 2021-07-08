@@ -17,26 +17,13 @@ import java.io.Serializable;
  */
 @Data
 @ToString
-@TableName("d_course")
-public class DCourse extends Model<DCourse> {
+public class DCourse2 {
 
-    private static final  long serialVersionUID =1L;
+    protected String id;
 
-    @TableId(value = "c_ID",type = IdType.INPUT)
-    private String id;
+    protected String name;
 
-    @TableField("c_name")
-    private String name;
-
-    /**
-     * 教师编号
-     */
-    @TableField("teacher_id")
-    private String teacherId;
+    protected String teacherId;
 
 
-    @Override
-    protected Serializable pkVal(){
-        return this.id;
-    }
 }

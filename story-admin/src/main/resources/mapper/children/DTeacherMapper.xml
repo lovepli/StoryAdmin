@@ -20,7 +20,9 @@
     </select>
 
     <select id="getTeacher" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DTeacher">
-        SELECT t_id, t_name FROM d_teacher WHERE t_id=#{id}
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM d_teacher WHERE t_id=#{id}
     </select>
 
 </mapper>

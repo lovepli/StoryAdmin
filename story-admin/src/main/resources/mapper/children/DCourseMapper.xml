@@ -139,14 +139,17 @@ select:使用另一个查询封装的结果-->
        </resultMap>
 
     <select id="getCourse31" parameterType="java.lang.String" resultMap="CourseResultMap31">
-        select * from d_course c, d_teacher t,d_student s , d_score ds where c.teacher_id=t.t_id and ds.course_id=c.c_id and ds.ds_id= s.s_id and c.c_id=#{id}
+        select * from d_course c inner join d_teacher t on c.teacher_id = t.t_id inner join d_score ds on ds.course_id = c.c_id inner join d_student s on s.s_id =ds.ds_id and c.c_id=#{id}
     </select>
-    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO2" id="CourseResultMap31" extends="BaseResultMap">
+    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO2" id="CourseResultMap31" >
+        <id     property="id"     column="c_id"     />
+        <result property="name"   column="c_name"   />
         <!-- 一对一关联：使用select引用方式 -->
         <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher" select="com.story.storyadmin.mapper.children.DTeacherMapper.getTeacher" fetchType="lazy" />
         <!-- ofType指定students集合中的对象类型 -->
         <!-- 一对多关联：使用select引用方式 -->
-<!--        <collection property="students" column="c_id"  ofType="com.story.storyadmin.domain.entity.children.DStudent" select="com.story.storyadmin.mapper.children.DStudentMapper.getStudent" fetchType="lazy"></collection>-->
+<!--        <collection property="students" column="ds_id"  javaType="com.story.storyadmin.domain.entity.children.DStudent" select="com.story.storyadmin.mapper.children.DStudentMapper.getStudent" fetchType="lazy" >-->
+<!--        </collection>-->
         <collection property="students" ofType="com.story.storyadmin.domain.entity.children.DStudent">
             <id property="id" column="s_id"/>
             <result property="name" column="s_name"/>
@@ -154,45 +157,18 @@ select:使用另一个查询封装的结果-->
             <result property="sex"  column="s_sex"   />
         </collection>
     </resultMap>
-
-
 
 
 <!--     根据课程Id查询对应的课程信息,包括学生,分数,老师-->
-    <select id="getCourse33" parameterType="java.lang.String" resultMap="CourseResultMap33">
-        select * from d_course c, d_teacher t,d_student s , d_score ds where c.teacher_id=t.t_id and ds.course_id=c.c_id and ds.ds_id= s.s_id and c.c_id=#{id}
-    </select>
-    <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO33" id="CourseResultMap33">
-        <id property="id" column="c_id"/>
-        <result property="name" column="c_name"/>
-        <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher">
-            <id property="id" column="t_id"/>
-            <result property="name" column="t_name"/>
-        </association>
-<!--      score表的course_id的外键是course的主键id,所以这里不能这样写  -->
-<!--        <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore">-->
-<!--            <id property="id" column="ds_id"/>-->
-<!--            <result property="score" column="ds_score"/>-->
-<!--            <result property="courseId" column="course_id"/>-->
-<!--        </association>-->
-        <!-- ofType指定students集合中的对象类型 -->
-        <collection property="students" ofType="com.story.storyadmin.domain.entity.children.DStudent">
-            <id property="id" column="s_id"/>
-            <result property="name" column="s_name"/>
-            <result property="birthday"   column="s_birthday"   />
-            <result property="sex"  column="s_sex"   />
-        </collection>
-    </resultMap>
-
     <select id="getCourse34" parameterType="java.lang.String" resultMap="CourseResultMap34">
-        select * from d_course c, d_teacher t,d_student s , d_score ds where c.teacher_id=t.t_id and ds.course_id=c.c_id and ds.ds_id= s.s_id and c.c_id=#{id}
+        select * from d_course c inner join d_teacher t on c.teacher_id = t.t_id inner join d_score ds on ds.course_id = c.c_id inner join d_student s on s.s_id =ds.ds_id and c.c_id=#{id}
     </select>
     <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO4" id="CourseResultMap34" extends="BaseResultMap">
         <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher">
             <id property="id" column="t_id"/>
             <result property="name" column="t_name"/>
         </association>
-        <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore">
+        <association property="scores" column="course_id" javaType="com.story.storyadmin.domain.entity.children.DScore">
             <id property="id" column="ds_id"/>
             <result property="score" column="ds_score"/>
             <result property="courseId" column="course_id"/>
@@ -219,22 +195,14 @@ select:使用另一个查询封装的结果-->
        <resultMap type="com.story.storyadmin.domain.entity.children.CourseDTO3" id="CourseResultMap4">
           <id property="id" column="c_id"/>
           <result property="name" column="c_name"/>
-          <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher" select="getTeacher2">
-          </association>
-<!--          <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore" select="getScore"></association>-->
-           <collection property="score" column="c_id" ofType="com.story.storyadmin.domain.entity.children.DScore"  select="getScore"></collection>
-          <collection property="students" column="ds_id" ofType="com.story.storyadmin.domain.entity.children.DStudent"  select="getStudent"></collection>
+          <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher" select="com.story.storyadmin.mapper.children.DTeacherMapper.getTeacher"></association>
+          <association property="score" column="c_id" javaType="com.story.storyadmin.domain.entity.children.DScore" select="com.story.storyadmin.mapper.children.DScoreMapper.getScoreByCourseId"></association>
+          <collection property="students" column="ds_id" ofType="com.story.storyadmin.domain.entity.children.DStudent"  select="com.story.storyadmin.mapper.children.DStudentMapper.getStudent"></collection>
        </resultMap>
 
-       <select id="getTeacher2" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DTeacher">
-          SELECT t_id, t_name FROM d_teacher WHERE t_id=#{id}
-       </select>
-    <select id="getScore" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DScore">
-        SELECT ds_id, ds_score, course_id FROM d_score WHERE course_id=#{id}
-    </select>
-       <select id="getStudent" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DStudent">
-          SELECT s_id, s_name FROM d_student WHERE s_id=#{id}
-       </select>
+
+
+
 
 
 

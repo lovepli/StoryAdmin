@@ -79,25 +79,17 @@ public class DCourseTest extends TestCase {
         logger.info("查询班级信息：{}",course.toString());
     }
 
-    // 报错
+    // 查询结果由问题
     @Test
     public void Test311() {
         // 查询出所有数据
         CourseDTO2 course = dCourseMapper.getCourse31("0001");
-        logger.info("查询班级信息：{}",course.toString());
+       // list.forEach(System.out::println);
+        System.out.println(course.toString());
     }
 
     /**
      * 根据课程Id查询对应的课程信息,包括学生,分数,老师
-     */
-    @Test
-    public void Test33() {
-        CourseDTO33 course = dCourseMapper.getCourse33("0001");
-        logger.info("查询班级信息：{}",course.toString());
-    }
-
-    /**
-     * TODO 报错
      */
     @Test
     public void Test34() {

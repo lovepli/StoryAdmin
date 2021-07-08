@@ -9,7 +9,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ds_ID,ds_course,course_id
+        ds_ID,ds_score,course_id
     </sql>
 
 
@@ -19,6 +19,22 @@
         from
         d_score
     </select>
+
+    <select id="getScoreByCourseId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from d_score where course_id=#{id}
+    </select>
+
+    <select id="getScoreByCourseId2" parameterType="java.lang.String" resultMap="CourseResultMap5">
+        select * from d_student s inner join d_score ds on s.s_id=ds.ds_id and ds.course_id =#{id}
+    </select>
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.DScoreDTO2" id="CourseResultMap5">
+        <id     property="id"     column="ds_id"     />
+        <result property="score"   column="ds_score"   />
+        <collection property="students" column="ds_id" ofType="com.story.storyadmin.domain.entity.children.DTeacher" select="com.story.storyadmin.mapper.children.DTeacherMapper.getTeacher"></collection>
+    </resultMap>
 
 
     <!--
@@ -30,6 +46,7 @@
     <select id="getScore" parameterType="java.lang.String" resultMap="CourseResultMap4">
         select * from d_score where course_id=#{id}
     </select>
+
     <resultMap type="com.story.storyadmin.domain.entity.children.DScoreDTO" id="CourseResultMap4">
         <id property="id" column="ds_id"/>
         <result property="score" column="ds_score"/>

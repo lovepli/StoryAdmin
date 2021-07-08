@@ -1,6 +1,7 @@
 package com.story.storyadmin.domain.entity.children;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -10,7 +11,8 @@ import java.util.List;
  * @description: 课程对象
  */
 @Data
-public class CourseDTO4 extends DCourse{
+@ToString
+public class CourseDTO4 extends DCourse2{
 
 
 
@@ -21,7 +23,7 @@ public class CourseDTO4 extends DCourse{
     private DTeacher teacher;
 
     // 分数对象
-    private List<DScore> score;
+    private DScore scores;
 
     //使用一个List<DStudent>集合属性表示班级拥有的学生
     private List<DStudent> students;

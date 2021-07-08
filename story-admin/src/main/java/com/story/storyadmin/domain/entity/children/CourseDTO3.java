@@ -1,6 +1,7 @@
 package com.story.storyadmin.domain.entity.children;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @description: 课程对象
  */
 @Data
+@ToString
 public class CourseDTO3 {
 
     //定义实体类的属性，与DCourse表中的字段对应
@@ -24,16 +26,18 @@ public class CourseDTO3 {
     private DTeacher teacher;
 
     // 分数对象
-   // private DScore score;
-    private List<DScore> score;
+    //private DScore score;
+    private List<DScore> scores;
 
     //使用一个List<DStudent>集合属性表示班级拥有的学生
     private List<DStudent> students;
 
+   // private DScoreDTO2 dScoreDTO2;
 
-    @Override
-     public String toString() {
-             return "CourseDTO2 [id=" + id + ", name=" + name + ", teacher=" + teacher
-                        + ", score=" + score+", students=" + students + "]";}
+
+    //@Override
+    // public String toString() {
+    //         return "CourseDTO2 [id=" + id + ", name=" + name + ", teacher=" + teacher
+    //                    + ", score=" + score+", students=" + students + "]";}
 
 }

@@ -3,6 +3,7 @@ package com.story.storyadmin.domain.entity.children;
 import com.story.storyadmin.web.mongoTest.Student;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class CourseDTO2 {
     private DTeacher teacher;
 
     //使用一个List<DStudent>集合属性表示班级拥有的学生
-    private List<DStudent> students;
+    private List<DStudent> students = new ArrayList<>();
 
 
     @Override
