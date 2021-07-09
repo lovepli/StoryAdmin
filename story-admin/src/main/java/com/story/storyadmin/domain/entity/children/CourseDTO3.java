@@ -26,8 +26,8 @@ public class CourseDTO3 {
     private DTeacher teacher;
 
     // 分数对象
-    //private DScore score;
-    private List<DScore> scores;
+    private DScore score;
+    //private List<DScore> scores;
 
     //使用一个List<DStudent>集合属性表示班级拥有的学生
     private List<DStudent> students;

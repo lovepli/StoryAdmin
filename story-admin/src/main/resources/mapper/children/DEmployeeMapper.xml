@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.storyadmin.mapper.children.DEmployeeMapper">
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.DEmployee" id="BaseResultMap">
+        <id     property="id"     column="e_id"     />
+        <result property="name"   column="e_name"   />
+        <result property="deptId"   column="dept_id"   />
+    </resultMap>
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.onetomany.DEmployeeBO" id="EmployeeMap" >
+        <id     property="id"     column="e_id"     />
+        <result property="name"   column="e_name"   />
+        <!-- 多对一关联：使用select引用方式 -->
+        <association property="dept" column="dept_id"
+                     javaType="com.story.storyadmin.domain.entity.children.DDept"
+                     select="com.story.storyadmin.mapper.children.DDeptMapper.selectDeptById"
+                     fetchType="lazy" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        e_id,e_name,dept_id
+    </sql>
+
+
+    <select id="selectEmployeeByDeptId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM d_employee WHERE dept_id=#{id}
+    </select>
+
+
+
+    <select id="selectEmployeeDeptByDeptId" parameterType="java.lang.String" resultMap="EmployeeMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM d_employee WHERE dept_id=#{id}
+    </select>
+
+    <select id="selectEmployeeDeptById" parameterType="java.lang.String" resultMap="EmployeeMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM d_employee WHERE e_id=#{id}
+    </select>
+
+
+
+
+
+
+</mapper>

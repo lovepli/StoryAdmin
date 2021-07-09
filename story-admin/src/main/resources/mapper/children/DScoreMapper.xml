@@ -20,54 +20,5 @@
         d_score
     </select>
 
-    <select id="getScoreByCourseId" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from d_score where course_id=#{id}
-    </select>
-
-    <select id="getScoreByCourseId2" parameterType="java.lang.String" resultMap="CourseResultMap5">
-        select * from d_student s inner join d_score ds on s.s_id=ds.ds_id and ds.course_id =#{id}
-    </select>
-
-    <resultMap type="com.story.storyadmin.domain.entity.children.DScoreDTO2" id="CourseResultMap5">
-        <id     property="id"     column="ds_id"     />
-        <result property="score"   column="ds_score"   />
-        <collection property="students" column="ds_id" ofType="com.story.storyadmin.domain.entity.children.DTeacher" select="com.story.storyadmin.mapper.children.DTeacherMapper.getTeacher"></collection>
-    </resultMap>
-
-
-    <!--
-    方式二：嵌套查询：通过执行另外一个SQL映射语句来返回预期的复杂类型
-        SELECT * FROM class WHERE c_id=1;
-        SELECT * FROM teacher WHERE t_id=1   //1 是上一个查询得到的teacher_id的值
-        SELECT * FROM student WHERE class_id=1  //1是第一个查询得到的c_id字段的值
- -->
-    <select id="getScore" parameterType="java.lang.String" resultMap="CourseResultMap4">
-        select * from d_score where course_id=#{id}
-    </select>
-
-    <resultMap type="com.story.storyadmin.domain.entity.children.DScoreDTO" id="CourseResultMap4">
-        <id property="id" column="ds_id"/>
-        <result property="score" column="ds_score"/>
-        <association property="course" column="course_id" javaType="com.story.storyadmin.domain.entity.children.DCourse" select="getDCourse">
-        </association>
-        <association property="student" column="ds_id" javaType="com.story.storyadmin.domain.entity.children.DStudent" select="getDStudent">
-        </association>
-        <association property="teacher" column="teacher_id" javaType="com.story.storyadmin.domain.entity.children.DTeacher" select="getTeacher2">
-        </association>
-    </resultMap>
-
-
-    <select id="getDCourse" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DCourse">
-        SELECT c_id, c_name,teacher_id FROM d_course WHERE c_id=#{id}
-    </select>
-    <select id="getTeacher2" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DTeacher">
-        SELECT t_id, t_name FROM d_teacher WHERE t_id=#{id}
-    </select>
-
-    <select id="getDStudent" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DStudent">
-        SELECT s_id, s_name FROM d_student WHERE s_id=#{id}
-    </select>
 
 </mapper>

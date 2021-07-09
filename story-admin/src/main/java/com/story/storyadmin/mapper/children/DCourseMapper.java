@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.domain.entity.children.*;
 import com.story.storyadmin.domain.entity.children.dto.CourseTeacherResult;
+import com.story.storyadmin.domain.entity.children.manytomany.DCourseBO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -41,5 +42,7 @@ public interface DCourseMapper extends BaseMapper<DCourse> {
 
 
     CourseDTO3 getCourse4(String id);
+
+    DCourseBO getCourseAndStudentByCourseId(String id);
 
 }

@@ -200,6 +200,30 @@ select:使用另一个查询封装的结果-->
           <collection property="students" column="ds_id" ofType="com.story.storyadmin.domain.entity.children.DStudent"  select="com.story.storyadmin.mapper.children.DStudentMapper.getStudent"></collection>
        </resultMap>
 
+    <!--#####################################################多对多关联查询##############################################################-->
+<!--根据课程id查询课程信息和学生信息，一对多关系 -->
+    <select id="getCourseAndStudentByCourseId" parameterType="java.lang.String" resultMap="CourseStudentResultMap">
+        select c.*,s.* from d_student s inner join d_score ds on s.s_id = ds.ds_id INNER JOIN d_course  c on ds.course_id =c.c_id and c.c_id =#{id}
+    </select>
+    <resultMap type="com.story.storyadmin.domain.entity.children.manytomany.DCourseBO" id="CourseStudentResultMap">
+        <id property="id" column="c_id"/>
+        <result property="name" column="c_name"/>
+        <!-- ofType指定students集合中的对象类型 -->
+        <collection property="students" ofType="com.story.storyadmin.domain.entity.children.DStudent">
+            <id property="id" column="s_id"/>
+            <result property="name" column="s_name"/>
+            <result property="birthday"   column="s_birthday"   />
+            <result property="sex"  column="s_sex"   />
+        </collection>
+    </resultMap>
+
+
+
+
+
+
+
+
 
 
 

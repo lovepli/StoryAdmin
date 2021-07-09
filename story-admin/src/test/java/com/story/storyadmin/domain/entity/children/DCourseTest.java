@@ -1,7 +1,14 @@
 package com.story.storyadmin.domain.entity.children;
 
 import com.story.storyadmin.domain.entity.children.dto.CourseTeacherResult;
+import com.story.storyadmin.domain.entity.children.manytomany.DCourseBO;
+import com.story.storyadmin.domain.entity.children.manytomany.DStudentBO;
+import com.story.storyadmin.domain.entity.children.onetomany.DDeptBO;
+import com.story.storyadmin.domain.entity.children.onetomany.DEmployeeBO;
 import com.story.storyadmin.mapper.children.DCourseMapper;
+import com.story.storyadmin.mapper.children.DDeptMapper;
+import com.story.storyadmin.mapper.children.DEmployeeMapper;
+import com.story.storyadmin.mapper.children.DStudentMapper;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +29,15 @@ public class DCourseTest extends TestCase {
 
     @Autowired
     DCourseMapper dCourseMapper;
+
+    @Autowired
+    DStudentMapper dStudentMapper;
+
+    @Autowired
+    DDeptMapper dDeptMapper;
+
+    @Autowired
+    DEmployeeMapper dEmployeeMapper;
 
 
     @Test
@@ -106,6 +122,45 @@ public class DCourseTest extends TestCase {
         CourseDTO3 course = dCourseMapper.getCourse4("0001");
         logger.info("查询班级信息：{}",course.toString());
     }
+
+
+    //#################################多对多关联查询############################################
+    @Test
+    public void TestManyToMany() {
+        // 一个课程多个学生
+        DCourseBO courseStudent = dCourseMapper.getCourseAndStudentByCourseId("0001");
+        logger.info("查询课程学生信息：{}",courseStudent.toString());
+    }
+
+    @Test
+    public void TestManyToMany2() {
+        // 一个学生多个课程
+        DStudentBO studentCourse = dStudentMapper.getStudentAndCourseByStudentId("0001");
+        logger.info("查询学生课程信息：{}",studentCourse.toString());
+    }
+
+
+    // Mybatis中使用association及collection进行一对多双向关联示例
+    @Test
+    public void TestOneToMany() {
+        // 一对多
+        DDeptBO deptBO = dDeptMapper.selectDeptEmployeeByDeptId("0001");
+        logger.info("查询部门信息：{}",deptBO.toString());
+    }
+
+    @Test
+    public void TestOneToMany2() {
+        // 一对一
+       // List<DEmployeeBO> employeeBO = dEmployeeMapper.selectEmployeeDeptByDeptId("0001");
+         DEmployeeBO employeeBO = dEmployeeMapper.selectEmployeeDeptById("0001");
+        logger.info("查询员工信息：{}",employeeBO.toString());
+    }
+
+
+
+
+
+
 
 
 

@@ -31,4 +31,21 @@
     </select>
 
 
+    <!--#####################################################多对多关联查询##############################################################-->
+    <!--根据学生编号id查询学生信息和课程信息，一对多关系 -->
+    <select id="getStudentAndCourseByStudentId" parameterType="java.lang.String" resultMap="StudentCourseResultMap">
+        SELECT s.*,c.* from d_student s inner join d_score ds on s.s_id = ds.ds_id INNER JOIN d_course  c on ds.course_id =c.c_id and s.s_id=#{id}
+    </select>
+    <resultMap type="com.story.storyadmin.domain.entity.children.manytomany.DStudentBO" id="StudentCourseResultMap">
+        <id property="id" column="s_id"/>
+        <result property="name" column="s_name"/>
+        <result property="birthday"   column="s_birthday"   />
+        <result property="sex"  column="s_sex"   />
+        <!-- ofType指定students集合中的对象类型 -->
+        <collection property="courses" ofType="com.story.storyadmin.domain.entity.children.DCourse">
+            <id property="id" column="c_id"/>
+            <result property="name" column="c_name"/>
+        </collection>
+    </resultMap>
+
 </mapper>
