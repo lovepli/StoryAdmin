@@ -30,6 +30,9 @@ public class DDept   extends Model<DDept>{
     @TableField("d_name")
     private String name;
 
+    @TableField("parent_id")
+    private String parentId;
+
         @Override
         protected Serializable pkVal(){
             return this.id;

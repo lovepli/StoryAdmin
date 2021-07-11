@@ -5,6 +5,7 @@
     <resultMap type="com.story.storyadmin.domain.entity.children.DDept" id="BaseResultMap">
         <id     property="id"     column="d_id"     />
         <result property="name"   column="d_name"   />
+        <result property="parentId"   column="parent_id"   />
     </resultMap>
 
     <resultMap type="com.story.storyadmin.domain.entity.children.onetomany.DDeptBO" id="DeptMap" extends="BaseResultMap">
@@ -14,13 +15,21 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        d_id,d_name
+        d_id,d_name,parent_id
     </sql>
 
     <select id="selectDeptById" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM d_dept WHERE d_id=#{id}
+    </select>
+
+    <select id="selectDeptByParentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from d_dept d
+        where
+        d.parent_id=#{parentId}
     </select>
 
 
@@ -30,5 +39,27 @@
          from
         d_dept d where d.d_id=#{id}
     </select>
+
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.dto.DDeptDTO" id="DeptMap2" >
+        <id     property="id"     column="d_id"     />
+        <result property="name"   column="d_name"   />
+        <!-- 多对一关联：使用select引用方式 。association配置先于collection-->
+        <association property="parent" column="parent_id" javaType="com.story.storyadmin.domain.entity.children.DDept" select="com.story.storyadmin.mapper.children.DDeptMapper.selectDeptById"></association>
+        <!-- 一对多关联：使用select引用方式 -->
+        <collection property="children" column="d_id" ofType="com.story.storyadmin.domain.entity.children.DDept" select="com.story.storyadmin.mapper.children.DDeptMapper.selectDeptByParentId" fetchType="lazy">
+        </collection>
+    </resultMap>
+
+    <select id="selectDeptById2" parameterType="java.lang.String" resultMap="DeptMap2">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM d_dept WHERE d_id=#{id}
+    </select>
+
+
+
+
+
 
 </mapper>

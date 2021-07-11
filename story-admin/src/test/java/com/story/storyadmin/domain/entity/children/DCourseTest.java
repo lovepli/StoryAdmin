@@ -1,6 +1,7 @@
 package com.story.storyadmin.domain.entity.children;
 
 import com.story.storyadmin.domain.entity.children.dto.CourseTeacherResult;
+import com.story.storyadmin.domain.entity.children.dto.DDeptDTO;
 import com.story.storyadmin.domain.entity.children.manytomany.DCourseBO;
 import com.story.storyadmin.domain.entity.children.manytomany.DStudentBO;
 import com.story.storyadmin.domain.entity.children.onetomany.DDeptBO;
@@ -154,6 +155,14 @@ public class DCourseTest extends TestCase {
        // List<DEmployeeBO> employeeBO = dEmployeeMapper.selectEmployeeDeptByDeptId("0001");
          DEmployeeBO employeeBO = dEmployeeMapper.selectEmployeeDeptById("0001");
         logger.info("查询员工信息：{}",employeeBO.toString());
+    }
+
+    // Mybatis中使用association及collection进行自关联
+    @Test
+    public void Test5() {
+
+        DDeptDTO deptBO = dDeptMapper.selectDeptById2("00010003");
+        logger.info("根据id查询部门以及下级部门信息：{}",deptBO.toString());
     }
 
 
