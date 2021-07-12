@@ -71,6 +71,8 @@ public interface AttService extends IService<Att> {
 
     int uploadFile(MultipartFile file);
 
+    void importExcel(MultipartFile file) throws Exception;
+
     String findFileInfoDetail(JSONObject jsonObject);
 
 }

@@ -29,6 +29,10 @@ public class DStudent extends Model<DStudent> {
     @TableField("s_name")
     private String name;
 
+    /**
+     *  @DateTimeFormat 用于前端传给后端的时间格式转换，
+     *  @JsonFormat 用于后端传给前端的时间格式转换
+     */
     @JsonFormat(pattern ="yyyy-MM-dd",timezone = "GMT+8")
     @DateTimeFormat(pattern ="yyyy-MM-dd")
     @TableField("s_birthday")

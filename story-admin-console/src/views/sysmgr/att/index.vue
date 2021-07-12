@@ -60,6 +60,13 @@
           icon="el-icon-download"
           @click="DownloadForm()"
         >导出数据为Excel表格</el-button>
+        <el-button
+          class="filter-item"
+          type="success"
+          size="small"
+          icon="el-icon-download"
+          @click="importExcelForm()"
+        >导入Excel表格数据</el-button>
       </template>
       <!--body-->
       <template slot="body">
@@ -177,7 +184,7 @@
 </template>
 
 <script>
-import { drop, uploadFile, downloadFile, findFileInfoDetail, uploadFile2 } from '@/api/sysmgr/att';
+import { drop, uploadFile, downloadFile, findFileInfoDetail, uploadFile2, importExcelFile } from '@/api/sysmgr/att';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
@@ -223,7 +230,7 @@ export default {
         { name: '创建时间', value: 'createdTime', map: this.dateFormat }
       ],
       acceptFileType:
-        '.jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF,.ZIP,.RAR',
+        '.jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF,.ZIP,.RAR,.xls,.xlsx,.docx',
       downLoadLoading: '',
       fileUploadParam: {
         sourceDir: 'temp'
@@ -282,8 +289,14 @@ export default {
             this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
             content.onError(e.message)
           })
-      } else {
+      } else if (this.uploadFileStatus === '2') {
         uploadFile2(content.file).then(r => { content.onSuccess(r, content.file) })
+          .catch(e => {
+            this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
+            content.onError(e.message)
+          })
+      } else {
+        importExcelFile(content.file).then(r => { content.onSuccess(r, content.file) })
           .catch(e => {
             this.addFiles.splice(this.addFiles.indexOf(content.file.name), 1)
             content.onError(e.message)
@@ -346,6 +359,13 @@ export default {
       this.uploadFileStatus = '2'
       this.uploadVisible = true;
       // this.fileList = null;
+    },
+    // 导入Excel文件
+    importExcelForm(){
+   this.uploadFileStatus = '3'
+      this.uploadVisible = true;
+      // this.fileList = null;
+
     },
     // 导出当前页数据
     showDownloadForm() {

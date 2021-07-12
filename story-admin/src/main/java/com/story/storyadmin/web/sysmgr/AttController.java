@@ -122,6 +122,14 @@ public class AttController extends BaseController {
         }
     }
 
+    @ApiOperation(value = "附件管理" ,  notes="导入附件Excel数据")
+    @RequiresPermissions("sysmgr.att.upload")
+    @RequestMapping(value="/importExcel",method = {RequestMethod.POST})
+    public Result importExcel(@RequestParam("file") MultipartFile file) throws Exception {
+       attService.importExcel(file);
+       return new Result(true,"上传成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
 
 
     @ApiOperation(value = "附件管理" ,  notes="下载附件")

@@ -39,6 +39,16 @@ export function uploadFile2(file, data) {
   })
 }
 
+export function importExcelFile(file, data) {
+  var formData = new FormData()
+  formData.append('file', file)
+  return request({
+    url: '/sysmgr/att/importExcel?' + search(data),
+    method: 'post',
+    data: formData
+  })
+}
+
 
 export function downloadFile(id) {
   return request({

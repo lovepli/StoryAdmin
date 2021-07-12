@@ -1,11 +1,15 @@
 package com.story.storyadmin.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * 日期工具类
@@ -14,8 +18,72 @@ import java.util.Date;
  *
  */
 public class DateUtils {
-	
-	/**
+
+    public static  final  String FORMAT_ONE ="yyyy-MM-dd";
+    public static  final  String FORMAT_TWO ="yyyy/MM/dd";
+    public static  final  String FORMAT_YEAR ="yyyy";
+
+    static SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_ONE);
+    static SimpleDateFormat sdf_two= new SimpleDateFormat(FORMAT_TWO);
+    static SimpleDateFormat sdf_year= new SimpleDateFormat(FORMAT_YEAR);
+
+    /**
+     * 获取系统当前时间
+     * @return
+     */
+    public static String getDate(){
+        Date date = new Date();
+        return sdf.format(date);
+    }
+
+    /**
+     * Date 类型转String
+     * @param date
+     * @return
+     */
+    public static  String getDate(Date date){
+        String time =sdf.format(date);
+        return time;
+    }
+
+    /**
+     * String 转 Date
+     * @param dateStr
+     * @return
+     */
+    public static  Date getDate(String dateStr){
+        Date date = null;
+        try{
+            date = sdf.parse(dateStr);
+            // date = sdf_two.parse(dateStr);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return  date;
+    }
+
+    /**
+     * 获取上一年年份
+     * @param currYear
+     * @return
+     */
+    public static String getLastYear(String currYear){
+        String lastYear = null;
+        Calendar calendar = new GregorianCalendar();
+        try{
+            Date date = sdf_year.parse(currYear);
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR,-1);
+            lastYear =sdf_year.format(calendar.getTime());
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return  lastYear;
+    }
+
+    //##############################################################################################
+
+    /**
 	 * 获取当前日期
 	 * 
 	 * @return date
