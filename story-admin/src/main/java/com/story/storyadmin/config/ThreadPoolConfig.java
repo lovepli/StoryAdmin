@@ -20,19 +20,19 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ThreadPoolConfig {
 
     /** 核心线程数（默认线程数） */
-    @Value("${thread.pool.corePoolSize:5}")
+    @Value("${thread.pool.corePoolSize:15}")
     private int corePoolSize;
 
     /** 最大线程数 */
-    @Value("${thread.pool.maxPoolSize:10}")
+    @Value("${thread.pool.maxPoolSize:50}")
     private int maxPoolSize;
 
     /** 缓冲队列大小 */
-    @Value("${thread.pool.queueCapacity:200}")
+    @Value("${thread.pool.queueCapacity:100}")
     private int queueCapacity;
 
     /** 允许线程空闲时间（单位：默认为秒） */
-    @Value("${thread.pool.keepAliveSeconds:30}")
+    @Value("${thread.pool.keepAliveSeconds:60}")
     private int keepAliveSeconds;
 
     /** 线程名前缀 */
