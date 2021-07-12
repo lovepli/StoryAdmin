@@ -50,7 +50,7 @@ import java.util.*;
  * @author sunnj
  * @since 2018-12-28
  */
-@Service
+@Service  //@Service用于标注业务层组件
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);

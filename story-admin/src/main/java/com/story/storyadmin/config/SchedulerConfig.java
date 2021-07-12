@@ -21,7 +21,11 @@ import java.util.Properties;
  */
 @Configuration
 public class SchedulerConfig {
-	
+
+    /**
+     * @Qualifier:
+     * 当有多个同一类型的 Bean 时，可以用 @Qualifier(“name”) 来指定。与 @Autowired 配合使用；
+     */
 	@Autowired
 	@Qualifier("storyJobFactory")
     private StoryJobFactory storyJobFactory;

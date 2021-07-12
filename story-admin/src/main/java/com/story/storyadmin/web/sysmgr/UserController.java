@@ -1,8 +1,5 @@
 package com.story.storyadmin.web.sysmgr;
 
-import cn.afterturn.easypoi.excel.ExcelExportUtil;
-import cn.afterturn.easypoi.excel.entity.ExportParams;
-import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,33 +12,47 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
-import com.story.storyadmin.ruoyidomain.AjaxResult;
-import com.story.storyadmin.ruoyidomain.entity.SysUser;
 import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.service.sysmgr.UserService;
-import com.story.storyadmin.utils.ruoyiutils.StringUtils;
-import com.story.storyadmin.utils.wind.DateUtils;
 import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.ByteArrayOutputStream;
 import java.time.Instant;
 import java.util.*;
 
+/**
+ * @RestController:
+ * 用于标注控制层组件 (如 struts 中的 action)，包含 @Controller 和 @ResponseBody；
+ * @Controller:
+ * 用于标注是控制层组件，需要返回页面时请用 @Controller 而不是 @RestController；
+ * @ResponseBody:
+ * 表示该方法的返回结果直接写入 HTTP response body 中，一般在异步获取数据时使用，在使用 @RequestMapping 后，返回值通常解析为跳转路径，
+ * 加上 @responsebody 后返回结果不会被解析为跳转路径，而是直接写入 HTTP response body 中；比如异步获取 json 数据，加上 @responsebody 后，会直接返回 json 数据；
+ * @RequestMapping:
+ * RequestMapping 是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径；
+ * 该注解有六个属性:
+ * params: 指定 request 中必须包含某些参数值是，才让该方法处理。
+ * headers: 指定 request 中必须包含某些指定的 header 值，才能让该方法处理请求。
+ * value: 指定请求的实际地址，指定的地址可以是 URI Template 模式
+ * method: 指定请求的 method 类型， GET、POST、PUT、DELETE 等
+ * consumes: 指定处理请求的提交内容类型（Content-Type），如 application/json,text/html;
+ * produces: 指定返回的内容类型，仅当 request 请求头中的 (Accept) 类型中包含该指定类型才返回。
+ */
 @Api(description = "用户管理")
 @RestController
 @RequestMapping(value="/sysmgr/user")
 public class UserController extends BaseController {
 
+    /**
+     * @AutoWired:
+     * byType 方式。把配置好的 Bean 拿来用，完成属性、方法的组装，它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作；
+     * 当加上（required=false）时，就算找不到 bean 也不报错；
+     */
     @Autowired
     UserService userService;
 
@@ -50,6 +61,9 @@ public class UserController extends BaseController {
 
     /**
      * 分页查询 用户列表信息
+     * @RequestParam註解:
+     * 用在方法的参数前面。相当于 request.getParameter()；
+     *
      * @param user
      * @param pageNo
      * @param limit

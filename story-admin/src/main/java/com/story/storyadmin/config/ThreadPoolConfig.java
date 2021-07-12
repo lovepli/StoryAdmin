@@ -4,13 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author: 59688
  * @date: 2021/7/12
- * @description:  线程池配置类
+ * @description:  自定义线程池配置类，替代springboot默认线程池
  *
  *  默认情况下，在创建了线程池后，线程池中的线程数为0，当有任务来之后，就会创建一个线程去执行任务，
  *	当线程池中的线程数目达到corePoolSize后，就会把到达的任务放到缓存队列当中；

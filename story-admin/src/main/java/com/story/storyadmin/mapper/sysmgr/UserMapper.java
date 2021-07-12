@@ -2,12 +2,11 @@ package com.story.storyadmin.mapper.sysmgr;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.story.storyadmin.domain.entity.bank.NewGeneration;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.entity.sysmgr.UserRole;
-import com.story.storyadmin.web.mongoTest.Student;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +19,7 @@ import java.util.Map;
  * @author sunnj
  * @since 2018-12-28
  */
+@Repository //@Repository用于标注数据访问组件，即 DAO 组件
 public interface UserMapper extends BaseMapper<User> {
 
     /**

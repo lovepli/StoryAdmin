@@ -10,6 +10,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MybatisPlusConfig {
 
+    /**
+     * @Bean:
+     * 相当于 XML 中的, 放在方法的上面，而不是类，意思是产生一个 bean, 并交给 spring 管理；
+     * @return
+     */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor page = new PaginationInterceptor();

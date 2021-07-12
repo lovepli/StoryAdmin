@@ -72,6 +72,8 @@ public class ExceptionController extends BaseController{
 
 
     /**
+     * @ExceptionHandler(Exception.class)註解: 用在方法上面表示遇到这个异常就执行以下方法。
+     *
      * 自定义异常
      * Handle exceptions thrown by handlers.
      */

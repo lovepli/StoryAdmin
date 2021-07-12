@@ -131,7 +131,14 @@ public class AttController extends BaseController {
     }
 
 
-
+    /**
+     * @PathVariable註解:
+     * 路径变量。如 RequestMapping(“/download/{id}”) ；
+     * 参数与大括号里的名字相同的话，注解后括号里的内容可以不填。
+     *
+     * @param response
+     * @param fileId
+     */
     @ApiOperation(value = "附件管理" ,  notes="下载附件")
     @RequiresPermissions("sysmgr.att.download")
     @RequestMapping(value = "/download/{id}", method = GET)

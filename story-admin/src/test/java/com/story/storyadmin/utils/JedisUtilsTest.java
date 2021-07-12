@@ -13,6 +13,11 @@ import javax.annotation.Resource;
 @SpringBootTest
 public class JedisUtilsTest extends TestCase {
 
+    /**
+     * @Resource(name=”name”,type=”type”)：
+     * 没有括号内内容的话，默认 byName。与 @Autowired 干类似的事；
+     */
+
     /** 引入自定义Integer 缓存 */
     @Resource(name = "intRedisTemplate")
     private RedisTemplate<String, Integer> intTemplate;
