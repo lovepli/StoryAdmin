@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * @author: 59688
  * @date: 2021/7/9
- * @description:
+ * @description: 员工对象，包含员工所在的部门信息
  */
 @Data
 @ToString

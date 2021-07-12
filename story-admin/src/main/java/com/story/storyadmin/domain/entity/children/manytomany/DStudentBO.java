@@ -1,10 +1,6 @@
 package com.story.storyadmin.domain.entity.children.manytomany;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.story.storyadmin.domain.entity.children.DCourse;
 import lombok.Data;

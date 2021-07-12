@@ -14,8 +14,6 @@ import java.util.List;
 @ToString
 public class CourseDTO4 extends DCourse2{
 
-
-
     /**
      * DCourse表中有一个teacher_id字段，所以在CourseDTO类中定义一个teacher属性，
      * 用于维护teacher和course之间的一对一关系，通过这个teacher属性就可以知道这个班级是由哪个老师负责的

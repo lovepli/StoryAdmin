@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author: lipan
  * @date: 2021/7/5
- * @description: 分数
+ * @description: 部门对象，包含部门下所有员工信息
  */
 @Data
 @ToString
