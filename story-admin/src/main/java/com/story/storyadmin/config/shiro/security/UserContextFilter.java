@@ -1,20 +1,14 @@
 package com.story.storyadmin.config.shiro.security;
 
-import com.alibaba.fastjson.JSONObject;
+
 import com.story.storyadmin.config.shiro.LoginUser;
 import com.story.storyadmin.constant.SecurityConsts;
-import com.story.storyadmin.filter.BodyRequestWrapper;
-import com.story.storyadmin.filter.xss.XssHttpServletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Springboot中实现Filter实现的途径
@@ -84,10 +78,10 @@ public class UserContextFilter implements Filter {
             LoginUser loginUser = new LoginUser(account);
             //将登录用户对象存入到ThreadLocal线程内部属性中
             try (UserContext context = new UserContext(loginUser)) {
-                logger.info("####AnnoantationFilter doFilter 执行前");
+                logger.info("####UserContextFilter 权限过滤器执行前");
                 //让目标资源执行，放行
                 filterChain.doFilter(servletRequest, servletResponse);
-                logger.info("####AnnoantationFilter doFilter 执行后");
+                logger.info("####UserContextFilter 权限过滤器执行后");
             }
         }else{
             // 让目标资源执行，放行
