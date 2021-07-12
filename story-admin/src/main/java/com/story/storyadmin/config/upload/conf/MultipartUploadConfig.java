@@ -18,6 +18,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Configuration
 public class MultipartUploadConfig extends WebMvcConfigurationSupport {
 
+    /**
+     * 将拦截器注册到 spring 容器
+     * @param registry
+     */
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MultipartHandlerInterceptor()).addPathPatterns("/**");

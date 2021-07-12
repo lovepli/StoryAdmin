@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 应用上下文
+ * 获取 spring 容器对象的方式：实现ApplicationContextAware接口，然后重写setApplicationContext方法，就能从该方法中获取到 spring 容器对象
  */
 @Component
 public class ApplicationContextUtil implements ApplicationContextAware {
@@ -19,7 +20,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
     }
 
     /**
-     *
+     * 根据类class获取对象
      * @param cls
      * @param <T>
      * @return
@@ -29,7 +30,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
     }
 
     /**
-     * 通过类名获取对象
+     * 根据类名获取对象
      * @param beanName
      * @return
      */

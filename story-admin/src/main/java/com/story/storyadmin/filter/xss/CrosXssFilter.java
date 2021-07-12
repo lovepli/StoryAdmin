@@ -17,8 +17,8 @@ import java.io.IOException;
  *
  * 这个过滤器主要在前端页面进行xss防范
  */
-@Component
-@ServletComponentScan
+//@Component
+//@ServletComponentScan
 @WebFilter(urlPatterns = "/*")
 public class CrosXssFilter implements Filter {
     private static final Logger logger = LoggerFactory.getLogger(CrosXssFilter.class);
@@ -66,12 +66,12 @@ public class CrosXssFilter implements Filter {
         //sql,xss过滤
         HttpServletRequest httpServletRequest=(HttpServletRequest)request;
        // String result=httpServletRequest.
+        System.out.println("记录请求日志");
         logger.info("CrosXssFilter.......orignal url:{},ParameterMap:{}",httpServletRequest.getRequestURI(), JSONObject.toJSONString(httpServletRequest.getParameterMap()));
-        XssHttpServletRequestWrapper xssHttpServletRequestWrapper=new XssHttpServletRequestWrapper(
-                httpServletRequest);
+        XssHttpServletRequestWrapper xssHttpServletRequestWrapper=new XssHttpServletRequestWrapper(httpServletRequest);
         chain.doFilter(xssHttpServletRequestWrapper, response);
         logger.info("CrosXssFilter..........doFilter url:{},ParameterMap:{}",xssHttpServletRequestWrapper.getRequestURI(), JSONObject.toJSONString(xssHttpServletRequestWrapper.getParameterMap()));
-
+        System.out.println("记录响应日志");
     }
     @Override
     public void destroy() {

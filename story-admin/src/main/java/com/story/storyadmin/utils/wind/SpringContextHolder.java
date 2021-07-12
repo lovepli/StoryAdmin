@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候取出ApplicaitonContext.
+ * 获取 spring 容器对象的方式：实现ApplicationContextAware接口，然后重写setApplicationContext方法，就能从该方法中获取到 spring 容器对象
  *
  * @date 2017-2-9 下午11:51
  */

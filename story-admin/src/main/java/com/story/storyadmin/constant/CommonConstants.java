@@ -7,7 +7,7 @@ package com.story.storyadmin.constant;
  */
 public class CommonConstants {
 
-    /**********************通用代码 是否删除***********************/
+    /**********************定义魔数 是否删除，直接在xml文件中引用，方便维护***********************/
     // 删除
     public static final String DELETE = "0";
     // 不删除
