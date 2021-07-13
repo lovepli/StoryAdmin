@@ -96,7 +96,8 @@ public class UserController extends BaseController {
      */
     @ApiOperation(value = "用户信息" ,  notes="根据Id查询用户信息")
     @RequiresPermissions("sysmgr.user.query")
-    @RequestMapping(value="/find",method = {RequestMethod.POST})
+   @RequestMapping(value="/find",method = {RequestMethod.POST}) // @RequestMapping注解的6个参数
+   // @RequestMapping(value="/find",method = {RequestMethod.POST,RequestMethod.GET},consumes = "application/json",produces = "application/json",params ="myparam=myvalue",headers = "Refer=http://www.baidu.com/")
     public Result findById(@RequestBody User user){
         User userBean= userService.getById(user.getId());
         //详情信息，隐藏用户的密码显示
