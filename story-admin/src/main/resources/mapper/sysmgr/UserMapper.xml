@@ -207,7 +207,33 @@
     </select>
 
 
-<!-- #{}里面的数字代表你传入参数的顺序。这种方法不建议使用，sql层表达不直观，且一旦顺序调整容易出错。-->
+<!--通常我们会将数据库表的主键id设为自增。在插入一条记录时，我们不设置其主键id，而让数据库自动生成该条记录的主键id，那么在插入一条记录后，
+如何得到数据库自动生成的这条记录的主键id呢？有两种方式
+1、使用useGeneratedKeys和keyProperty属性
+2、使用<selectKey>子标签
+
+如果使用的是mysql这样的支持自增主键的数据库，可以简单的使用第一种方式；对于不支持自增主键的数据库，如oracle，则没有主键返回这一概念，而需要在插入之前先生成一个主键。
+此时可以用<selectKey>标签，
+设置其order属性为BEFORE，并在标签体内写上生成主键的SQL语句，这样在插入之前，会先处理<selectKey>，生成主键，再执行真正的插入操作。
+<selectKey>标签其实就是一条SQL，这条SQL的执行，可以放在主SQL执行之前或之后，并且会将其执行得到的结果封装到入参的Java对象的指定属性上。
+注意<selectKey>子标签只能用在<insert>和<update>标签中。上面的LAST_INSERT_ID()实际上是MySQL提供的一个函数，可以用来获取最近插入或更新的记录的主键id。
+
+-->
+    <insert id="insertUser" parameterType="com.story.storyadmin.domain.entity.sysmgr.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO st_user (account,name,email) VALUES (#{account},#{name},#{email});
+    </insert>
+
+    <insert id="insertUser2" parameterType="com.story.storyadmin.domain.entity.sysmgr.User">
+        INSERT INTO st_user (account,name,email) VALUES (#{account},#{name},#{email});
+        <selectKey keyProperty="id" order="AFTER" resultType="long" >
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+
+
+
+
+    <!-- #{}里面的数字代表你传入参数的顺序。这种方法不建议使用，sql层表达不直观，且一旦顺序调整容易出错。-->
 <!--   select gen.* from st_user gen where gen.name = #{0} and gen.id = #{1} 实际测试执行这样的sql语句会报错！！-->
     <select id="selectUserByNameAndId" resultMap="BaseResultMap">
         select

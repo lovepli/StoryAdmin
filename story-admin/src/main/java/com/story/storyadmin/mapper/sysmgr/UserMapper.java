@@ -82,6 +82,10 @@ public interface UserMapper extends BaseMapper<User> {
     @MapKey("id")
     Map<Long,Map<Long,Object>> getUserMap4();
 
+    // 插入主键返回
+    Long insertUser(User user);
+    Long insertUser2(User user);
+
     /**
      * TODO 能不能在sql层面利用分组查询，根据停启用状态分组，状态相同的user放在一个list中，答案是不能
      * @return

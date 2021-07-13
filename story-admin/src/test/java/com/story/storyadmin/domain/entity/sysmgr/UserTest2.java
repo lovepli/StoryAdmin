@@ -102,6 +102,13 @@ public class UserTest2 extends TestCase {
     /**
      * mybaits的主键插入返回
      */
+    @Test
+    public void insertTest(){
+       long l1= userMapper.insertUser(new User("account","name","email"));
+        System.out.println("插入返回的主键为："+l1); //1 TODO 有问题？？
+       long l2= userMapper.insertUser2(new User("account2","name2","email2"));
+        System.out.println("插入返回的主键为："+l2);//1
+    }
 
     /**
      * mybatis的Example条件对象使用
