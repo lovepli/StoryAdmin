@@ -2,6 +2,7 @@ package com.story.storyadmin.utils;
 
 import com.google.common.collect.*;
 import org.apache.commons.beanutils.BeanUtils;
+//import org.springframework.beans.BeanUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -36,7 +37,7 @@ public class UtilBean {
      * 1.1 List集合拼接成以逗号分隔的字符串
      */
     @Test
-    void listTest() {
+    public void listTest() {
         // 如何把list集合拼接成以逗号分隔的字符串 a,b,c
         List<String> list = Arrays.asList("a", "b", "c");
         // 第一种方法，可以用stream流
@@ -51,7 +52,7 @@ public class UtilBean {
      * 1.4 两个List集合取交集
      */
     @Test
-    void listTest2() {
+    public void listTest2() {
         List<String> list1 = new ArrayList<>();
         list1.add("a");
         list1.add("b");
@@ -70,7 +71,7 @@ public class UtilBean {
      * 1.2 比较两个字符串是否相等，忽略大小写
      */
     @Test
-    void stringTest() {
+    public void stringTest() {
         String strA ="abc";
         String strB ="Abc";
         if (strA.equalsIgnoreCase(strB)) {
@@ -91,7 +92,7 @@ public class UtilBean {
      * }
      */
     @Test
-    void objectTest() {
+    public void objectTest() {
         String strA ="abc";
         String strB ="Abc";
         if (Objects.equals(strA,strB)) {
@@ -150,7 +151,7 @@ public class UtilBean {
      * 2.1.2 首字母转成大写
      */
     @Test
-    void stringTest2() {
+    public void stringTest2() {
         String str = "yideng";
 
         System.out.println("字符串是否为空："+StringUtils.isEmpty(str));
@@ -163,7 +164,7 @@ public class UtilBean {
      * 2.1.3 重复拼接字符串
      */
     @Test
-    void stringTest3() {
+    public void stringTest3() {
         String str = StringUtils.repeat("ab", 2);
         System.out.println(str); // 输出abab
     }
@@ -173,7 +174,7 @@ public class UtilBean {
      * 再也不用手写SimpleDateFormat格式化了
      */
     @Test
-    void dateTest() throws ParseException {
+    public void dateTest() throws ParseException {
         // Date类型转String类型
         String date = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
         System.out.println(date); // 输出 2021-05-01 01:01:01
@@ -190,7 +191,7 @@ public class UtilBean {
      * 当一个方法需要返回两个及以上字段时，我们一般会封装成一个临时对象返回，现在有了Pair和Triple就不需要了
      */
     @Test
-    void objectTest2(){
+    public void objectTest2(){
         // 返回两个字段
         ImmutablePair<Integer, String> pair = ImmutablePair.of(1, "yideng");
         System.out.println(pair.getLeft() + "," + pair.getRight()); // 输出 1,yideng
@@ -223,7 +224,7 @@ public class UtilBean {
      * }
      */
     @Test
-   void listTest3(){
+    public void listTest3(){
         List<String> listA = Arrays.asList("a", "b", "c");
         List<String> listB = Arrays.asList("a", "b", "c","e");
         System.out.println("集合是否为空："+CollectionUtils.isEmpty(listA));
@@ -248,9 +249,41 @@ public class UtilBean {
      *
      */
 
-    class User{
+    static  class User{
         private Integer id;
         private String name;
+
+        public User(){}
+
+        public User(Integer id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
+
     }
 
     /**
@@ -260,7 +293,7 @@ public class UtilBean {
      * @throws NoSuchMethodException
      */
     @Test
-    void objectTest3() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public  void objectTest3() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         User user = new User();
         BeanUtils.setProperty(user, "id", 1);
         BeanUtils.setProperty(user, "name", "yideng");
@@ -272,7 +305,7 @@ public class UtilBean {
      * 对象和map互转
      */
     @Test
-    void objectToMap() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public void objectToMap() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         //设置对象属性
         User user = new User();
         BeanUtils.setProperty(user, "id", 1);
@@ -286,6 +319,19 @@ public class UtilBean {
         User newUser = new User();
         BeanUtils.populate(newUser, map);
         System.out.println(newUser); // 输出 {"id":1,"name":"yideng"}
+    }
+
+    /**
+     * spring框架的BeanUtils的对象拷贝方法
+     * import org.springframework.beans.BeanUtils;
+     *
+     */
+    @Test
+    public void objectTest4() throws InvocationTargetException, IllegalAccessException {
+        User user1 = new User(1,"张三");
+        User user2 = new User();
+        BeanUtils.copyProperties(user1,user2); // TODO 对象拷贝的使用
+        System.out.println(user2); // TODO 没有生效？？？
     }
 
 
@@ -304,7 +350,7 @@ public class UtilBean {
      * 文件处理
      */
     @Test
-    void fileTest() throws IOException {
+    public void fileTest() throws IOException {
         File file = new File("demo1.txt");
        // 读取文件
         List<String> lines = FileUtils.readLines(file, Charset.defaultCharset());
@@ -329,7 +375,7 @@ public class UtilBean {
      * 3.1 创建集合
      */
     @Test
-    void listTest4(){
+    public void listTest4(){
 
        // List<String> list = Lists.newArrayList();
         List<Integer> list = Lists.newArrayList(1, 2, 3);
@@ -349,7 +395,7 @@ public class UtilBean {
      * 3.2.1 Multimap 一个key可以映射多个value的HashMap
      */
     @Test
-    void listTest5(){
+    public void listTest5(){
         Multimap<String, Integer> map = ArrayListMultimap.create();
         map.put("key", 1);
         map.put("key", 2);
@@ -365,7 +411,7 @@ public class UtilBean {
      *
      */
     @Test
-    void listTest6(){
+    public void listTest6(){
         BiMap<String, String> biMap = HashBiMap.create();
         // 如果value重复，put方法会抛异常，除非用forcePut方法
         biMap.put("key","value");
@@ -380,7 +426,7 @@ public class UtilBean {
      * 3.2.3 Table 一种有两个key的HashMap
      */
     @Test
-    void listTest7(){
+    public void listTest7(){
         // 一批用户，同时按年龄和性别分组
         Table<Integer, String, String> table = HashBasedTable.create();
         table.put(18, "男", "yideng");
@@ -398,7 +444,7 @@ public class UtilBean {
      * 3.2.4 Multiset 一种用来计数的Set
      */
     @Test
-    void listTest8(){
+    public void listTest8(){
         Multiset<String> multiset = HashMultiset.create();
         multiset.add("apple");
         multiset.add("apple");

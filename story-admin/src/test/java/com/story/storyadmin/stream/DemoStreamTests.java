@@ -1,5 +1,6 @@
 package com.story.storyadmin.stream;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -267,10 +268,12 @@ public class DemoStreamTests {
         // list转换成map
         Map<Integer,User> map=users.stream()
                 .collect(Collectors.toMap(User::getAge, Function.identity()));
+        System.out.println(JSON.toJSONString(map));
 
         // 按年龄分组
         Map<Integer,List<User>> userMap =users.stream().
                 collect(Collectors.groupingBy(User::getAge));
+        System.out.println(JSON.toJSONString(userMap));
 
         // 求平均年龄
         Double ageAvg = users.stream().
@@ -281,10 +284,13 @@ public class DemoStreamTests {
                 collect(Collectors.summingInt(User::getAge));
 
         // 求年龄最大的用户
-        User user = users.stream().collect(Collectors.maxBy(Comparator.comparing(User::getAge))).orElse(null);
+        User user = users.stream().
+                collect(Collectors.maxBy(Comparator.comparing(User::getAge))).orElse(null);
 
         // 把用户姓名拼接成逗号分隔的字符串输出
-        String names = users.stream().map(User::getName).collect(Collectors.joining(",")); // 输出 Tom,Jerry
+        String names = users.stream()
+                .map(User::getName)
+                .collect(Collectors.joining(",")); // 输出 Tom,Jerry
     }
 
 
