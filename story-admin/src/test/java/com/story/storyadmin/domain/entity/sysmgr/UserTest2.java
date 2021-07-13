@@ -1,9 +1,11 @@
 package com.story.storyadmin.domain.entity.sysmgr;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.story.storyadmin.mapper.sysmgr.UserMapper;
 import com.story.storyadmin.service.sysmgr.UserService;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import junit.framework.TestCase;
 import org.apache.ibatis.annotations.MapKey;
 import org.junit.Test;
@@ -83,6 +85,19 @@ public class UserTest2 extends TestCase {
             System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
         }
     }
+
+    /**
+     * 利用map的特性，查询出来key相同（ID相同）的数据会覆盖掉
+     */
+    @Test
+    public void getUserMap4() {
+        Map<Long,Map<Long,Object>> map = userMapper.getUserMap4();
+        //for (Map.Entry<Long, Map<Long, Object>> entry : map.entrySet()) {
+        //    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+        //}
+        System.out.println(JSON.toJSONString(map));
+    }
+
 
     //##########################################mybatis 请求参数类型#########################################
     /**

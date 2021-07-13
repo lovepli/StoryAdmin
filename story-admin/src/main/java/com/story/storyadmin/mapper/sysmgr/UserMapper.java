@@ -79,6 +79,17 @@ public interface UserMapper extends BaseMapper<User> {
     @MapKey("id")
     Map<Long,Map<Long,Object>> getUserMap3();
 
+    @MapKey("id")
+    Map<Long,Map<Long,Object>> getUserMap4();
+
+    /**
+     * TODO 能不能在sql层面利用分组查询，根据停启用状态分组，状态相同的user放在一个list中，答案是不能
+     * @return
+     */
+    //@MapKey("status")
+    //Map<String,List<Object>> getUserMap5();
+
+
     //##########################################mybatis 请求参数类型#########################################
 
     User selectUserByNameAndId(String name, Long id);

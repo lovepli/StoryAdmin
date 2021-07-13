@@ -186,6 +186,26 @@
         from st_user gen
     </select>
 
+    <select id="getUserMap4" resultType="java.util.Map">
+        select
+        gen.id "id",
+        gen.name "name",
+        gen.email "email",
+        gen.avatar "avatar"
+        from st_user gen
+    </select>
+
+<!--不行的-->
+    <select id="getUserMap5" resultType="java.util.Map">
+        select
+        gen.id "id",
+        gen.name "name",
+        gen.email "email",
+        gen.avatar "avatar",
+        gen.status "status"
+        from st_user gen group by gen.status
+    </select>
+
 
 <!-- #{}里面的数字代表你传入参数的顺序。这种方法不建议使用，sql层表达不直观，且一旦顺序调整容易出错。-->
 <!--   select gen.* from st_user gen where gen.name = #{0} and gen.id = #{1} 实际测试执行这样的sql语句会报错！！-->
