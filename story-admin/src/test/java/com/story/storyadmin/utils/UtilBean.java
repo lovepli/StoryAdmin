@@ -31,8 +31,6 @@ import java.util.stream.Collectors;
 @SpringBootTest
 public class UtilBean {
 
-
-
     /**
      * ###############################################1. Java自带工具方法#######################################
      * 1.1 List集合拼接成以逗号分隔的字符串
@@ -41,10 +39,10 @@ public class UtilBean {
     void listTest() {
         // 如何把list集合拼接成以逗号分隔的字符串 a,b,c
         List<String> list = Arrays.asList("a", "b", "c");
-// 第一种方法，可以用stream流
+        // 第一种方法，可以用stream流
         String join = list.stream().collect(Collectors.joining(","));
         System.out.println(join); // 输出 a,b,c
-// 第二种方法，其实String也有join方法可以实现这个功能
+        // 第二种方法，其实String也有join方法可以实现这个功能
         String join2 = String.join(",", list);
         System.out.println(join2); // 输出 a,b,c
     }

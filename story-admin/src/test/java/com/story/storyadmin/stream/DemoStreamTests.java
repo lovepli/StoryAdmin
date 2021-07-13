@@ -5,12 +5,16 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
+/**
+ * Stream基础认识
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoStreamTests {
@@ -41,6 +45,7 @@ public class DemoStreamTests {
      */
 
     /**
+     * 集合自带Stream流方法
      * 1、通过 java.util.Collection.stream() 方法用集合创建流
      */
     @Test
@@ -61,6 +66,7 @@ public class DemoStreamTests {
     }
 
     /**
+     * 通过Array数组创建
      * 2、使用java.util.Arrays.stream(T[] array)方法用数组创建流
      */
     @Test
@@ -70,7 +76,7 @@ public class DemoStreamTests {
     }
 
     /**
-     * 3、使用Stream的静态方法：of()、iterate()、generate()
+     * 3、使用Stream的静态方法创建：of()、iterate()、generate()
      */
     @Test
     public void test3() {
@@ -78,6 +84,9 @@ public class DemoStreamTests {
 
         Stream<Integer> stream2 = Stream.iterate(0, (x) -> x + 3).limit(4);
         stream2.forEach(System.out::println);
+
+        Stream<String> stream4 = Stream.generate(() -> "Hello").limit(3);
+        stream4.forEach(System.out::println);// 输出 Hello,Hello,Hello
 
         Stream<Double> stream3 = Stream.generate(Math::random).limit(3);
         stream3.forEach(System.out::println);
@@ -88,6 +97,196 @@ public class DemoStreamTests {
         //0.1914314208854283
         //0.8116932592396652
     }
+
+    /**
+     * 数值流
+     * 另外还有LongStream、DoubleStream都有这几个方法。
+     */
+    @Test
+    public void test4(){
+        // 生成有限的常量流
+        IntStream intStream1 = IntStream.range(1, 3); // 输出 1,2
+        IntStream intStream2 = IntStream.rangeClosed(1, 3); // 输出 1,2,3
+        // 生成一个等差数列
+        IntStream.iterate(1, i -> i + 3).limit(5).forEach(System.out::println); // 输出 1,4,7,10,13
+        // 生成无限常量数据流
+        IntStream generate = IntStream.generate(() -> 10).limit(3); // 输出 10,10,10
+    }
+
+
+    //####################################实战使用##############################################################
+
+    static class User{
+        private String name;
+
+        private Integer age;
+
+        public User(){}
+
+        public User(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
+    }
+
+    /**
+     * 1 遍历 forEach
+     */
+    @Test
+    public void demo1(){
+        List<User> users = new ArrayList<>();
+        users.add(new User("Tom", 1));
+        users.add(new User("Jerry", 2));
+        // 循环输出user对象
+        users.stream().forEach(user -> System.out.println(user));
+    }
+
+    /**
+     * 2 查找 find
+     */
+    @Test
+    public void demo2(){
+        List<User> users = Arrays.asList(
+        new User("Tom", 1),
+        new User("Jerry", 2));
+        // 取出第一个对象
+        User user=users.stream().findFirst().orElse(null);
+        System.out.println(user);
+        // 随机取出任意一个对象
+        User user2=users.stream().findAny().orElse(null);
+        System.out.println(user2);
+    }
+
+    /**
+     * 3 匹配 match
+     */
+    @Test
+    public void demo3(){
+        List<User> users = Arrays.asList(
+                new User("Tom", 1),
+                new User("Jerry", 2));
+        // 判断是否存在name是Tom的用户
+       // boolean existTom= users.stream().anyMatch(user -> "Tom".equals(user.getName()));
+        boolean existTom= users.stream().anyMatch(user -> Objects.equals("Tom",user.getName()));
+        // 判断所有用户的年龄是否都小于5
+        boolean checkAge= users.stream().allMatch(user -> user.getAge()<5);
+    }
+
+    /**
+     * 4 筛选 filter
+     */
+    @Test
+    public void demo4(){
+        List<User> users = Arrays.asList(
+                new User("Tom", 1),
+                new User("Jerry", 2));
+        //筛选name是Tom的用户
+        users.stream().filter(user -> Objects.equals("Tom",user.name)).forEach(System.out::println);
+    }
+
+    /**
+     *映射 map/flatMap
+     */
+    @Test
+    public void demo5(){
+        List<User> users = Arrays.asList(
+                new User("Tom", 1),
+                new User("Jerry", 2));
+        // 打印users里的name
+        users.stream().map(User::getName).forEach(System.out::println);
+
+        // List<List<User>> 转 List<User>
+        List<List<User>> userList=new ArrayList<>();
+        userList.add(users);
+        List<User> users2=userList.stream().flatMap(Collection::stream).collect(Collectors.toList());
+        users2.forEach(System.out::println);
+    }
+
+    /**
+     * 6 归约 reduce
+     */
+    @Test
+    public void  demo6(){
+        List<User> users = Arrays.asList(
+                new User("Tom", 1),
+                new User("Jerry", 2));
+        // 求用户年龄之和
+        Integer sum =users.stream().map(User::getAge ).reduce(Integer::sum).orElse(0);
+        System.out.println(sum);
+        // 求用户年龄的乘积
+        Integer product = users.stream().map(User::getAge).reduce((x,y) ->x*y).orElse(0);
+        System.out.println(product);
+
+    }
+
+    /**
+     * 7 排序 sorted
+     */
+    @Test
+    public void demo7(){
+        List<User> users = Arrays.asList(
+                new User("Tom", 1),
+                new User("Jerry", 2));
+        // 按年龄倒序排
+        List<User> collect= users.stream().sorted(Comparator.comparing(User::getAge).reversed()).collect(Collectors.toList());
+        collect.forEach(System.out::println);
+    }
+
+    /**
+     * 8 收集 collect
+     */
+    @Test
+    public void demo8(){
+        List<User> users = Arrays.asList(
+                new User("Tom", 1),
+                new User("Jerry", 2));
+        // list转换成map
+        Map<Integer,User> map=users.stream()
+                .collect(Collectors.toMap(User::getAge, Function.identity()));
+
+        // 按年龄分组
+        Map<Integer,List<User>> userMap =users.stream().
+                collect(Collectors.groupingBy(User::getAge));
+
+        // 求平均年龄
+        Double ageAvg = users.stream().
+                collect(Collectors.averagingInt(User::getAge)); // 输出 1.5
+
+        // 求年龄之和
+        Integer ageSum = users.stream().
+                collect(Collectors.summingInt(User::getAge));
+
+        // 求年龄最大的用户
+        User user = users.stream().collect(Collectors.maxBy(Comparator.comparing(User::getAge))).orElse(null);
+
+        // 把用户姓名拼接成逗号分隔的字符串输出
+        String names = users.stream().map(User::getName).collect(Collectors.joining(",")); // 输出 Tom,Jerry
+    }
+
 
 
 }

@@ -10,12 +10,90 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * 实战
+ * Stream实战
  * https://blog.csdn.net/mu_wind/article/details/109516995
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoStreamTests2 {
+
+    //静态内部类
+    static class Person {
+        private String name; // 姓名
+        private int salary; // 薪资
+        private int age; // 年龄
+        private String sex; //性别
+        private String area; // 地区
+
+        // 构造方法
+        public Person(){}
+
+        public Person(String name, int salary, int age, String sex, String area) {
+            this.name = name;
+            this.salary = salary;
+            this.age = age;
+            this.sex = sex;
+            this.area = area;
+        }
+
+        public Person(String name, int salary, String sex, String area) {
+            this.name = name;
+            this.salary = salary;
+            this.sex = sex;
+            this.area = area;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getSalary() {
+            return salary;
+        }
+
+        public void setSalary(int salary) {
+            this.salary = salary;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public String getArea() {
+            return area;
+        }
+
+        public void setArea(String area) {
+            this.area = area;
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "name='" + name + '\'' +
+                    ", salary=" + salary +
+                    ", age=" + age +
+                    ", sex='" + sex + '\'' +
+                    ", area='" + area + '\'' +
+                    '}';
+        }
+    }
 
 	@Test
 	public void contextLoads() {
@@ -66,13 +144,13 @@ public class DemoStreamTests2 {
      */
     @Test
     public void test3() {
-        List<Person> personList = new ArrayList<Person>();
-        personList.add(new Person("Tom", 8900, 23, "male", "New York"));
-        personList.add(new Person("Jack", 7000, 25, "male", "Washington"));
-        personList.add(new Person("Lily", 7800, 21, "female", "Washington"));
-        personList.add(new Person("Anni", 8200, 24, "female", "New York"));
-        personList.add(new Person("Owen", 9500, 25, "male", "New York"));
-        personList.add(new Person("Alisa", 7900, 26, "female", "New York"));
+        List<Person> personList = Arrays.asList(
+        new Person("Tom", 8900, 23, "male", "New York"),
+        new Person("Jack", 7000, 25, "male", "Washington"),
+        new Person("Lily", 7800, 21, "female", "Washington"),
+        new Person("Anni", 8200, 24, "female", "New York"),
+        new Person("Owen", 9500, 25, "male", "New York"),
+        new Person("Alisa", 7900, 26, "female", "New York"));
 
         List<String> fiterList = personList.stream().filter(x -> x.getSalary() > 8000).map(Person::getName)
                 .collect(Collectors.toList());
@@ -117,13 +195,13 @@ public class DemoStreamTests2 {
      */
     @Test
     public void test6() {
-        List<Person> personList = new ArrayList<Person>();
-        personList.add(new Person("Tom", 8900, 23, "male", "New York"));
-        personList.add(new Person("Jack", 7000, 25, "male", "Washington"));
-        personList.add(new Person("Lily", 7800, 21, "female", "Washington"));
-        personList.add(new Person("Anni", 8200, 24, "female", "New York"));
-        personList.add(new Person("Owen", 9500, 25, "male", "New York"));
-        personList.add(new Person("Alisa", 7900, 26, "female", "New York"));
+        List<Person> personList = Arrays.asList(
+        new Person("Tom", 8900, 23, "male", "New York"),
+        new Person("Jack", 7000, 25, "male", "Washington"),
+        new Person("Lily", 7800, 21, "female", "Washington"),
+        new Person("Anni", 8200, 24, "female", "New York"),
+        new Person("Owen", 9500, 25, "male", "New York"),
+        new Person("Alisa", 7900, 26, "female", "New York"));
 
         Optional<Person> max = personList.stream().max(Comparator.comparingInt(Person::getSalary));
         System.out.println("员工工资最大值：" + max.get().getSalary());
@@ -242,13 +320,13 @@ public class DemoStreamTests2 {
      */
     @Test
     public void test12() {
-        List<Person> personList = new ArrayList<Person>();
-        personList.add(new Person("Tom", 8900, 23, "male", "New York"));
-        personList.add(new Person("Jack", 7000, 25, "male", "Washington"));
-        personList.add(new Person("Lily", 7800, 21, "female", "Washington"));
-        personList.add(new Person("Anni", 8200, 24, "female", "New York"));
-        personList.add(new Person("Owen", 9500, 25, "male", "New York"));
-        personList.add(new Person("Alisa", 7900, 26, "female", "New York"));
+        List<Person> personList = Arrays.asList(
+        new Person("Tom", 8900, 23, "male", "New York"),
+        new Person("Jack", 7000, 25, "male", "Washington"),
+        new Person("Lily", 7800, 21, "female", "Washington"),
+        new Person("Anni", 8200, 24, "female", "New York"),
+        new Person("Owen", 9500, 25, "male", "New York"),
+        new Person("Alisa", 7900, 26, "female", "New York"));
 
         // 求工资之和方式1：
         Optional<Integer> sumSalary = personList.stream().map(Person::getSalary).reduce(Integer::sum);
