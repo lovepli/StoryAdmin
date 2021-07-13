@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -98,6 +99,20 @@ public class UserTest2 extends TestCase {
         System.out.println(JSON.toJSONString(map));
     }
 
+    /**
+     * mybaits的主键插入返回
+     */
+
+    /**
+     * mybatis的Example条件对象使用
+     *https://blog.csdn.net/biandous/article/details/65630783
+     */
+
+    public void testExample(){
+        // 初始化example对象
+        //UserExample example = new UserExample(Brand.class);
+        //Example.Criteria criteria = example.createCriteria();
+    }
 
     //##########################################mybatis 请求参数类型#########################################
     /**

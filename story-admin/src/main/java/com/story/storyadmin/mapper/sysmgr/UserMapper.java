@@ -89,6 +89,9 @@ public interface UserMapper extends BaseMapper<User> {
     //@MapKey("status")
     //Map<String,List<Object>> getUserMap5();
 
+    // mybatis的主键插入返回
+
+
 
     //##########################################mybatis 请求参数类型#########################################
 
