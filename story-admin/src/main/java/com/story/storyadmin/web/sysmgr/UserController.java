@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
@@ -22,6 +23,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -120,7 +122,7 @@ public class UserController extends BaseController {
      * @param user
      * @return  TODO @Valid 使用JSR 303进行校验!!
      */
-    @SysLogAnnotation
+   // @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})

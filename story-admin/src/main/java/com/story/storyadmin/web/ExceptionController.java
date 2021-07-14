@@ -123,8 +123,8 @@ public class ExceptionController extends BaseController{
 
     /**
      * 捕捉其他所有异常
-     * @param request
-     * @param ex
+     * @param
+     * @param
      * @return
      */
 //     @ExceptionHandler(Exception.class)
@@ -135,13 +135,13 @@ public class ExceptionController extends BaseController{
 //     }
 
 
-// ################################ 处理参数校验异常 #################### 参考： https://gitee.com/lovepli_cn/validation-spring-boot-demo
+// ################################ （JRS 303 校验框架 ）处理参数校验异常 #################### 参考： https://gitee.com/lovepli_cn/validation-spring-boot-demo
     @ExceptionHandler(ConstraintViolationException.class)
     public Result handler(ConstraintViolationException e) {
         StringBuffer errorMsg = new StringBuffer();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         violations.forEach(x -> errorMsg.append(x.getMessage()).append(";"));
-        return new Result<String>(false, "参数异常，请稍后重试", errorMsg.toString(),ResultEnum.FORMAT_ERROR.getCode());
+        return new Result<String>(false, errorMsg.toString(), "参数异常，请稍后重试",ResultEnum.FORMAT_ERROR.getCode());
     }
 
     //处理校验异常，对于对象类型的数据的校验异常
@@ -150,7 +150,7 @@ public class ExceptionController extends BaseController{
         StringBuffer sb = new StringBuffer();
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
         allErrors.forEach(msg -> sb.append(msg.getDefaultMessage()).append(";"));
-        return new Result<String>(false, "参数异常，请稍后重试", sb.toString(),ResultEnum.FORMAT_ERROR.getCode());
+        return new Result<String>(false, sb.toString(), "参数异常，请稍后重试",ResultEnum.FORMAT_ERROR.getCode());
     }
 
     //文件上传文件大小超出限制

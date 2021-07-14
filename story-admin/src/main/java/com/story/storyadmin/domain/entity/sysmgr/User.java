@@ -1,6 +1,6 @@
 package com.story.storyadmin.domain.entity.sysmgr;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
@@ -9,7 +9,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -43,14 +50,41 @@ public class User extends BaseEntity<User> {
   private static final long serialVersionUID = 1L;
 
     /**
-     * 账号
+     * 账号 JSR 303 权限校验框架
      */
+    @NotBlank(message = "账号不能为空")
+    @TableField("account")
     private String account;
 
     /**
      * 姓名
      */
+    @NotBlank(message = "姓名不能为空")
     private String name;
+
+    /**
+     * 年龄
+     */
+    @Range(min = 15,max = 60,message = "年龄必须在15到60岁之间")
+    private int age;
+
+    /**
+     * 生日
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past(message = "生日必须是一个过去的日期")
+    private Date birthday;
+
+    /**
+     * 手机号码
+     */
+    @Pattern(regexp = "[1],[3,8],[3,6,9],[0-9]{8}",message = "无效的电话号码")
+    private String phone;
+
+    /**
+     * 性别 1表示男，2表示女
+     */
+    private String sex;
 
     /**
     * 头像对应图片的URL
@@ -60,11 +94,14 @@ public class User extends BaseEntity<User> {
     /**
      * 密码
      */
+    @NotBlank(message = "密码不能为空")
+    @Length(min = 6,max = 8,message = "密码长度必须在6位到8位之间")
     private String password;
 
     /**
      * 邮箱
      */
+    @Email(message = "必须是合法的邮箱地址")
     private String email;
 
     /**
