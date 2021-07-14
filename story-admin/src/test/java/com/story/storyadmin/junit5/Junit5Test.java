@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @ValueSource(ints = {1, 2, 3})：参数化测试提供数据
  */
 @DisplayName("Junit5测试") // https://www.cnblogs.com/haixiang/p/13812363.html
-public class Junit5Test extends StoryAdminApplicationTests{
+public class Junit5Test { //extends StoryAdminApplicationTests
 
 
     /**

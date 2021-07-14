@@ -1,10 +1,9 @@
 package com.story.storyadmin.stream;
 
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -18,8 +17,7 @@ import java.util.stream.Stream;
  * @date: 2021/7/13
  * @description: Java8 stream复杂使用场景，你遇到过吗？
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@DisplayName("Java8 stream复杂使用场景")
 public class StreamTest {
 
     static  class User{
@@ -62,6 +60,7 @@ public class StreamTest {
      * 虽然distinct()方法也可以进行去重，但是只能比较整个对象，不能比较对象里属性。
      */
     @Test
+    @DisplayName("按照属性ID去重对象")
     public void test1() {
         List<Integer> collect= Arrays.asList(1,1,2).stream().distinct().collect(Collectors.toList());
         System.out.println(collect);

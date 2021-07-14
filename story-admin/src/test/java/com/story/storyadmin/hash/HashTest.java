@@ -1,10 +1,9 @@
 package com.story.storyadmin.hash;
 
 import com.alibaba.fastjson.JSON;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,14 +16,14 @@ import java.util.Map;
  * @description: 你不知道的HashMap高阶用法，开发效率提升一倍
  * HashMap在工作中使用非常频繁，其实在JDK1.8的时候新增一些更高阶的用法，熟练使用这些方法可以大大提升开发效率，写出更简洁优美的代码。
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@DisplayName("HashMap高阶用法")
 public class HashTest {
 
     /**
      * 1. get方法指定返回默认值（getOrDefault）
      */
     @Test
+    @DisplayName("get方法指定返回默认值（getOrDefault）")
     public void test1(){
         Map<String, String> map = new HashMap<>();
         map.put("key1", "value1");

@@ -24,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.time.Instant;
 import java.util.*;
 
@@ -116,13 +118,13 @@ public class UserController extends BaseController {
     /**
      * 保存
      * @param user
-     * @return
+     * @return  TODO @Valid 使用JSR 303进行校验!!
      */
     @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
-    public Result save(@RequestBody User user){
+    public Result save(@Valid @RequestBody User user){
         return userService.persist(user);
     }
 

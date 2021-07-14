@@ -1,9 +1,9 @@
 package com.story.storyadmin.stream;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,8 +13,7 @@ import java.util.stream.Stream;
  * Stream实战
  * https://blog.csdn.net/mu_wind/article/details/109516995
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@DisplayName("Stream实战")
 public class DemoStreamTests2 {
 
     //静态内部类
@@ -96,6 +95,7 @@ public class DemoStreamTests2 {
     }
 
 	@Test
+    @DisplayName("初始化")
 	public void contextLoads() {
         List<Person> personList = new ArrayList<Person>();
         personList.add(new Person("Tom", 8900, "male", "New York"));
@@ -110,6 +110,7 @@ public class DemoStreamTests2 {
      * 1、遍历/匹配（foreach/find/match）
      * Stream也是支持类似集合的遍历和匹配元素的，只是Stream中的元素是以Optional类型存在的。Stream的遍历、匹配非常简单。
      */
+    @DisplayName("遍历/匹配")
     @Test
     public void test1() {
         List<Integer> list = Arrays.asList(7, 6, 9, 3, 8, 2, 1);

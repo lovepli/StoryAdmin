@@ -1,10 +1,8 @@
 package com.story.storyadmin.stream;
 
 import com.alibaba.fastjson.JSON;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.Function;
@@ -16,8 +14,7 @@ import java.util.stream.Stream;
 /**
  * Stream基础认识
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@DisplayName("Stream基础认识")
 public class DemoStreamTests {
 
 	@Test
@@ -50,6 +47,7 @@ public class DemoStreamTests {
      * 1、通过 java.util.Collection.stream() 方法用集合创建流
      */
     @Test
+    @DisplayName("集合自带Stream流方法")
     public void test1() {
         List<String> list = Arrays.asList("a", "b", "c");
         // 创建一个顺序流
