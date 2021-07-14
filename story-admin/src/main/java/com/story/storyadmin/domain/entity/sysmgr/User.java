@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -23,6 +25,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true) //@EqualsAndHashCode 和@Data注解的使用说明 https://blog.csdn.net/zhanlanmg/article/details/50392266
 @Accessors(chain = true) //chain的中文含义是链式的，设置为true，则setter方法返回当前对象
 @TableName("st_user")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends BaseEntity<User> {
 
   /**
@@ -79,10 +83,6 @@ public class User extends BaseEntity<User> {
     @TableField("erp_flag")
     private String erpFlag;
 
-    /**
-     * 构造函数
-     */
-    public User(){}
 
     /**
      * 构造函数

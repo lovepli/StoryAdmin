@@ -225,7 +225,7 @@
 
     <insert id="insertUser2" parameterType="com.story.storyadmin.domain.entity.sysmgr.User">
         INSERT INTO st_user (account,name,email) VALUES (#{account},#{name},#{email});
-        <selectKey keyProperty="id" order="AFTER" resultType="long" >
+        <selectKey keyProperty="id" order="BEFORE" resultType="long" >
             SELECT LAST_INSERT_ID();
         </selectKey>
     </insert>
@@ -541,6 +541,16 @@
         <if test="ynFlag!=null and ynFlag==@com.story.storyadmin.constant.CommonConstants@NOT_DELETE">
             and yn_flag=#{ynFlag}
         </if>
+    </select>
+
+
+    <select id="selectTreeList" resultMap="BaseResultMap">
+        select
+        *
+        from st_user
+        <where>
+            ${ew.sqlSegment}
+        </where>
     </select>
 
 

@@ -104,9 +104,9 @@ public class UserTest2 extends TestCase {
      */
     @Test
     public void insertTest(){
-       long l1= userMapper.insertUser(new User("account","name","email"));
+       long l1= userMapper.insertUser(new User("账户1","张三","1171205514@qq.com"));
         System.out.println("插入返回的主键为："+l1); //1 TODO 有问题？？
-       long l2= userMapper.insertUser2(new User("account2","name2","email2"));
+       long l2= userMapper.insertUser2(new User(333l,"账户2","李四","1171205514@qq.com"));
         System.out.println("插入返回的主键为："+l2);//1
     }
 

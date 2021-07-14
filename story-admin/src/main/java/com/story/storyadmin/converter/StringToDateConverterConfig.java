@@ -1,7 +1,6 @@
 package com.story.storyadmin.converter;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -12,14 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 //@Configuration // 自动注入
 @ConditionalOnWebApplication // 配置手动开关,使用注解了才启动注入
-public class DateToStringConverterConfig extends WebMvcConfigurerAdapter {
+public class StringToDateConverterConfig extends WebMvcConfigurerAdapter {
     /**
      * 将新定义的类型转换器注入到 spring 容器中
      * @param registry
      */
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new DateConverter());
+        registry.addConverter(new StringToDateConverter());
     }
 
 }

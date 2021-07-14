@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
+import com.story.storyadmin.converter.method2.DateEditor;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
@@ -21,6 +22,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.*;
@@ -246,6 +248,13 @@ public class UserController extends BaseController {
         //map.put("result", data);
         return  new Result(true, null, data ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
+
+    //在控制器初始化时注册属性编辑器
+    //@InitBinder
+    //public void initBuilder(WebDataBinder binder){
+    //    // 注册自定义编辑器
+    //    binder.registerCustomEditor(Date.class,new DateEditor());
+    //}
 
 
 }

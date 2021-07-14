@@ -1,11 +1,13 @@
 package com.story.storyadmin.mapper.sysmgr;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.entity.sysmgr.UserRole;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -136,6 +138,9 @@ public interface UserMapper extends BaseMapper<User> {
     User selectAll(User user);
 
     User selectUseByYnFlag(User user);
+
+    //########################################## 传入Wrapper<参数> #########################################
+    List<T> selectTreeList(@Param("ew") Wrapper<T> wrapper);
 
 
 
