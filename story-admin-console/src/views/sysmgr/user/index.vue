@@ -261,6 +261,7 @@ import {
   saveUserRole
 } from '@/api/sysmgr/user';
 
+
 import { findAllRoleList } from '@/api/sysmgr/role';
 import { findFileInfoDetail } from '@/api/sysmgr/user';
 import { getToken } from '@/utils/auth'; // 从Cookies中获取token
@@ -416,7 +417,9 @@ export default {
   },
   // created 钩子可以用来在一个实例被创建之后执行代码
   // 此函数中，data和methods都已经初始化好了，如果需要调用methods中的方法或操作data中的值最早就在created函数中操作。
-  created() {},
+  created() {
+    this.getRoleListByAccount();
+  },
   // methods是Vue内置的对象，用于存放一些自定义的方法函数
   methods: {
     handleClose() {

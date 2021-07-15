@@ -361,11 +361,10 @@ export default {
       // this.fileList = null;
     },
     // 导入Excel文件
-    importExcelForm(){
-   this.uploadFileStatus = '3'
+    importExcelForm() {
+      this.uploadFileStatus = '3'
       this.uploadVisible = true;
       // this.fileList = null;
-
     },
     // 导出当前页数据
     showDownloadForm() {

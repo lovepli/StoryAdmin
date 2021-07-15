@@ -80,8 +80,9 @@ service.interceptors.response.use(response => {
     ).then(() => {
        // store.dispatch action的分发
       store.dispatch('FedLogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象,刷新页面, 避免bug
+        //location.reload() // 为了重新实例化vue-router对象,刷新页面, 避免bug
        // location.href = '/index';
+       this.$forceUpdate()
       })
     })
     } else if(res.code === 50000){

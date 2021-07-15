@@ -8,6 +8,12 @@ import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.User;
+import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo1;
+import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo2;
+import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo3;
+import com.story.storyadmin.domain.entity.validationentity.group.GroupA;
+import com.story.storyadmin.domain.entity.validationentity.group.GroupB;
+import com.story.storyadmin.domain.entity.validationentity.group.GroupUser;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
@@ -21,9 +27,13 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid; // 使用JRS 303校验框架
+import javax.validation.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.*;
 
@@ -48,7 +58,11 @@ import java.util.*;
 @Api(description = "用户管理")
 @RestController
 @RequestMapping(value="/sysmgr/user")
+@Validated
 public class UserController extends BaseController {
+
+    @Autowired
+    private Validator validator;
 
     /**
      * @AutoWired:
@@ -116,15 +130,35 @@ public class UserController extends BaseController {
     /**
      * 保存
      * @param user
-     * @return  TODO @Valid 使用JSR 303进行校验!!
+     * @return
+     *
+     *  @Valid 使用JSR 303进行校验!!
+     *  验证不通过时，抛出了MethodArgumentNotValidException异常，可以使用全局捕获异常处理。
      */
-   // @SysLogAnnotation
+    @SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@Valid @RequestBody User user){
         return userService.persist(user);
     }
+
+    /**
+     * 根据用户名查询所有角色
+     *  如果只有少数参数，直接把参数写到Controller层，然后在Controller层进行验证就可以了  @NotNull(message = "用户名不能为空")
+     *  验证不通过时，抛出了ConstraintViolationException异常，可以使用全局捕获异常处理。
+     * @return
+     */
+    @ApiOperation(value = "用户信息" ,  notes="根据用户名查询所有角色")
+    @RequiresPermissions("sysmgr.user.query")
+    @RequestMapping(value="/findRolelistByAccount",method = {RequestMethod.POST,RequestMethod.GET})
+    public Result list(@NotNull(message = "用户名不能为空") @RequestParam(value = "ua",required = false) String userName){
+        return userService.findUserRole(userName);
+    }
+
+
+
+
 
     /**
      * 删除 这里的删除是进行修改操作的逻辑删除
@@ -172,16 +206,6 @@ public class UserController extends BaseController {
         return userService.findUserRole(user.getUserId());
     }
 
-    /**
-     * 根据用户名查询所有角色
-     * @return
-     */
-    @ApiOperation(value = "用户信息" ,  notes="根据用户名查询所有角色")
-    @RequiresPermissions("sysmgr.user.query")
-    @RequestMapping(value="/findRolelistByAccount",method = {RequestMethod.POST,RequestMethod.GET})
-    public Result list(@RequestParam(value = "ua") String userName){
-        return userService.findUserRole(userName);
-    }
 
     /**
      * 更改/保存用户角色
@@ -255,6 +279,96 @@ public class UserController extends BaseController {
     //    // 注册自定义编辑器
     //    binder.registerCustomEditor(Date.class,new DateEditor());
     //}
+
+//##################################################################################################################################
+
+    /**
+     * 测试hibernate的校验模式--快速失败模式 (只要有一个验证失败，则返回)
+     * https://my.oschina.net/shadowolf/blog/1934934
+     * @param
+     * @return
+     */
+    //@RequiresPermissions("sysmgr.user.save")
+    //@RequestMapping(value="/save",method = {RequestMethod.POST})
+    public Result saveTest(){
+        ValidateDemo1 userModel=new ValidateDemo1();
+        userModel.setAddress("");
+        userModel.setAge(35);
+        userModel.setEmail("176712");
+        userModel.setName("");
+        userModel.setPassword("12345");
+        userModel.setMobile("17671226463");
+        userModel.setContacts(new ArrayList<String>(){{add("111");add("222");add("333");}});
+
+        Set<ConstraintViolation<ValidateDemo1>> violationSet = validator.validate(userModel);
+        for (ConstraintViolation<ValidateDemo1> model : violationSet) {
+            System.out.println("校验：" + model.getMessage());
+        }
+        return new Result(true, "保存成功！", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
+    /**
+     * 对象级联校验 测试
+     * 对象内部包含另一个对象作为属性，属性上加 @Valid，可以验证作为属性的对象内部的验证
+     */
+    //@RequiresPermissions("sysmgr.user.save")
+    //@RequestMapping(value="/save",method = {RequestMethod.POST})
+    public Result saveTest2(){
+        ValidateDemo2 demo2 = new ValidateDemo2();
+        demo2.setList(new ArrayList<String>(){{add("111");add("222");add("333");}});
+
+        ValidateDemo3 demo3 = new ValidateDemo3();
+        demo3.setExtField("22");
+        demo3.setEmail("111");
+        demo2.setDemo3(demo3);
+        Set<ConstraintViolation<ValidateDemo2>> violationSet = validator.validate(demo2);
+        for (ConstraintViolation<ValidateDemo2> model : violationSet) {
+            System.out.println("校验：" + model.getMessage());
+        }
+        return new Result(true, "保存成功！", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
+    /**
+     * 分组校验 -- 只验证GroupA和GroupB的分组
+     * @return
+     */
+    //@RequiresPermissions("sysmgr.user.save")
+    //@RequestMapping(value="/save",method = {RequestMethod.POST})
+    public Result saveTest3(){
+        GroupUser p = new GroupUser();
+        /**GroupA验证不通过*/
+        p.setUserId(-12);
+        /**GroupA验证通过*/
+        //p.setUserId(12);
+        p.setUserName("a");
+        p.setAge(110);
+        p.setSex(5);
+        Set<ConstraintViolation<GroupUser>> validate = validator.validate(p, GroupA.class, GroupB.class);
+        for (ConstraintViolation<GroupUser> item : validate) {
+            System.out.println("校验："+item);
+        }
+        return new Result(true, "保存成功！", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
+
+    /**
+     * 待测试
+     * @param p
+     * @param result
+     * @return
+     */
+    //@RequiresPermissions("sysmgr.user.save")
+    //@RequestMapping(value="/save",method = {RequestMethod.POST})
+    public Result saveTest4(@Validated({GroupA.class, GroupB.class}) GroupUser p, BindingResult result){
+        if(result.hasErrors()){
+            List<ObjectError> allErrors = result.getAllErrors();
+            for (ObjectError error : allErrors) {
+                System.out.println("校验："+error);
+            }
+        }
+        return new Result(true, "保存成功！", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
 
 
 }

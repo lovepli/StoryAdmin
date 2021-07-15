@@ -61,7 +61,7 @@ public class User extends BaseEntity<User> {
      * 姓名
      */
     @NotBlank(message = "姓名不能为空")
-   // @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]{6,20}$", message = "用户名必须要有一个小写字母，一个大写字母和一个数字，并且是6-20位")
+    //@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]{6,20}$", message = "用户名必须要有一个小写字母，一个大写字母和一个数字，并且是6-20位")
     private String name;
 
     /**
@@ -105,7 +105,7 @@ public class User extends BaseEntity<User> {
      * 密码
      */
     @NotBlank(message = "密码不能为空")
-    @Length(min = 6,max = 8,message = "密码长度必须在6位到8位之间")
+    @Length(min = 6,max = 18,message = "密码长度必须在6位到18位之间")
     //@Pattern(regexp = "[a-z0-9_\\-]{1,100}", message = "仅小写字母（a-z）、数字、破折号（-）和下划线（_）可以使用，且长度最长为100，最短为1")
     private String password;
 

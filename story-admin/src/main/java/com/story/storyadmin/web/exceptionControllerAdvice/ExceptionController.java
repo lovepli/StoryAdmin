@@ -1,13 +1,16 @@
-package com.story.storyadmin.web;
+package com.story.storyadmin.web.exceptionControllerAdvice;
 
 import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.web.BaseController;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,7 +35,7 @@ import java.util.regex.Pattern;
  * @author
  */
 @RestControllerAdvice
-public class ExceptionController extends BaseController{
+public class ExceptionController extends BaseController {
 
     /**
      * 捕捉shiro的异常
@@ -137,7 +140,7 @@ public class ExceptionController extends BaseController{
 
 // ################################ （JRS 303 校验框架 ）处理参数校验异常 #################### 参考： https://gitee.com/lovepli_cn/validation-spring-boot-demo
     /**
-     * 处理@RequestParam校验不通过异常
+     * 处理@RequestParam 参数校验不通过异常
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public Result validationError(ConstraintViolationException ex) {
@@ -155,7 +158,7 @@ public class ExceptionController extends BaseController{
 
 
     /**
-     * 处理校验异常，处理参数为对象类型的数据的校验异常
+     * 处理@RequestBody校验异常，处理对象类型的数据的校验异常
      * @param e
      * @return
      */
@@ -170,6 +173,25 @@ public class ExceptionController extends BaseController{
         logger.error("对象参数校验异常:{}", sb.toString());
         return new Result<String>(false, sb.toString(), "参数异常，请稍后重试",ResultEnum.FORMAT_ERROR.getCode());
     }
+
+    /**
+     *  @Validated + 全局捕获异常处理（最佳实践）
+     *  测试时：使用 @Valid + 全局捕获异常处理也可以，具体区别有待研究。
+     * 处理实体字段校验不通过异常
+     */
+    //@ExceptionHandler(MethodArgumentNotValidException.class)
+    //public Result validationError(MethodArgumentNotValidException ex) {
+    //    BindingResult result = ex.getBindingResult();
+    //    final List<FieldError> fieldErrors = result.getFieldErrors();
+    //    StringBuilder builder = new StringBuilder();
+    //
+    //    for (FieldError error : fieldErrors) {
+    //        builder.append( "\n" + error.getDefaultMessage());
+    //    }
+    //    logger.error(builder.toString());
+    //    return new Result<String>(false, builder.toString(), "参数异常，请稍后重试",ResultEnum.FORMAT_ERROR.getCode());
+    //}
+
 
     //文件上传文件大小超出限制
     @ExceptionHandler(MaxUploadSizeExceededException.class)
