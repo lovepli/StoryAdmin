@@ -166,7 +166,7 @@
 			<version>1.9.4</version>
 		</dependency>
 
-         <!--测试-->
+         <!--单元测试依赖-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -293,11 +293,15 @@
         </dependency>
 
           <!--hibernate验证框架-->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>6.1.6.Final</version>
-        </dependency>
+       <!--Hibernate validator已被spring boot starter web依赖 集成，所以无需再另外引入依赖即可使用-->
+<!-- pring3支持JSR-303验证框架，JSR-303 是Java EE 6 中的一项子规范，叫做BeanValidation，官方参考实现是hibernate-validator（与Hibernate ORM 没有关系），JSR 303 用于对Java Bean 中的字段的值进行验证。
+hibernate-validator实现了JSR-303规范，并扩展了一些注解，提供了一套比较完善、便捷的验证实现方式。
+-->
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-validator</artifactId>-->
+<!--            <version>6.1.6.Final</version>-->
+<!--        </dependency>-->
 
          <!--参数校验-->
         <dependency>

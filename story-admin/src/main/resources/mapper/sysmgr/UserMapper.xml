@@ -11,7 +11,7 @@
         <result property="account"   column="account"   />
         <result property="name"  column="name"   />
 
-        <result property="age"  column="age"   />
+<!--        <result property="age"  column="age"   />-->
         <result property="birthday"  column="birthday"   />
         <result property="phone"  column="phone"   />
         <result property="sex"  column="sex"   />
@@ -34,7 +34,7 @@
 
     <!-- 查询字段 -->
     <sql id="Base_Column_List">
-        ID,account,name,age,birthday,phone,sex,avatar,password,email,last_pwd_modified_time,status,erp_flag,yn_flag,creator,editor,created_time,modified_time
+        ID,account,name,birthday,phone,sex,avatar,password,email,last_pwd_modified_time,status,erp_flag,yn_flag,creator,editor,created_time,modified_time
     </sql>
 
     <!-- 查询条件 -->

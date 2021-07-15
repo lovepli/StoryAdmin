@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.story.storyadmin.common.exception.CustomException;
 import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
-import com.story.storyadmin.converter.method2.DateEditor;
 import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
@@ -23,11 +21,9 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.validation.Valid; // 使用JRS 303校验框架
 import java.time.Instant;
 import java.util.*;
 
@@ -87,7 +83,7 @@ public class UserController extends BaseController {
         QueryWrapper<User> eWrapper = new QueryWrapper(user);
         eWrapper.eq("yn_flag", "1");
         IPage<User> list = userService.page(page, eWrapper);
-        logger.info("查询出用户信息:{}",list);
+        logger.info("查询出用户信息:{}",list.getRecords().toString());
         result.setData(list);
         result.setResult(true);
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
@@ -136,7 +132,7 @@ public class UserController extends BaseController {
      * @return
      */
     @Transactional
-    @SysLogAnnotation
+    //@SysLogAnnotation
     @ApiOperation(value = "用户信息" ,  notes="删除用户信息")
     @RequiresPermissions("sysmgr.user.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})

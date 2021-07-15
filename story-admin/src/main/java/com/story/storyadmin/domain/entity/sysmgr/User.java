@@ -3,6 +3,7 @@ package com.story.storyadmin.domain.entity.sysmgr;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.story.storyadmin.domain.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,26 +61,35 @@ public class User extends BaseEntity<User> {
      * 姓名
      */
     @NotBlank(message = "姓名不能为空")
+   // @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]{6,20}$", message = "用户名必须要有一个小写字母，一个大写字母和一个数字，并且是6-20位")
     private String name;
 
     /**
      * 年龄
      */
-    @Range(min = 15,max = 60,message = "年龄必须在15到60岁之间")
-    private int age;
+    //@Range(min = 15,max = 60,message = "年龄必须在15到60岁之间")
+    //private int age;
 
     /**
      * 生日
      */
+    // 如果是空，则不校验，如果不为空，则校验
+    //@Pattern(regexp = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", message = "出生日期格式不正确")
+    @JsonFormat(pattern ="yyyy-MM-dd",timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "生日必须是一个过去的日期")
     private Date birthday;
 
-    /**
+    /***
      * 手机号码
+     * 移动号段: 134 135 136 137 138 139 147 148 150 151 152 157 158 159 165 172 178 182 183 184 187 188 198
+     * 联通号段: 130 131 132 145 146 155 156 166 170 171 175 176 185 186
+     * 电信号段: 133 149 153 170 173 174 177 180 181 189 191 199
+     * 虚拟运营商: 170
      */
-    @Pattern(regexp = "[1],[3,8],[3,6,9],[0-9]{8}",message = "无效的电话号码")
+    @Pattern(regexp = "^((13[0-9])|(14[5,6,7,9])|(15[^4])|(16[5,6])|(17[0-9])|(18[0-9])|(19[1,8,9]))\\d{8}$", message = "无效的电话号码")
     private String phone;
+
 
     /**
      * 性别 1表示男，2表示女
@@ -96,6 +106,7 @@ public class User extends BaseEntity<User> {
      */
     @NotBlank(message = "密码不能为空")
     @Length(min = 6,max = 8,message = "密码长度必须在6位到8位之间")
+    //@Pattern(regexp = "[a-z0-9_\\-]{1,100}", message = "仅小写字母（a-z）、数字、破折号（-）和下划线（_）可以使用，且长度最长为100，最短为1")
     private String password;
 
     /**

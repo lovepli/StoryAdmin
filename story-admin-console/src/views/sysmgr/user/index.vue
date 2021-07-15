@@ -54,6 +54,15 @@
         <el-table-column align="center" prop="id" label="ID" width="100px" sortable />
         <el-table-column align="center" prop="account" label="账号"/>
         <el-table-column align="center" prop="name" label="姓名"/>
+
+        <!-- <el-table-column align="center" prop="age" label="年龄"/> -->
+        <el-table-column align="center" prop="birthday" label="生日"/>
+        <el-table-column align="center" prop="phone" label="手机号码"/>
+        <el-table-column label="性别" align="center">
+          <template slot-scope="scope">
+            <el-tag :type="scope.row.sex | sexTagFilter">{{ scope.row.sex | sexFilter }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="avatar" label="用户头像">
           <template slot-scope="scope">
             <img v-if="scope.row.avatar" :src="scope.row.avatar" width="40" @click="showImg(scope.row)">
@@ -114,6 +123,34 @@
         <el-form-item label="姓名" prop="name">
           <!-- 使用clearable属性即可得到一个可清空的输入框 -->
           <el-input v-model="userForm.name" placeholder="请输入姓名" clearable/>
+        </el-form-item>
+        <!-- <el-form-item label="年龄" prop="age">
+          <el-input v-model="userForm.age" placeholder="请输入" clearable/>
+        </el-form-item> -->
+        <el-form-item label="生日" prop="birthday">
+          <el-date-picker
+            v-model="userForm.birthday"
+            type="date"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            placeholder="选择日期"
+            @change="selectDate"
+          />
+        </el-form-item>
+
+        <el-form-item label="性别" prop="sex">
+          <el-select v-model="userForm.sex" class="filter-item" placeholder="请选择...">
+            <el-option
+              v-for="item in sexOptions"
+              :key="item.key"
+              :label="item.key"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="手机号码" prop="phone">
+          <el-input v-model="userForm.phone" placeholder="请输入" clearable/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="userForm.password" type="password" placeholder="请输入密码"/>
@@ -241,11 +278,21 @@ const erpFlagOptions = [
   { key: '是', value: '1' }
 ];
 
+const sexOptions = [
+  { key: '男', value: '1' },
+  { key: '女', value: '2' }
+];
+
 const statusTypeKeyValue = statusOptions.reduce((acc, cur) => {
   acc[cur.value] = cur.key;
   return acc;
 }, {});
 const erpFlagTypeKeyValue = erpFlagOptions.reduce((acc, cur) => {
+  acc[cur.value] = cur.key;
+  return acc;
+}, {});
+
+const sexTypeKeyValue = sexOptions.reduce((acc, cur) => {
   acc[cur.value] = cur.key;
   return acc;
 }, {});
@@ -277,6 +324,17 @@ export default {
       };
       return statusMap[flag];
     },
+    sexFilter(sex) {
+      return sexTypeKeyValue[sex];
+    },
+    // 性别标签过滤器
+    sexTagFilter(sex) {
+      const sexMap = {
+        '1': 'success',
+        '0': 'danger'
+      };
+      return sexMap[sex];
+    },
     parseTime
   },
   // data中存放的是el中需要的数据
@@ -304,10 +362,15 @@ export default {
       modifyVisible: false, // 修改可见性，是否显示弹框
       statusOptions: statusOptions, // 状态选项
       erpFlagOptions: erpFlagOptions, // erp标志选项
+      sexOptions: sexOptions, // 性别选项
       // form表单对象
       userForm: {
         account: '', // 账号
         name: '', // 姓名
+        // age: '', // 年龄
+        birthday: '', // 生日
+        phone: '', // 手机号码
+        sex: '1', // 性别
         avatar: '',
         password: '', // 密码
         email: '', // 邮箱
@@ -359,6 +422,9 @@ export default {
     handleClose() {
       this.dialogVisible = false
     },
+    selectDate(val) {
+      console.log('选择的日期为', +val)
+    },
      	/**
        * 查看附件
        */
@@ -367,7 +433,7 @@ export default {
       this.imgList = []
       await findFileInfoDetail({
         'userId': row.id
-      }).then(res => { 
+      }).then(res => {
         // eslint-disable-next-line no-array-constructor
         var arr = new Array()
         arr = res.data.split('&&&')
@@ -416,6 +482,10 @@ export default {
         this.userForm.id = null;
         this.userForm.account = null;
         this.userForm.name = null;
+        // this.userForm.age = null;
+        this.userForm.birthday = null;
+        this.userForm.phone = null;
+        this.userForm.sex = '1';
         this.userForm.avatar = null;
         this.userForm.password = null;
         this.userForm.email = null;

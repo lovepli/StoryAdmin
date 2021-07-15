@@ -136,20 +136,38 @@ public class ExceptionController extends BaseController{
 
 
 // ################################ （JRS 303 校验框架 ）处理参数校验异常 #################### 参考： https://gitee.com/lovepli_cn/validation-spring-boot-demo
+    /**
+     * 处理@RequestParam校验不通过异常
+     */
     @ExceptionHandler(ConstraintViolationException.class)
-    public Result handler(ConstraintViolationException e) {
-        StringBuffer errorMsg = new StringBuffer();
-        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-        violations.forEach(x -> errorMsg.append(x.getMessage()).append(";"));
-        return new Result<String>(false, errorMsg.toString(), "参数异常，请稍后重试",ResultEnum.FORMAT_ERROR.getCode());
+    public Result validationError(ConstraintViolationException ex) {
+        Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
+        StringBuilder builder = new StringBuilder();
+        //violations.forEach(x -> builder.append(x.getMessage()).append(";")); // 遍历方式一
+        for (ConstraintViolation<?> item : violations) { // 遍历方式二
+            builder.append( "\n" + item.getMessage()).append(";");
+        }
+        logger.error("参数校验异常:{}", builder.toString());
+        return new Result<String>(false, builder.toString(), "参数异常，请稍后重试",ResultEnum.FORMAT_ERROR.getCode());
     }
 
-    //处理校验异常，对于对象类型的数据的校验异常
+
+
+
+    /**
+     * 处理校验异常，处理参数为对象类型的数据的校验异常
+     * @param e
+     * @return
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Result handler(MethodArgumentNotValidException e) {
         StringBuffer sb = new StringBuffer();
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
-        allErrors.forEach(msg -> sb.append(msg.getDefaultMessage()).append(";"));
+        //allErrors.forEach(msg -> sb.append(msg.getDefaultMessage()).append(";")); // 遍历方式一
+        for (ObjectError item : allErrors) {
+            sb.append( "\n" + item.getDefaultMessage()).append(";");
+        }
+        logger.error("对象参数校验异常:{}", sb.toString());
         return new Result<String>(false, sb.toString(), "参数异常，请稍后重试",ResultEnum.FORMAT_ERROR.getCode());
     }
 
