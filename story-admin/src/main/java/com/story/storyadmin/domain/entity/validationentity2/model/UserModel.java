@@ -1,11 +1,11 @@
-package com.story.storyadmin.domain.entity.validationentity.model;
+package com.story.storyadmin.domain.entity.validationentity2.model;
 
 
-import com.story.storyadmin.common.annotation.validationgroup.Mobile;
-import com.story.storyadmin.common.annotation.validationgroup.UserName;
-import com.story.storyadmin.common.validator.group.ValidEmail;
-import com.story.storyadmin.common.validator.group.ValidMobile;
-import com.story.storyadmin.common.validator.group.ValidUserName;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidEmail;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidMobile;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidUserName;
+import com.story.storyadmin.domain.entity.validationentity2.validator.zidingyi.annotation.Mobile;
+import com.story.storyadmin.domain.entity.validationentity2.validator.zidingyi.annotation.UserName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

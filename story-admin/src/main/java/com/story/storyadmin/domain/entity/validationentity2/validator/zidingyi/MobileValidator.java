@@ -1,12 +1,13 @@
-package com.story.storyadmin.common.validator;
+package com.story.storyadmin.domain.entity.validationentity2.validator.zidingyi;
 
-
-import com.story.storyadmin.common.annotation.validationgroup.Mobile;
+import com.story.storyadmin.domain.entity.validationentity2.validator.zidingyi.annotation.Mobile;
 import org.springframework.util.StringUtils;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * 自定义校验器 --
+ */
 public class MobileValidator implements ConstraintValidator<Mobile, String> {
 
     private String regexp;

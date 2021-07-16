@@ -29,6 +29,7 @@ public abstract class BaseController {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
+     * 在spring容器初始化时注册属性编辑器
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
      */
     @InitBinder
@@ -44,6 +45,13 @@ public abstract class BaseController {
             }
         });
     }
+
+    //在控制器初始化时注册属性编辑器 可以放在UserController中也可以放在继承的父类中，都可以起到作用
+    //@InitBinder
+    //public void initBuilder(WebDataBinder binder){
+    //    // 注册自定义编辑器
+    //    binder.registerCustomEditor(Date.class,new DateEditor());
+    //}
 
     /**
      * 设置请求分页数据

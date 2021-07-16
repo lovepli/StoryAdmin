@@ -1,7 +1,6 @@
 package com.story.storyadmin.utils.validation;
 
 
-import com.story.storyadmin.domain.entity.validationentity.model.ValidationResult;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.ConstraintViolation;

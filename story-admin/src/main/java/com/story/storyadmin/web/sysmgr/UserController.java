@@ -8,12 +8,13 @@ import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.User;
-import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo1;
-import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo2;
-import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo3;
+import com.story.storyadmin.domain.entity.validationentity.model.ValidateDemo1;
+import com.story.storyadmin.domain.entity.validationentity.model.ValidateDemo2;
+import com.story.storyadmin.domain.entity.validationentity.model.ValidateDemo3;
 import com.story.storyadmin.domain.entity.validationentity.group.GroupA;
 import com.story.storyadmin.domain.entity.validationentity.group.GroupB;
 import com.story.storyadmin.domain.entity.validationentity.group.GroupUser;
+import com.story.storyadmin.domain.entity.validationentity.validator.zidingyi.CaseModeDemo;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
@@ -125,39 +126,6 @@ public class UserController extends BaseController {
         result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
-
-
-    /**
-     * 保存
-     * @param user
-     * @return
-     *
-     *  @Valid 使用JSR 303进行校验!!
-     *  验证不通过时，抛出了MethodArgumentNotValidException异常，可以使用全局捕获异常处理。
-     */
-    @SysLogAnnotation
-    @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
-    @RequiresPermissions("sysmgr.user.save")
-    @RequestMapping(value="/save",method = {RequestMethod.POST})
-    public Result save(@Valid @RequestBody User user){
-        return userService.persist(user);
-    }
-
-    /**
-     * 根据用户名查询所有角色
-     *  如果只有少数参数，直接把参数写到Controller层，然后在Controller层进行验证就可以了  @NotNull(message = "用户名不能为空")
-     *  验证不通过时，抛出了ConstraintViolationException异常，可以使用全局捕获异常处理。
-     * @return
-     */
-    @ApiOperation(value = "用户信息" ,  notes="根据用户名查询所有角色")
-    @RequiresPermissions("sysmgr.user.query")
-    @RequestMapping(value="/findRolelistByAccount",method = {RequestMethod.POST,RequestMethod.GET})
-    public Result list(@NotNull(message = "用户名不能为空") @RequestParam(value = "ua",required = false) String userName){
-        return userService.findUserRole(userName);
-    }
-
-
-
 
 
     /**
@@ -273,12 +241,36 @@ public class UserController extends BaseController {
         return  new Result(true, null, data ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
-    //在控制器初始化时注册属性编辑器
-    //@InitBinder
-    //public void initBuilder(WebDataBinder binder){
-    //    // 注册自定义编辑器
-    //    binder.registerCustomEditor(Date.class,new DateEditor());
-    //}
+    /**
+     * 保存
+     * @param user
+     * @return
+     *
+     *  @Valid 使用JSR 303进行校验!!
+     *  验证不通过时，抛出了MethodArgumentNotValidException异常，可以使用全局捕获异常处理。
+     */
+    @SysLogAnnotation
+    @ApiOperation(value = "用户信息" ,  notes="保存用户信息")
+    @RequiresPermissions("sysmgr.user.save")
+    @RequestMapping(value="/save",method = {RequestMethod.POST})
+    public Result save(@Valid @RequestBody User user){
+        return userService.persist(user);
+    }
+
+    /**
+     * 根据用户名查询所有角色
+     *  如果只有少数参数，直接把参数写到Controller层，然后在Controller层进行验证就可以了  @NotNull(message = "用户名不能为空")
+     *  验证不通过时，抛出了ConstraintViolationException异常，可以使用全局捕获异常处理。
+     * @return
+     */
+    @ApiOperation(value = "用户信息" ,  notes="根据用户名查询所有角色")
+    @RequiresPermissions("sysmgr.user.query")
+    @RequestMapping(value="/findRolelistByAccount",method = {RequestMethod.POST,RequestMethod.GET})
+    public Result list(@NotNull(message = "用户名不能为空") @RequestParam(value = "ua",required = false) String userName){
+        return userService.findUserRole(userName);
+    }
+
+
 
 //##################################################################################################################################
 
@@ -329,7 +321,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 分组校验 -- 只验证GroupA和GroupB的分组
+     * 分组校验 -- 只验证GroupA和GroupB的分组-1
      * @return
      */
     //@RequiresPermissions("sysmgr.user.save")
@@ -352,7 +344,7 @@ public class UserController extends BaseController {
 
 
     /**
-     * 待测试
+     * 分组校验 -- 只验证GroupA和GroupB的分组-2 待测试
      * @param p
      * @param result
      * @return
@@ -365,6 +357,22 @@ public class UserController extends BaseController {
             for (ObjectError error : allErrors) {
                 System.out.println("校验："+error);
             }
+        }
+        return new Result(true, "保存成功！", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
+    /**
+     * 测试自定义校验器 --大小写校验器
+     * @return
+     */
+    //@RequiresPermissions("sysmgr.user.save")
+    //@RequestMapping(value="/save",method = {RequestMethod.POST})
+    public Result saveTest5(){
+        CaseModeDemo demo = new CaseModeDemo();
+        demo.setUserName("userName");
+        Set<ConstraintViolation<CaseModeDemo>> validate = validator.validate(demo);
+        for (ConstraintViolation<CaseModeDemo> dem : validate) {
+            System.out.println("校验："+dem.getMessage());
         }
         return new Result(true, "保存成功！", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }

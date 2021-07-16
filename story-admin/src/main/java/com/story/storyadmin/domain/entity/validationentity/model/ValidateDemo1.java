@@ -1,7 +1,5 @@
-package com.story.storyadmin.domain.entity.validationentity.validateDemo;
+package com.story.storyadmin.domain.entity.validationentity.model;
 
-import com.story.storyadmin.common.annotation.validationgroup.Mobile;
-import com.story.storyadmin.common.annotation.validationgroup.UserName;
 import com.story.storyadmin.common.validator.group.ValidEmail;
 import com.story.storyadmin.common.validator.group.ValidMobile;
 import com.story.storyadmin.common.validator.group.ValidUserName;
@@ -11,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
 import java.util.List;
@@ -19,7 +16,7 @@ import java.util.List;
 /**
  * @author: 59688
  * @date: 2021/7/15
- * @description:
+ * @description: 校验对象
  */
 @Data
 @Builder

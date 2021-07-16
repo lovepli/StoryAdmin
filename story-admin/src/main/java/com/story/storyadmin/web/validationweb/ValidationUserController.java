@@ -1,10 +1,10 @@
 package com.story.storyadmin.web.validationweb;
 
-import com.story.storyadmin.common.validator.group.ValidEmail;
-import com.story.storyadmin.common.validator.group.ValidMobile;
-import com.story.storyadmin.common.validator.group.ValidUserName;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
-import com.story.storyadmin.domain.entity.validationentity.model.UserModel;
+import com.story.storyadmin.domain.entity.validationentity2.model.UserModel;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidEmail;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidMobile;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidUserName;
 import com.story.storyadmin.domain.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;

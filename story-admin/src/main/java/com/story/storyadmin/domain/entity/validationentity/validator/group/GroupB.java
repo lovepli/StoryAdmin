@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.validationentity.group;
+package com.story.storyadmin.domain.entity.validationentity.validator.group;
 
 /**
  * @author: 59688

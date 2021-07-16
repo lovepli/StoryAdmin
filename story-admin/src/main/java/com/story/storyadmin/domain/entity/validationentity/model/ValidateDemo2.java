@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.validationentity.validateDemo;
+package com.story.storyadmin.domain.entity.validationentity.model;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author: 59688
  * @date: 2021/7/15
- * @description:
+ * @description: 校验对象，和校验子对像
  */
 @Data
 public class ValidateDemo2 {
