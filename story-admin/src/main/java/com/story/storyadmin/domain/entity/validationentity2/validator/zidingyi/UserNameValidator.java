@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * 自定义校验器 --
+ * 自定义校验器 -- 用户名校验
  */
 public class UserNameValidator implements ConstraintValidator<UserName, String> {
 
@@ -14,7 +14,7 @@ public class UserNameValidator implements ConstraintValidator<UserName, String> 
 
     @Override
     public void initialize(UserName constraintAnnotation) {
-        //获取校验的手机号的格式
+        //获取校验的用户名的格式
         this.regexp = constraintAnnotation.regexp();
     }
 

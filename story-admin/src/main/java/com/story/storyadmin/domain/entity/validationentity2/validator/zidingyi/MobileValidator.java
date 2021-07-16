@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * 自定义校验器 --
+ * 自定义校验器 -- 手机号码校验
  */
 public class MobileValidator implements ConstraintValidator<Mobile, String> {
 

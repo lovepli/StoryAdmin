@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -71,12 +72,13 @@ public class LoginController extends BaseController{
     @ApiOperation(value = "登录接口" ,  notes="登录")
     @ResponseBody
     @RequestMapping(value="/login",method = {RequestMethod.POST})
-    public Result login(HttpServletResponse response, @RequestBody LoginBody user) {
+    public Result login(HttpServletResponse response, @Valid @RequestBody LoginBody user) {
         return userService.login2(user,response);
     }
 
     /**
-     * 验证码登录 通过jsonObject对象接收入参，解密base64加密的请求参数
+     * base64加密参数进行登录  前端加密，后端进行解密
+     * 通过jsonObject对象接收入参，解密base64加密的请求参数
      * @param jsonObject
      * @return
      */

@@ -8,12 +8,12 @@ import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.User;
+import com.story.storyadmin.domain.entity.validationentity.model.GroupUser;
 import com.story.storyadmin.domain.entity.validationentity.model.ValidateDemo1;
 import com.story.storyadmin.domain.entity.validationentity.model.ValidateDemo2;
 import com.story.storyadmin.domain.entity.validationentity.model.ValidateDemo3;
-import com.story.storyadmin.domain.entity.validationentity.group.GroupA;
-import com.story.storyadmin.domain.entity.validationentity.group.GroupB;
-import com.story.storyadmin.domain.entity.validationentity.group.GroupUser;
+import com.story.storyadmin.domain.entity.validationentity.validator.group.GroupA;
+import com.story.storyadmin.domain.entity.validationentity.validator.group.GroupB;
 import com.story.storyadmin.domain.entity.validationentity.validator.zidingyi.CaseModeDemo;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
@@ -170,7 +170,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "用户信息" ,  notes="根据用户Id查询角色")
     @RequiresPermissions("sysmgr.user.query")
     @RequestMapping(value="/findUserRole",method = {RequestMethod.POST})
-    public Result findUserRole(@RequestBody UserRoleVo user){
+    public Result findUserRole( @Valid @RequestBody UserRoleVo user){
         return userService.findUserRole(user.getUserId());
     }
 
@@ -184,7 +184,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "用户信息" ,  notes="更改/保存用户角色")
     @RequiresPermissions("sysmgr.user.save")
     @RequestMapping(value="/saveUserRole",method = {RequestMethod.POST})
-    public Result saveUserRole(@RequestBody UserRoleVo userRole){
+    public Result saveUserRole(@Valid @RequestBody UserRoleVo userRole){
         return userService.saveUserRoles(userRole);
     }
 
@@ -197,7 +197,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "用户信息" ,  notes="修改密码")
     @RequiresAuthentication
     @RequestMapping(value="/editpassword",method = {RequestMethod.POST})
-    public Result editPassWord(@RequestBody UserPassword userPassword){
+    public Result editPassWord(@Valid @RequestBody UserPassword userPassword){
         return userService.editPassWord(userPassword);
     }
 
@@ -227,6 +227,7 @@ public class UserController extends BaseController {
 
     /**
      * 在线展示员工上传的照片或pdf信息
+     * TODO 使用JSONObject作为参数对象，不能使用@Valid 参数校验框架
      *
      * @param jsonObject
      * @return
@@ -245,8 +246,8 @@ public class UserController extends BaseController {
      * 保存
      * @param user
      * @return
-     *
-     *  @Valid 使用JSR 303进行校验!!
+     *  使用JSR 303进行校验!!
+     *  @NotBlank 注解必须和 @Valid 注解一起使用才有效，单纯校验对象参数，可以不在Controller加@Validated注解
      *  验证不通过时，抛出了MethodArgumentNotValidException异常，可以使用全局捕获异常处理。
      */
     @SysLogAnnotation

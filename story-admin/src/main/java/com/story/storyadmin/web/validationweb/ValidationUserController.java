@@ -32,7 +32,7 @@ public class ValidationUserController {
     }
 
     /**
-     * 手机号注册
+     * 手机号注册 -- 使用自定义手机号码校验器进行校验
      *
      * @param userModel
      * @return

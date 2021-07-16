@@ -1,8 +1,8 @@
 package com.story.storyadmin.domain.entity.validationentity.model;
 
-import com.story.storyadmin.common.validator.group.ValidEmail;
-import com.story.storyadmin.common.validator.group.ValidMobile;
-import com.story.storyadmin.common.validator.group.ValidUserName;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidEmail;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidMobile;
+import com.story.storyadmin.domain.entity.validationentity2.validator.group.ValidUserName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
