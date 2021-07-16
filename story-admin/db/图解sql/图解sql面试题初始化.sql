@@ -68,3 +68,12 @@ CREATE TABLE `d_teacher` (
 -- insert d_teacher VALUES('0002','马化腾');
 -- insert d_teacher VALUES('0003','NULL');
 -- insert d_teacher VALUES('0004','');
+
+-- 其他sql语句知识点：
+--新增表字段
+--ALTER TABLE d_student ADD `age` varchar(255) DEFAULT NULL COMMENT '年龄';
+
+--
+----删除表字段
+--ALTER TABLE d_student drop `age`;
+

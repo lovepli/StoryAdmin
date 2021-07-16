@@ -1,6 +1,7 @@
 package com.story.storyadmin.utils.validation;
 
 
+import com.story.storyadmin.domain.vo.Result;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.ConstraintViolation;
@@ -32,16 +33,16 @@ public class ValidationUtil {
      * @param <T>
      * @return
      */
-    public static <T> ValidationResult validateEntity(T obj) {
-        ValidationResult result = new ValidationResult();
+    public static <T> Result validateEntity(T obj) {
+        Result result = new Result();
         Set<ConstraintViolation<T>> set = validator.validate(obj, Default.class);
         if (!CollectionUtils.isEmpty(set)) {
-            result.setHasErrors(true);
+            result.setResult(true);
             Map<String, String> errorMsg = new HashMap<>();
             for (ConstraintViolation<T> cv : set) {
                 errorMsg.put(cv.getPropertyPath().toString(), cv.getMessage());
             }
-            result.setErrorMsg(errorMsg);
+            result.setData(errorMsg);
         }
         return result;
     }
@@ -54,16 +55,16 @@ public class ValidationUtil {
      * @param <T>
      * @return
      */
-    public static <T> ValidationResult validateProperty(T obj, String propertyName) {
-        ValidationResult result = new ValidationResult();
+    public static <T> Result validateProperty(T obj, String propertyName) {
+        Result result = new Result();
         Set<ConstraintViolation<T>> set = validator.validateProperty(obj, propertyName, Default.class);
         if (!CollectionUtils.isEmpty(set)) {
-            result.setHasErrors(true);
+            result.setResult(true);
             Map<String, String> errorMsg = new HashMap<>();
             for (ConstraintViolation<T> cv : set) {
                 errorMsg.put(propertyName, cv.getMessage());
             }
-            result.setErrorMsg(errorMsg);
+            result.setData(errorMsg);
         }
         return result;
     }

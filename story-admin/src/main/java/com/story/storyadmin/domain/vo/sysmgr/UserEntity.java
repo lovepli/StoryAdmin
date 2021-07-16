@@ -1,5 +1,7 @@
 package com.story.storyadmin.domain.vo.sysmgr;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 
@@ -135,7 +137,12 @@ public class UserEntity implements  Serializable{
     @Column(name = "modified_time")
     private Date modifiedTime;
 
-    @Transient
+    /**
+     * 给不想被序列化的属性增加注解
+     */
+    @Transient // 或者使用 Jackson中的@JsonIgnore注解在返回的json字符串中忽略掉此字段 或者使用@fastJson中的JSONField(serialize=false)
+    //@JsonIgnore
+    //@JSONField(serialize=false)
     private Integer standby1;//备用字段1
 
     @Transient

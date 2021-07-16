@@ -66,8 +66,9 @@ public class User extends BaseEntity<User> {
     /**
      * 年龄
      */
-    //@Range(min = 15,max = 60,message = "年龄必须在15到60岁之间")
-    //private Integer age;
+    @Range(min = 0,max = 100,message = "年龄必须在0到100岁之间")
+    @NotNull
+    private Integer age;
 
     /**
      * 生日
