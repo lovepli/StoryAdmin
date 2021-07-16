@@ -2,19 +2,18 @@ package com.story.storyadmin.domain.vo.sysmgr;
 
 import lombok.Data;
 import lombok.ToString;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author: 59688
  * @date: 2021/7/16
- * @description:  使用 Spring Data JPA 依赖包的注解
+ * @description:  Spring Data JPA 依赖包的注解  使用javax.persistence注解配置PO对象
  */
-@Table(name = "st_user")//指定数据库对应的表 //@Entity  //说明此java类是实体类
+@Entity  //说明此java类是实体类
+@Table(name = "st_user")//指定数据库对应的表
 @Data
 @ToString
 public class UserEntity implements  Serializable{
