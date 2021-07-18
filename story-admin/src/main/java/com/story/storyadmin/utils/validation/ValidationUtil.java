@@ -2,7 +2,7 @@ package com.story.storyadmin.utils.validation;
 
 
 import com.story.storyadmin.domain.vo.Result;
-import org.springframework.util.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -68,5 +68,4 @@ public class ValidationUtil {
         }
         return result;
     }
-
 }

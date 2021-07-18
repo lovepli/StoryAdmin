@@ -1,7 +1,5 @@
-package com.story.storyadmin.domain.entity.validationentity.model;
+package com.story.storyadmin.domain.entity.validationentity.group;
 
-import com.story.storyadmin.domain.entity.validationentity.validator.group.GroupA;
-import com.story.storyadmin.domain.entity.validationentity.validator.group.GroupB;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -12,7 +10,7 @@ import javax.validation.groups.Default;
 /**
  * @author: 59688
  * @date: 2021/7/15
- * @description: 分组校验对象
+ * @description:
  *
  * GroupA校验字段userId
  * GroupB校验字段userName、sex

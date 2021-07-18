@@ -5,15 +5,19 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.story.storyadmin.domain.entity.BaseEntity;
-import com.story.storyadmin.validator.group.AddGroup;
-import com.story.storyadmin.validator.group.UpdateGroup;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,7 +30,6 @@ import java.util.Date;
  * @since 2018-12-28
  */
 @Data
-//@Builder
 @EqualsAndHashCode(callSuper = true) //@EqualsAndHashCode 和@Data注解的使用说明 https://blog.csdn.net/zhanlanmg/article/details/50392266
 @Accessors(chain = true) //chain的中文含义是链式的，设置为true，则setter方法返回当前对象
 @TableName("st_user")
@@ -56,19 +59,16 @@ public class User extends BaseEntity<User> {
 
     /**
      * 姓名
-     * 增加校验组，新增和修改都做用户名非空的校验判断
      */
     @NotBlank(message = "姓名不能为空")
-    //@NotBlank(message = "姓名不能为空", groups = {AddGroup.class, UpdateGroup.class})
     //@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]{6,20}$", message = "用户名必须要有一个小写字母，一个大写字母和一个数字，并且是6-20位")
     private String name;
 
     /**
      * 年龄
      */
-    @Range(min = 0,max = 100,message = "年龄必须在0到100岁之间")
-    @NotNull
-    private Integer age;
+    //@Range(min = 15,max = 60,message = "年龄必须在15到60岁之间")
+    //private int age;
 
     /**
      * 生日

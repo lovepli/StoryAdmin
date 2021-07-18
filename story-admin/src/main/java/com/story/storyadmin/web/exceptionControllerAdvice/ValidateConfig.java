@@ -13,7 +13,7 @@ import javax.validation.ValidatorFactory;
 /**
  * @author: 59688
  * @date: 2021/7/15
- * @description: hibernate的校验模式 参考：https://my.oschina.net/shadowolf/blog/1934934
+ * @description: hibernate的校验模式 https://blog.csdn.net/wuseyukui/article/details/81164207
  * 1、普通模式（默认是这个模式）
  *
  * 　　普通模式(会校验完所有的属性，然后返回所有的验证失败信息)
@@ -26,8 +26,8 @@ import javax.validation.ValidatorFactory;
  *
  * fail_fast： true 快速失败返回模式 false 普通模式
  */
-@Configuration // @Configuration注解多和@Bean注解配合使用，手动注入配置文件到spring容器中，和@Component注解差不多，都是将对象手动注入到spring容器
-@EnableAutoConfiguration // 和@ComponentScan注解的功能差不多，@ComponentScan注解是自动扫描添加了@Component注解的组件(对象)，注入到spring容器中，而@EnableAutoConfiguration注解是将添加了@Configuration注解的配置文件（对象）注入到spring容器中
+@Configuration
+@EnableAutoConfiguration
 public class ValidateConfig {
 
     /**
@@ -43,10 +43,6 @@ public class ValidateConfig {
         return postProcessor;
     }
 
-    /**
-     * Validator配置
-     * @return
-     */
     @Bean
     public Validator validator() {
         // hibernate.validator.fail_fast: true 快速失败返回模式，false 普通模式

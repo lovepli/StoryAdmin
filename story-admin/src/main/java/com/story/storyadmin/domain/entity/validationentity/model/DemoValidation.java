@@ -1,13 +1,17 @@
-package com.story.storyadmin.domain.entity.validationentity2.model;
+package com.story.storyadmin.domain.entity.validationentity.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.*;
+// TODO hibernate-validator已弃用的注解
+//import org.hibernate.validator.constraints.Email;
+//import org.hibernate.validator.constraints.NotBlank;
+//import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
+import javax.validation.constraints.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;

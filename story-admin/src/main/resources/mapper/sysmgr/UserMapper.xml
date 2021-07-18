@@ -11,7 +11,7 @@
         <result property="account"   column="account"   />
         <result property="name"  column="name"   />
 
-        <result property="age"  column="age"   />
+<!--        <result property="age"  column="age"   />-->
         <result property="birthday"  column="birthday"   />
         <result property="phone"  column="phone"   />
         <result property="sex"  column="sex"   />
@@ -34,7 +34,7 @@
 
     <!-- 查询字段 -->
     <sql id="Base_Column_List">
-        ID,account,name,age,birthday,phone,sex,avatar,password,email,last_pwd_modified_time,status,erp_flag,yn_flag,creator,editor,created_time,modified_time
+        ID,account,name,birthday,phone,sex,avatar,password,email,last_pwd_modified_time,status,erp_flag,yn_flag,creator,editor,created_time,modified_time
     </sql>
 
     <!-- 查询条件 -->
@@ -49,19 +49,6 @@
             </if>
             <if test="name != null and name != ''">
                 and name = #{name}
-            </if>
-            <if test="age != null and age != ''">
-                and age = #{age}
-            </if>
-<!-- 需要字符串转Date查询-->
-            <if test="birthday != null and birthday != ''">
-                and birthday = #{birthday}
-            </if>
-            <if test="phone != null and phone != ''">
-                and phone = #{phone}
-            </if>
-            <if test="sex != null and sex != ''">
-                and sex = #{sex}
             </if>
             <if test="avatar != null and avatar != '' ">
                 and avatar = #{avatar}
