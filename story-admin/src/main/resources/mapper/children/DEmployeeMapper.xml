@@ -44,7 +44,11 @@
     </select>
 
 
-
+    <select id="selectEmployeeNamesBydeptId" resultType="java.lang.String">
+        SELECT e_name
+        FROM d_employee
+        WHERE dept_id = #{deptId}
+    </select>
 
 
 

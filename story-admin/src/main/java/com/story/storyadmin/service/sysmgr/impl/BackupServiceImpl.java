@@ -10,7 +10,7 @@ import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.mapper.sysmgr.BackupMapper;
 import com.story.storyadmin.service.sysmgr.BackupService;
 import com.story.storyadmin.utils.DataBaseUtils;
-import com.story.storyadmin.utils.DateUtils;
+import com.story.storyadmin.utils.DateMethordUtil.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -40,7 +40,7 @@ public class BackupServiceImpl extends ServiceImpl<BackupMapper, Backup> impleme
         long endTime = System.currentTimeMillis();
         Backup entity= new Backup();
         entity.setBackupDate(DateUtils.currentDate());
-        entity.setBackupName(String.format("%s-%s-数据备份",DateUtils.getCurrentDate(),dbBackupProperties.getDbname()));
+        entity.setBackupName(String.format("%s-%s-数据备份", DateUtils.getCurrentDate(),dbBackupProperties.getDbname()));
         entity.setDbName(dbBackupProperties.getDbname());
         if(!StringUtils.isEmpty(relativeFile)){
             //备份成功

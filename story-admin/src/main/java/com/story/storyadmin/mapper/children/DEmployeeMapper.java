@@ -20,6 +20,8 @@ public interface DEmployeeMapper extends BaseMapper<DEmployee> {
     List<DEmployeeBO> selectEmployeeDeptByDeptId(String id);
 
     DEmployeeBO selectEmployeeDeptById(String id);
+
+    List<String> selectEmployeeNamesBydeptId(String deptId);
 }
 
 

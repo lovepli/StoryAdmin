@@ -9,13 +9,11 @@ import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.pub.WeatherDetailVo;
 import com.story.storyadmin.domain.vo.pub.WeatherVo;
-import com.story.storyadmin.utils.HttpClientUtils;
 import com.story.storyadmin.utils.JedisUtils;
 import com.story.storyadmin.utils.MethodUtil;
+import com.story.storyadmin.utils.netMethordUtil.HttpClientUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -100,6 +98,7 @@ public class PubController extends BaseController{
             result= new Result(true, "天气信息查询成功", weatherVo, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }catch (Exception e) {
             e.printStackTrace();
+            logger.error("天气信息查询失败：{}",e.getMessage());
             throw new CustomException(ResultEnum.API_REQUEST_EXCEPTION.getCode(), "天气信息查询失败", MethodUtil.getLineInfo());
         }
         return result;

@@ -1,7 +1,11 @@
 package com.story.storyadmin.domain.entity.children;
 
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.domain.entity.bank.NewGeneration;
 import com.story.storyadmin.domain.entity.children.dto.CourseTeacherResult;
 import com.story.storyadmin.domain.entity.children.dto.DDeptDTO;
+import com.story.storyadmin.domain.entity.children.dto.DDeptDTO2;
 import com.story.storyadmin.domain.entity.children.manytomany.DCourseBO;
 import com.story.storyadmin.domain.entity.children.manytomany.DStudentBO;
 import com.story.storyadmin.domain.entity.children.onetomany.DDeptBO;
@@ -10,6 +14,7 @@ import com.story.storyadmin.mapper.children.DCourseMapper;
 import com.story.storyadmin.mapper.children.DDeptMapper;
 import com.story.storyadmin.mapper.children.DEmployeeMapper;
 import com.story.storyadmin.mapper.children.DStudentMapper;
+import com.story.storyadmin.utils.bank.PageUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -175,6 +180,26 @@ public class DCourseTest extends TestCase {
         DDeptDTO deptBO = dDeptMapper.selectDeptById2("0003");
         logger.info("根据id查询部门以及下级部门信息：{}",deptBO.toString());
     }
+
+    /**
+     * 一对多分页的SQL
+     * 查询部门下的所有员工信息
+     * 部门--员工
+     */
+    @Test
+    public void Test6() {
+        JSONObject jsonObject=new JSONObject();
+        Page<DDeptDTO2> page =new PageUtil<DDeptDTO2>().getPage(jsonObject);
+        List<DDeptDTO2>  deptBO = dDeptMapper.findByPage3(page);
+        logger.info("根据id查询部门以及下级部门信息：{}",deptBO.toString());
+    }
+
+    @Test
+    public void Test7() {
+        List<DDeptDTO2>  deptBO = dDeptMapper.findByPage4(0,10);
+        logger.info("根据id查询部门以及下级部门信息：{}",deptBO.toString());
+    }
+
 
 
 

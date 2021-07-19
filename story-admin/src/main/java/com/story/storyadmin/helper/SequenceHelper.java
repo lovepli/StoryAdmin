@@ -2,8 +2,8 @@ package com.story.storyadmin.helper;
 
 import com.story.storyadmin.domain.entity.sysmgr.SystemSequence;
 import com.story.storyadmin.mapper.sysmgr.SystemSequenceMapper;
-import com.story.storyadmin.utils.DateUtil;
-import com.story.storyadmin.utils.StringUtil;
+import com.story.storyadmin.utils.DateMethordUtil.DateUtil;
+import com.story.storyadmin.utils.stringMethordUtil.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

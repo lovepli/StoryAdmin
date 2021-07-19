@@ -3,7 +3,7 @@ package com.story.storyadmin.config.upload.support;
 import com.story.storyadmin.config.upload.entity.FileSlot;
 import com.story.storyadmin.domain.entity.sysmgr.Att;
 import com.story.storyadmin.service.sysmgr.AttService;
-import com.story.storyadmin.utils.StringUtils;
+import com.story.storyadmin.utils.stringMethordUtil.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;

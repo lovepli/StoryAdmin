@@ -5680,7 +5680,7 @@ CREATE TABLE `st_user` (
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `erp_flag` char(2) COLLATE utf8_bin DEFAULT '0' COMMENT 'ERP账号标识',
-  `age` bigint(20) DEFAULT '0',
+  `age` int(11) DEFAULT NULL,
   `birthday` datetime DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_bin DEFAULT '',
   `sex` char(2) COLLATE utf8_bin DEFAULT '0',

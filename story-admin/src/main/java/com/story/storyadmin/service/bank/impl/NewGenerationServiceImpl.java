@@ -8,7 +8,7 @@ import com.story.storyadmin.mapper.bank.NewGenerationMapper;
 import com.story.storyadmin.service.bank.NewGenerationService;
 import com.story.storyadmin.utils.bank.DateUtils;
 import com.story.storyadmin.utils.bank.PageUtil;
-import com.story.storyadmin.utils.StringUtils;
+import com.story.storyadmin.utils.stringMethordUtil.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -8,18 +8,16 @@ import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.User;
-import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo1;
-import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo2;
-import com.story.storyadmin.domain.entity.validationentity.validateDemo.ValidateDemo3;
-import com.story.storyadmin.domain.entity.validationentity.group.GroupA;
-import com.story.storyadmin.domain.entity.validationentity.group.GroupB;
-import com.story.storyadmin.domain.entity.validationentity.group.GroupUser;
+
+import com.story.storyadmin.domain.entity.validationentity.*;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.UserDo;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
 import com.story.storyadmin.service.sysmgr.ImageFileService;
 import com.story.storyadmin.service.sysmgr.UserService;
+import com.story.storyadmin.validator.group2.GroupA;
+import com.story.storyadmin.validator.group2.GroupB;
 import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -273,7 +271,8 @@ public class UserController extends BaseController {
         return  new Result(true, null, data ,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
-    //在控制器初始化时注册属性编辑器
+    //在控制器初始化时注册属性编辑器，实现String转Date日期格式转化
+    // （也可以再每个controller中注册属性编辑器，也可以在BaseController中注册，其他controller继承BaseController,那么所有controller都继承这个方法）
     //@InitBinder
     //public void initBuilder(WebDataBinder binder){
     //    // 注册自定义编辑器
@@ -352,7 +351,7 @@ public class UserController extends BaseController {
 
 
     /**
-     * 待测试
+     * 分组校验 -- 只验证GroupA和GroupB的分组-2 待测试
      * @param p
      * @param result
      * @return
@@ -365,6 +364,23 @@ public class UserController extends BaseController {
             for (ObjectError error : allErrors) {
                 System.out.println("校验："+error);
             }
+        }
+        return new Result(true, "保存成功！", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
+
+
+    /**
+     * 测试自定义校验器 --大小写校验器
+     * @return
+     */
+    //@RequiresPermissions("sysmgr.user.save")
+    //@RequestMapping(value="/save",method = {RequestMethod.POST})
+    public Result saveTest5(){
+        CaseModeDemo demo = new CaseModeDemo();
+        demo.setUserName("userName");
+        Set<ConstraintViolation<CaseModeDemo>> validate = validator.validate(demo);
+        for (ConstraintViolation<CaseModeDemo> dem : validate) {
+            System.out.println("校验："+dem.getMessage());
         }
         return new Result(true, "保存成功！", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }

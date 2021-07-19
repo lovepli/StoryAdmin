@@ -1,5 +1,7 @@
 package com.story.storyadmin.utils;
 
+import com.story.storyadmin.utils.DateMethordUtil.DateExpressionUtil;
+import com.story.storyadmin.utils.DateMethordUtil.DateUtils;
 import org.assertj.core.util.DateUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +21,7 @@ public class DateExpressUtilTest {
         //汇总区间
         String q0="Q-0";
         Date[] q0Arr = DateExpressionUtil.explainDateRangeExpression(q0,"00:00:00/23:59:59", DateUtil.parse("2019-01-01"));
-        Assert.assertEquals("2019-01-01 00:00:00",DateUtils.formatDateTime(q0Arr[0]));
+        Assert.assertEquals("2019-01-01 00:00:00", DateUtils.formatDateTime(q0Arr[0]));
         Assert.assertEquals("2019-03-31 23:59:59",DateUtils.formatDateTime(q0Arr[1]));
 
         String q1="Q-1";

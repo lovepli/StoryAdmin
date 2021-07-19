@@ -68,7 +68,7 @@ public class User extends BaseEntity<User> {
      * 年龄
      */
     //@Range(min = 15,max = 60,message = "年龄必须在15到60岁之间")
-    //private int age;
+    private Integer age; //根据实际的场景，选择age的类型，Integer的值可以为null,而int默认值为0
 
     /**
      * 生日

@@ -50,17 +50,14 @@ public class NewGenerationController {
 
     /**
      * 批量更新
+     *
      * @param NewGenerations 前端传递的参数也是一个json对象，只是是个对象数组
      * @return
      */
-    public Result updateNewGeneration(@RequestBody List<NewGeneration> NewGenerations){
+    public Result updateNewGeneration(@RequestBody List<NewGeneration> NewGenerations) {
         newGenerationService.updateNewGeneration(NewGenerations);
-         return new Result(true, "更新成功", ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+        return new Result(true, "更新成功", ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
-
-
-
-
 
 
 }
