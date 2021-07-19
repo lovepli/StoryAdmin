@@ -1,7 +1,8 @@
 package com.story.storyadmin.validator;
 
 
-import com.story.storyadmin.common.annotation.validationen.UserName;
+
+import com.story.storyadmin.validator.annotation.UserName;
 import org.springframework.util.StringUtils;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

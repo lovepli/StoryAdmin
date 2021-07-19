@@ -5,12 +5,12 @@ import com.story.storyadmin.constant.enumtype.ResultEnum;
 
 import com.story.storyadmin.domain.entity.validationentity.UserModel;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.validator.group3.ValidEmail;
+import com.story.storyadmin.validator.group3.ValidMobile;
+import com.story.storyadmin.validator.group3.ValidUserName;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 // 参考：https://blog.csdn.net/kuangdaoyizhimei/article/details/111903345
@@ -39,10 +39,10 @@ public class ValidationUserController {
      * @param userModel
      * @return
      */
-   // @PostMapping("/mobile-regist")
-    //public Result mobileRegit(@Validated(ValidMobile.class) @RequestBody UserModel userModel) {
-    //    return new Result(true,"手机号注册成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-    //}
+    @PostMapping("/mobile-regist")
+    public Result mobileRegit(@Validated(ValidMobile.class) @RequestBody UserModel userModel) {
+        return new Result(true,"手机号注册成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
 
     /**
      * 邮箱注册
@@ -50,10 +50,10 @@ public class ValidationUserController {
      * @param userModel
      * @return
      */
-    //@PostMapping("/email-regist")
-    //public Result emailRegist(@Validated(ValidEmail.class) @RequestBody UserModel userModel) {
-    //    return new Result(true,"邮箱注册成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-    //}
+    @PostMapping("/email-regist")
+    public Result emailRegist(@Validated(ValidEmail.class) @RequestBody UserModel userModel) {
+        return new Result(true,"邮箱注册成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
 
     /**
      * 用户名注册
@@ -61,10 +61,10 @@ public class ValidationUserController {
      * @param userModel
      * @return
      */
-    //@PostMapping("/username-regist")
-    //public Result userNameRegist(@Validated(ValidUserName.class) @RequestBody UserModel userModel) {
-    //    return new Result(true,"用户名注册成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
-    //}
+    @PostMapping("/username-regist")
+    public Result userNameRegist(@Validated(ValidUserName.class) @RequestBody UserModel userModel) {
+        return new Result(true,"用户名注册成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.story.storyadmin.validator;
 
-import com.story.storyadmin.common.annotation.validationen.Mobile;
+
+import com.story.storyadmin.validator.annotation.Mobile;
 import org.springframework.util.StringUtils;
 
 import javax.validation.ConstraintValidator;

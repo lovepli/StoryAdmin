@@ -1,4 +1,4 @@
-package com.story.storyadmin.utils.validation;
+package com.story.storyadmin.validator;
 
 
 import com.story.storyadmin.domain.vo.Result;

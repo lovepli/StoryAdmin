@@ -1,4 +1,4 @@
-package com.story.storyadmin.common.annotation.validationen;
+package com.story.storyadmin.validator.annotation;
 
 
 import com.story.storyadmin.validator.CheckCaseValidator;

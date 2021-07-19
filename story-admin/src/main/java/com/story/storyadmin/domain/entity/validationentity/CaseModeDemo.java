@@ -1,6 +1,7 @@
 package com.story.storyadmin.domain.entity.validationentity;
-import com.story.storyadmin.common.annotation.validationen.CaseMode;
-import com.story.storyadmin.common.annotation.validationen.CheckCase;
+
+import com.story.storyadmin.validator.annotation.CaseMode;
+import com.story.storyadmin.validator.annotation.CheckCase;
 import lombok.Data;
 
 /**

@@ -143,6 +143,7 @@
 //    @Transient // 或者使用 Jackson中的@JsonIgnore注解在返回的json字符串中忽略掉此字段 或者使用@fastJson中的JSONField(serialize=false)
 //    //@JsonIgnore
 //    //@JSONField(serialize=false)
+//       @TableFiled(exit = false)
 //    private Integer standby1;//备用字段1
 //
 //    @Transient
