@@ -1,10 +1,7 @@
 package com.story.storyadmin.validator;
 
-
-
 import com.story.storyadmin.validator.annotation.CaseMode;
 import com.story.storyadmin.validator.annotation.CheckCase;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

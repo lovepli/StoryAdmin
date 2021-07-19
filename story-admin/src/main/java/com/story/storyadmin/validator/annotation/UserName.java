@@ -26,6 +26,7 @@ public @interface UserName {
 
     Class<? extends Payload>[] payload() default {};
 
+    //用户名校验正则
     String regexp() default ValidationUtil.USERNAME_REGX;
 
     Pattern.Flag[] flags() default {};

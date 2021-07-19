@@ -21,12 +21,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface Mobile {
 
+    // 错误的提示信息
     String message() default ValidationUtil.MOBILE_MSG;
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
+    //手机号校验正则
     String regexp() default ValidationUtil.MOBILE_REGX;
 
     Pattern.Flag[] flags() default {};
