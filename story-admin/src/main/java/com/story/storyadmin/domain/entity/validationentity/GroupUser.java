@@ -1,5 +1,8 @@
-package com.story.storyadmin.domain.entity.validationentity.group;
+package com.story.storyadmin.domain.entity.validationentity;
 
+
+import com.story.storyadmin.validator.group2.GroupA;
+import com.story.storyadmin.validator.group2.GroupB;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;

@@ -1,6 +1,6 @@
 package com.story.storyadmin.web.validationweb;
 
-import com.story.storyadmin.domain.entity.validationentity.model.StudentValidation;
+import com.story.storyadmin.domain.entity.validationentity.StudentValidation;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,14 +1,12 @@
-package com.story.storyadmin.domain.entity.validationentity.model;
+package com.story.storyadmin.domain.entity.validationentity;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 import java.util.List;
-
-
 
 
 /*

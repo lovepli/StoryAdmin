@@ -2,7 +2,8 @@ package com.story.storyadmin.web.validationweb;
 
 
 import com.story.storyadmin.constant.enumtype.ResultEnum;
-import com.story.storyadmin.domain.entity.validationentity.model.UserModel;
+
+import com.story.storyadmin.domain.entity.validationentity.UserModel;
 import com.story.storyadmin.domain.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;

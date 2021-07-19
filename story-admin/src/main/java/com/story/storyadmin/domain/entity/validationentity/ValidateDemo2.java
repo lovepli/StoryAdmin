@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.validationentity.validateDemo;
+package com.story.storyadmin.domain.entity.validationentity;
 
 import lombok.Data;
 

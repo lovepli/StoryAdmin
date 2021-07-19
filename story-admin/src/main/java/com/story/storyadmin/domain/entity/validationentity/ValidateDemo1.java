@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.validationentity.validateDemo;
+package com.story.storyadmin.domain.entity.validationentity;
 
 
 import lombok.AllArgsConstructor;
@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**

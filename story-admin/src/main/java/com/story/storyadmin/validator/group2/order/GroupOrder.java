@@ -1,7 +1,7 @@
-package com.story.storyadmin.domain.entity.validationentity.group.order;
+package com.story.storyadmin.validator.group2.order;
 
-import com.story.storyadmin.domain.entity.validationentity.group.GroupA;
-import com.story.storyadmin.domain.entity.validationentity.group.GroupB;
+import com.story.storyadmin.validator.group2.GroupA;
+import com.story.storyadmin.validator.group2.GroupB;
 
 import javax.validation.GroupSequence;
 import javax.validation.groups.Default;
@@ -14,6 +14,6 @@ import javax.validation.groups.Default;
  * 指定组的验证顺序，前面组验证不通过，后面组不验证
  */
 // GroupA > GroupB > Default
-//@GroupSequence({GroupA.class, GroupB.class, Default.class})
+@GroupSequence({GroupA.class, GroupB.class, Default.class})
 public interface GroupOrder {
 }

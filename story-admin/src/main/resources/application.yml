@@ -9,7 +9,7 @@ server:
 spring:
   # 配置文件
   profiles:
-    active: mac
+    active: dev
   # freemarker模板引擎
   freemarker:
     cache: false

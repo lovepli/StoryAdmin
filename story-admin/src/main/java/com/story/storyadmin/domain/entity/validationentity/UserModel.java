@@ -1,4 +1,4 @@
-package com.story.storyadmin.domain.entity.validationentity.model;
+package com.story.storyadmin.domain.entity.validationentity;
 
 
 import lombok.AllArgsConstructor;
