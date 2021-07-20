@@ -54,7 +54,8 @@ public class SpringTaskConfig {
     /**
      * 从配置文件读取参数
      */
-    @Async // 异步执行，线程之间不会互相干扰
+    //@Async // 异步执行，线程之间不会互相干扰
+    @Async("taskExecutor") // 使用自定义线程池
     @PostConstruct // 加上该注解项目启动时就执行一次该方法,与springboot启动类是否有@EnableScheduling注解无关，总是能够执行一次
    // @Scheduled(cron = "${task.cron}") // cron表达式
     @Scheduled(cron = "0/1 * * * * ? ")
@@ -70,7 +71,8 @@ public class SpringTaskConfig {
     /**
      * 定时任务方法1
      */
-    @Async // 异步执行，线程之间不会互相干扰，任务自动提交到线程池
+    //@Async // 异步执行，线程之间不会互相干扰，任务自动提交到线程池
+    @Async("taskExecutor")
     @PostConstruct // 加上该注解项目启动时就执行一次该方法
     @Scheduled(cron=times1)
     public void teskTest() {

@@ -2,6 +2,7 @@ package com.story.storyadmin.domain.entity.children;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.bank.NewGeneration;
 import com.story.storyadmin.domain.entity.children.dto.CourseTeacherResult;
 import com.story.storyadmin.domain.entity.children.dto.DDeptDTO;
@@ -10,12 +11,14 @@ import com.story.storyadmin.domain.entity.children.manytomany.DCourseBO;
 import com.story.storyadmin.domain.entity.children.manytomany.DStudentBO;
 import com.story.storyadmin.domain.entity.children.onetomany.DDeptBO;
 import com.story.storyadmin.domain.entity.children.onetomany.DEmployeeBO;
+import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.mapper.children.DCourseMapper;
 import com.story.storyadmin.mapper.children.DDeptMapper;
 import com.story.storyadmin.mapper.children.DEmployeeMapper;
 import com.story.storyadmin.mapper.children.DStudentMapper;
 import com.story.storyadmin.utils.bank.PageUtil;
 import junit.framework.TestCase;
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -182,6 +185,14 @@ public class DCourseTest extends TestCase {
     }
 
     /**
+     * 树形结构展示部门数据TreeUtil
+     */
+    @Test
+    public void Test5_1() {
+
+    }
+
+    /**
      * 一对多分页的SQL
      * 查询部门下的所有员工信息
      * 部门--员工
@@ -190,14 +201,51 @@ public class DCourseTest extends TestCase {
     public void Test6() {
         JSONObject jsonObject=new JSONObject();
         Page<DDeptDTO2> page =new PageUtil<DDeptDTO2>().getPage(jsonObject);
-        List<DDeptDTO2>  deptBO = dDeptMapper.findByPage3(page);
-        logger.info("根据id查询部门以及下级部门信息：{}",deptBO.toString());
+        List<DDeptDTO2>  deptList = dDeptMapper.findByPage3(page);
+        //封装查询list集合到page对象，返回给前端
+        page.setRecords(deptList);
+        page.setTotal(deptList.size());
+        // 封装分页查询数据到返回对象
+        Result result = new Result();
+        result.setData(page);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+
+
+        //logger.info("分页查询部门以及部门下的所有员工的名字：{}",deptList.toString());
+        //deptList.forEach(System.out::println);
+
+        //DDeptDTO2(deptId=0, deptName=公司总部, employeeNames=[])
+        //DDeptDTO2(deptId=0001, deptName=财务部, employeeNames=[张三, 李四])
+        //DDeptDTO2(deptId=00010003, deptName=研发一组, employeeNames=[])
+        //DDeptDTO2(deptId=0002, deptName=人事部, employeeNames=[王五, 赵六])
+        //DDeptDTO2(deptId=00020003, deptName=研发二组, employeeNames=[])
+        //DDeptDTO2(deptId=0003, deptName=研发部, employeeNames=[])
     }
 
     @Test
     public void Test7() {
-        List<DDeptDTO2>  deptBO = dDeptMapper.findByPage4(0,10);
-        logger.info("根据id查询部门以及下级部门信息：{}",deptBO.toString());
+        Page<DDeptDTO2> page = new Page<>(0,10);
+        List<DDeptDTO2>  deptList = dDeptMapper.findByPage4(0,10);
+        //封装查询list集合到page对象，返回给前端
+        page.setRecords(deptList);
+        page.setTotal(deptList.size());
+        // 封装分页查询数据到返回对象
+        Result result = new Result();
+        result.setData(page);
+        result.setResult(true);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+
+
+        //logger.info("分页查询部门以及部门下的所有员工的名字：{}",deptList.toString());
+        //deptList.forEach(System.out::println);
+
+        //DDeptDTO2(deptId=0001, deptName=财务部, employeeNames=[张三, 李四])
+        //DDeptDTO2(deptId=0002, deptName=人事部, employeeNames=[王五, 赵六])
+        //DDeptDTO2(deptId=0, deptName=公司总部, employeeNames=[])
+        //DDeptDTO2(deptId=00010003, deptName=研发一组, employeeNames=[])
+        //DDeptDTO2(deptId=00020003, deptName=研发二组, employeeNames=[])
+        //DDeptDTO2(deptId=0003, deptName=研发部, employeeNames=[])
     }
 
 

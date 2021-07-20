@@ -81,25 +81,18 @@
         <id property="deptId" column="d_id"/>
         <result property="deptName" column="d_name"/>
         <!-- 利用 collection 标签提供的 select 特性 和 column   -->
-        <collection property="employeeNames" ofType="string" select="com.story.storyadmin.mapper.children.DEmployeeMapper.selectEmployeeNamesBydeptId" column="deptId"/>
+        <!--2、再根据deptId查询对应的图片-->
+        <collection property="employeeNames" ofType="string" select="com.story.storyadmin.mapper.children.DEmployeeMapper.selectEmployeeNamesBydeptId" column="d_id"/>
     </resultMap>
 
     <select id="findByPage3" resultMap="pageResultMap">
         select
-        d_id as deptId,d_name as deptName
-        from
-        d_dept
+        d_id ,d_name
+        from d_dept
     </select>
 
-    <!--2、再根据deptId查询对应的图片-->
-<!--    <select id="selectEmployeeNamesBydeptId" resultType="string">-->
-<!--        SELECT e_name-->
-<!--        FROM d_employee-->
-<!--        WHERE dept_id = #{deptId}-->
-<!--    </select>-->
 
-
-<!--或者下面的方式结-->
+<!--或者下面的sql方式查找-->
     <resultMap id="pageResultMap2" type="com.story.storyadmin.domain.entity.children.dto.DDeptDTO2">
         <id property="deptId" column="d_id"/>
         <result property="deptName" column="d_name"/>

@@ -4,7 +4,7 @@ package com.story.storyadmin.config.shiro.security;
 import com.story.storyadmin.config.shiro.LoginUser;
 
 /**
- * 线程上下文，与应用上下文ApplicationContextAware区别开来,可以说是替代session存储用户登录信息
+ * 线程上下文，与应用上下文ApplicationContextAware区别开来,可以说是替代session存储用户登录信息，相当于是一个本地缓存
  * TODO 这里的作用和从session中取出用户信息是一样的处理方式，感觉这样做复杂了很多，
  * 这是因为这里是json web token 的形式，所以服务端不存储用户session信息，所以就不用session来存储用户信息
  *
