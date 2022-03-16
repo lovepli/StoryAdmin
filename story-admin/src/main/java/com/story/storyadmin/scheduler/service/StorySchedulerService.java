@@ -8,6 +8,16 @@ import org.springframework.stereotype.Service;
 import com.story.storyadmin.scheduler.listener.StoryJobListener;
 import java.util.Date;
 
+/**
+ * 定义一个任务
+ * 首先我们来明确几个概念：
+ * Scheduler:主要负责调度任务。
+ * Trigger:负责执行任务的触发器。
+ * JobListener:任务执行的监听器，可以监听到任务执行前、后以及未能成功执行抛出异常。
+ * Job及JobDetail:被执行的任务，Scheduler真正调度的对象。
+ *
+ * 知道了Scheduler，那么我们需要要知道如何启动，停止，变更以及移除一个任务，所以定义任务动态变更的服务类，包含对任务用到的所有操作。
+ */
 @Service
 public class StorySchedulerService {
 

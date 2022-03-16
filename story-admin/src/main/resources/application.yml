@@ -1,61 +1,126 @@
+# 配置端口
 server:
   port: 9430
+  #配置session过期时间
+  #session-timeout: 1800
+  # 应用的访问路径（指定访问前缀）
+#  servlet:
+#    context-path: /storyAdmin
+
+# spring config
 spring:
+  # 配置文件
   profiles:
-    active: dev
+    active: mac
+  # freemarker模板引擎
   freemarker:
     cache: false
     charset: UTF-8
     suffix: .ftl
+  # 20210524新增spring如下配置
+  #开启热部署
+  devtools:
+    restart:
+      enabled: true # 设置开启热部署
+      additional-paths: src/mian/java # 重启目录
+      exclude: WEB-INF/** # WEB-INF下的文件内容不重启
+  # 文件上传配置 在springboot+tomcat架构下的文件上传校验，需做如下配置文件上传的属性：
+  servlet:
+    multipart:
+      enabled: true #是否支持多文件上传
+      file-size-threshold: 20MB #文件写入磁盘的阈值
+      max-file-size: 100MB #上传文件的最大值
+      max-request-size: 100MB #最大请求文件的大小
+#     location: #上传文件的保存地址
+#     resolve-lazily: false #是否在文件或参数访问时延迟解析多部门请求
 
+# 静态资源文件映射
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-parrern: /static/**
+    #配置全局日期格式化
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8 #指定时间区域类型
+
+
+# mybatis-plus相关配置
 mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
   mapper-locations: classpath:/mapper/**/*.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.story.storyadmin.domain.entity
+  #MP别名包扫描路径，通过该属性可以给包中的类注册别名，实体扫描，多个package用逗号或者分号分隔
+#  typeAliasesPackage: com.story.storyadmin.domain.entity
+  type-aliases-package: com.story.storyadmin.domain.entity
   mapperClassScan: com.story.storyadmin.mapper
+  type-handlers-package: com.story.storyadmin.myBatisTypeHandler
+  # MP配置扫描通用枚举 #支持通配符 *或者;分割
+  type-enums-package: com.story.storyadmin.enumerator.globalEnum
+  # 启动时是否检查XML文件的存在，默认不检查
+  #check-config-location: false
+
+  #ExecutorType:SIMPLE 执行器类型不做特殊的事情，为每个语句的执行创建一个新的预处理语句（PreparedStatement）
+  #ExecutorType:REUSE 执行器类型会复用预处理语句（PreparedStatement）
+  #ExecutorType:REUSE 执行器类型会批量执行所有的更新语句
+#  executor-type: simple
+
+  # 以下配置均有默认值,可以不设置
   global-config:
-    db-config:
-      id-type: auto
+    #db-config:
     #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 0
+    #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+#    id-type: 0 #或者写为 id-type: auto
     #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
     field-strategy: 2
+    #添加表名前缀,MYSQL中的表做一下修改,为xx_user。但Java实体类保持不变（仍然为User）。
+    #table-prefix: xx_
     #驼峰下划线转换
     db-column-underline: true
     #刷新mapper 调试神器
     refresh-mapper: true
     #数据库大写下划线转换
     #capital-mode: true
+
     #逻辑删除配置（下面3个配置）
-    #    logic-delete-value: 0
-    #    logic-not-delete-value: 1
-    #自定义SQL注入器
-    #sql-injector: com.baomidou.springboot.xxx
-    logic-delete-value: 1
-    logic-not-delete-value: 0
-    #    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    #logic-delete-field: deleted # 全局逻辑删除的实体字段名
+    #logic-delete-value: 1 # 逻辑已删除值(默认为1)
+    #logic-not-delete-value: 0 # 逻辑未删除值(默认为0)
+    # 若逻辑已删除和未删除的值和默认值一样，则可以不配置这2项
     # SQL 解析缓存，开启后多租户 @SqlParser 注解生效
     #sql-parser-cache: true
+    #自定义SQL注入器
+    #sql-injector: com.baomidou.springboot.xxx
+    #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
   configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
     map-underscore-to-camel-case: true
+    # 是否开启二级缓存
     cache-enabled: false
+    #配置jdbcTypeForNull， oracle数据库必须配置
+    #jdbc-type-for-null: null
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    # call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #开启SQL语句打印
+
 # token相关
 token:
-  #  token有效时间，单位分钟 24*60=1440
+  # token有效时间，单位秒 24*60=1440 即24分钟
   tokenExpireTime: 1440
-  # 更新令牌时间 2*60=120
+  # 更新令牌时间 单位秒 2*60=120 即2分钟
   refreshCheckTime: 120
-  #  #  RefreshToken过期时间，单位：分钟, 24*60=1440
-  #  refreshTokenExpireTime: 1440
-  #  shiro缓存有效期，单位分钟,2*60=120
-  shiroCacheExpireTime: 120
+  #  shiro缓存有效期，单位秒 24*60=1440 即24分钟
+  shiroCacheExpireTime: 1440
   #  token加密密钥
   secretKey: story-admin
+
 #动态设置拦截器
 permission-config:
   perms:
     #配置不会被拦截的链接 需要anon认证
     - key: /
+      value: anon
+    - key: /captchaImage
       value: anon
     - key: /user/login
       value: anon
@@ -66,16 +131,26 @@ permission-config:
       value: anon
     - key: /swagger-resources/**
       value: anon
+    - key: /images/**
+      value: anon
     - key: /v2/api-docs/**
       value: anon
     - key: /webjars/**
       value: anon
     - key: /druid/**
       value: anon
+    - key: /common/**
+      value: anon
+    - key: /mongoDBTest/**
+      value: anon
+    - key: /redisCacheTest/**
+      value: anon
       #除了以上的url,其他所有请求需要自定义的jwt认证
     - key: /**
       value: jwt
+
 #天气API
 weather-config:
   appid: 59274993
   appsecret: YxMhVC2U
+

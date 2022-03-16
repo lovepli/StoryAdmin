@@ -1,4 +1,4 @@
-import { login, logout, getInfo, loginerp } from '@/api/login'
+import { login, logout, getInfo, loginerp,secretLogin } from '@/api/login'
 // eslint-disable-next-line no-unused-vars
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
@@ -16,7 +16,8 @@ const user = {
     name: '',
     avatar: '',
     roles: [], // 初始值为空
-    funcs: [],
+    menus: [],
+    permissions: [],
     erp: ''
   },
 
@@ -30,24 +31,34 @@ const user = {
   // 通过 store.dispatch(type)方法触发action，参数为事件类型，需要和action中函数名称一致。
   // 在组件中分发Action: 在组件中使用 this.$store.dispatch('xxx') 分发 action，或者使用 mapActions 辅助函数将组件的 methods 映射为 store.dispatch 调用
   actions: {
-    // 1、登录后台
+    
+    // 1、通过验证码登录后台
     Login({ commit }, userInfo) { // commit提交调用mutation；userInfo即为点击后传递过来的参数，此时是 用户登录信息
       const username = userInfo.username.trim()
+      const password = userInfo.password
+      const code = userInfo.code
+      const uuid = userInfo.uuid
+      const rememberMe = userInfo.rememberMe
       // Action 通常是异步的，那么如何知道 action 什么时候结束呢？更重要的是，我们如何才能组合多个 action，以处理更加复杂的异步流程？
       // 首先，你需要明白 store.dispatch 可以处理被触发的 action 的处理函数返回的 Promise，并且 store.dispatch 仍旧返回 Promise
       return new Promise((resolve, reject) => {
         // 一旦登录接口响应成功，会将返回的Token信息全局设置再请求头中，这样以后所有的请求中都携带这个请求头信息。
         // 具体可以看：src/utils/request.js中这段代码：config.headers['Authorization'] = getToken()
         // 这是全局配置axios实例，因为所有的API请求都需要经过这个request.js文件，所以其中的配置项对所有的请求都有效。
-        login(username, userInfo.password).then(response => {
+       
+        login(username, password, code, uuid, rememberMe).then(response => {
+        //  secretLogin(username, password, code, uuid, rememberMe).then(response => { // TODO base64加密接口参数
+          // 这里前端登录的时候不要存储token，因为在request.js中已经存储了token，在登录成功的response响应拦截器中存储了token
           // const data = response.data
-          // setToken(data.token)  //登录成功后将token存储在cookie之中，这个方法是定义在auth.js中
+          // setToken(data.token)  //登录成功后将token存储在cookie之中，这个方法是定义在auth.js中，这个是前端处理存储用户信息的方式，后台是使用jwt验证
           // commit('SET_TOKEN', data.token)
           resolve()
         }).catch(error => {
           reject(error)
         })
       })
+
+
     },
 
     // 登录ERP
@@ -70,17 +81,23 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
           const data = response.data
+         // console.log('用户登录的数据：' + JSON.stringify(response.data))
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            // 全局设置信息-角色信息
+            // 全局设置信息-角色信息，并存储到store中
             commit('SET_ROLES', data.roles)
+            commit('SET_PERMISSIONS', data.permissions) // 权限
+            //console.log('登录用户角色：' + JSON.stringify(data.roles))
           } else {
+            // commit('SET_ROLES', ['ROLE_DEFAULT'])
             reject('getInfo: roles must be a non-null array !')
             // reject('Verification failed, please Login again.')
           }
           // 全局设置信息-姓名 commit将状态信息提交到mutations处理，第一个参数为事件类型，需要和mutation中函数名称一致；第二个参数为要传递的参数。mutation中的函数接受 state 作为其第一个参数
           // commit分发多重 mutation，调用mutation中对应相同名称的方法
+          commit('SET_ID', data.id) // 用户ID
           commit('SET_NAME', data.name)// 姓名
           commit('SET_AVATAR', data.avatar) // 头像
+          commit('SET_MENUS', data.menus) // 菜单
           commit('SET_ERP', data.erp)
           resolve(response)
         }).catch(error => {
@@ -99,7 +116,10 @@ const user = {
           // 重置token值
           commit('SET_TOKEN', '')
           // 重置角色信息
-          commit('SET_ROLES', [])
+          // commit('SET_ROLES', [])
+          // commit('SET_PERMISSIONS', [])
+          // 重置用户信息，包括角色信息，菜单信息等。。
+          commit('RESET_USER')
           // 移除Cookies中的token， removeToken()方法是auth.js中的方法
           removeToken()
           resolve()
@@ -114,6 +134,7 @@ const user = {
     FedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
+       // commit('RESET_USER')
         removeToken()
         resolve()
       })
@@ -130,7 +151,10 @@ const user = {
       // 改变stat中的token的值
       state.token = token
     },
-    // 回调函数 SET_NAME:()
+    // 回调函数 SET_NAME:() 对数据进行赋值，类似Java中的set方法，存储的数据是存储在vuex的store中，获取值的方式是在getter中获取
+    SET_ID: (state, id) => { // 登录id
+      state.id = id
+    },
     SET_NAME: (state, name) => { // 姓名状态的改变
       state.name = name
     },
@@ -140,8 +164,24 @@ const user = {
     SET_ROLES: (state, roles) => { // 角色
       state.roles = roles
     },
+    SET_MENUS: (state, menus) => { // 菜单
+      state.menus = menus
+    },
+    SET_PERMISSIONS: (state, permissions) => { // 权限
+      state.permissions = permissions
+    },
     SET_ERP: (state, erp) => { // erp
       state.erp = erp
+    },
+    // 重置数据
+    RESET_USER: (state) => {
+      state.id = '';
+      state.name = '';
+      state.avatar = '';
+      state.erp = '';
+      state.roles = [];
+      state.menus = [];
+      state.permissions = [];
     }
   }
 

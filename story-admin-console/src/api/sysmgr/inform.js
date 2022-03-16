@@ -1,105 +1,85 @@
 import request from '@/utils/request'
-
-// // 添加
-// export function addInform(inform) {
-//   var expiration = inform.expiration
-//   if (expiration && expiration.getTime) {
-//     inform.expiration = expiration.getTime()
-//   }
-//   return request({
-//     url: '/inform',
-//     method: 'post',
-//     data: inform
-//   })
-// }
-
-// 查询
-// export function queryInform(cond, page) {
-//   const params = {
-//     status: cond.status,
-//     title: cond.title,
-//     creator: cond.operator,
-//     tf: cond.topFirst,
-//     page: page.num,
-//     limit: page.size
-//   }
-//   const { createDate } = cond
-//   if (createDate && createDate.length === 2) {
-//     params.sd = params[0].getTime()
-//     params.ed = params[1].getTime()
-//   }
-//   return request({
-//     url: `/informs?${search(params)}`,
-//     method: 'get'
-//   })
-// }
+import { search } from '@/utils/common'
 
 // 列表查询
-export function getList(params) {
+export function getInformList(param) {
   return request({
-    url: '/sysmgr/inform/list',
+    url: `/sysmgr/inform/list`,
     method: 'get',
-    params
+    data: param
   })
 }
-// 根据Id查询
-export function findById(param) {
+
+export function queryInform(cond, page) {
+  const params = {
+    status: cond.status,
+    title: cond.title,
+    creatorId: cond.creatorId,
+    tf: cond.topFirst,
+    page: page.num,
+    limit: page.size
+  }
+  const { requestDate } = cond
+  if (requestDate && requestDate.length === 2) {
+    params.sd = requestDate[0].getTime()
+    params.ed = requestDate[1].getTime()
+  }
   return request({
-    url: '/sysmgr/inform/find',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/list?${search(params)}`,
+    method: 'get'
+  })
+}
+
+// 查看详情
+export function findById(id) {
+  return request({
+    url: `/inform/${id}`,
+    method: 'get'
   })
 }
 
 // 过期
-export function outdateInform(param) {
+export function outdateInform(id) {
   return request({
-    url: '/sysmgr/inform/outdate',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/${id}/outdate`,
+    method: 'post'
   })
 }
 
 // 撤销
-export function cancelInform(param) {
+export function cancelInform(id) {
   return request({
-    url: '/sysmgr/inform/cancel',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/${id}/cancel`,
+    method: 'post'
   })
 }
 
 // 取消置顶
-export function untopInform(param) {
+export function untopInform(id) {
   return request({
-    url: '/sysmgr/inform/untop',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/${id}/untop`,
+    method: 'post'
   })
 }
 
 // 置顶
-export function topInform(param) {
+export function topInform(id) {
   return request({
-    url: '/sysmgr/inform/top',
-    method: 'post',
-    data: param
+    url: `/sysmgr/inform/${id}/top`,
+    method: 'post'
   })
 }
 
-// 更改/保存
+// // 添加
 export function save(param) {
+  var expiration = param.expiration
+  if (expiration && expiration.getTime) {
+    param.expiration = expiration.getTime()
+  }
   return request({
     url: '/sysmgr/inform/save',
     method: 'post',
     data: param
   })
 }
-// 删除
-export function drop(param) {
-  return request({
-    url: '/sysmgr/inform/delete',
-    method: 'post',
-    data: param
-  })
-}
+

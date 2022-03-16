@@ -1,14 +1,16 @@
 package com.story.storyadmin.service.sysmgr;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.story.storyadmin.domain.entity.sysmgr.User;
-import com.story.storyadmin.domain.entity.sysmgr.UserRole;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.domain.vo.sysmgr.LoginBody;
 import com.story.storyadmin.domain.vo.sysmgr.UserPassword;
 import com.story.storyadmin.domain.vo.sysmgr.UserRoleVo;
 import com.story.storyadmin.domain.vo.sysmgr.UserVo;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * <p>
@@ -34,6 +36,10 @@ public interface UserService extends IService<User> {
      */
     Result login(UserVo user, HttpServletResponse response);
 
+    Result login2(LoginBody user, HttpServletResponse response);
+
+    Result login3(JSONObject jsonObject, HttpServletResponse response);
+
     /**
      * ERP登录
      * @return
@@ -55,6 +61,13 @@ public interface UserService extends IService<User> {
     Result findUserRole(Long userId);
 
     /**
+     * 根据用户名查询所有角色
+     * @param userName
+     * @return
+     */
+    Result findUserRole(String userName);
+
+    /**
      * 修改用户角色
      * @param userRole
      * @return
@@ -67,5 +80,17 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result editPassWord(UserPassword userPassword);
+
+    /**
+     * 根据用户ID查查询user
+     * @param id
+     * @return
+     */
+     User selectUserById(Long id);
+
+     List<User> selectUserNameList();
+
+    String findFileInfoDetail(JSONObject jsonObject);
+
 
 }

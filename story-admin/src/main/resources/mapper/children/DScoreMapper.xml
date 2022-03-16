@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.storyadmin.mapper.children.DScoreMapper">
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.DScore" id="BaseResultMap">
+        <id     property="id"     column="ds_id"     />
+        <result property="score"   column="ds_score"   />
+        <result property="courseId"  column="course_id"   />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ds_ID,ds_score,course_id
+    </sql>
+
+
+    <select id="findByPage" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        d_score
+    </select>
+
+    <!--#####################################################图sql题目##############################################################-->
+
+<!--查询学生的总成绩并进行排名-->
+    <select id="findSumScoreList"  resultType="java.util.Map">
+        select
+        ds.ds_id as `id`, sum(ds.ds_score) as sumScore
+        from
+        d_score ds group by ds.ds_id order by sum(ds.ds_score) desc
+    </select>
+
+    <select id="findSumScoreList2"  resultType="java.util.Map">
+        select
+          ds.ds_id as `id`, sum(ds.ds_score) as sumScore
+        from
+        d_score ds group by ds.ds_id order by sum(ds.ds_score) desc
+    </select>
+
+
+
+
+    <!--查询平均成绩大于60分的学生的学号和平均成绩-->
+    <select id="findAvgScoreList"  resultType="java.util.Map">
+        select
+        ds.ds_id as `id`, avg(ds.ds_score) as avgScore
+        from
+        d_score ds group by ds.ds_id having avg(ds.ds_score) >60 order by avg(ds.ds_score)
+    </select>
+
+    <select id="findAvgScoreList2"  resultType="java.util.Map">
+        select
+        ds.ds_id as `id`, avg(ds.ds_score) as avgScore
+        from
+        d_score ds group by ds.ds_id having avg(ds.ds_score) >60 order by avg(ds.ds_score)
+    </select>
+
+<!--检索"0001"课程分数小于60，按分数降序desc排列的学生信息-->
+    <select id="findStudentInfoOrderbyScore"  resultType="java.util.Map">
+        select
+        dt.s_id as id,
+        dt.s_name as name,
+        dt.s_birthday as birthday,
+        dt.s_sex as sex,
+        ds.course_id courseId,
+        ds.ds_score score
+        from
+        d_score ds left join d_student dt on ds.ds_id = dt.s_id where ds.course_id='0001' and ds.ds_score &lt; 60 order by ds.ds_score desc
+    </select>
+
+    <select id="findStudentInfoOrderbyScore2"  resultType="java.util.Map">
+        select
+        dt.s_id as id,
+        dt.s_name as name,
+        dt.s_birthday as birthday,
+        dt.s_sex as sex,
+        ds.course_id courseId,
+        ds.ds_score score
+        from
+        d_score ds left join d_student dt on ds.ds_id = dt.s_id
+    </select>
+
+   <!--查询不同老师所教不同课程平均分从高到低显示-->
+    <select id="findTeacherAndScoreInfoOrderbyScore"  resultType="java.util.Map">
+        select
+        ds.course_id as courseId,
+        avg(ds.ds_score) as score
+        from d_score ds
+        where 1=1
+        GROUP BY ds.course_id
+        ORDER BY avg(ds.ds_score) desc
+    </select>
+
+<!--查询课程名称为"数学"，且分数低于60的学生姓名和分数-->
+    <select id="findStudentAndScoreInfobyCourseName"  resultType="java.util.Map">
+        select
+         dst.s_name as name,ds.ds_score as score
+        from d_student dst
+        left join d_score ds
+        on dst.s_id = ds.ds_id
+        left join d_course dc
+        on ds.course_id=dc.c_id
+        where
+        dc.c_name ='数学'
+        and ds.ds_score &lt; 60
+    </select>
+
+<!-- 查询任何一门课程成绩在70分以上的姓名、课程名称和分数（与上题类似）-->
+    <select id="findStudentAndScoreInfobyScore"  resultType="java.util.Map">
+        select
+        dst.s_id `id`, dst.s_name `name`,dc,c_name  `courseName`,ds.ds_score  `score`
+        from d_student dst
+        left join d_score ds
+        on dst.s_id = ds.ds_id
+        left join d_course dc
+        on ds.course_id=dc.c_id
+        where
+        ds.ds_score &gt; 70
+    </select>
+
+<!--查询两门及其以上不及格课程的同学的学号，姓名及其平均成绩-->
+
+    <select id="findStudentAndAvgScoreInfo"  resultType="java.util.Map">
+        select
+        dst.s_id `id`,dst.s_name `name`, avg(ds.ds_score ) `avgScore`
+        from d_student dst
+        left join d_score ds
+        on dst.s_id = ds.ds_id
+        left join d_course dc
+        on ds.course_id=dc.c_id
+        where
+        ds.ds_score  &lt; 60
+        group by  dst.s_id ,dst.s_name
+        having count(dst.s_id )  &gt;= 2
+    </select>
+
+<!--查询不同课程成绩相同的学生的学生编号、课程编号、学生成绩   注意：这三个数都存分数表-->
+<!--  select distinct a.ds_id,a.ds_score ,a.course_id  from d_score as a cross join d_score b on a.ds_id = b.ds_id where a.ds_score = b.ds_score and a.course_id != b.course_id-->
+    <select id="findStudentAndCoAndScoreInfo"  resultType="java.util.Map">
+        select
+        ds1.ds_id `ds1`, ds1.course_id `courseId1` ,ds1.ds_score `score1`
+<!--    , ds2.ds_id `ds2`, ds2.course_id `courseId2`,ds2.ds_score `score2`-->
+        from d_score ds1
+        inner join
+        d_score ds2
+        on ds1.ds_id =ds2.ds_id
+        where ds1.ds_score = ds2.ds_score and  ds1.course_id != ds2.course_id
+    </select>
+
+<!--查询课程编号为“0001”的课程比“0002”的课程成绩高的所有学生的学号   也可以使用自查询-->
+    <select id="findStudentInfoByCourseId"  resultType="java.util.Map">
+        select
+        ds1.ds_id `ds1`
+        from d_score ds1
+        cross join
+        d_score ds2
+        on ds1.ds_id =ds2.ds_id
+        where ds1.ds_score > ds2.ds_score  and  ds1.course_id = '0001' and ds2.course_id ='0002'
+    </select>
+
+<!--查询学过编号为“0001”的课程并且也学过编号为“0002”的课程的学生的学号、姓名-->
+    <select id="findStudentInfoByCourseId2"  resultType="java.util.Map">
+        select
+        dst.s_id `id`,dst.s_name `name`
+        from d_student dst
+        left join d_score ds
+        on dst.s_id = ds.ds_id
+        where ds.course_id IN ('0001','0002') GROUP BY dst.s_id,dst.s_name
+    </select>
+
+<!--查询学过“孟扎扎”老师所教的所有课的同学的学号、姓名-->
+    <select id="findStudentInfoByTeacherName"  resultType="java.util.Map">
+        select
+        dst.s_id `id`, dst.s_name `name`,ds.ds_score `score`,dc.c_name `courseName`
+        from d_student dst
+        left join d_score ds
+        on dst.s_id = ds.ds_id
+        left join d_course dc
+        on ds.course_id=dc.c_id
+        left join d_teacher dt
+        on dt.t_id =dc.teacher_id
+        where
+        dt.t_name='孟扎扎'
+    </select>
+
+<!--查询没学过"孟扎扎"老师讲授的任一门课程的学生姓名 （与上题类似，"没学过"用not in来实现)-->
+    <select id="findStudentInfoNotInByTeacherName"  resultType="java.util.Map">
+       select
+        dst.s_id `id`,
+        dst.s_name `name`
+        FROM
+        d_student dst
+        WHERE
+        dst.s_id not in (
+        SELECT
+        ds.ds_id
+        FROM
+        d_score ds
+        LEFT JOIN d_course dc ON ds.course_id = dc.c_id
+        LEFT JOIN d_teacher dt ON dc.teacher_id = dt.t_id
+        WHERE
+        dt.t_name = '孟扎扎'
+        )
+    </select>
+
+<!--查询没学过“孟扎扎”老师课的学生的学号、姓名（与上题类似）-->
+    <select id="findStudentInfoNotInByTeacherName2"  resultType="java.util.Map">
+        SELECT
+        dst.s_id `id`,
+        dst.s_name `name`
+        FROM
+        d_student dst
+        WHERE
+        dst.s_id NOT IN (
+        SELECT
+        ds.ds_id
+        FROM
+        d_score ds
+        WHERE
+        ds.course_id = (
+        SELECT
+        dc.c_id
+        FROM
+        d_course dc
+        WHERE
+        dc.teacher_id = (
+        SELECT
+        dt.t_id
+        FROM
+        d_teacher dt
+        WHERE
+        dt.t_name = '孟扎扎'
+        )
+        )
+        )
+    </select>
+
+<!-- 查询选修“孟扎扎”老师所授课程的学生中成绩最高的学生姓名及其成绩（与上题类似,用成绩排名，用 limit 1得出最高一个）-->
+    <select id="findStudentInfoInByTeacherName"  resultType="java.util.Map">
+        select
+        dst.s_id `id`, dst.s_name `name`,ds.ds_score `score`,dc.c_name `courseName`
+        from d_student dst
+        left join d_score ds
+        on dst.s_id = ds.ds_id
+        left join d_course dc
+        on ds.course_id=dc.c_id
+        left join d_teacher dt
+        on dt.t_id =dc.teacher_id
+        where
+        dt.t_name='孟扎扎'
+        order by ds.ds_score desc limit 1
+    </select>
+
+<!--查询至少有一门课与学号为“0001”的学生所学课程相同的学生的学号和姓名-->
+    <select id="findStudentInfoInByCourseId"  resultType="java.util.Map">
+        select
+        distinct dst.s_id `id`, dst.s_name `name`
+        from d_student dst
+        left join d_score ds
+        on dst.s_id = ds.ds_id where ds.course_id in (
+        select ds.course_id from d_score ds
+        where
+        ds.ds_id='0001')
+        and dst.s_id  !='0001'
+    </select>
+
+<!-- 按平均成绩从高到低显示所有学生的所有课程的成绩以及平均成绩-->
+    <select id="findAllAvgScoreOrderByDesc"  resultType="java.util.Map">
+        select
+        avg(ds.ds_score) as avgScore
+        from d_score ds
+        left join d_student dst
+        on ds.ds_id = dst.s_id
+        where 1=1
+        GROUP BY dst.s_id
+        ORDER BY avg(ds.ds_score) desc
+    </select>
+
+<!-- 按平均成绩从高到低显示所有学生的所有课程的成绩以及平均成绩-->
+    <select id="findAllAvgScoreAndScore"  resultType="java.util.Map">
+        select ds.ds_id `id`, avg(ds.ds_score) `avgScore` ,
+        max(case when dc.c_name = '数学' then ds.ds_score else null end) `math`,
+        max(case when dc.c_name = '语文' then ds.ds_score else null end) `chinese`,
+        max(case when dc.c_name = '英语' then ds.ds_score else null end) `english`
+        from d_score ds inner join d_course dc on ds.course_id = dc.c_id  group by ds.ds_id
+    </select>
+<!--查询学生平均成绩及其名次 mysql中没有row_number()函数  参考https://www.jianshu.com/p/32e8c40372b3-->
+    <select id="findAvgScoreAndOrder"  resultType="java.util.Map">
+        SET @row_number = 0;
+        SELECT
+        (@row_number:=@row_number + 1) AS num, ds.ds_id `id`, avg(ds.ds_score) `avgScore`
+        FROM
+        d_score ds group by ds.ds_id order by avg(ds.ds_score) desc;
+    </select>
+
+    <!--查询每门功课成绩并倒排-->
+    <select id="findScoreFirstAndSecend1"  resultType="java.util.Map">
+        select distinct ds1.course_id,ds1.ds_score
+        from d_score ds1
+        cross join d_score ds2
+        on ds1.course_id = ds2.course_id
+        order by ds1.course_id,ds1.ds_score desc;
+    </select>
+
+<!--查询每门功课成绩的前两名  关联子查询-->
+    <select id="findScoreFirstAndSecend2"  resultType="java.util.Map">
+        select ds1.course_id `courseId`,ds1.ds_score `score` from d_score ds1 where (
+        select count(1) from d_score ds2 where ds1.course_id =ds2.course_id and ds2.ds_score >=ds1.ds_score
+        ) &lt;= 2
+        order by ds1.course_id,ds1.ds_score desc;
+    </select>
+
+<!-- 查询每门功课成绩最好的前两名学生姓名  关联子查询-->
+    <select id="findScoreFirstAndSecend22"  resultType="java.util.Map">
+        select ds1.course_id `courseId`,ds1.ds_score `score`,dst.s_name `name`,dst.s_id `id` from d_score ds1 inner join d_student dst on ds1.ds_id = dst.s_id where (
+        select count(1) from d_score ds2 where ds1.course_id =ds2.course_id and ds2.ds_score >=ds1.ds_score
+        ) &lt;= 2
+        order by ds1.course_id,ds1.ds_score desc;
+    </select>
+
+<!--按各科成绩进行排序，并显示排名 https://blog.csdn.net/liyang_nash/article/details/99641571-->
+    <select id="findCourseScoreOrder"  resultType="java.util.Map">
+        select
+        ds1.ds_id,ds1.course_id,ds1.ds_score ,count(ds2.ds_score)+1 as rank
+        from d_score ds1 left join d_score ds2
+        on ds1.course_id = ds2.course_id  and ds1.ds_score &lt;  ds2.ds_score
+        group by ds1.course_id,ds1.ds_score ,ds1.ds_id
+        order by ds_id, rank asc;
+    </select>
+<!--
+或参考这种
+select * ,(select count(distinct ds_score)+1 from d_score  B where B.course_id = A.course_id and B.ds_score > A.ds_score) as rank from d_score A order by course_id,rank;
+-->
+
+    <!--各科按成绩进行排序，并显示排名 -->
+    <select id="findCourseScoreOrder2"  resultType="java.util.Map">
+        select
+        ds1.ds_id,ds1.course_id,ds1.ds_score ,count(ds2.ds_score)+1 as rank
+        from d_score ds1 left join d_score ds2
+        on ds1.course_id = ds2.course_id  and ds1.ds_score &lt;  ds2.ds_score
+        group by ds1.course_id,ds1.ds_score ,ds1.ds_id
+        order by course_id, rank asc;
+    </select>
+
+    <!--查询所有课程的成绩第2名到第3名的学生信息及该课程成绩-->
+    <select id="findCourseScoreOrder3"  resultType="java.util.Map">
+        select a.ds_id,a.course_id,a.ds_score from
+        (
+        select
+        ds1.ds_id,ds1.course_id,ds1.ds_score ,count(ds2.ds_score)+1 as rank
+        from d_score ds1 left join d_score ds2
+        on ds1.course_id = ds2.course_id  and ds1.ds_score &lt; ds2.ds_score
+        group by ds1.course_id,ds1.ds_score ,ds1.ds_id
+        order by ds1.course_id, rank asc
+        ) a where a.rank =2 or a.rank = 3
+    </select>
+
+<!-- 查询所有课程的成绩第2名到第3名的学生信息及该课程成绩
+   使用union all 将每组选出的数据合并到一起-->
+    <select id="findCourseScoreOrder3_2"  resultType="java.util.Map">
+        (select * from d_score where course_id = '0001' order by ds_score  desc limit 2)
+        union all
+        (select * from d_score where course_id = '0002' order by ds_score  desc limit 2)
+        union all
+        (select * from d_score where course_id = '0003' order by ds_score  desc limit 2);
+    </select>
+
+    <select id="findCourseScoreOrder4"  resultType="java.util.Map">
+        select a.ds_id,a.course_id,a.ds_score ,dst.s_name  from
+        (
+        select
+        ds1.ds_id,ds1.course_id,ds1.ds_score ,count(ds2.ds_score)+1 as rank
+        from d_score ds1 left join d_score ds2
+        on ds1.course_id = ds2.course_id  and ds1.ds_score &lt; ds2.ds_score
+        group by ds1.course_id,ds1.ds_score ,ds1.ds_id
+        order by ds1.ds_id, rank asc
+        ) a  inner join d_student dst  on a.ds_id=dst.s_id where a.rank =2 or a.rank = 3
+    </select>
+
+
+
+
+
+
+
+
+
+    <!--
+    mybatis中大于等于小于等于的写法
+
+     第一种写法（1）：
+    原符号       <        <=      >       >=       &        '        "
+    替换符号    &lt;    &lt;=   &gt;    &gt;=   &amp;   &apos;  &quot;
+    例如：sql如下：
+    create_date_time &gt;= #{startTime} and  create_date_time &lt;= #{endTime}
+
+    第二种写法（2）：
+    大于等于
+    <![CDATA[ >= ]]>
+    小于等于
+    <![CDATA[ <= ]]>
+    例如：sql如下：
+    create_date_time <![CDATA[ >= ]]> #{startTime} and  create_date_time <![CDATA[ <= ]]> #{endTime}
+
+    -->
+
+
+</mapper>

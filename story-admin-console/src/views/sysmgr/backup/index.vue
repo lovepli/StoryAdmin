@@ -63,9 +63,7 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { getList, drop } from '@/api/sysmgr/backup';
-
+import { drop } from '@/api/sysmgr/backup';
 import DataGrid from '@/components/DataGrid';
 import { parseTime, formatFileSize } from '@/utils';
 import waves from '@/directive/waves'; // Waves directive
@@ -95,10 +93,6 @@ export default {
   },
   data() {
     return {
-      // tableKey: 0,
-      // total: 0,
-      // list: null,
-      // listLoading: true,
       listQuery: {
         pageNo: 1,
         limit: 10,
@@ -129,11 +123,6 @@ export default {
               this.$refs.dataList.fetchData();
             });
           }
-          // 删除成功的提示信息
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
         })
         .catch(() => {
           // 删除失败的提示信息

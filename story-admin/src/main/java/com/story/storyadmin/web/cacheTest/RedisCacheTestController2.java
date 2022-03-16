@@ -1,9 +1,7 @@
 package com.story.storyadmin.web.cacheTest;
 
 import com.story.storyadmin.utils.JedisUtils;
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.story.storyadmin.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +19,8 @@ import java.util.stream.IntStream;
  * @description: 测试缓存工具类 JedisUtils
  */
 @RestController
-///webjars 测试的url,不需要登录
-@RequestMapping(value="/webjars")
-public class RedisCacheTestController2 {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+@RequestMapping(value="/redisCacheTest")
+public class RedisCacheTestController2 extends BaseController {
 
     @Autowired
     private JedisUtils jedisUtils;

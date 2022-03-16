@@ -278,7 +278,7 @@ export default {
         children: [] // 子节点为空
       };
 
-      if (!data.children) { // 如果子节点不为空，设置为空
+      if (!data.children) { // 如果没有字节点，添加一个子节点
         this.$set(data, 'children', []);
       }
       // 添加临时子节点对象到菜单对象
@@ -375,11 +375,6 @@ export default {
           param.authorityId = this.auth_path[this.auth_path.length - 1]; // 参数为权限id
           save(param).then(res => {
             this.modifyVisible = false;
-            Message({
-              message: '保存成功',
-              type: 'success',
-              duration: 5 * 1000
-            });
             // 刷新左侧菜单树
             this.loadData();
           });
@@ -418,12 +413,6 @@ export default {
             }
           });
         }
-        // 删除成功的提示信息
-        // 使用全局注册的Message
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
       })
         .catch(() => {
           // 删除失败的提示信息

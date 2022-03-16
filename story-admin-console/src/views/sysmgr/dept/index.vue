@@ -241,11 +241,11 @@ export default {
           }
           save(param).then(res => {
             this.modifyVisible = false;
-            Message({
-              message: '保存成功',
-              type: 'success',
-              duration: 5 * 1000
-            });
+            // Message({
+            //   message: '保存成功',
+            //   type: 'success',
+            //   duration: 5 * 1000
+            // });
             this.loadData();
           });
         } else {
@@ -283,10 +283,6 @@ export default {
           });
         }
         // 删除成功的提示信息
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
       })
         .catch(() => {
           // 删除失败的提示信息

@@ -1,6 +1,8 @@
 package com.story.storyadmin.domain.entity.sysmgr;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
 import lombok.Data;
@@ -40,40 +42,16 @@ public class Dept extends BaseEntity<Dept> {
     private Long pid;
 
     /**
+     * 编号路径
+     */
+    @TableField("full_id")
+    private String fullId;
+
+    /**
      * 部门描述
      */
     @TableField("dept_desc")
     private String deptDesc;
-
-    /**
-     * 有效标志
-     * 逻辑删除标志
-     */
-    @TableField("yn_flag")
-    private String ynFlag;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 修改人
-     */
-    private String editor;
-
-    /**
-     * 创建时间
-     */
-    @TableField("created_time")
-    private Date createdTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modified_time")
-    private Date modifiedTime;
-
 
     @Override
     protected Serializable pkVal() {

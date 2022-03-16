@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.storyadmin.mapper.sysmgr.ImageFileMapper">
+
+    <insert id="insertUrl">
+        insert into st_image_file (name,lujing,url) values (#{name},#{lujing},#{url})
+    </insert>
+
+    <delete id="deleteImage">
+        delete from st_image_file where url =#{url,jdbcType=VARCHAR}
+    </delete>
+    <select id="selectImageByUrl" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.sysmgr.ImageFile">
+        select * from st_image_file where url =#{url,jdbcType=VARCHAR}
+    </select>
+</mapper>

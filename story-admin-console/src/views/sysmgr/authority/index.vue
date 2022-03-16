@@ -27,6 +27,7 @@
             <span slot-scope="{ node, data }" class="custom-tree-node">
               <span>{{ node.label }}</span>
               <span>
+                <!--在父级组件监听这个loadData事件的时候，我们可以通过 $event 访问到被抛出的这个值，如果这个事件处理函数是一个方法，那么这个值将会作为第一个参数传入这个方法  -->
                 <el-button
                   v-show="data.id==0"
                   type="text"
@@ -136,6 +137,9 @@ export default {
     };
   },
   // 侦听属性
+  // 虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。
+  // 这就是为什么 Vue 通过 watch 选项提供了一个更通用的方法，来响应数据的变化。
+  // 当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。
   watch: {
     filterText(val) {
     // filter() 替换数组的方法，不会变更原始数组，而总是返回一个新数组
@@ -187,9 +191,25 @@ export default {
         parentName: data.label,
         children: []
       };
-
+      // 如果没有字节点，添加一个子节点
       if (!data.children) {
-        this.$set(data, 'children', []);
+      // 使用 Vue.set(object, propertyName, value) 方法向嵌套对象添加响应式 property,例如：Vue.set(vm.someObject, 'b', 2)
+      // 还可以使用 vm.$set 实例方法，这也是全局 Vue.set 方法的别名：this.$set(this.someObject,'b',2)
+        // vue响应式原理的使用
+        this.$set(data, 'children', []); // 将data对象添加property属性为"children",值为null的数组
+        // 官方解释vm.$set：向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新。它必须用于向响应式对象上添加新 property，因为 Vue 无法探测普通的新增 property (比如 this.myObject.newProperty = 'hi')
+        // vm.$delete:删除对象的 property。如果对象是响应式的，确保删除能触发更新视图。这个方法主要用于避开 Vue 不能检测到 property 被删除的限制，但是你应该很少会使用它。
+
+        // 有时你可能需要为已有对象赋值多个新 property，比如使用 Object.assign() 或 _.extend()。但是，这样添加到对象上的新 property 不会触发更新。在这种情况下，你应该用原对象与要混合进去的对象的 property 一起创建一个新的对象。
+        // 代替 `Object.assign(this.someObject, { a: 1, b: 2 })`
+        // this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
+
+        // 补充,在vuex知识点mutations中提到：
+        // 当需要在对象上添加新属性时，你应该
+        // 使用 Vue.set(obj, 'newProp', 123), 或者
+        // 以新对象替换老对象。例如，利用对象展开运算符 (opens new window)我们可以这样写：
+        // state.obj = { ...state.obj, newProp: 123 }
+        //
       }
       data.children.push(newChild);
       this.modifyVisible = true;
@@ -243,11 +263,6 @@ export default {
           }
           save(param).then(res => {
             this.modifyVisible = false;
-            Message({
-              message: '保存成功',
-              type: 'success',
-              duration: 5 * 1000
-            });
             this.loadData();
           });
         } else {
@@ -284,11 +299,6 @@ export default {
             }
           });
         }
-        // 删除成功的提示信息
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
       })
         .catch(() => {
           // 删除失败的提示信息

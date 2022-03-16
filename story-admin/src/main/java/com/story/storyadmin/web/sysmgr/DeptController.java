@@ -1,14 +1,13 @@
 package com.story.storyadmin.web.sysmgr;
 
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Dept;
-import com.story.storyadmin.domain.entity.sysmgr.Resource;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.DeptNode;
-import com.story.storyadmin.domain.vo.sysmgr.ResourceNode;
 import com.story.storyadmin.service.sysmgr.DeptService;
-import com.story.storyadmin.service.sysmgr.ResourceService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,16 +29,16 @@ import java.util.List;
 @Api(description = "部门管理")
 @RestController
 @RequestMapping("/sysmgr/dept")
-public class DeptController {
+public class DeptController extends BaseController {
 
     @Autowired
     DeptService deptService;
 
     /**
-     * 查询所有菜单
+     * 查询所有部门
      * @return
      */
-    @ApiOperation(value = "所有菜单" ,  notes="查询所有菜单")
+    @ApiOperation(value = "所有部门" ,  notes="查询所有部门")
     @RequiresPermissions("sysmgr.dept.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(){
@@ -49,7 +48,7 @@ public class DeptController {
         Result result = new Result();
         result.setData(trees);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -58,6 +57,8 @@ public class DeptController {
      * @param dept
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "所有部门" ,  notes="保存/编辑所有部门")
     @RequiresPermissions("sysmgr.dept.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Dept dept){
@@ -69,6 +70,8 @@ public class DeptController {
      * @param dept 部门对象
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "所有部门" ,  notes="删除部门")
     @RequiresPermissions("sysmgr.dept.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Dept dept){
@@ -80,9 +83,9 @@ public class DeptController {
             delRes.setYnFlag("0");
             delRes.setEditor(UserContext.getCurrentUser().getAccount());
             delRes.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(deptService.updateById(delRes),null,null, Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(deptService.updateById(delRes),"删除成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

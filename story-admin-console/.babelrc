@@ -1,5 +1,6 @@
 {
-  "presets": [
+  // 预设
+  "presets": [ // 设置转码规则
     ["env", {
       "modules": false,
       "targets": {

@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      filePostUrl: process.env.VUE_APP_BASE_API,
+      filePostUrl: process.env.BASE_API,
       addFiles: []
     }
   },
@@ -75,7 +75,9 @@ export default {
       return valid
     },
     afterLoad(r, file, fileList) {
-      file.id = r.result
+      // 这里上传完成的结果需要处理
+      // debugger
+      file.id = r.data
       if (file.id) this.fileList.push(file.id)
     },
     clearFiles() { this.$refs['myUpload'].clearFiles() }

@@ -1,7 +1,9 @@
 <template>
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
+    <!-- element 滚动条 -->
     <el-scrollbar wrap-class="scrollbar-wrapper">
+      <!-- 路由对象属性:$route.path 字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。-->
       <el-menu
         :show-timeout="200"
         :default-active="$route.path"

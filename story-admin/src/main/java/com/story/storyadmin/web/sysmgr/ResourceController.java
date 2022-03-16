@@ -1,11 +1,12 @@
 package com.story.storyadmin.web.sysmgr;
 
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Resource;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.ResourceNode;
 import com.story.storyadmin.service.sysmgr.ResourceService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,7 +23,7 @@ import java.util.List;
 @Api(description = "菜单管理")
 @RestController
 @RequestMapping(value="/sysmgr/resource")
-public class ResourceController {
+public class ResourceController extends BaseController {
     @Autowired
     ResourceService resourceService;
 
@@ -40,7 +41,7 @@ public class ResourceController {
         Result result = new Result();
         result.setData(trees);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -49,6 +50,8 @@ public class ResourceController {
      * @param resource
      * @return
      */
+    //@SysLogAnnotation
+    @ApiOperation(value = "所有菜单" ,  notes="保存/编辑菜单信息")
     @RequiresPermissions("sysmgr.resource.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Resource resource){
@@ -60,6 +63,8 @@ public class ResourceController {
      * @param resource 菜单对象
      * @return
      */
+    //@SysLogAnnotation
+    @ApiOperation(value = "所有菜单" ,  notes="删除菜单信息")
     @RequiresPermissions("sysmgr.resource.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Resource resource){
@@ -71,9 +76,9 @@ public class ResourceController {
             delRes.setYnFlag("0");
             delRes.setEditor(UserContext.getCurrentUser().getAccount());
             delRes.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(resourceService.updateById(delRes),null,null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(resourceService.updateById(delRes),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

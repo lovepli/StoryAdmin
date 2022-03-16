@@ -1,12 +1,14 @@
 package com.story.storyadmin.web.tool;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.tool.Todo;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.tool.TodoService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,7 +34,7 @@ import java.util.List;
 @Api(description = "待办事项")
 @RestController
 @RequestMapping("/tool/todo")
-public class TodoController {
+public class TodoController extends BaseController {
 
     @Autowired
     TodoService todoService;
@@ -61,7 +63,7 @@ public class TodoController {
         List<Todo> list = todoService.list(eWrapper);
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -70,6 +72,7 @@ public class TodoController {
      * @param todo
      * @return
      */
+    @ApiOperation(value = "待办事项" ,  notes="根据Id查询待办事项")
     @RequiresPermissions("tool.todo.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody Todo todo){
@@ -78,7 +81,7 @@ public class TodoController {
         Result result = new Result();
         result.setData(todoBean);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -87,6 +90,8 @@ public class TodoController {
      * @param todo
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "待办事项" ,  notes="保存待办事项")
     @RequiresPermissions("tool.todo.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Todo todo){
@@ -100,7 +105,8 @@ public class TodoController {
             todoService.save(todo);
         }
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setMessage("保存成功");
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -109,6 +115,8 @@ public class TodoController {
      * @param todo
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "待办事项" ,  notes="删除待办事项")
     @RequiresPermissions("tool.todo.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Todo todo){
@@ -119,9 +127,9 @@ public class TodoController {
             delTodo.setYnFlag("0");
             delTodo.setEditor(UserContext.getCurrentUser().getAccount());
             delTodo.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(todoService.updateById(delTodo),null,null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(todoService.updateById(delTodo),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

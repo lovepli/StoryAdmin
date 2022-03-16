@@ -15,11 +15,17 @@ import java.util.Properties;
 /**
  * 定时任务配置
  * @author sunnj
- *
+ * SchedulerConfig类通过 @Configuration 自动装载配置。
+ * SchedulerFactoryBean是Quartz为我们提供的一个生成Scheduler实例Bean的工厂类。Scheduler主要负责调度任务。
+ * quartzProperties配置参数可以自由配置Quartz的一些基本参数属性。
  */
 @Configuration
 public class SchedulerConfig {
-	
+
+    /**
+     * @Qualifier:
+     * 当有多个同一类型的 Bean 时，可以用 @Qualifier(“name”) 来指定。与 @Autowired 配合使用；
+     */
 	@Autowired
 	@Qualifier("storyJobFactory")
     private StoryJobFactory storyJobFactory;

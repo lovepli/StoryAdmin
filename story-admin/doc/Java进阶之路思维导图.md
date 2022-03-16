@@ -1,0 +1,222 @@
+> 本文由 [简悦 SimpRead](http://ksria.com/simpread/) 转码， 原文地址 [mp.weixin.qq.com](https://mp.weixin.qq.com/s/jD9_99GOaMsEbSKZGEyRIQ)
+
+> “
+>
+> Hi~ o(_￣▽￣_) ブ，这张思维导图适合有一定 Java 基础的童鞋哦！！！如果把里面的知识都研究通透了，那你离架构师也就不远了。
+
+**思维导图放在文末哦**，先来列出思维导图的大纲：
+
+```
+并发编程
+ 多线程内存模型
+  Java线程
+  volatile关键字
+   指令重排
+   可见性
+   原子性
+ 同步相关
+  synchronized关键字
+  AQS详解
+  乐观锁、悲观锁、可重入锁、公平锁等
+  ReentranLock
+  ThreadLocal
+ AQS并发包
+  CountDownLatch
+  Semaphore
+  CyclicBarrier
+ atomic原子操作
+  atomic类
+  CAS乐观锁、ABA问题
+  CAS底层相关Unsafe类
+ 阻塞队列
+  有界队列
+   ArrayBlockingQueue
+   ConcurrentLinkedQueue
+  无界队列
+   PriorityBlockingQueue
+   DelayQueue
+ 并发Map
+  HashMap与ConcurrentHashMap
+ Executor线程池
+  Future
+  ThreadPoolExecutorService
+  线程池核心参数、拒绝策略
+ ForkJoin框架
+
+源码分析
+ Java类源码
+  HashMap
+  ThreadLocal
+  ArrayList
+ 框架源码
+  Spring
+   IoC
+    容器设计原理
+    Bean生命周期
+    Spring Context装载过程
+    FactoryBean与BeanFactory
+   Aop
+    Aop注解编程
+     @EnableAspectJAutoProxy
+     @Before/@After/@Around
+     @Pointcut
+    Aop源码
+   事务控制
+    @EnableTransactionManagement
+    @Transactional
+  MyBatis
+   核心应用配置
+   与Spring集成
+   核心类
+    Configuration
+    Mapper
+    SqlSession
+    Executor
+   手写MyBatis
+    初始化流程
+    二级缓存
+    最终手写
+
+Netty
+ 网络与IO模型
+ BIO与NIO与AIO
+ Netty线程模型及源码
+ 高性能序列化协议
+ 粘包拆包现象解决办法
+ Netty心跳机制
+ 直接内存与零拷贝
+ Netty相关项目
+
+设计模式
+ 设计原则
+  开闭、单一职责原则...
+ 创建型模式
+  工厂、抽象工厂、单列模式
+  建造者、原型模式
+ 结构型模式
+  适配器、装饰器、代理模式
+  外观、桥接、组合、享元模式
+ 行为模式
+  模板方法、策略、观察者模式 
+  迭代器、责任链、命令、中介者模式
+  备忘录、状态、访问者、解释器模式
+
+数据库
+ MySQL
+ 索引，锁
+ 事务隔离级别
+ 调优
+ 分库分表
+
+程序员的工具箱
+ Git
+ Maven
+ Jenkins
+ Linux
+
+算法与数据结构
+ 算法复杂度
+ 线性表，链表
+ 队列，栈
+ 基础排序算法
+ 进阶排序：快速排序，归并排序
+ 二分搜索，Hash表
+ 树，二叉树，BTree，B+Tree
+ 图，广度优先遍历，深度优先遍历
+ 最小树，最短路径
+ 位图
+
+中间件
+ 消息中间件
+  Rabbitmq
+   高可用集群部署
+   消息分发
+   消息路由
+   消息确认
+   镜像队列
+  RocketMq
+   集群部署
+   普通消息，顺序消息，事务消息，定时消息
+   API使用
+  Kafka
+   技术选型（与其他消息中间件对比）
+   集群搭建
+   副本机制，选举原理
+   消息丢失，重复消费，顺序消费
+ 存储中间件
+  Redis
+   数据结构
+   使用场景
+    分布式锁
+    分布式缓存
+    延迟队列
+    电商场景：如统计
+   持久化机制，安全机制
+   主从集群，分片集群
+   客户端使用
+   缓存穿透，缓存雪崩，缓存击穿
+   布隆过滤器
+   性能优化
+  MongoDB
+   高可用集群
+   集合，索引文档
+   实践
+  FastDFS
+   分布式部署及其使用
+  ElasticSearch
+   ELK使用
+   高级查询
+   底层原理
+ 协调中间件
+  Zookeeper
+   集群部署
+   使用场景
+    注册中心
+    配置中心
+    分布式锁
+   znode，watcher，ACL
+  Dubbo
+   部署使用
+   调用模块原理
+   容错机制
+   RPC底层原理
+   负载均衡策略
+   后台监控
+
+微服务
+ SpringBoot源码解析
+ Spring Cloud Alibaba
+  注册中心Nacos
+  负载均衡Ribbon
+  远程调用Feign
+  限流降级熔断Sentinel
+  统一网关Gateway
+  统一配置Nacos
+  分布式事务Seata
+  权限控制
+ Spring Cloud Netflix
+  Eureka服务注册
+  Ribbon负载均衡
+  Feign声明式服务调用
+  Hystrix服务限流，降级，熔断
+  Zuul统一网关
+  Congfig分布式配置中心
+  Sleuth分布式链路跟踪
+ 容器化
+  Docker
+   镜像，仓库，容器
+   环境搭建
+   DockerFile
+   DockerCompose
+   服务编排
+  Kubernetes
+   集群搭建
+```
+
+这里是思维导图：
+
+![](https://mmbiz.qpic.cn/mmbiz_png/822ywgc9dCJaPwUtTvM4SoniaQwJFYsrSA3nmVcJYlwhbiarPbQJS2kiaXznomjOcwaictd8iaewQShsQUgePNILL2Q/640?wx_fmt=png)
+
+祝大家早日成为架构师！！！
+
+![](https://mmbiz.qpic.cn/mmbiz_gif/822ywgc9dCKI1A1qJUFmbXavCfOHNuzCYRiaa7IcTCL5uKryxT6vFta4FRWuicZRVUBBsJLFNtsvTrPwnO9vp31Q/640?wx_fmt=gif)

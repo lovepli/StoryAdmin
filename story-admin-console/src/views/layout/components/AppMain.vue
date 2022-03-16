@@ -1,6 +1,6 @@
 <template>
   <section class="app-main">
-    <!-- transition过度动效 下面的是给所有路由设置一样的过渡效果-->
+    <!-- transition过度动效 下面的是给所有路由设置一样的过渡效果 https://cn.vuejs.org/v2/guide/transitions.html -->
     <!-- <router-view> 是基本的动态组件，所以我们可以用 <transition> 组件给它添加一些过渡效果 -->
     <transition name="fade-transform" mode="out-in">
       <!-- 动态组件keep-alive -->
@@ -9,7 +9,7 @@
       <keep-alive :include="cachedViews">
         <!-- 路由出口 -->
         <!-- 路由匹配到的组件将渲染在这里 -->
-        <router-view :key="key" />
+        <router-view :key="key" @custom-tag="updateViewTag"/>
       </keep-alive>
     </transition>
   </section>
@@ -27,7 +27,22 @@ export default {
       return this.$store.state.tagsView.cachedViews
     },
     key() {
-      return this.$route.path
+      return this.$route.path //字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
+    }
+  },
+  methods: {
+    /**
+     * 自定义tag栏的标题
+     */
+    updateViewTag(customTag) {
+      const visitedViews = this.$store.state.tagsView.visitedViews
+      for (let i = 0; i < visitedViews.length; i++) {
+        const view = visitedViews[i]
+        if (view.path === this.$route.path) {
+          view.title = customTag
+          break
+        }
+      }
     }
   }
 }

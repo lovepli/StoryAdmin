@@ -1,21 +1,17 @@
 package com.story.storyadmin.web.sysmgr;
 
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.SysLog;
-import com.story.storyadmin.domain.entity.sysmgr.User;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.SysLogService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.Instant;
 
 /**
  * <p>
@@ -28,7 +24,7 @@ import java.time.Instant;
 @Api(description = "系统日志")
 @RestController
 @RequestMapping("/sysmgr/syslog")
-public class SysLogController {
+public class SysLogController extends BaseController {
 
     @Autowired
     SysLogService sysLogService;
@@ -41,17 +37,18 @@ public class SysLogController {
      * @return
      */
     @ApiOperation(value = "系统日志" ,  notes="查询系统日志列表")
-    @RequiresPermissions("sysmgr.syslog.query")
+    @RequiresPermissions("sysmgr.log.sys.query")
     @RequestMapping(value="/list",method = {RequestMethod.POST,RequestMethod.GET})
     public Result list(SysLog sysLog,
                        @RequestParam(defaultValue = "1")int pageNo,
                        @RequestParam(defaultValue = "10")int limit){
         Result result = new Result();
+        // TODO 系统中使用到了两种分页对象，一种是mybatis-plus的Page分页对象，一种是PageHelper第三方插件的分页方法
         Page<SysLog> page = new Page(pageNo, limit);
         IPage<SysLog> list = sysLogService.findPage(page, sysLog);
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -60,15 +57,20 @@ public class SysLogController {
      * @param sysLog
      * @return
      */
-    @RequiresPermissions("sysmgr.syslog.query")
+    @ApiOperation(value = "系统日志" ,  notes="根据Id查询系统日志")
+    @RequiresPermissions("sysmgr.log.sys.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody SysLog sysLog){
         SysLog userBean= sysLogService.findById(sysLog.getId());
         Result result = new Result();
         result.setData(userBean);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
+
+    /**
+     * 删除系统操作日志 待开发...
+     */
 
 }

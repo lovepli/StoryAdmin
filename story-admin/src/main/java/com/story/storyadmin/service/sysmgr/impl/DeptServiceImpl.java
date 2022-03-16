@@ -3,7 +3,8 @@ package com.story.storyadmin.service.sysmgr.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
+import com.story.storyadmin.domain.entity.sysmgr.Authority;
 import com.story.storyadmin.domain.entity.sysmgr.Dept;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.domain.vo.sysmgr.DeptNode;
@@ -91,13 +92,23 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
      */
     @Override
     public Result persist(Dept dept) {
+        Result result ;
         Date currentDate= Date.from(Instant.now());
+
+        //fullId 拼接全部上级ID值
+        if(dept.getPid()!=null && dept.getPid()>0){
+            Dept parent= baseMapper.selectById(dept.getPid());
+            dept.setFullId(parent.getFullId()+'-'+ parent.getId());
+        }else{
+            dept.setFullId("0");
+        }
 
         //修改
         if(dept.getId() != null){
             dept.setEditor(UserContext.getCurrentUser().getAccount());
             dept.setModifiedTime(currentDate);
             baseMapper.updateById(dept);
+            result=new Result(true,"修改成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
             dept.setYnFlag("1");
             dept.setEditor(UserContext.getCurrentUser().getAccount());
@@ -105,8 +116,9 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             dept.setCreatedTime(currentDate);
             dept.setModifiedTime(currentDate);
             baseMapper.insert(dept);
+            result=new Result(true,"添加成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
-        return new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+        return result;
     }
 
 }

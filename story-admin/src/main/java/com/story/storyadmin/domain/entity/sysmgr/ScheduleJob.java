@@ -1,5 +1,7 @@
 package com.story.storyadmin.domain.entity.sysmgr;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
 import lombok.Data;
@@ -15,6 +17,8 @@ import java.util.Date;
  *
  * @author sunnj
  * @since 2019-08-18
+ * 动态增删变更任务
+ * 既然要动态的变更任务，那我们就将任务保存在数据库中，没此项目启动，就不用再次配置。定义我们的PO类，上面的用到的ScheduleJob便是出自这里：
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -78,30 +82,5 @@ public class ScheduleJob extends BaseEntity {
      * 失败原因
      */
     private String failReason;
-
-    /**
-     * 有效标志
-     */
-    private String ynFlag;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 修改人
-     */
-    private String editor;
-
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
-
-    /**
-     * 修改时间
-     */
-    private Date modifiedTime;
 
 }

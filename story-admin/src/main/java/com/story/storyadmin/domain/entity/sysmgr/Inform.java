@@ -1,22 +1,17 @@
 package com.story.storyadmin.domain.entity.sysmgr;
-
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.story.storyadmin.domain.entity.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
+
 
 /**
  * 系统通知表
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 @TableName("st_inform")
-public class Inform extends BaseEntity {
+public class Inform extends BaseEntity{
 
     private static final long serialVersionUID = 1L;
 
@@ -41,19 +36,19 @@ public class Inform extends BaseEntity {
     private Short status;
 
     /**
-     * 创建者
+     * 创建者id
      */
-    private Integer creator;
+    private Long creatorId;
 
     /**
-     * 附件列表ID
+     * 附件列表ID 的id本来是long类型的
      */
     private String attchmentList;
 
     /**
      * 撤销人ID
      */
-    private Integer canceler;
+    private Long canceler;
 
     /**
      * 撤销时间
@@ -63,7 +58,7 @@ public class Inform extends BaseEntity {
     /**
      * 过期操作人
      */
-    private Integer outdateOperator;
+    private Long outdateOperator;
 
     /**
      * 过期时间
@@ -75,4 +70,13 @@ public class Inform extends BaseEntity {
      */
     private String content;
 
+    @Override
+    public String toString() {
+        return "Inform{" +
+                "title='" + title + '\'' +
+                ", top=" + top +
+                ", status=" + status +
+                ", creator=" + creatorId +
+                '}';
+    }
 }

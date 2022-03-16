@@ -1,11 +1,9 @@
 package com.story.storyadmin.service.sysmgr.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Authority;
 import com.story.storyadmin.domain.entity.sysmgr.RoleAuthority;
 import com.story.storyadmin.domain.vo.Result;
@@ -114,6 +112,7 @@ public class AuthorityServiceImpl extends ServiceImpl<AuthorityMapper, Authority
      */
     @Override
     public Result persist(Authority auth) {
+        Result result ;
         Date currentDate= Date.from(Instant.now());
 
         //fullId
@@ -127,6 +126,7 @@ public class AuthorityServiceImpl extends ServiceImpl<AuthorityMapper, Authority
         if(auth.getId()!=null){//修改
             auth.setModifiedTime(currentDate);
             baseMapper.updateById(auth);
+            result=new Result(true,"修改成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
             auth.setYnFlag("1");
             auth.setEditor(UserContext.getCurrentUser().getAccount());
@@ -134,7 +134,8 @@ public class AuthorityServiceImpl extends ServiceImpl<AuthorityMapper, Authority
             auth.setCreatedTime(currentDate);
             auth.setModifiedTime(currentDate);
             baseMapper.insert(auth);
+            result=new Result(true,"添加成功",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
-        return new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+        return result;
     }
 }

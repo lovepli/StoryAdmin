@@ -4,12 +4,14 @@ package com.story.storyadmin.web.baseinfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.baseinfo.Dict;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.baseinfo.DictService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -31,7 +33,7 @@ import java.util.List;
 @Api(description = "字典管理")
 @RestController
 @RequestMapping("/baseinfo/dict")
-public class DictController {
+public class DictController extends BaseController {
 
     @Autowired
     DictService dictService;
@@ -56,7 +58,7 @@ public class DictController {
         IPage<Dict> list = dictService.page(page, eWrapper);
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -65,6 +67,7 @@ public class DictController {
      * @param dict
      * @return
      */
+    @ApiOperation(value = "字典" ,  notes="根据Id查询字典信息")
     @RequiresPermissions("baseinfo.dict.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody Dict dict){
@@ -72,7 +75,7 @@ public class DictController {
         Result result = new Result();
         result.setData(rolebean);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -81,13 +84,17 @@ public class DictController {
      * @param dict
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "字典" ,  notes="保存/修改字典信息")
     @RequiresPermissions("baseinfo.dict.save")
     @RequestMapping(value="/save",method = {RequestMethod.POST})
     public Result save(@RequestBody Dict dict){
+        Result result ;
         if(dict.getId()!= null){
             dict.setModifiedTime(Date.from(Instant.now()));
             dict.setEditor(UserContext.getCurrentUser().getAccount());
             dictService.updateById(dict);
+            result= new Result(true, "修改成功", dict, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{//添加
             //父编码设置为空
             dict.setParentCode("");
@@ -97,10 +104,8 @@ public class DictController {
             dict.setCreatedTime(Date.from(Instant.now()));
             dict.setCreator(UserContext.getCurrentUser().getAccount());
             dictService.save(dict);
+            result= new Result(true, "添加成功", dict, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }
-        Result result = new Result();
-        result.setData(dict);
-        result.setResult(true);
         return result;
     }
 
@@ -109,6 +114,8 @@ public class DictController {
      * @param dict
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "字典" ,  notes="删除字典信息")
     @RequiresPermissions("baseinfo.dict.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Dict dict){
@@ -120,9 +127,9 @@ public class DictController {
             delDict.setYnFlag("0");
             delDict.setEditor(UserContext.getCurrentUser().getAccount());
             delDict.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(dictService.updateById(delDict),null,null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(dictService.updateById(delDict),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }
@@ -132,13 +139,16 @@ public class DictController {
      * @param dictList
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "字典" ,  notes="批量保存字典信息")
     @RequiresPermissions("baseinfo.dict.save")
     @RequestMapping(value="/batch_save",method = {RequestMethod.POST})
     public Result batchSave(@RequestBody List<Dict> dictList){
         dictService.batchSave(dictList);
         Result result = new Result();
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         result.setResult(true);
+        result.setMessage("批量保存成功");
         return result;
     }
 }

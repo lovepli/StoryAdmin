@@ -1,52 +1,19 @@
 <template>
   <div>
+
     <el-row :gutter="40" class="panel-group">
-      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-          <div class="card-panel-icon-wrapper icon-people">
-            <!-- svg-icon为全局注册的组件 -->
-            <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-          </div>
-          <div class="card-panel-description">
-            <div class="card-panel-text">访客</div>
-            <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
-          </div>
-        </div>
+
+      <el-col :span="17">
+        <!-- 公告列表 -->
+        <inform-list class="dashboard-component" style="padding-bottom:45px" />
       </el-col>
-      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel" @click="handleSetLineChartData('messages')">
-          <div class="card-panel-icon-wrapper icon-message">
-            <svg-icon icon-class="message" class-name="card-panel-icon" />
-          </div>
-          <div class="card-panel-description">
-            <div class="card-panel-text">消息</div>
-            <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
-          </div>
-        </div>
+      <el-col :span="7">
+        <!-- 代办列表 -->
+        <todo-list class="dashboard-component" />
       </el-col>
-      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel" @click="handleSetLineChartData('purchases')">
-          <div class="card-panel-icon-wrapper icon-money">
-            <svg-icon icon-class="money" class-name="card-panel-icon" />
-          </div>
-          <div class="card-panel-description">
-            <div class="card-panel-text">购买</div>
-            <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
-          </div>
-        </div>
-      </el-col>
-      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel" @click="handleSetLineChartData('shoppings')">
-          <div class="card-panel-icon-wrapper icon-shopping">
-            <svg-icon icon-class="shopping" class-name="card-panel-icon" />
-          </div>
-          <div class="card-panel-description">
-            <div class="card-panel-text">购物</div>
-            <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
-          </div>
-        </div>
-      </el-col>
+
     </el-row>
+
     <!-- Weather -->
     <el-row :gutter="20" class="panel-group">
       <div class="card-title">{{ weather.city }}天气</div>
@@ -84,9 +51,10 @@
 <script>
 import { getWeather } from '@/api/dashboard';
 import { parseTime } from '@/utils';
-import CountTo from 'vue-count-to';
+import InformList from './InformList'
+import TodoList from './TodoList'
 export default {
-  components: { CountTo }, // 引入子组件
+  components: { InformList, TodoList }, // 引入子组件
   filters: {
     parseTime
   },
@@ -97,11 +65,38 @@ export default {
   },
   // 只要执行完了mounted，表示整个Vue实例已经初始化完毕了，此时组件已经进入了运行阶段。
   mounted() {
-    this.showWeather();
+    // this.showWeather();
+
+    // 优化一下代码，定时调用查询天气接口
+    // 轮询接口
+    const that = this
+    const timers = window.setInterval(() => {
+      setTimeout(res => {
+        that.toRotation()// 调用的方法
+      }, 0)// 利用定时器清除setInterval的每次叠加
+    }, 600000);//  600000 10分钟执行一次  10000
+  },
+  beforeRouteLeave(to, from, next) {
+    window.clearInterval(timers); // 跳转当前页面清除定时器
+    next();
   },
   methods: {
-    handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type);
+    /** 轮训调用审核退回的方法 */
+    async toRotation() {
+      const _this = this;
+      // this.treeloading = true;
+      getWeather().then(res => {
+        res.data.dateList.forEach(element => {
+          // 这个特殊的 `require` 语法将会告诉 webpack
+          // 自动将你的构建代码切割成多个包，这些包
+          // 会通过 Ajax 请求加载
+          element.weaImg = require('@/assets/weather/' +
+            element.weaImg +
+            '.png');
+        });
+        // console.log(res.data)
+        _this.weather = res.data;
+      });
     },
     showWeather() {
       const _this = this;
@@ -247,5 +242,10 @@ export default {
       }
     }
   }
+}
+
+.dashboard-component {
+  background: #fff;
+  padding: 16px 16px 30px;
 }
 </style>

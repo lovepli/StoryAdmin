@@ -5,8 +5,8 @@ import com.story.storyadmin.config.shiro.LoginUser;
 import com.story.storyadmin.config.shiro.security.UserContext;
 import com.story.storyadmin.domain.entity.sysmgr.SysLog;
 import com.story.storyadmin.service.sysmgr.SysLogService;
-import com.story.storyadmin.utils.DateUtils;
-import com.story.storyadmin.utils.IPUtils;
+import com.story.storyadmin.utils.DateMethordUtil.DateUtils;
+import com.story.storyadmin.utils.netMethordUtil.IPUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,7 +19,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -53,7 +52,6 @@ public class StorySysLogAspect {
 
   /**
    * @Before - 将函数标记为在切入点覆盖的方法之前执行的通知。 @Before 是一种通知类型，可以确保在方法执行之前运行通知。
-   *
    * @param joinPoint 连接点(JoinPoint)代表您的应用程序中可以插入AOP方面的一个点/位置。 您也可以说，这是应用程序中使用Spring AOP框架执行操作的实际位置
    */
   @Before("storySysLog()")
@@ -80,7 +78,8 @@ public class StorySysLogAspect {
         final String methodName = joinPoint.getSignature().getName();
         //获取方法参数数组
         final Object[] args = joinPoint.getArgs();
-        //将参数数组转换为json字符串
+        // TODO 记录返回方法返回值待开发
+        //使用Alibaba的fastJson工具将参数数组转换为json字符串
         final String params = JSONObject.toJSONString(args);
         //记录 系统日志信息，recordLog方法是一个异步方法
         sysLogService.recordLog(new SysLog(logId.get(), account, ip, method, url, uri, clazz, methodName, DateUtils.currentDate(),

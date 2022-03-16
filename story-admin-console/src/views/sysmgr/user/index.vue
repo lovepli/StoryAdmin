@@ -49,11 +49,25 @@
         >新增</el-button>
       </template>
       <!--body-->
-      <!-- 使用自定义表格组件data-grid组件中的自定义插槽 body-->
+      <!-- 使用自定义表格组件data-grid组件中的自定义插槽 body， sortable排序-->
       <template slot="body">
-        <el-table-column align="center" prop="id" label="ID" width="100px"/>
+        <el-table-column align="center" prop="id" label="ID" width="100px" sortable />
         <el-table-column align="center" prop="account" label="账号"/>
         <el-table-column align="center" prop="name" label="姓名"/>
+
+        <!-- <el-table-column align="center" prop="age" label="年龄"/> -->
+        <el-table-column align="center" prop="birthday" label="生日"/>
+        <el-table-column align="center" prop="phone" label="手机号码"/>
+        <el-table-column label="性别" align="center">
+          <template slot-scope="scope">
+            <el-tag :type="scope.row.sex | sexTagFilter">{{ scope.row.sex | sexFilter }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="avatar" label="用户头像">
+          <template slot-scope="scope">
+            <img v-if="scope.row.avatar" :src="scope.row.avatar" width="40" @click="showImg(scope.row)">
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="email" label="邮箱" />
         <el-table-column label="状态" align="center">
           <!-- 作用域插槽/带数据的插槽 -->
@@ -83,6 +97,8 @@
           class-name="small-padding fixed-width"
         >
           <template slot-scope="scope">
+            <!-- 按钮权限控制 -->
+            <!-- <el-button v-if="hasPerm('sysmgr.user.save')" type="primary" size="mini" @click="modify(scope.row)">编辑</el-button> -->
             <el-button type="primary" size="mini" @click="modify(scope.row)">编辑</el-button>
             <el-button size="mini" @click="modifyUserRole(scope.row)">角色</el-button>
             <el-button type="danger" size="mini" @click="dropRow(scope.row)">删除</el-button>
@@ -108,8 +124,49 @@
           <!-- 使用clearable属性即可得到一个可清空的输入框 -->
           <el-input v-model="userForm.name" placeholder="请输入姓名" clearable/>
         </el-form-item>
+        <!-- <el-form-item label="年龄" prop="age">
+          <el-input v-model="userForm.age" placeholder="请输入" clearable/>
+        </el-form-item> -->
+        <el-form-item label="生日" prop="birthday">
+          <el-date-picker
+            v-model="userForm.birthday"
+            type="date"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            placeholder="选择日期"
+            @change="selectDate"
+          />
+        </el-form-item>
+
+        <el-form-item label="性别" prop="sex">
+          <el-select v-model="userForm.sex" class="filter-item" placeholder="请选择...">
+            <el-option
+              v-for="item in sexOptions"
+              :key="item.key"
+              :label="item.key"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="手机号码" prop="phone">
+          <el-input v-model="userForm.phone" placeholder="请输入" clearable/>
+        </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="userForm.password" type="password" placeholder="请输入密码"/>
+        </el-form-item>
+        <el-form-item label="用户头像" prop="avatar">
+          <el-upload
+            :headers="importHeaders"
+            :action="filePostUrl"
+            :show-file-list="false"
+            :on-success="uploadAvatar"
+            class="avatar-uploader"
+            accept=".jpg,.jpeg,.png,.gif"
+          >
+            <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
+          </el-upload>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="userForm.email" placeholder="请输入邮箱"/>
@@ -174,13 +231,29 @@
       </span>
     </el-dialog>
 
+    <!--      展示附件图片的对话框-->
+    <el-dialog
+      :title="'上传的文件'"
+      :visible.sync="dialogVisible"
+      :before-close="handleClose"
+      width="70%">
+      <el-image v-for="(item, index) in imgList" :key="index" :src="item" style="width: 50%;height: 50%"/>
+      <el-divider style="margin-top: 100px"/>
+      <div v-for="(item, index) in pdfList" :key="index">
+        <!--          <embed :src="item" width="100%" height="300px">-->
+        <!--          <iframe :src="item" width="100%" height="100%"></iframe>-->
+        <object :data="item" type="application/pdf" width="100%" height="800px"/>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleClose">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import {
-  // eslint-disable-next-line no-unused-vars
-  getList,
   findById,
   save,
   drop,
@@ -188,8 +261,11 @@ import {
   saveUserRole
 } from '@/api/sysmgr/user';
 
+
 import { findAllRoleList } from '@/api/sysmgr/role';
-// import Pagination from "@/components/Pagination";
+import { findFileInfoDetail } from '@/api/sysmgr/user';
+import { getToken } from '@/utils/auth'; // 从Cookies中获取token
+// import Pagination from "@/components/Pagination"; // 分页组件
 import DataGrid from '@/components/DataGrid'; // 引入表格子组件
 import { parseTime } from '@/utils'; // 引入util中的格式化方法
 // import { Message, MessageBox } from 'element-ui'; // 单独引入element-ui的Message消息提示, MessageBox弹框
@@ -203,11 +279,21 @@ const erpFlagOptions = [
   { key: '是', value: '1' }
 ];
 
+const sexOptions = [
+  { key: '男', value: '1' },
+  { key: '女', value: '2' }
+];
+
 const statusTypeKeyValue = statusOptions.reduce((acc, cur) => {
   acc[cur.value] = cur.key;
   return acc;
 }, {});
 const erpFlagTypeKeyValue = erpFlagOptions.reduce((acc, cur) => {
+  acc[cur.value] = cur.key;
+  return acc;
+}, {});
+
+const sexTypeKeyValue = sexOptions.reduce((acc, cur) => {
   acc[cur.value] = cur.key;
   return acc;
 }, {});
@@ -239,6 +325,17 @@ export default {
       };
       return statusMap[flag];
     },
+    sexFilter(sex) {
+      return sexTypeKeyValue[sex];
+    },
+    // 性别标签过滤器
+    sexTagFilter(sex) {
+      const sexMap = {
+        '1': 'success',
+        '0': 'danger'
+      };
+      return sexMap[sex];
+    },
     parseTime
   },
   // data中存放的是el中需要的数据
@@ -253,12 +350,9 @@ export default {
       }
     };
     return {
-      // 这几个属性好像没有用？
-      // tableKey: 0,
-      // total: 0,
-      // list: null,
-      // listLoading: true,
-
+      importHeaders: { Authorization: getToken() },
+      // 上传图片接口
+      filePostUrl: process.env.BASE_API + '/common/uploadImageFile',
       // 查询参数对象
       listQuery: {
         pageNo: 1,
@@ -269,10 +363,16 @@ export default {
       modifyVisible: false, // 修改可见性，是否显示弹框
       statusOptions: statusOptions, // 状态选项
       erpFlagOptions: erpFlagOptions, // erp标志选项
+      sexOptions: sexOptions, // 性别选项
       // form表单对象
       userForm: {
         account: '', // 账号
         name: '', // 姓名
+        // age: '', // 年龄
+        birthday: '', // 生日
+        phone: '', // 手机号码
+        sex: '1', // 性别
+        avatar: '',
         password: '', // 密码
         email: '', // 邮箱
         status: '', // 状态
@@ -295,7 +395,12 @@ export default {
       defaultProps: {
         children: 'children', // 子节点
         label: 'name' // 节点名称 这里是角色名称，这个name值应该要与返回的json中的name字段保持一致
-      }
+      },
+      // 图片展示
+      imgList: [],
+      // pdf展示
+      pdfList: [],
+      dialogVisible: false
     };
   },
   // 侦听属性
@@ -312,9 +417,38 @@ export default {
   },
   // created 钩子可以用来在一个实例被创建之后执行代码
   // 此函数中，data和methods都已经初始化好了，如果需要调用methods中的方法或操作data中的值最早就在created函数中操作。
-  created() {},
+  created() {
+    this.getRoleListByAccount();
+  },
   // methods是Vue内置的对象，用于存放一些自定义的方法函数
   methods: {
+    handleClose() {
+      this.dialogVisible = false
+    },
+    selectDate(val) {
+      console.log('选择的日期为', +val)
+    },
+     	/**
+       * 查看附件
+       */
+    async showImg(row) {
+      this.dialogVisible = true
+      this.imgList = []
+      await findFileInfoDetail({
+        'userId': row.id
+      }).then(res => {
+        // eslint-disable-next-line no-array-constructor
+        var arr = new Array()
+        arr = res.data.split('&&&')
+        for (var i = 0; i < arr.length - 1; i++) {
+          if (arr[i].indexOf('data:application/pdf;base64,') !== -1) {
+            this.pdfList.push(arr[i])
+          } else {
+            this.imgList.push(arr[i])
+          }
+        }
+      })
+    },
     // onDataRest() {}这是ES6的简写方式,之前是 methodName:function(){} 这种写法
     // 重置按钮
     onDataRest() {
@@ -351,11 +485,23 @@ export default {
         this.userForm.id = null;
         this.userForm.account = null;
         this.userForm.name = null;
+        // this.userForm.age = null;
+        this.userForm.birthday = null;
+        this.userForm.phone = null;
+        this.userForm.sex = '1';
+        this.userForm.avatar = null;
         this.userForm.password = null;
         this.userForm.email = null;
         this.userForm.status = '1'; // 状态默认值为1
         this.userForm.erpFlag = '0'; // erp标识默认值为0
       }
+    },
+    // 上传图像 返回图片的URL地址
+    uploadAvatar: function(response) {
+      // console.log(response)
+      this.userForm.avatar = response.data
+      // console.log(response.data)
+      this.$message.success('图片上传成功')
     },
     // 保存(添加/修改)-提交按钮
     submitForm() {
@@ -399,12 +545,12 @@ export default {
               this.$refs.dataList.fetchData();
             });
           }
-          // 删除成功的提示信息
+          // 删除成功页面显示的提示信息,这里是前端写死的接口调用成功的返回信息，我们要做的是接口调用成功返回的结果交由后台传递的数据来展示
           // 使用全局的Message
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+          // this.$message({
+          //   type: 'success',
+          //   message: '删除成功!'
+          // });
         })
         .catch(() => {
           // 删除失败的提示信息
@@ -468,3 +614,29 @@ export default {
   }
 };
 </script>
+
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #20a0ff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+}
+.avatar {
+  width: 145px;
+  height: 145px;
+  display: block;
+}
+</style>

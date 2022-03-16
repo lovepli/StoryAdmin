@@ -1,9 +1,8 @@
 package com.story.storyadmin.scheduler.listener;
 
-import com.story.storyadmin.domain.StoryServiceException;
+import com.story.storyadmin.common.exception.StoryServiceException;
 import com.story.storyadmin.service.sysmgr.ScheduleJobService;
 import com.story.storyadmin.utils.ExceptionUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 自定义任务监听器
+ * 自定义任务监听器StoryJobListener
  * Quartz  Scheduler 可以对Job(任务)建立一个监听器，分别对任务执行  《之前， 之后， 取消》 3个阶段进行监听。
  * 实现监听器需要实现JobListener接口，然后注册到Scheduler上就可以了
  */

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.storyadmin.mapper.children.DDeptMapper">
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.DDept" id="BaseResultMap">
+        <id     property="id"     column="d_id"     />
+        <result property="name"   column="d_name"   />
+        <result property="parentId"   column="parent_id"   />
+
+        <result property="address"   column="address"   />
+    </resultMap>
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.onetomany.DDeptBO" id="DeptMap" extends="BaseResultMap">
+    <!-- 一对多关联：使用select引用方式 -->
+    <collection property="employees" column="d_id" ofType="com.story.storyadmin.domain.entity.children.DEmployee" select="com.story.storyadmin.mapper.children.DEmployeeMapper.selectEmployeeByDeptId" fetchType="lazy">
+    </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        d_id,d_name,parent_id
+    </sql>
+
+<!--20210915增加属性-->
+    <sql id="Base_Column_List_2">
+        d_id,d_name,parent_id,address
+    </sql>
+
+    <select id="selectDeptById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM d_dept WHERE d_id=#{id}
+    </select>
+
+    <select id="selectDeptByParentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from d_dept d
+        where
+        d.parent_id=#{parentId}
+    </select>
+
+
+    <select id="selectDeptEmployeeByDeptId" parameterType="java.lang.String" resultMap="DeptMap">
+        select
+        <include refid="Base_Column_List"/>
+         from
+        d_dept d where d.d_id=#{id}
+    </select>
+
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.dto.DDeptDTO" id="DeptMap2" >
+        <id     property="id"     column="d_id"     />
+        <result property="name"   column="d_name"   />
+        <!-- 多对一关联：使用select引用方式 。association配置先于collection-->
+        <association property="parent" column="parent_id" javaType="com.story.storyadmin.domain.entity.children.DDept" select="com.story.storyadmin.mapper.children.DDeptMapper.selectDeptById"></association>
+        <!-- 一对多关联：使用select引用方式 -->
+        <collection property="children" column="d_id" ofType="com.story.storyadmin.domain.entity.children.DDept" select="com.story.storyadmin.mapper.children.DDeptMapper.selectDeptByParentId" fetchType="lazy">
+        </collection>
+    </resultMap>
+
+    <select id="selectDeptById2" parameterType="java.lang.String" resultMap="DeptMap2">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM d_dept WHERE d_id=#{id}
+    </select>
+
+
+
+
+    <select id="findByPage" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        d_dept
+    </select>
+
+    <!-- 1、先查询主表的分页数据    -->
+    <select id="findByPage2"  resultMap="pageResultMap">
+        select
+        d_id as deptId,d_name as deptName
+        from
+        d_dept
+        LIMIT #{current},#{size}
+    </select>
+
+
+    <resultMap id="pageResultMap" type="com.story.storyadmin.domain.entity.children.dto.DDeptDTO2">
+        <id property="deptId" column="d_id"/>
+        <result property="deptName" column="d_name"/>
+        <!-- 利用 collection 标签提供的 select 特性 和 column   -->
+        <!--2、再根据deptId查询对应的图片-->
+        <collection property="employeeNames" ofType="string" select="com.story.storyadmin.mapper.children.DEmployeeMapper.selectEmployeeNamesBydeptId" column="d_id"/>
+    </resultMap>
+
+    <select id="findByPage3" resultMap="pageResultMap">
+        select
+        d_id ,d_name
+        from d_dept
+    </select>
+
+
+<!--或者下面的sql方式查找-->
+    <resultMap id="pageResultMap2" type="com.story.storyadmin.domain.entity.children.dto.DDeptDTO2">
+        <id property="deptId" column="d_id"/>
+        <result property="deptName" column="d_name"/>
+        <collection property="employeeNames"  ofType="string">
+            <result column="e_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="findByPage4" resultMap="pageResultMap2">
+        SELECT P.d_id, P.d_name, PI.e_name
+        FROM (SELECT d_id, d_name
+        FROM d_dept
+        LIMIT #{current},#{size}) P
+        LEFT JOIN d_employee PI
+        ON P.d_id = PI.dept_id
+    </select>
+
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.DDeptPOJO" id="BaseResultMap2">
+        <id     property="id"     column="d_id"     />
+        <result property="name"   column="d_name"   />
+        <result property="parentId"   column="parent_id"   />
+    </resultMap>
+    <resultMap id="NodeTreeResult" type="com.story.storyadmin.domain.entity.children.DDeptPOJO" extends="BaseResultMap2">
+        <collection property="childNode" column="d_id" ofType="com.story.storyadmin.domain.entity.children.DDeptPOJO"
+                    javaType="java.util.ArrayList" select="com.story.storyadmin.mapper.children.DDeptMapper.nextNoteTree">
+        </collection>
+    </resultMap>
+
+<!--noteTree ：获取所有父级节点数据；
+    nextNoteTree：循环获取子节点数据，直到叶子节点结束；-->
+    <select id="nextNoteTree" resultMap="NodeTreeResult">
+        select
+        <include refid="Base_Column_List"/>
+        from d_dept
+        where parent_id=#{parentId}
+    </select>
+    <select id="noteTree" resultMap="NodeTreeResult">
+        select
+        <include refid="Base_Column_List"/>
+        from d_dept
+        where parent_id='0'
+    </select>
+
+
+
+
+
+</mapper>

@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface LoginLogMapper extends BaseMapper<LoginLog> {
 
+    int deleteLogininforByIds(Long[] ids);
+
 }

@@ -1,24 +1,37 @@
 <template>
   <div>
+    <!-- 搜索框 -->
     <div class="filter-container">
-      <el-input v-model="queryCond.title" class="filter-item" placeholder="标题" />
-      <el-select v-model="queryCond.operator" class="filter-item" placeholder="发布人" clearable @change="query">
+      <el-input v-model="listQuery.title" class="filter-item" placeholder="标题" />
+      <el-select v-model="listQuery.creatorId" class="filter-item" placeholder="发布人" clearable @change="query">
         <el-option v-for="u in allUsers" :key="u.id" :value="u.id" :label="u.name" />
       </el-select>
-      <el-select v-model="queryCond.status" class="filter-item" placeholder="状态" clearable @change="query">
+      <el-select v-model="listQuery.status" class="filter-item" placeholder="状态" clearable @change="query">
         <el-option v-for="(s,i) in statusLabel" :key="i" :value="i" :label="s" />
       </el-select>
-      <date-between :value="queryCond.createDate" class="filter-item" name="发布日期" @keypress.native.enter="query" @change="val=>{queryCond.createDate = val;query()}" />
+      <date-between :value="listQuery.requestDate" class="filter-item" start="开始时间" end="结束时间" @keypress.native.enter="query" @change="val=>{listQuery.requestDate = val;query()}" />
       <el-button :loading="listLoading" class="filter-item" type="primary" icon="el-icon-search" @click="query">
-        搜索
+        查询
       </el-button>
     </div>
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <!-- 表格 -->
+    <el-table v-loading="listLoading" :data="dataList" border fit highlight-current-row style="width: 100%">
       <el-table-column type="index" label="序号" align="center" width="60" />
       <el-table-column :formatter="r=>r.title" label="标题" align="center" min-width="360" />
-      <el-table-column :formatter="r=>parseDate(r.create_date)" label="发布时间" align="center" min-width="120" />
-      <el-table-column :formatter="r=>getUserName(r.creator)" label="发布人" align="center" min-width="120" />
-      <el-table-column label="状态" align="center">
+      <el-table-column :formatter="r=>parseDate(r.createDate)" label="发布时间" align="center" min-width="120" />
+      <el-table-column :formatter="r=>getUserName(r.creatorId)" label="发布人" align="center" min-width="120" />
+      <el-table-column label="状态" align="center" 
+      :filters="[{ text: '已撤销', value: 0 }, { text: '有效中', value: 1 }, { text: '已过期', value: 2 }]"
+      :filter-method="filterTag"
+      filter-placement="bottom-end"
+      >
+      <!-- 作用域插槽 slot-scope-->
+      <!-- slot-scope 的值可以接收任何有效的可以出现在函数定义的参数位置上的 JavaScript 表达式。这意味着在支持的环境下 (单文件组件或现代浏览器)，你也可以在表达式中使用 ES2015 解构，如下 -->
+       <!-- 
+         <span slot-scope="{ msg }">
+        {{ msg }}
+        </span>
+         -->
         <template slot-scope="{row}">
           <el-tag :type="statusType[row.status]" size="mini">
             {{ statusLabel[row.status] }}
@@ -33,13 +46,14 @@
       <el-table-column align="center" width="360" label="操作">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="showInfo(row.id)">查看详情</el-button>
-          <el-button v-if="row.status===1&&!row.top&&permissions.top_and_cancel" size="mini" type="danger" icon="el-icon-top" @click="top(row.id)">置顶</el-button>
-          <el-button v-if="row.status===1&&row.top&&permissions.top_and_cancel" size="mini" type="" icon="el-icon-bottom" @click="untop(row.id)">取消置顶</el-button>
-          <el-button v-if="row.status===1&&permissions.cancel" size="mini" type="info" @click="cancel(row.id,row.title)">撤销</el-button>
-          <el-button v-if="row.status===1&&permissions.outdate" size="mini" type="warning" @click="outdate(row.id,row.title)">过期</el-button>
+          <el-button v-if="row.status===1&&!row.top" size="mini" type="danger" icon="el-icon-top" @click="top(row.id)">置顶</el-button>
+          <el-button v-if="row.status===1&&row.top" size="mini" type="" icon="el-icon-bottom" @click="untop(row.id)">取消置顶</el-button>
+          <el-button v-if="row.status===1" size="mini" type="info" @click="cancel(row.id,row.title)">撤销</el-button>
+          <el-button v-if="row.status===1" size="mini" type="warning" @click="outdate(row.id,row.title)">过期</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页标签 -->
     <nav style="text-align: center; padding-top: 30px">
       <el-pagination
         :page-sizes="[10,20,30,50,100,300,500,1000]"
@@ -51,64 +65,91 @@
         @current-change="query"
       />
     </nav>
+
   </div>
 </template>
 <script>
-import DateBetween from '@/components/DateBetween'
-import { getList, topInform, untopInform, cancelInform, outdateInform } from '@/api/sysmgr/inform'
+import DateBetween from '@/components/DateBetween' // 引入自定义日期组件
+import { queryInform, topInform, untopInform, cancelInform, outdateInform } from '@/api/sysmgr/inform'
 import { parseTime } from '@/utils'
-import { getList as findAllUserList } from '@/api/sysmgr/user'
+import { findAllUserList } from '@/api/sysmgr/user'
 
 export default {
   name: 'InformTable',
   components: { DateBetween },
   data() {
     return {
-      permissions: {},
-      queryCond: {
+      listQuery: {
         title: '',
-        createDate: [],
+        requestDate: [],
         status: undefined,
-        creater: undefined
+        createrId: undefined
       },
+      // 分页
       page: {
         num: 1,
         size: 10
       },
       total: 0,
-      list: [],
-      listLoading: false,
+      dataList: null,
+      listLoading: false, // 表格加载
       allUsers: [],
       statusLabel: ['已撤销', '有效中', '已过期'],
-      statusType: ['info', 'success', 'warning']
+      statusType: ['info', 'success', 'warning'],
+      redirect: undefined // 重定向
+    }
+  },
+  // 侦听属性
+  watch: {
+    $route: { // 当前路由
+      handler: function(route) {
+        this.redirect = route.query && route.query.redirect;
+      },
+      immediate: true
     }
   },
   created() {
+    // 查询所有用户名
+    // debugger
+    findAllUserList()
+      .then(res => {
+        console.log(res.data.records);
+        this.allUsers = res.data.records
+      })
+    // 查询列表
     this.query()
-    this.$permission()
-    findAllUserList().then(r => { this.allUsers = r.result })
   },
   methods: {
+     // 对表格字段内容进行筛选 ,只能筛选某一页的数据，分页筛选需要在el-table中使用 @filter-change=""方法
+     filterTag(value, row) {
+       console.log("勾选的值:"+value)
+       console.log("状态标签:"+this.statusLabel[row.status])
+       return row.status === value ? this.statusLabel[row.status]:false ;
+      },
     query() {
       this.listLoading = true
-      getList(this.queryCond, this.page).then(r => {
-        this.list = r.result.list
-        this.total = r.result.total
+      queryInform(this.listQuery, this.page).then(r => {
+        this.dataList = r.data.records;
+        this.total = r.data.total
       }).catch(e => {}).finally(() => { this.listLoading = false })
     },
+    // 日期格式化
     parseDate(t) { return parseTime(t) },
+    // 置顶
     top(id) {
       topInform(id).then(r => {
         this.$message.success('操作成功')
         this.query()
       }).catch(e => {})
     },
+    // 取消置顶
     untop(id) {
       untopInform(id).then(r => {
         this.$message.success('操作成功')
         this.query()
       }).catch(e => {})
     },
+    // 撤销
     cancel(id, title) {
       this.$confirm(`公告撤销后不可恢复，确定撤销《${title}》？`, '操作提示').then(r => {
         cancelInform(id).then(r => {
@@ -117,6 +158,7 @@ export default {
         }).catch(e => {})
       }).catch(e => {})
     },
+    // 过期
     outdate(id, title) {
       this.$confirm(`公告过期后不可恢复，确定要让《${title}》过期？`, '操作提示').then(r => {
         outdateInform(id).then(r => {
@@ -125,13 +167,16 @@ export default {
         }).catch(e => {})
       }).catch(e => {})
     },
-    // 根据ID查询y用户名
+    // 根据ID查询用户名
     getUserName(id) {
       const user = this.$getById(this.allUsers, id) || {}
       return user.name || '未知'
     },
+    // 进入公告详情页面
     showInfo(id) {
-      this.$router.push({ path: `/inform/${id}` })
+      this.redirect = `/inform/${id}`
+      //  this.$router.push({ path: `/inform/${id}` })
+      this.$router.push({ path: this.redirect || '/inform' }) // 登录成功之后重定向到首页
     }
   }
 }

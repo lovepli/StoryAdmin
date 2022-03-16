@@ -4,11 +4,13 @@ package com.story.storyadmin.web.sysmgr;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.story.storyadmin.config.mongo.SysLogAnnotation;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Backup;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.sysmgr.BackupService;
+import com.story.storyadmin.web.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,7 +31,7 @@ import java.util.Date;
 @Api(description = "系统备份")
 @RestController
 @RequestMapping("/sysmgr/backup")
-public class BackupController {
+public class BackupController extends BaseController {
 
     @Autowired
     BackupService backupService;
@@ -54,7 +56,7 @@ public class BackupController {
         IPage<Backup> list = backupService.page(page, eWrapper);
         result.setData(list);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -64,6 +66,7 @@ public class BackupController {
      * @param backup
      * @return
      */
+    @ApiOperation(value = "系统备份" ,  notes="根据Id查询系统备份信息")
     @RequiresPermissions("sysmgr.backup.query")
     @RequestMapping(value="/find",method = {RequestMethod.POST})
     public Result findById(@RequestBody Backup backup){
@@ -71,7 +74,7 @@ public class BackupController {
         Result result = new Result();
         result.setData(backupBean);
         result.setResult(true);
-        result.setCode(Constants.TOKEN_CHECK_SUCCESS);
+        result.setCode(ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         return result;
     }
 
@@ -80,6 +83,8 @@ public class BackupController {
      * @param backup
      * @return
      */
+    @SysLogAnnotation
+    @ApiOperation(value = "系统备份" ,  notes="删除系统备份信息")
     @RequiresPermissions("sysmgr.backup.delete")
     @RequestMapping(value="/delete",method = {RequestMethod.POST})
     public Result dropById(@RequestBody Backup backup){
@@ -90,9 +95,9 @@ public class BackupController {
             delBackup.setYnFlag("0");
             delBackup.setEditor(UserContext.getCurrentUser().getAccount());
             delBackup.setModifiedTime(Date.from(Instant.now()));
-            result=new Result(backupService.updateById(delBackup),null,null,Constants.TOKEN_CHECK_SUCCESS);
+            result=new Result(backupService.updateById(delBackup),"删除成功",null,ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
         }else{
-            result = new Result(false, "", null ,Constants.PARAMETERS_MISSING);
+            result = new Result(false, "删除失败", null , ResultEnum.PARAMETERS_MISSING.getCode());
         }
         return result;
     }

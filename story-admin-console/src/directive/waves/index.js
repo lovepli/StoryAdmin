@@ -1,9 +1,9 @@
 import waves from './waves' // 1、引入waves
-
+ 
 const install = function(Vue) {
   // 自定义指令
   // 2、注册一个全局自定义指令 `v-waves`
-  // 添加全局资源
+  // 注册全局指令
   Vue.directive('waves', waves)
 }
 
@@ -11,7 +11,7 @@ const install = function(Vue) {
 // 参考：https://www.cnblogs.com/CyLee/p/10239853.html
 if (window.Vue) {
   window.waves = waves
-  // 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成
+  // 通过全局方法 Vue.use() 使用插件。它需要在你调用 new Vue() 启动应用之前完成 https://cn.vuejs.org/v2/guide/plugins.html
   Vue.use(install); // eslint-disable-line
 }
 

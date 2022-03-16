@@ -1,8 +1,8 @@
 package com.story.storyadmin.config.shiro.security;
 
 import com.alibaba.fastjson.JSON;
-import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.utils.JedisUtils;
 import org.apache.shiro.subject.Subject;
@@ -58,8 +58,8 @@ public class SystemLogoutFilter extends LogoutFilter {
             logger.error("退出登录错误",ex);
         }
 
-        //响应json数据给前端
-        this.writeResult(response);
+        //响应json数据给前端,展示到页面上(这里退出成功的信息展示交由前端来展示，后台就不做处理了)
+        // this.writeResult(response);
         //不执行后续的过滤器
         return false;
     }
@@ -69,12 +69,15 @@ public class SystemLogoutFilter extends LogoutFilter {
         PrintWriter out = null;
         try {
             out = response.getWriter();
-            Result result = new Result(true,null,null, Constants.TOKEN_CHECK_SUCCESS);
+            // TODO message显示到前端页面出现中文乱码
+            Result result = new Result(true,"退出登录成功！",null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
+            // 这里退出登录成功信息不交后台显示给前端，由前端自己展示 this.$message.success('用户已登出！')
             out.append(JSON.toJSONString(result));
         } catch (IOException e) {
             logger.error("返回Response信息出现IOException异常:" + e.getMessage());
         } finally {
             if (out != null) {
+                // 关闭PrintWriter流
                 out.close();
             }
         }

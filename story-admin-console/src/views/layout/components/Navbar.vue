@@ -3,8 +3,11 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />
+
     <div class="right-menu">
+      <!-- 系统登录用户名 -->
       <div class="user_name right-menu-item">{{ name }}</div>
+      <!-- 用户图像 -->
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -20,6 +23,11 @@
               首页
             </el-dropdown-item>
           </router-link>
+          <router-link to="/me/index">
+            <el-dropdown-item>
+              个人中心
+            </el-dropdown-item>
+          </router-link>
           <router-link v-if="this.isErp" class="inlineBlock" to="/pwd" >
             <el-dropdown-item >
               修改密码
@@ -31,6 +39,34 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <!-- 通知 -->
+    <div class="right-menu">
+      <notice/>
+    </div>
+    <!-- 聊天室 -->
+    <div class="right-menu">
+      <!-- <router-link to="/">
+        <Chat/>
+      </router-link> -->
+      <Chat/>
+    </div>
+    <div class="right-menu">
+     <!-- 全屏显示 -->   
+      <Screenfull />
+    </div>
+    <div class="right-menu">
+     <!-- 文档地址 -->   
+      <StoryAdminDoc  />
+    </div>
+    <div class="right-menu">
+     <!-- 源码地址 -->   
+      <StoryAdminGit  />
+    </div>
+    <div class="right-menu">
+    <!-- 根据输入的目录进行全文检索 -->
+      <StoryAdminSearch  />
+    </div>
+
   </el-menu>
 </template>
 
@@ -38,39 +74,66 @@
 import { mapGetters } from 'vuex' // mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性：
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Screenfull from '@/components/Screenfull/Screenfull'
+import StoryAdminDoc from '@/components/RuoYi/Doc/StoryAdminDoc'
+import StoryAdminGit from '@/components/RuoYi/Git/StoryAdminGit'
+import StoryAdminSearch from '@/components/HeaderSearch/StoryAdminSearch'
+import Notice from '@/components/oa_sys/Notice';
+import Chat from '@/components/oa_sys/Chat';
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    Screenfull,
+    Notice,
+    Chat,
+    StoryAdminDoc,
+    StoryAdminGit,
+    StoryAdminSearch
   },
   // 官方说明文档：计算属性是基于它们的响应式依赖进行缓存的。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 erp 还没有发生改变，多次访问 isErp 计算属性会立即返回之前的计算结果，而不必再次执行函数。
-  computed: { // 动态计算属性，相当于this.$store.getters.name, this.$store.getters.sidebar,
-  // 使用对象展开运算符 ...mapGetters 将 getter 混入 computed 对象中
+  // 说明：当映射的计算属性的名称与 state 的子节点名称相同时，我们也可以给 mapState 传一个字符串数组。举例如下：（这里是...mapGetters对象展开运算符，同样也是适用的！！）
+  // computed: mapState([
+  // 映射 this.count 为 store.state.count
+  //'count'
+  //])
+ computed: { // 动态计算属性，相当于this.$store.getters.name, this.$store.getters.sidebar,
+   // 使用对象展开运算符将 getter 混入 computed 对象中
+   //当映射的计算属性的名称与 state 的子节点名称相同时，我们也可以给 mapGetters 传一个字符串数组
     ...mapGetters([
+      //把 `this.name` 映射为 `this.$store.getters.name`
       'name',
       'sidebar',
       'avatar',
       'erp'
     ]),
-    // 这里的计算属性是调用了一个方法，当这个erp值改变的时候，方法才调用
+    // 计算属性isRrp值依赖属性erp,当erp值改变的时候，返回isRrp的值，在第二次改变之前，缓存isErp的值
     isErp() {
-      return this.erp == '0'
+      return this.erp === '0'
     }
   },
   methods: {
+
     toggleSideBar() {
       // 分发Action 通过 store.dispatch(type)方法触发action，参数为事件类型，需要和action中函数名称一致。
       this.$store.dispatch('ToggleSideBar')
     },
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        this.$store.dispatch('FedLogOut').then(() => {
-          if (this.erp == '1') {
-            window.location = process.env.ERP_LOGOUT_HREF
-          } else {
-            location.reload() // 为了重新实例化vue-router对象 避免bug
-          }
+      this.$confirm('确定注销并退出系统吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$store.dispatch('LogOut').then(() => {
+          this.$store.dispatch('FedLogOut').then(() => {
+            if (this.erp === '1') {
+              window.location = process.env.ERP_LOGOUT_HREF
+            } else {
+              location.reload() // 为了重新实例化vue-router对象 避免bug
+              this.$message.success('退出登录成功！')
+            }
+          })
         })
       })
     }
@@ -104,11 +167,11 @@ export default {
       vertical-align: 13px;
       font-size:13.5px;
     }
-    .screenfull {
-      position: absolute;
-      right: 90px;
-      top: 16px;
-    }
+    // .screenfull {
+    //   position: absolute;
+    //   right: 90px;
+    //   top: 16px;
+    // }
     .avatar-container {
       height: 45px;
       margin-right: 30px;

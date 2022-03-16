@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.story.storyadmin.mapper.children.DStudentMapper">
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.DStudent" id="BaseResultMap">
+        <id     property="id"     column="s_ID"     />
+        <id     property="name"     column="s_name"     />
+        <result property="birthday"   column="s_birthday"   />
+        <result property="sex"  column="s_sex"   />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        s_ID,s_birthday,s_sex
+    </sql>
+
+
+    <select id="findByPage" parameterType="com.alibaba.fastjson.JSONObject" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        d_student
+    </select>
+
+
+
+    <select id="getStudent" parameterType="java.lang.String" resultType="com.story.storyadmin.domain.entity.children.DStudent">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM d_student WHERE s_id=#{id}
+    </select>
+
+
+    <!--#####################################################多对多关联查询##############################################################-->
+    <!--根据学生编号id查询学生信息和课程信息，一对多关系 -->
+    <select id="getStudentAndCourseByStudentId" parameterType="java.lang.String" resultMap="StudentCourseResultMap">
+        SELECT s.*,c.* from d_student s inner join d_score ds on s.s_id = ds.ds_id INNER JOIN d_course  c on ds.course_id =c.c_id and s.s_id=#{id}
+    </select>
+    <resultMap type="com.story.storyadmin.domain.entity.children.manytomany.DStudentBO" id="StudentCourseResultMap">
+        <id property="id" column="s_id"/>
+        <result property="name" column="s_name"/>
+        <result property="birthday"   column="s_birthday"   />
+        <result property="sex"  column="s_sex"   />
+        <!-- ofType指定students集合中的对象类型 -->
+        <collection property="courses" ofType="com.story.storyadmin.domain.entity.children.DCourse">
+            <id property="id" column="c_id"/>
+            <result property="name" column="c_name"/>
+        </collection>
+    </resultMap>
+
+
+
+
+    <!-- sql基础语法练习 https://mp.weixin.qq.com/s/nhqM70-dHbuRH5kVEowM8A
+1.查找学生
+    %表式任意字符串
+查姓'猴'的学生的名单(姓名中第一个字是'猴') select * from d_student where s_name like '猴%'
+查询姓名中最后一个字是'猴'的学生的名单 select * from d_student where s_name like '%猴'
+查询姓名中带'猴'的学生的名单 select * from d_student where s_name like '%猴%' TODO sql优化：尽量避免在字段开头模糊查询，会导致数据库引擎放弃索引进行全表扫描 优化后 '猴%'
+
+查询姓“猴”学生的个数 select count(s_id) from d_student where s_name like '猴%';
+
+2.汇总分析
+查询课程编号为“0002”的总成绩 select sum(ds_score) from d_score where course_id = '0002'
+查询选了课程的学生人数 select count( distinct ds_id) from d_score
+练习二：分组分析
+查询各科成绩最高和最低的分， 以如下的形式显示：课程号，最高分，最低分 select course_id,max(ds_score),min(ds_score) from d_score group by course_id
+查询每门课程被选修的学生数 select course_id, count(ds_id) from d_score group by course_id
+查询男生、女生人数 select s_sex, count(s_sex) from d_student group by s_sex
+练习二：分组结果的条件
+查询平均成绩大于60分学生的学号和平均成绩 select ds_id ,avg(ds_score) from d_score group by ds_id having avg(ds_score) >60
+查询至少选修两门课程的学生学号 select ds_id,count(course_id) from d_score group by ds_id having count(course_id) >=2
+查询同名同姓学生名单并统计同名人数 select s_name,count(*) from d_student group by s_name having count(*)>=2
+查询不及格的课程并按课程号从大到小排列 select course_id from d_score where ds_score <60  order by course_id desc
+查询每门课程的平均成绩，结果按平均成绩升序排序，平均成绩相同时，按课程号降序排列 select course_id,avg(ds_score) from d_score order by avg(ds_score) asc ,course_id desc
+检索课程编号为“0004”且分数小于60的学生学号，结果按按分数降序排列 select ds_id from d_score where course_id ='0004' and ds_score < 60 order by ds_score desc
+统计每门课程的学生选修人数(超过2人的课程才统计)
+要求输出课程号和选修人数，查询结果按人数降序排序，若人数相同，按课程号升序排序 select course_id,count(ds_id) from d_score group by course_id having count(ds_id) >2 order by count(ds_id) desc,course_id asc
+查询两门以上不及格课程的同学的学号及其平均成绩
+select ds_id,avg(ds_score) from d_score where ds_score < 60  group by ds_id having count(course_id) > 2
+
+3.复杂查询
+查询所有课程成绩小于60分学生的学号、姓名 【知识点】子查询  select s_id,s_name from s_student where s_id in (select ds_id from d_score where ds_score < 60)
+查询没有学全所有课的学生的学号、姓名
+select s_id,s_name from s_student where s_id in (select ds_id from d_score where group by ds_id having count(course_id) < (select count(c_id) from d_course ))
+查询出只选修了两门课程的全部学生的学号和姓名
+
+4.topN问题
+这类问题其实就是常见的：分组取每组最大值、最小值，每组最大的N条（top N）记录。
+工作中会经常遇到这样的业务问题：
+如何找到每个类别下用户最喜欢的产品是哪个？
+如果找到每个类别下用户点击最多的5个商品是什么？
+这类问题其实就是常见的：分组取每组最大值、最小值，每组最大的N条（top N）记录。
+
+查询各科成绩前两名的记录
+select distinct ds1.* from d_score ds1 inner join d_score ds2 on ds1.course_id =ds2.course_id and ds1.ds_score < ds2.ds_score
+按课程号分组取成绩最大值所在行的数据
+select ds1.* from d_score ds1 where ds1.ds_score =(  select ds.course_id,avg(ds.ds_score) from d_score ds group by ds.course_id)
+
+4.1 分组取每组最大值
+案例：按课程号分组取成绩最大值所在行的数据
+我们可以使用分组（group by）和汇总函数得到每个组里的一个值（最大值，最小值，平均值等）。但是无法得到成绩最大值所在行的数据。
+select 课程号,max(成绩) as 最大成绩
+from score
+group by 课程号;
+
+我们可以使用关联子查询来实现：关联子查询的使用说明：https://www.cnblogs.com/fuyusheng/p/12510957.html
+自查询：关联子查询首先依靠子查询中的关联语句，从主查询中选取关联属性的第一个值，进入子查询中，然后将子查询结果返回主查询，判断where条件，依次类推，直到主查询中关联属性的值选取完毕。
+select *
+from score as a
+where 成绩 = (
+select max(成绩)
+from score as b
+where b.课程号 = a.课程号);
+
+4.2 每组最大的N条记录
+案例：查询各科成绩前两名的记录
+select 课程号,max(成绩) as 最大成绩
+from score
+group by 课程号;
+总结: 常见面试题：分组取每组最大值、最小值，每组最大的N条（top N）记录。
+
+5.多表查询
+查询所有学生的学号、姓名、选课数、总成绩
+select a.学号,a.姓名,count(b.课程号) as 选课数,sum(b.成绩) as 总成绩
+from student as a left join score as b
+on a.学号 = b.学号
+group by a.学号;
+
+查询平均成绩大于85的所有学生的学号、姓名和平均成绩
+select a.学号,a.姓名, avg(b.成绩) as 平均成绩
+from student as a left join score as b
+on a.学号 = b.学号
+group by a.学号
+having avg(b.成绩)>85;
+
+查询学生的选课情况：学号，姓名，课程号，课程名称
+select a.学号, a.姓名, c.课程号,c.课程名称
+from student a inner join score b on a.学号=b.学号
+inner join course c on b.课程号=c.课程号;
+
+查询出每门课程的及格人数和不及格人数
+考察case表达式
+select 课程号,
+sum(case when 成绩>=60 then 1
+  else 0
+    end) as 及格人数,
+sum(case when 成绩 <  60 then 1
+  else 0
+    end) as 不及格人数
+from score
+group by 课程号;
+
+使用分段[100-85],[85-70],[70-60],[<60]来统计各科成绩，分别统计：各分数段人数，课程号和课程名称
+ 考察case表达式
+select a.课程号,b.课程名称,
+sum(case when 成绩 between 85 and 100
+  then 1 else 0 end) as '[100-85]',
+sum(case when 成绩 >=70 and 成绩<85
+  then 1 else 0 end) as '[85-70]',
+sum(case when 成绩>=60 and 成绩<70
+  then 1 else 0 end) as '[70-60]',
+sum(case when 成绩<60 then 1 else 0 end) as '[<60]'
+from score as a right join course as b
+on a.课程号=b.课程号
+group by a.课程号,b.课程名称;
+
+查询课程编号为0003且课程成绩在80分以上的学生的学号和姓名
+select a.学号,a.姓名
+from student  as a inner join score as b on a.学号=b.学号
+where b.课程号='0003' and b.成绩>80;
+
+使用sql实现将该表行转列
+【面试题类型总结】这类题目属于行列如何互换
+select 学号,
+max(case 课程号 when '0001' then 成绩 else 0 end) as '课程号0001',
+max(case 课程号 when '0002' then 成绩 else 0 end) as '课程号0002',
+max(case 课程号 when '0003' then 成绩 else 0 end) as '课程号0003'
+from score
+group by 学号;
+
+6.日期函数的使用
+用途：当前日期               函数：current_date                   案例：current_date                      结果：2021-09-10
+用途：当前时间               函数： current_time                  案例：current_time                      结果：14:25:09
+用途：当前日期和时间          函数： current_timestamp              案例：current_timestamp                结果： 2021-09-10 14:25:09
+用途：获取日期和年份,月份，日期 函数： year(日期) month(日期) day(日期) 案例：year('2021-09-10')                结果： 2021
+用途：日期对应星期几          函数：dayname(日期)                    案例：dayname('2021-09-10 14:25:09')    结果： 星期六
+
+查找1990年出生的学生名单 select s_id,s_anme frome s_student where year(birthday) =1990
+
+
+
+猴子数据分析 https://houzidata.gitbook.io/sql
+MYSQL中的窗口函数 rank, dense_rank, row_number
+
+
+    -->
+
+
+</mapper>

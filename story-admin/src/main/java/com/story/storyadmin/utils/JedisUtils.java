@@ -138,7 +138,7 @@ public class JedisUtils {
    * 将数据存入缓存（并设置失效时间）
    * @param key
    * @param val
-   * @param seconds
+   * @param seconds 单位：秒
    * @return
    */
   public void saveString(String key, String val, int seconds) {
@@ -493,7 +493,7 @@ public class JedisUtils {
   /**
    * 设置超时时间
    * @param key
-   * @param seconds
+   * @param seconds 单位：秒
    */
   public void expire(String key, int seconds) {
     redisTemplate.expire(key, seconds, TimeUnit.SECONDS);

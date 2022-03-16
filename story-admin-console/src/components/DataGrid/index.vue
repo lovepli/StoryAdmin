@@ -33,7 +33,7 @@
             icon="el-icon-refresh"
             @click="onReset"
           >重置</el-button>
-          <!-- 自定义slot具名插槽，我们希望把extendOperation组件放在这里 -->
+          <!-- 自定义slot具名插槽，我们希望把extendOperation组件放在这里，extendOperation组件作为扩展功能组件 -->
           <!-- Slot 通俗的理解就是“占坑”，在组件模板中占好了位置，当使用该组件标签时候，组件标签里面的内容就会自动填坑（替换组件模板中slot位置）
        并且可以作为承载分发内容的出口 -->
           <slot name="extendOperation"/>
@@ -53,13 +53,15 @@
       border
       fit
       highlight-current-row
+      @selection-change="handleSelectionChange"
     >
       <!-- 自定义slot具名插槽，我们希望把body表格体组件放在这里 -->
       <slot name="body"/>
     </el-table>
     <!-- 分页组件 -->
-    <!--:page.sync 是v-on:update:page的简写 是对应自定义组件pagination中触发事件this.$emit('update:page')事件对监听  -->
-    <!--:limit.sync 是v-on:update:limit的简写 是对应自定义组件pagination中触发事件this.$emit('update:limit')事件对监听  -->
+    <!-- .sync (2.3.0+) 语法糖，会扩展成一个更新父组件绑定值的 v-on 侦听器。能够实现父子组件双向绑定 -->
+    <!--:page.sync 是v-on:update:page的简写(语法糖：@update:page) 是对应自定义组件pagination中触发事件this.$emit('update:page')事件对监听  -->
+    <!--:limit.sync 是v-on:update:limit的简写(语法糖：@update:limit)  是对应自定义组件pagination中触发事件this.$emit('update:limit')事件对监听  -->
     <pagination
       v-show="total>0"
       :total="total"
@@ -82,6 +84,9 @@ export default {
   // 单向数据流：所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。
   // 这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。
   // 额外的，每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值。这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告
+
+  //官方文档： props 可以是数组或对象，用于接收来自父组件的数据。props 可以是简单的数组，或者使用对象作为替代，对象允许配置高级选项，如类型检测、自定义验证和设置默认值。这里显然是一个对象
+  // 在组件实例中访问url、dataName、searchHandlerVisibleSet...这些值，就像访问 data 中的值一样！！！
   props: { // 获取到<data-grid></data-grid> 组件内url和dataName和searchHandlerVisibleSet的值，即得到父组件中传过来的值
     url: {}, // 后端访问列表的api的url地址
     dataName: {}, // 查询参数对象 在<data-grid></data-grid>组件中对应data-name下划线命名方式
@@ -90,20 +95,21 @@ export default {
     isInitLoad: {// 是否初始化加载
       default: true
     },
+    // 系统日志有用到
     filterStatus: { // 查询条件验证通过状态，在<data-grid></data-grid>组件中对应filter-status下划线命名方式
-      default: true,
-      type: Boolean
+      default: true, //为该 prop 指定一个默认值
+      type: Boolean // type:可以是下列原生构造函数中的一种：String、Number、Boolean、Array、Object、Date、Function、Symbol、任何自定义构造函数、或上述内容组成的数组。会检查一个 prop 是否是给定的类型，否则抛出警告。
     }
   },
   data() {
     return {
-      total: 0,
-      list: null,
+      total: 0, // 总数目
+      list: null, // 表格数据
       listLoading: false, // 在数据获取期间展示一个表格loading加载状态，还可以在不同视图间展示不同的loading状态
       // 分页查询参数
       queryedData: {
-        pageNo: 1,
-        limit: 10
+        pageNo: 1, // 第一页
+        limit: 10 // 每页显示的数量
       },
       searchHandlerVisible: true // 是否显示搜索框
     };
@@ -116,7 +122,7 @@ export default {
   // 因为进入列表页面就需要在列表中显示出数据，那么就需要实现加载页面时自动加载页面方法（包括根据条件是否显示搜索框和初始化查询列表数据的方法）
   // 而之前我们已经知道了，Vue的声明周期中，最早可以操作methods和data中的数据的阶段是：created生命周期函数阶段。
   // 那么在这里调用onSubmit方法即可
-    //      console.log("created=>",this.isInitLoad); // `this` 指向 vm 实例
+  // console.log("created=>",this.isInitLoad); // `this` 指向 vm 实例
     var that = this;
     if (that.searchHandlerVisibleSet === 'false') {
       that.searchHandlerVisible = false;
@@ -132,6 +138,16 @@ export default {
       // 触发一个dataRest名字的事件，触发的事件名dataRest需要完全匹配监听这个事件所用的名称，监听这个名字的事件是@dataRest
       // 触发事件that.$emit('dataRest'); 对应的监听事件@dataRest="onDataRest"
       // 现在，你已经知道了 $emit 的用法，它可以被 v-on 侦听
+      // 官方说明：父级组件可以像处理 native DOM 事件一样通过 v-on 监听子组件实例的任意事件,同时子组件可以通过调用内建的 $emit 方法并传入事件名称来触发一个事件,有了这个 v-on 监听器，父级组件就会接收该事件并更新
+      // vm.$on用法：监听当前实例上的自定义事件。事件可以由 vm.$emit 触发。回调函数会接收所有传入事件触发函数的额外参数。例子如下：
+      // vm.$on('test', function (msg) {
+      //   console.log(msg)
+      // })
+      // vm.$emit('test', 'hi')
+      // // => "hi"
+      // vm.$once用法：监听一个自定义事件，但是只触发一次。一旦触发之后，监听器就会被移除。
+      // vm.$off用法： 移除自定义事件监听器。 1、如果没有提供参数，则移除所有的事件监听器；2、如果只提供了事件，则移除该事件所有的监听器；3、如果同时提供了事件与回调，则只移除这个回调的监听器。
+      // vm.$emit用法： 触发当前实例上的事件。附加参数都会传给监听器回调。
       that.$emit('dataRest', undefined);
       return false;
     },
@@ -150,6 +166,10 @@ export default {
           that.fetchData();
         }
       }, 100);
+    },
+    // 多选框选中数据
+    handleSelectionChange(rows) {
+      this.$emit('handleSelection', rows);
     },
     // 请求成功，需要重新刷新列表（不然新数据不能及时的更新到页面上）
     fetchData() {

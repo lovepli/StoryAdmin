@@ -3,14 +3,14 @@ package com.story.storyadmin.service.sysmgr.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.story.storyadmin.config.props.DbBackupProperties;
 import com.story.storyadmin.config.shiro.security.UserContext;
-import com.story.storyadmin.constant.Constants;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.constant.enumtype.YNFlagStatusEnum;
 import com.story.storyadmin.domain.entity.sysmgr.Backup;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.mapper.sysmgr.BackupMapper;
 import com.story.storyadmin.service.sysmgr.BackupService;
 import com.story.storyadmin.utils.DataBaseUtils;
-import com.story.storyadmin.utils.DateUtils;
+import com.story.storyadmin.utils.DateMethordUtil.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -40,7 +40,7 @@ public class BackupServiceImpl extends ServiceImpl<BackupMapper, Backup> impleme
         long endTime = System.currentTimeMillis();
         Backup entity= new Backup();
         entity.setBackupDate(DateUtils.currentDate());
-        entity.setBackupName(String.format("%s-%s-数据备份",DateUtils.getCurrentDate(),dbBackupProperties.getDbname()));
+        entity.setBackupName(String.format("%s-%s-数据备份", DateUtils.getCurrentDate(),dbBackupProperties.getDbname()));
         entity.setDbName(dbBackupProperties.getDbname());
         if(!StringUtils.isEmpty(relativeFile)){
             //备份成功
@@ -54,7 +54,7 @@ public class BackupServiceImpl extends ServiceImpl<BackupMapper, Backup> impleme
         }
         entity.setRuntime((endTime - startTime)/1000);
         this.persist(entity);
-        return new Result(true, "备份成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "备份成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 
     @Override
@@ -78,6 +78,6 @@ public class BackupServiceImpl extends ServiceImpl<BackupMapper, Backup> impleme
             //更新
             baseMapper.updateById(backup);
         }
-        return new Result(true, "修改成功", null, Constants.TOKEN_CHECK_SUCCESS);
+        return new Result(true, "修改成功", null, ResultEnum.TOKEN_CHECK_SUCCESS.getCode());
     }
 }

@@ -1,5 +1,6 @@
 package com.story.storyadmin.web.mongoTest;
 
+import com.story.storyadmin.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,8 @@ import java.util.Map;
  * @description: 测试MongoTemplate https://blog.csdn.net/larger5/article/details/79760317
  */
 @RestController
-@RequestMapping("/webjars")
-public class MongoDBTestController {
-    private static final Logger logger = LoggerFactory.getLogger(MongoDBTestController.class);
+@RequestMapping("/mongoDBTest")
+public class MongoDBTestController extends BaseController {
 
     @Autowired
     MongoTemplate mongoTemplate;

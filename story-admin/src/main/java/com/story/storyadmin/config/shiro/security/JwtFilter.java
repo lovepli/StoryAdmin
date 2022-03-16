@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.story.storyadmin.config.shiro.LoginUser;
 import com.story.storyadmin.constant.Constants;
 import com.story.storyadmin.constant.SecurityConsts;
+import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.service.common.ISyncCacheService;
 import com.story.storyadmin.utils.JedisUtils;
@@ -28,7 +29,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /** jwt设置参数 */
+    /** jwt设置参数 构造器注入bean对象*/
     JwtProperties jwtProperties;
     ISyncCacheService syncCacheService;
     JedisUtils jedisUtils;
@@ -52,6 +53,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     /**
      * 登录验证
+     * 当前请求executeLogin验证成功后，调用refreshTokenIfNeed检查请求中携带的Token是否已经生效2小时，如果是就重新颁发
      * @param request
      * @param response
      * @return
@@ -69,11 +71,12 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(token);
 
-        //绑定上下文获取账号
+        //TODO 绑定上下文 获取账号
         String account = JwtUtil.getClaim(authorization, SecurityConsts.ACCOUNT);
-
-//        //绑定上下文
-//        new UserContext(new LoginUser(account));
+        // 将LoginUser 设置为线程内部属性，方便其他线程获取
+        // UserContext userContext= new UserContext(new LoginUser(account));
+           new UserContext(new LoginUser(account));
+           // 当我们在业务中需要访问上下文用户时，可以这样获取：UserContext.getCurrentUser().getAccount()
 
         //检查是否需要更换token，需要则重新颁发
         this.refreshTokenIfNeed(account, authorization, response);
@@ -83,7 +86,10 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 检查是否需要,若需要则校验时间戳，刷新Token，并更新时间戳
+     * 加入Token验证通过后定时刷新Token的逻辑
+     * 解决Token过期后刷新的逻辑，那么我们需要增加Token过期前更新的逻辑,
+     * 将原来设计的Token到期后刷新，重新修改为Token在有效期内刷新，使得Token一旦到期，则直接跳转到登录页，保证了同一个用户，并发的请求只会更换一次令牌
+     * 检查是否需要刷新token,若需要则校验时间戳，刷新Token，并更新时间戳
      * @param account
      * @param authorization
      * @param response
@@ -100,9 +106,15 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             if (b) {
                 //b为true获取到锁
                 // refreshTokenKey是登录的时候设置的缓存时间戳
+                // TODO 这个是记住我缓存key
                 String refreshTokenKey= SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account;
+                // TODO 这个是没有记住我缓存key
+                String refreshTokenKeyNoRemeberMe = SecurityConsts.PREFIX_SHIRO_REFRESH_TOKEN + account + "rememberMe";
+                Boolean rememberMe = null;
                 //判断redis是否缓存了数据
                 if(jedisUtils.exists(refreshTokenKey)){
+                    // 记住我
+                    rememberMe = true; 
                     //获取缓存中的时间戳
                     String tokenTimeStamp = jedisUtils.get(refreshTokenKey);
                     //获取token中时间戳
@@ -111,17 +123,35 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                     if(!tokenMillis.equals(tokenTimeStamp)){
                         throw new TokenExpiredException(String.format("账户%s的令牌无效", account));
                     }
+                } else if(jedisUtils.exists(refreshTokenKeyNoRemeberMe)){
+                    rememberMe = false;
+                    //获取缓存中的时间戳
+                    String tokenTimeStamp = jedisUtils.get(refreshTokenKeyNoRemeberMe);
+                    //获取token中时间戳
+                    String tokenMillis= JwtUtil.getClaim(authorization,SecurityConsts.CURRENT_TIME_MILLIS);
+                    //检查redis中的时间戳与token的时间戳是否一致
+                    if(!tokenMillis.equals(tokenTimeStamp)){
+                        throw new TokenExpiredException(String.format("账户%s的令牌无效", account));
+                    }
                 }
+
                 //时间戳一致，则颁发新的令牌
                 logger.info(String.format("为账户%s颁发新的令牌", account));
                 //系统当前时间
                 String strCurrentTimeMillis = String.valueOf(currentTimeMillis);
+                String newToken = null;
+                if(rememberMe){
+                    //生成新的签名token,n分钟后过期
+                   newToken = JwtUtil.sign(account,strCurrentTimeMillis,true);
+                    //更新缓存中的token时间戳，TODO 主要更新的是currentTimeMillis系统当前时间戳数据，过期时间在程序里是写死的
+                    //将数据存入缓存（并设置失效时间为24小时）
+                    jedisUtils.saveString(refreshTokenKey, strCurrentTimeMillis, jwtProperties.getTokenExpireTime()*60);
+                }
                 //生成新的签名token,n分钟后过期
-                String newToken = JwtUtil.sign(account,strCurrentTimeMillis);
-
-                //更新缓存中的token时间戳，TODO 主要更新的是currentTimeMillis系统当前时间戳数据，过期时间在程序里是写死的
-                //将数据存入缓存（并设置失效时间）
-                jedisUtils.saveString(refreshTokenKey, strCurrentTimeMillis, jwtProperties.getTokenExpireTime()*60);
+                  newToken = JwtUtil.sign(account,strCurrentTimeMillis,false);
+                //更新缓存中的token时间戳，
+                //将数据存入缓存（并设置失效时间为24分钟）
+                jedisUtils.saveString(refreshTokenKeyNoRemeberMe, strCurrentTimeMillis, jwtProperties.getTokenExpireTime());
 
                 //设置httpServletResponse响应头将新的token返回给前端
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -136,15 +166,18 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     /**
      * 检查是否需要更新Token
-     *
+     * 这里的refreshCheckTime表示自Token颁发后，超过20分钟，就为请求更新一次Token，同时，
+     * 我们的refreshCheckTime时间应当小于令牌的有效期tokenExpireTime，即我们是要令牌在有效期内进行更新。
      * @param authorization
      * @param currentTimeMillis
      * @return
      */
     private boolean refreshCheck(String authorization, Long currentTimeMillis) {
         String tokenMillis = JwtUtil.getClaim(authorization, SecurityConsts.CURRENT_TIME_MILLIS);
-        //当前时间戳-token中的时间戳 大于更新令牌时间
-        if (currentTimeMillis - Long.parseLong(tokenMillis) > (jwtProperties.refreshCheckTime * 60 * 1000L)) {
+       // TODO  3、这里要考虑到记住我功能，所以更新令牌时间也要改变！！ 错误更正：记没记住我和令牌刷新时间没有必然关系，只要令牌刷新时间refreshCheckTime在
+        // TODO 令牌有效期tokenExpireTime之内，就都可以刷新，这里我们把记住我和没有记住我分别分配了两个key存入到Redis中，key的过期时间也设置的不同
+        //当前时间戳-token中的时间戳 大于20分钟(即设置的更新令牌时间为20分钟)
+        if (currentTimeMillis - Long.parseLong(tokenMillis) > (jwtProperties.refreshCheckTime * 10 * 1000L)) {
             return true;
         }
         return false;
@@ -171,13 +204,15 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 if (throwable != null && throwable instanceof SignatureVerificationException) {
                     msg = String.format("Token或者密钥不正确(%s)",throwable.getMessage());
                 } else if (throwable != null && throwable instanceof TokenExpiredException) {
-                    msg = String.format("Token已过期(%s)",throwable.getMessage());
+                    // TODO 为什么总是一会儿就过期了？
+                   // msg = String.format("Token已过期(%s)",throwable.getMessage());
+                    msg = String.format("Token已过期,请刷新页面重新登录！");
                 } else {
                     if (throwable != null) {
                         msg = throwable.getMessage();
                     }
                 }
-                //401非法请求 响应给前端
+                //401非法请求 响应给前端 TODO 这个前端页面没有显示？？？
                 this.response401(response, msg);
                 return false;
             }
@@ -200,9 +235,12 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 401非法请求
+     *  TODO 这个前端也没有显示响应的结果信息 ？？？
+     * 401非法请求 （token过期）
      * @param resp
      * @param msg
+     * 说明：当请求验证Token时抛出TokenExpiredException异常后，校验缓存中的RefreshToken的时间戳是否与当前请求Token时间戳一致，倘若一致，则重新生成Token，以当前时间戳更新缓存中的RefreshToken时间戳；倘若不一致，则以Json格式直接响应401未登录错误。
+     * 采用前后端分离的方式，我们的401就需要直接返回JSON格式的响应。
      */
     private void response401(ServletResponse resp, String msg) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
@@ -215,10 +253,12 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
             Result result = new Result();
             result.setResult(false);
-            result.setCode(Constants.PASSWORD_CHECK_INVALID);
+            result.setCode(ResultEnum.TOKEN_CHECK_STALE_DATED.getCode());
             result.setMessage(msg);
+            // 将结果响应给前端
             out.append(JSON.toJSONString(result));
         } catch (IOException e) {
+            // TODO 代码规范：catch中捕获的异常日志级别为error级别！！
             logger.error("返回Response信息出现IOException异常:" + e.getMessage());
         } finally {
             if (out != null) {

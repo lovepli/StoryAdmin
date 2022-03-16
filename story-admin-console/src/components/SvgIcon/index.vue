@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'SvgIcon',
+  name: 'SvgIcon', // 创建 icon-component 组件
   props: {
     iconClass: {
       type: String,

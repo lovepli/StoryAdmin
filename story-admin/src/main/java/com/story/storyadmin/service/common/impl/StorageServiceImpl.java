@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import com.story.storyadmin.config.upload.support.FileArchiveStrategy;
 import com.story.storyadmin.service.common.StorageService;
-import com.story.storyadmin.utils.StringUtils;
+import com.story.storyadmin.utils.stringMethordUtil.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class StorageServiceImpl implements StorageService {
 	protected FileArchiveStrategy fileArchiveStrategy;
 
 	/**
-	 * 
+	 * 存储文件
 	 */
 	@Override
 	public Path store(String sourceUri, MultipartFile multipartFile) throws IllegalStateException, IOException {

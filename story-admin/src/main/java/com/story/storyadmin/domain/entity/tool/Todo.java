@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -70,30 +69,5 @@ public class Todo extends BaseEntity {
      * 执行人
      */
     private String executor;
-
-    /**
-     * 有效标志
-     */
-    private String ynFlag;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 修改人
-     */
-    private String editor;
-
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
-
-    /**
-     * 修改时间
-     */
-    private Date modifiedTime;
 
 }
