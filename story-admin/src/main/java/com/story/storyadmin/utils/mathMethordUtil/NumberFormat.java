@@ -65,4 +65,16 @@ public class NumberFormat {
             return df.format(obj).toString();
         }
     }
+
+    //TODO 避免使用BigDecimal(double)
+    //
+    //BigDecimal(double) 存在精度损失风险，在精确计算或值比较的场景中可能会导致业务逻辑异常。
+    //
+    //反例：
+    //BigDecimal 反例
+    //BigDecimal bigDecimal = new BigDecimal(0.11D);
+    //
+    //正例：
+    // BigDecimal 正例
+    //BigDecimal bigDecimal1 = bigDecimal.valueOf(0.11D);
 }

@@ -1,0 +1,1 @@
+package com.story.storyadmin.framework.jdkProxyInvocation.invockProxy1;import java.lang.reflect.Method;public class $MyProxy0 implements Man{MyInvocationHandler h;public $MyProxy0(MyInvocationHandler h){this.h = h;}public void findObject()throws Throwable{ Method method1 = Man.class.getMethod("findObject",new Class[] {});this.h.invoke(this,method1,null);}}

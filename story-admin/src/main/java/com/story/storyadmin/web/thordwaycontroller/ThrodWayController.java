@@ -2,7 +2,7 @@ package com.story.storyadmin.web.thordwaycontroller;
 
 import com.story.storyadmin.domain.vo.Result;
 import com.story.storyadmin.utils.netMethordUtil.HttpClientUtil;
-import com.story.storyadmin.utils.objectMethordUtil.JsonUtils;
+import com.story.storyadmin.utils.objectMethordUtil.FastJsonUtils2;
 import com.story.storyadmin.web.BaseController;
 
 /**
@@ -28,7 +28,7 @@ public class ThrodWayController extends BaseController {
         try {
             String result = HttpClientUtil.doGet(url);
             System.out.println("请求结果：" + result);
-            Result identityCheckResult = JsonUtils.parse(result, Result.class);
+            Result identityCheckResult = FastJsonUtils2.parse(result, Result.class);
             //IdentityCheck identityCheck = JsonUtils.parse(result, "result", IdentityCheck.class);
             //logger.info(String.valueOf(identityCheckResult));
             //logger.info(identityCheck.toString());

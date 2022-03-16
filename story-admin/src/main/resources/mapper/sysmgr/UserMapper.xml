@@ -559,6 +559,19 @@
         </where>
     </select>
 
+<!--sql优化，查询是否存在重名的人,返回一条数据，数据条数大于0则说明存在重复数据-->
+    <select id="checkName" parameterType="String" resultType="int">
+        select
+        1
+        from st_user
+        <where>
+           name=#{name}
+        </where>
+        limit 1
+    </select>
+    <select id="getUserById" resultType="com.story.storyadmin.domain.entity.sysmgr.User">
+        select id,name,password from st_user where id = ?
+    </select>
 
 
 </mapper>

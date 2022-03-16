@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author: 59688
@@ -31,6 +33,29 @@ public class DEmployee extends Model<DEmployee> {
 
     @TableField("dept_id")
     private  String deptId;
+
+    // 增加属性20210915
+    /**岗位名称 **/
+    @TableField("job_name")
+    private  String jobName;
+
+    /**上级领导员工编号 **/
+    @TableField("manager_id")
+    private  String managerId;
+
+    /**入职日期 **/
+    @TableField("hire_date")
+    private Date hireDate;
+
+    /** 薪资 **/
+    @TableField("salary")
+    private BigDecimal salary;
+
+    /** 奖金，佣金 **/
+    @TableField("commission")
+    private BigDecimal commission;
+
+
 
     @Override
     protected Serializable pkVal(){

@@ -25,4 +25,6 @@
         FROM d_teacher WHERE t_id=#{id}
     </select>
 
+
+
 </mapper>

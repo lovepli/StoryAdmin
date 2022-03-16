@@ -1,7 +1,7 @@
 package com.story.storyadmin.config.shiro.security;
 
-
 import com.story.storyadmin.config.shiro.LoginUser;
+import org.springframework.stereotype.Component;
 
 /**
  * 线程上下文，与应用上下文ApplicationContextAware区别开来,可以说是替代session存储用户登录信息，相当于是一个本地缓存
@@ -11,6 +11,7 @@ import com.story.storyadmin.config.shiro.LoginUser;
  * 在进行一次http登录过程中，登录成功后，在UserContextFilter拦截器拦截过程中，将登录用户信息存到当前连接线程的内部属性中，在整个http连接服务器的过程中，该连接都可以获取到存在ThreadLocal中都登录用户信息，随时都可以取出来
  * 应用上下文ApplicationContextAware的作用是
  */
+//@Component
 public class UserContext implements AutoCloseable {
 
     /**
@@ -20,7 +21,7 @@ public class UserContext implements AutoCloseable {
      */
 
     //ThreadLocal线程内部属性
-    static final ThreadLocal<LoginUser> current = new ThreadLocal<>();
+    public static final ThreadLocal<LoginUser> current = new ThreadLocal<>();
 
     /**
      * 构造函数
@@ -32,14 +33,14 @@ public class UserContext implements AutoCloseable {
     }
 
     /**
-     *  获取登录用户
+     *  获取登录用户 （static方法）
      */
     public static LoginUser getCurrentUser() {
         return current.get();
     }
 
     /**
-     * 将登录用户信息设置为线程内部属性，方便其他线程获取
+     * 将登录用户信息设置为线程内部属性，方便其他线程获取 （static方法）
      * @param user
      */
     public static void setCurrentUser(LoginUser user) {

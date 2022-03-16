@@ -1,5 +1,6 @@
 package com.story.storyadmin.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -221,20 +222,20 @@ public class TreeUtil {
             return result;
         } catch (Exception e) {
             e.printStackTrace();
-           // throw new TreeCastException(e);
             throw new RuntimeException("树形转换异常");
         }
     }
 
-    public static List<Object> addRootNode(String rootName, Integer rootId, List<Object> children) {
-        Object root = new Object(); // object对象必须要有这三个属性
-        //root.setMenuId(rootId);
-        //root.setMenuName(rootName);
-        //root.setChildren(children);
-        List<Object> rootList = new ArrayList<>();
+    public static List<JSONObject> addRootNode(String rootName, Integer rootId, List<JSONObject> children) {
+        JSONObject root = new JSONObject(); // object对象必须要有这三个属性
+        root.put("menuId",rootId);// 这三个属性根据实际情况来写，可能有的表里面不是menuId和menuName，根据实际情况进行替换
+        root.put("menuName",rootName);
+        root.put("children",children);
+        List<JSONObject> rootList = new ArrayList<>();
         rootList.add(root);
         return rootList;
     }
+
 
 
 }

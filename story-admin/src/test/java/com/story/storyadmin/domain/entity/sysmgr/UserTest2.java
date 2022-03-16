@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.story.storyadmin.mapper.sysmgr.UserMapper;
 import com.story.storyadmin.service.sysmgr.UserService;
+import com.story.storyadmin.service.sysmgr.impl.UserServiceImpl;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import junit.framework.TestCase;
 import org.apache.ibatis.annotations.MapKey;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.embedded.undertow.UndertowWebServer;
 import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,6 +32,9 @@ public class UserTest2 extends TestCase {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    UserService userService;
 
     //##########################################mybatis 返回参数类型#########################################
 
@@ -73,11 +78,46 @@ public class UserTest2 extends TestCase {
         }
     }
 
+    /**
+     *  List<Map<Long, User>>其实和List<User>是一样的
+     */
     @Test
     public void Test23() {
         List<Map<Long, User>> maps = userMapper.getUserMap23();
         maps.forEach(System.out::println);
     }
+
+    /**
+     * 拓展
+     * 封装label-value下拉框结构
+     */
+    @Test
+    public void Test24() {
+        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        //queryWrapper.eq("del_flag","1");
+        List<User> userList = userService.list(queryWrapper);
+       // userList.forEach(System.out::println);
+        List<Map<String,String>> list=new ArrayList<>();
+        getUserItemNameList(userList,list);
+
+    }
+
+    /**
+     * 这个方法最好写成一个泛型方法，方便扩展
+     * @param itemList
+     * @param list
+     */
+    private void getUserItemNameList(List<User> itemList,List<Map<String,String>> list){
+        for (User user:itemList){
+            Map<String,String> map=new HashMap<>();
+            map.put("label",user.getName());
+            map.put("value", String.valueOf(user.getId()));
+            list.add(map);
+        }
+    }
+
+
+
 
     @Test
     public void Test3() {
@@ -410,6 +450,8 @@ public class UserTest2 extends TestCase {
      * Mybatis中如何避免魔数
      * 开过阿里巴巴开发手册的大概都知道代码中是不允许出现魔数的，何为魔数？简单的说就是一个数字，一个只有你知道，别人不知道这个代表什么意思的数字。
      * 通常我们在Java代码中都会定义一个常量类专门定义这些数字。
+     *
+     * 我们也可以通过使用resultMap的鉴别器来实现这样的筛选功能 https://mp.weixin.qq.com/s/dnT2f62YLr-TeSMHdqvc2g
      */
     @Test
     public void Test7() {

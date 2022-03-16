@@ -13,6 +13,12 @@ import java.io.Serializable;
  * @author: 59688
  * @date: 2020/11/6
  * @description:
+ * 使用@Data时默认@equalsandhashcode的状态为callsuper=false
+ * @equalsandhashcode(callsuper=false) 表达为在对象比较时不会考虑父类中的成员,仅仅比较子类中的属性就判断是否相同
+ * @equalsandhashcode(callsuper=true) 在比较时会考虑父类中的成员,通过父类和子类中的属性一起判断是否相同
+ *
+ * @Accessors(chain = true) 的set方法会返回对象，可以进行链式设值
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

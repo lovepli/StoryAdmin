@@ -3,7 +3,15 @@ package com.story.storyadmin.enumtest;
 /**
  * @author: lipan
  * @date: 2020-04-26
- * @description:
+ * @description: 枚举天生就是单例模式
+ * 枚举有这几个特性：
+ * （1）枚举TypeEnum被final修饰，并且默认继承了Enum类。因此不能再继承其他的类。
+ *
+ * （2）枚举的构造函数是private修饰的，所以不能通过构造函数获取对象。
+ *
+ * （3）枚举的属性是static修饰的，可以通过枚举直接调用属性。
+ *
+ * （4）valueOf(java.lang.String)可以通过枚举的名称获取对应的实例。
  */
 public enum TypeEnum {
     VIDEO(1, "视频"), AUDIO(2, "音频"), TEXT(3, "文本"), IMAGE(4, "图像");

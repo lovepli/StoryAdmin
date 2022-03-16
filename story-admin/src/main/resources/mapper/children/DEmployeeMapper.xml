@@ -6,12 +6,18 @@
         <id     property="id"     column="e_id"     />
         <result property="name"   column="e_name"   />
         <result property="deptId"   column="dept_id"   />
+
+        <result property="jobName"     column="job_name"     />
+        <result property="managerId"   column="manager_id"   />
+        <result property="hireDate"   column="hire_date"   />
+        <result property="salary"   column="salary"   />
+        <result property="commission"   column="commission"   />
     </resultMap>
 
     <resultMap type="com.story.storyadmin.domain.entity.children.onetomany.DEmployeeBO" id="EmployeeMap" >
         <id     property="id"     column="e_id"     />
         <result property="name"   column="e_name"   />
-        <!-- 多对一关联：使用select引用方式 -->
+        <!-- 多对一关联：使用select引用方式，并且懒加载fetchType="lazy" -->
         <association property="dept" column="dept_id"
                      javaType="com.story.storyadmin.domain.entity.children.DDept"
                      select="com.story.storyadmin.mapper.children.DDeptMapper.selectDeptById"
@@ -20,6 +26,11 @@
 
     <sql id="Base_Column_List">
         e_id,e_name,dept_id
+    </sql>
+
+    <!--20210915增加属性-->
+    <sql id="Base_Column_List_2">
+        e_id,e_name,dept_id,job_name,manager_id,hire_date,salary,commission
     </sql>
 
 
@@ -50,6 +61,715 @@
         WHERE dept_id = #{deptId}
     </select>
 
+
+    <!--薪资问题51题目-->
+    <!--1. 取得每个部门最高薪水的人员名称
+    方法一：关联子查询-->
+    <select id="findMaxSalaryGroupByDeptId"  resultType="java.util.Map">
+        SELECT
+        d1.e_name,
+        d1.salary
+        FROM
+        d_employee d1
+        WHERE
+        d1.salary = (
+        SELECT
+        d2.salary
+        FROM
+        d_employee d2
+        WHERE
+        d2.dept_id = d1.dept_id
+        ORDER BY
+        d2.salary DESC
+        LIMIT 1
+        )
+    </select>
+<!--方法二：连接查询实现-->
+    <select id="findMaxSalaryGroupByDeptId2"  resultType="java.util.Map">
+        SELECT
+        d1.e_name,
+        d1.salary
+        FROM
+        d_employee d1
+        JOIN (
+        SELECT
+        dept_id,
+        max(salary) maxSalary
+        FROM
+        d_employee
+        GROUP BY
+        dept_id
+        ) d2 ON d1.dept_id = d2.dept_id
+        WHERE
+        d1.salary = d2.maxSalary
+    </select>
+<!--哪些人的薪水在部门平均薪水之上-->
+    <select id="findEmpInfoMinSalary"  resultType="java.util.Map">
+        SELECT
+        d1.*
+        FROM
+        d_employee d1
+        WHERE
+        d1.salary &gt;  (
+        SELECT
+        avg(d2.salary)
+        FROM
+        d_employee d2
+        WHERE
+        d2.dept_id = d1.dept_id
+        )
+    </select>
+    <!--方法二：连接查询实现  TODO -->
+    <select id="findEmpInfoMinSalary2"  resultType="java.util.Map">
+        SELECT
+        d1.*
+        FROM
+        d_employee d1
+        JOIN (
+        SELECT
+        dept_id,
+        avg(salary) avgSalary
+        FROM
+        d_employee
+        GROUP BY
+        dept_id
+        ) d2 ON d2.dept_id = d1.dept_id
+        WHERE
+        d1.salary &gt;  d2.avgSalary
+    </select>
+
+<!--取得部门中（所有人）平均薪水等级-->
+    <select id="findAllEmpInfosMinSalary"  resultType="java.util.Map">
+        SELECT
+        d.dept_id,
+        d.avgSalary,
+        s.grade
+        FROM
+        (
+        SELECT
+        avg(salary) avgSalary,
+        dept_id
+        FROM
+        d_employee
+        GROUP BY
+        dept_id
+        ) d
+        JOIN d_salary_grade s ON d.avgSalary BETWEEN s.low_salary
+        AND s.high_salary
+    </select>
+
+<!--不准用组函数（max），取得最高薪水（给出两种解决方案）-->
+    <select id="findMinSalary"  resultType="java.util.Map">
+        SELECT
+        salary
+        FROM
+        d_employee
+        ORDER BY
+        salary DESC
+        LIMIT 1
+    </select>
+
+<!--方法二：自连接：其中一个值不小于任何一个值，distinct去重后使用not in 过滤查询结果后即为最大值： TODO -->
+    <select id="findMinSalary2"  resultType="java.util.Map">
+        SELECT
+        salary
+        FROM
+        d_employee
+        WHERE
+        salary NOT IN (
+        SELECT DISTINCT
+        a.salary
+        FROM
+        d_employee a
+        JOIN d_employee b ON a.salary &lt;  b.salary
+    </select>
+
+<!--取得平均薪水最高的部门的部门编号-->
+    <select id="findDeptIdByAvgSalary"  resultType="java.util.Map">
+        SELECT
+        avg(salary),
+        dept_id
+        FROM
+        d_employee
+        GROUP BY
+        dept_id
+        ORDER BY
+        avg(salary) DESC
+        LIMIT 1
+    </select>
+<!--取得平均薪水最高的部门的部门名称-->
+    <select id="findDeptNameByAvgSalaryGroup"  resultType="java.util.Map">
+        SELECT
+        d.d_name
+        FROM
+        d_dept d
+        WHERE
+        d.d_id = (
+        SELECT
+        dept_id
+        FROM
+        d_employee
+        GROUP BY
+        dept_id
+        ORDER BY
+        avg(salary) DESC
+        LIMIT 1
+        )
+    </select>
+
+<!--求平均薪水的等级最低的部门的部门名称 TODO-->
+<!--求平均薪水的等级最低的部门的部门编号和平均薪水以及薪水等级，需要查询部门名称则将该查询结果再作为一个临时表去与部门表进行关联-->
+    <select id="findDeptNameByAvgSalaryGrade"  resultType="java.util.Map">
+        SELECT
+        ds.grade,
+        d.deptId,
+        d.avgSalary
+        FROM
+        (
+        SELECT
+        avg(salary) avgSalary,
+        dept_id deptId
+        FROM
+        d_employee
+        GROUP BY
+        dept_id
+        ) d
+        JOIN d_salary_grade ds ON d.avgSalary BETWEEN ds.low_salary
+        AND ds.high_salary
+        ORDER BY
+        ds.grade ASC
+        LIMIT 1
+    </select>
+
+<!--取得比普通员工（员工编号没有在manager_id列上出现的）的最高薪水还要高的经理人姓名-->
+    <select id="findManagerNameByMaxSalary"  resultType="java.util.Map">
+        SELECT
+        e_id,
+        e_name,
+        manager_id,
+        salary
+        FROM
+        d_employee
+        WHERE
+        e_id IN (
+        SELECT DISTINCT
+        manager_id
+        FROM
+        d_employee
+        WHERE
+        manager_id IS NOT NULL
+        )
+        AND salary &gt; (
+        SELECT
+        salary
+        FROM
+        d_employee
+        WHERE
+        e_id NOT IN (
+        SELECT DISTINCT
+        manager_id
+        FROM
+        d_employee
+        WHERE
+        manager_id IS NOT NULL
+        )
+        ORDER BY
+        salary DESC
+        LIMIT 1
+        )
+    </select>
+<!--思路二：子查询 TODO-->
+    <select id="findManagerNameByMaxSalary2"  resultType="java.util.Map">
+        SELECT
+        e.e_name
+        FROM
+        d_employee e
+        WHERE
+        e.salary &gt; (
+        SELECT
+        max(e.salary) maxSalary
+        FROM
+        d_employee e
+        WHERE
+        e.e_name NOT IN (
+        SELECT DISTINCT
+        e.e_name
+        FROM
+        d_employee e
+        JOIN d_employee e1 ON e.e_id = e1.manager_id
+        )
+        )
+    </select>
+<!--取得薪水最高的前五名员工-->
+    <select id="findMaxSalaryFiveEmp"  resultType="java.util.Map">
+        select * from d_employee order by salary desc limit 5
+    </select>
+
+<!--取得薪水最高的第六到第十名员工-->
+    <select id="findMaxSalarySixToTenEmp"  resultType="java.util.Map">
+        select * from d_employee order by salary desc limit 5,5
+    </select>
+
+<!--取得最后入职的5名员工-->
+    <select id="findLastHireDateFiveEmp"  resultType="java.util.Map">
+        select * from d_employee order by hire_date desc limit 5
+    </select>
+
+<!--取得每个薪水等级有多少员工-->
+    <select id="findEmpCountBySalaryGrade"  resultType="java.util.Map">
+        SELECT
+        count(e.e_id),
+        ds.grade
+        FROM
+        d_employee e
+        JOIN d_salary_grade ds ON e.salary BETWEEN ds.low_salary
+        AND ds.high_salary
+        GROUP BY
+        ds.grade
+    </select>
+
+<!--列出所有员工及领导的名字 左连接查询 注意这里的左表为数据量小的表，右表为数据量大的表，
+on 的条件后面跟的是e1.manager_id = e2.e_id ，因为还存在用户的manager_id匹配不上的，所以左边显示所有数据，既进行左连接 TODO -->
+    <select id="findEmpAndLeaderName"  resultType="java.util.Map">
+        select e1.e_name ename,e2.e_name leaderName from d_employee e1 left join d_employee e2 on e1.manager_id = e2.e_id
+    </select>
+
+<!--列出受雇日期早于其直接上级的所有员工编号、姓名、部门名称 TODO 左连接-->
+    <select id="findEmpInfoByHireDate"  resultType="java.util.Map">
+        SELECT
+        t.eId,
+        t.ename,
+        d.d_name
+        FROM
+        (
+        SELECT
+        e1.e_id eId,
+        e1.e_name ename,
+        e1.hire_date,
+        e1.dept_id deptId,
+        e2.e_id `leaderEid`,
+        e2.e_name `leaderName`,
+        e2.hire_date `leaderHireDate`,
+        e2.dept_id `leaderDeptId`
+        FROM
+        d_employee e1
+        LEFT JOIN d_employee e2 ON e1.manager_id = e2.e_id
+        WHERE
+        e1.hire_date &lt; e2.hire_date
+        ) t
+        JOIN d_dept d ON t.deptId = d.d_id;
+    </select>
+
+<!--列出部门名称和这些部门的员工信息，同时列出那些没有员工的部门 TODO 使用左连接的典型案例！！！-->
+    <select id="findDeptInfoAndEmpInfo"  resultType="java.util.Map">
+        select d.d_name,e.* from d_dept d left join d_employee e on d.d_id = e.dept_id
+    </select>
+
+<!--列出至少有5个员工的所有部门-->
+    <select id="findDeptInfoByEmpNum"  resultType="java.util.Map">
+        SELECT
+        d.d_name,
+        d.d_id
+        FROM
+        d_dept d
+        LEFT JOIN d_employee e ON d.d_id = e.dept_id
+        GROUP BY
+        d.d_id
+        HAVING
+        count(e.e_id) &gt;= 5
+    </select>
+
+<!--列出薪水比“张三”多的所有员工信息-->
+    <select id="findEmpInfoBySalary"  resultType="java.util.Map">
+        select e.* from d_employee e where e.salary > (select salary from d_employee where e_name = '张三')
+    </select>
+
+<!--列出所有岗位为“软件工程师”的姓名及其部门名称，部门人数 -->
+<!-- 注意：这种写法只查询出软件工程师，就漏掉了部门经理！！！！看题目就是用这个写法就对了，不需要查询出该部门的经理，而我的写法查询的是该部门所有的员工信息  -->
+<!--    select d.d_name,d.d_id,count(e.e_id) from d_dept d join d_employee e on d.d_id = e.dept_id where e.job_name = '软件工程师' group by d.d_id -->
+    <select id="findDeptNameAndNumByJobName"  resultType="java.util.Map">
+        SELECT
+        t1.e_name,
+        t2.d_id,
+        t2.d_name,
+        t2.num
+        FROM
+        (
+        SELECT
+        e.e_name,
+        e.dept_id
+        FROM
+        d_employee e
+        WHERE
+        e.dept_id IN (
+        SELECT
+        dept_id
+        FROM
+        d_employee
+        WHERE
+        job_name = '软件工程师'
+        )
+        ) t1
+        JOIN (
+        SELECT
+        d.d_name,
+        d.d_id,
+        count(e.e_id) num
+        FROM
+        d_dept d
+        JOIN d_employee e ON d.d_id = e.dept_id
+        GROUP BY
+        d.d_id
+        ) t2 ON t1.dept_id = t2.d_id
+    </select>
+
+<!--列出最低薪水大于1500的各种工作及从事此工作的全部雇员人数-->
+<!--我是这样写的，但是正确答案是下面的这种，搞不懂emmm TODO-->
+<!--  select e.job_name, count(e.job_name) from d_employee e where e.salary >1500 group by e.job_name  -->
+    <select id="findJobNameAndEmpNum"  resultType="java.util.Map">
+        select e.job_name, count(e.job_name) from d_employee e group by e.job_name having min(salary) &gt; 1500
+    </select>
+
+<!--列出在部门“财务部”工作的员工的姓名，假定不知道财务部门的部门编号 TODO 子查询有时候是可以用关联查询替换掉-->
+<!--  方法二：关联查询  select e.* from d_employee e join d_dept d on e.dept_id = d.d_id where d.d_name = '财务部'-->
+    <select id="findEmpNameByDeptName"  resultType="java.util.Map">
+        select e.* from d_employee e where e.dept_id =(  select d.d_id from d_dept d where d.d_name = '财务部')
+    </select>
+
+<!-- 查询所有的上级领导 TODO 子查询有时候是可以用关联查询替换掉-->
+    <select id="findAllManagers"  resultType="java.util.Map">
+        select distinct e2.* from d_employee e join  d_employee e2 on e.manager_id =e2.e_id
+    </select>
+<!--  关联子查询  -->
+    <select id="findAllManagers2"  resultType="java.util.Map">
+        select e1.* from d_employee e1 where e1.e_id in (select e2.manager_id from d_employee e2 where e2.manager_id = e1.e_id)
+    </select>
+
+<!-- 查询所有员工的工资等级-->
+    <select id="findAllEmpyInfoAndSalaryGrade"  resultType="java.util.Map">
+        select e.*,ds.grade from d_employee e join d_salary_grade ds on e.salary between  ds.low_salary and ds.high_salary
+    </select>
+
+<!--列出薪金高于公司平均薪金的所有员工，所在部门、上级领导、雇员的工资等级 TODO 注意题目分析的顺序-->
+<!--
+查询薪资大于平均薪资的员工
+ select e.* from d_employee e where e.salary > (select avg(salary) from d_employee )
+
+ 查询所有的部门
+ select distinct d.d_id, d.d_name from d_employee e join d_dept d on e.dept_id = d.d_id
+
+查询所有的上级领导
+select distinct e2.* from d_employee e join  d_employee e2 on e.manager_id =e2.e_id
+
+关联子查询
+ select e1.* from d_employee e1 where e1.e_id in (select e2.manager_id from d_employee e2 where e2.manager_id = e1.e_id)
+
+查询所有员工的工资等级
+select e.*,ds.grade from d_employee e join d_salary_grade ds on e.salary between  ds.low_salary and ds.high_salary
+ -->
+    <select id="findEmpInfoAndDeptInfoBySalary"  resultType="java.util.Map">
+        SELECT
+        e.e_name `ename`,
+        d.d_name,
+        e2.e_name `leaderName`,
+        ds.grade
+        FROM
+        d_employee e
+        JOIN d_dept d ON e.dept_id = d.d_id
+        JOIN d_employee e2 ON e.manager_id = e2.e_id
+        JOIN d_salary_grade ds ON e.salary BETWEEN ds.low_salary
+        AND ds.high_salary
+        WHERE
+        e.salary &gt; (
+        SELECT
+        avg(salary)
+        FROM
+        d_employee
+        )
+    </select>
+
+<!--列出与“张三”从事相同工作的所有员工及部门名称-->
+    <select id="findEmpInfoAndDeptInfoByEmpName"  resultType="java.util.Map">
+        select e.*,d.d_name from d_employee e join d_dept d on e.dept_id = d.d_id where e.e_name = '张三'
+    </select>
+
+<!--    列出薪金等于部门0003中员工的薪金的其它员工的姓名和薪金 不等于号 <> 后者 !=  -->
+<!--sql优化，使用索引列作为条件进行查询时，需要避免使用<>或者!=等判断条件。如确实业务需要，使用到不等于符号，需要在重新评估索引建立，避免在此字段上建立索引，改由查询条件中其他索引字段代替。-->
+    <select id="findEmpInfoAndSalaryByDeptId"  resultType="java.util.Map">
+        select e.* from d_employee e where e.salary in( select salary from d_employee where dept_id = '0003') and e.dept_id != '0003'
+    </select>
+
+<!--列出薪金高于在部门0003工作的所有员工的薪金的员工姓名和薪金、部门名称-->
+<!-- 这样写更简洁，把条件从字表中分离出来
+select e.e_name,e.salary ,d.d_name from d_employee e join d_dept d on e.dept_id = d.d_id where e.salary >(select  max(salary)  from d_employee  where dept_id = '0003')  and e.dept_id != '0003'
+-->
+    <select id="findEmpInfoAndDeptInfoAndSalaryByDeptId"  resultType="java.util.Map">
+        select dd.e_name, dd.salary ,de.d_name from (
+        select e.e_name  ,e.salary, e.dept_id from d_employee e  where  e.salary &gt; (select  max(salary)  from d_employee  where dept_id = '0003') and e.dept_id != '0003'
+        ) dd join d_dept de on dd.dept_id = de.d_id
+    </select>
+
+<!--列出在每个部门工作的员工数量、平均工资和平均服务期限（*）-->
+<!--    TODO 其中涉及的函数包括：ifnull(字段,0)      datediff(now(),日期)      right join-->
+<!--
+select e.dept_id ,ifnull(count(e.e_id),0) peoNumber, ifnull(avg(e.salary),0) avgSalary,ifnull(avg(datediff(now(),e.hire_date)/365),0) serverTime from
+d_employee e right join d_dept d on e.dept_id = d.d_id group by e.dept_id order by e.dept_id
+-->
+    <select id="findEmpNumberAndAvgSalaryAndWoekDateByDeptId"  resultType="java.util.Map">
+        select e.dept_id, count(e.e_id), avg(e.salary),avg(datediff(now(),e.hire_date)/365) hireDate from d_employee e group by e.dept_id
+    </select>
+
+<!--列出所有员工的姓名、部门名称和工资-->
+    <select id="findAllEmpNameAndDeptNameAndSalary"  resultType="java.util.Map">
+        select e.e_name,d.d_name,e.salary from d_employee e join d_dept d on e.dept_id = d.d_id
+    </select>
+
+<!-- 列出所有部门的详细信息和人数
+ TODO 这里注意有的部门是没有人员的，所以需要使用外连接， 部门表为主表，员工表为从表-->
+    <select id="findAllDeptInfoAndCountNumber"  resultType="java.util.Map">
+        select e.dept_id,d.d_name, count(e.e_id) from d_employee e right join d_dept d on e.dept_id =d.d_id group by e.dept_id,d.d_name
+    </select>
+
+<!-- 列出各种工作的最低工资及从事此工作的雇员姓名-->
+<!--  或者方法二：   select e.salary ,e.e_name,e.job_name from d_employee e where e.salary in (select  min(salary) from d_employee group by job_name)-->
+    <select id="findMinSalaryAndEmpName"  resultType="java.util.Map">
+        select e.salary , e.e_name ,e.job_name from d_employee e join (select min(salary) minSalary,job_name from d_employee group by job_name ) e1 on e.salary =e1.minSalary and e.job_name = e1.job_name
+    </select>
+
+<!--列出各个部门经理的最低薪金-->
+    <select id="findManagerMinSalary"  resultType="java.util.Map">
+        select dept_id,min(salary) minSal from d_employee where job_name like '%经理' group by dept_id
+    </select>
+
+<!--列出所有员工的年工资，按年薪从低到高掋序-->
+    <select id="findAllEmpSalaryOrderByYeaySalary"  resultType="java.util.Map">
+        select e_name, ifnull(salary,0)*12 annualSal from d_employee order by  annualSal desc
+    </select>
+
+<!--求出员工领导的薪水超过3000的员工名称和领导名称 TODO 经典的自连接查询,注意理解 e1 和 e2 代表的表！！！-->
+    <select id="findEmpNanmeAndManagerNameByEmpManagerSalary"  resultType="java.util.Map">
+        select e1.e_name `ename` ,e2.e_name `leaderName`,e2.salary from d_employee e1 join d_employee e2 on e1.manager_id =e2.e_id where e2.salary >3000
+    </select>
+
+<!--求部门名称中带“组”字符的部门员工的工资合计、部门人数 TODO 注意理解题目意思！-->
+    <select id="findDeptSunmSalaryByEmpName"  resultType="java.util.Map">
+        select d.d_id,ifnull(sum(e.salary),0) sumSal,count(e.e_name) peoNumber  from  d_employee e right join d_dept d on e.dept_id = d.d_id where d.d_name like '%组%' group by d.d_id
+    </select>
+
+<!--给任职日期超过30年的员工加薪10%-->
+    <select id="updateSalaryByHireDate" resultType="java.lang.Integer" >
+        update d_employee set salary = salary * 1.1 where datediff(now(),hire_date)/365 > 30;
+    </select>
+
+<!--查询部门编号为0002,0003的两个部门所有员工的信息-->
+<!-- sql优化：尽量避免使用in和not in ,会导致引擎走全表扫描，优化方式：如果是连续值，可以用between代替-->
+    <select id="findAllEmpInfoByDdptId"  resultType="java.util.Map">
+        select e.* from d_employee e where e.dept_id in ('0002','0003')
+    </select>
+
+<!--查询工资大于0001号员工工资的员工的信息-->
+    <select id="findAllEmpInfoByEmpSalaryAndId"  resultType="java.util.Map">
+        select e.* from d_employee e where e.salary  &gt; (select salary from d_employee where e_id = '0001')
+    </select>
+
+<!--查询与0001号或0002号员工的manager_id和dept_id相同的其他员工的e_id, manager, dept_id
+ TODO 多列子查询（不成对比较 & 成对比较）
+-->
+    <select id="findAllEmpInfoByManagerIdAndDeptId"  resultType="java.util.Map">
+        select e.e_id, e.manager_id,e.dept_id from d_employee e
+        where e.manager_id in (select manager_id from d_employee where e_id in ('0001','0002'))
+        and e.dept_id in (select dept_id from d_employee where e_id in ('0001','0002'))
+        and e.e_id not in ('0001','0002')
+    </select>
+
+<!-- 成对比较   -->
+    <select id="findAllEmpInfoByManagerIdAndDeptId2"  resultType="java.util.Map">
+        select e.e_id, e.manager_id,e.dept_id from d_employee e
+        where (e.manager_id,e.dept_id) in (select manager_id,dept_id from d_employee where e_id in ('0001','0002'))
+        and e.e_id not in ('0001','0002')
+    </select>
+
+<!--查询所有部门的平均薪资，取最大的一个薪资-->
+<!--  方法二：  select max(avg(salary)) from d_employee group by dept_id-->
+<!--  方法三：  select max(avg_sal) from (select avg(salary) avg_sal from d_employee group by dept_id) e-->
+    <select id="findMaxSalaryByDeptId"  resultType="java.util.Map">
+        select  avg(salary) from d_employee  group by dept_id order by avg(salary) desc limit 1
+    </select>
+
+<!--返回比本部门平均工资高的员工的e_name, dept_id salary及平均工资-->
+    <select id="findSalaryInfoAndEmpInfoByDeptId"  resultType="java.util.Map">
+        select e.e_name,e.dept_id,e.salary,e1.avgSalary from d_employee e join ( select dept_id,avg(salary) avgSalary from d_employee group by dept_id) e1 on e.dept_id =e1.dept_id where e.salary > e1.avgSalary
+    </select>
+
+<!--若部门为0003 查看工资的 1.1 倍，部门号为 0002 工资的1.2倍，其余 1.3 倍
+TODO case...when ... then... when ... then ... else ... end
+-->
+    <select id="findSalaryInfoByDeptId"  resultType="java.util.Map">
+        SELECT
+        e_id,
+        e_name,
+        salary,
+        CASE
+        dept_id
+        WHEN '0003' THEN
+        salary * 1.1
+        WHEN '0002' THEN
+        salary * 1.2  ELSE salary * 1.3
+        END "new_sal"
+        FROM
+        d_employee;
+        SELECT
+        e_id,
+        e_name,
+        salary,
+        decode( dept_id, '0003', salary * 1.1, '0002' salary * 1.2,  salary * 1.3 ) "new_sal"
+        FROM
+        d_employee;
+    </select>
+
+<!--    显式员工的e_id,e_name和address。其中，若员工dept_id与address为'南山区'的dept_id相同，则address为’南山科技园666’,其余则为’其他地区777’-->
+    <select id="findEmpInfoAndAddressByAdddress"  resultType="java.util.Map">
+        select e_id, e_name, case dept_id when (
+        select d_id
+        from d_dept
+        where address = '南山区'
+        ) then '南山科技园666' else '其他地区777' end "address"
+        from d_employee;
+    </select>
+
+<!-- 查询员工的e_id,e_name,要求按照员工的d_name排序 TODO 我的写法和方法二的结果不同？？-->
+<!--  TODO 方法二：内联子查询  select e_id, e_name from d_employee e1 order by (select d_name from d_dept d1 where e1.dept_id = d1.d_id)-->
+    <select id="findEmpIdAndNameOrderByDeptName"  resultType="java.util.Map">
+        select e.e_id,e.e_name from d_employee e join d_dept d on e.dept_id =d.d_id order by d.d_name
+    </select>
+
+<!--查询公司管理者的e_id,e_name,job_name,dept_id信息 TODO 经典题目，关联自查询， EXISTS的使用 'x'代表什么？-->
+<!--    如果是子查询，可以用exists代替-->
+<!--   方法二(不走索引)： select e_id, e_name, job_name,dept_id from d_employee where e_id in ( select manager_id from d_employee)-->
+<!--   方法三(走索引)： select  e_id, e_name, job_name,dept_id from d_employee e1 where exists (select * from d_employee e2 where e1.e_id = e2.manager_id) -->
+    <select id="findManagerInfo"  resultType="java.util.Map">
+        select distinct e1.e_id,e1.e_name,e1.job_name,e1.dept_id from d_employee e join d_employee e1 where e.manager_id = e1.e_id
+    </select>
+
+<!--查询d_dept表中，不存在于d_employee表中的部门的d_id和d_name TODO     关联自查询， NOT EXISTS的使用，'x'代表什么？ -->
+<!--   方法二：   SELECT d_id,d_name FROM d_dept d1  WHERE  d1.d_id not in ( SELECT e1.dept_id FROM d_employee e1 )-->
+<!--   方法三：   select distinct d.d_id, e.dept_id from d_dept d left join d_employee e on d.d_id = e.dept_id  where e.dept_id is null-->
+    <select id="findEmpIdAndNameNotIn"  resultType="java.util.Map">
+        SELECT
+        d_id,
+        d_name
+        FROM
+        d_dept d1
+        WHERE
+        NOT EXISTS (
+        SELECT
+        'x'
+        FROM
+        d_employee e1
+        WHERE
+        e1.dept_id = d1.d_id
+        )
+    </select>
+
+<!--更改 0001 员工的信息: 使其工资变为所在部门中的最高工资, job_name 变为公司中平均工资最低的 job_name TODO update-->
+    <select id="updateEmpById"  resultType="java.lang.Integer">
+        update d_employee e1
+        set salary = (
+        select max(salary)
+        from d_employee e2
+        where e1.dept_id = e2.dept_id
+        ), job_name = (
+        select job_name
+        from d_employee
+        group by job_name
+        having avg(salary) = (
+        select min(avg(salary))
+        from d_employee
+        group by job_name
+        )
+        )
+        where e_id = '0001';
+    </select>
+
+<!--    删除 0001 号员工所在部门中工资最低的那个员工 TODO delete-->
+    <select id="deleteEmpById"  resultType="java.lang.Integer">
+        delete from d_employee e1
+        where salary = (
+        select min(salary)
+        from d_employee
+        where dept_id = (
+        select dept_id
+        from d_employee
+        where e_id = '0001'
+        )
+        )
+    </select>
+<!--    查询公司中各部门的总工资大于公司中各部门的平均总工资的部门信息-->
+
+<!--    查询员工的e_name, dept_id, salary,其中员工的salary,dept_id与有奖金的任何一个员工的salary,dept_id相同即可-->
+<!--    sql优化：尽量比避免null值的判断，会导致数据库引擎放弃索引进行全表扫描，优化方式：可以给字段添加默认值0，对0值进行判断-->
+    <!-- 成对比较 TODO   -->
+    <select id="findEmpInfoByCommission"  resultType="java.util.Map">
+        SELECT
+        e.e_name,
+        e.dept_id,
+        e.salary
+        FROM
+        d_employee e
+        WHERE
+        ( dept_id, salary ) IN (
+        SELECT
+        dept_id,
+        salary
+        FROM
+        d_employee
+        WHERE
+        commission IS NOT NULL)
+    </select>
+
+<!--    选择工资大于所有job_name为'软件工程师'的员工的工资的员工e_name, job_name, salary TODO all的用法-->
+<!--            select e_name,job_name,salary from d_employee where salary  &gt; all( select salary from d_employee where job_name = '软件工程师' )-->
+    <select id="findEmpInfoByJobName"  resultType="java.util.Map">
+        select e_name,job_name,salary from d_employee where salary  &gt; ( select max(salary) from d_employee where job_name = '软件工程师' )
+    </select>
+
+<!--    选择所有没有管理者的员工的e_name TODO 'A'代表什么？  -->
+    <select id="findEmpNameByManagerId"  resultType="java.util.Map">
+        select e_name
+        from d_employee e1
+        where not exists (
+        select 'A'
+        from d_employee e2
+        where e1.manager_id = e2.e_id
+        )
+    </select>
+
+<!--    查询0001，0002，0003号部门的job_name，dept_id并且dept_id按0001，0002，0003的顺序排列 TODO union的使用，并排序 -->
+<!--    sql优化:尽量避免使用 or ,会导致搜索引擎放弃索引进行全表扫描，优化方式，使用union代替or-->
+    <select id="findJobNameAndDeptIdByDeptId"  resultType="java.util.Map">
+        select job_name , dept_id , 1
+        from d_employee
+        where dept_id = '0001'
+        union
+        select job_name , dept_id , 2
+        from d_employee
+        where dept_id = '0002'
+        union
+        select job_name , dept_id , 3
+        from d_employee
+        where dept_id='0003'
+        order by 3;
+    </select>
+
+<!--sql优化：
+sql语句执行的顺序：
+第一步：from 选择表
+第二步：where 筛选条件，筛选对象===行
+第三步：group by 将筛选出来的数据进行分组
+第四步：having 筛选条件，筛选对象===组
+第五步：select 选取最后的结果
+第六步：order by 将结果按照特定顺序排列
+-->
 
 
 </mapper>

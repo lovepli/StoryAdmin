@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * @author: lipan
  * @date: 2020/5/20
- * @description:
+ * @description:  Spring Boot 中默认使用的 json 解析框架是 jackson。
  */
 public class AppleTest {
     public static void main(String[] args) throws IOException {

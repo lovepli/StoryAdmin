@@ -1,5 +1,7 @@
 package com.story.storyadmin.utils.stringMethordUtil;
 
+import java.util.Arrays;
+
 /**
  * @author: 59688
  * @date: 2021/7/20
@@ -7,7 +9,8 @@ package com.story.storyadmin.utils.stringMethordUtil;
  *
  */
 public class StringDemo {
-    public static void main(String[] args) throws Exception {
+
+    public static  void fun(){
         String str1 = "Hello World";
         String str2 = "Hello World";
         String str3 = "hello world";
@@ -67,6 +70,42 @@ public class StringDemo {
         System.out.println("r23 : " + str1.equalsIgnoreCase(str2));
         //判断是否是空字符串
         System.out.println("r24:  " + str1.isEmpty());
+    }
+
+    public static void fun2(){
+        //TODO 注意事项
+        //String.split(String regex)部分关键字需要转译
+        //
+        //使用字符串String 的plit 方法时，传入的分隔字符串是正则表达式，则部分关键字（比如 .[]()\| 等）需要转义。
+        //
+        //反例：
+        //String.split(String regex) 反例
+        //String[] split = "a.ab.abc".split(".");
+        //System.out.println(Arrays.toString(split));   // 结果为[]
+        //String[] split1 = "a|ab|abc".split("|");
+        //System.out.println(Arrays.toString(split1));  // 结果为["a", "|", "a", "b", "|", "a", "b", "c"]
+
+        //
+        //正例：
+        // String.split(String regex) 正例
+        // . 需要转译
+        //String[] split2 = "a.ab.abc".split("\\.");
+        //System.out.println(Arrays.toString(split2));  // 结果为["a", "ab", "abc"]
+        //
+        //// | 需要转译
+        //String[] split3 = "a|ab|abc".split("\\|");
+        //System.out.println(Arrays.toString(split3));  // 结果为["a", "ab", "abc"]
+
+        // 如果不进行转译的话，可以先进行replace()替换掉字符串中的“.”，为“,”，然后再对“,”进行split()分割，也能得到同样的结果
+        String [] split2 = "a.ab.abc".replace(".",",").split(",");
+        System.out.println(Arrays.toString(split2));
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        fun2();
+
 
     }
 }

@@ -21,12 +21,14 @@ public class CourseTeacherResult extends CourseDO{
         super.setTeacher(new DTeacher());
     }
 
+    @Override
     public void setId(String teacherId) {
         this.teacherId = teacherId;
         //设置
         super.getTeacher().setId(teacherId);
     }
 
+    @Override
     public void setName(String teacherName) {
         this.teacherName = teacherName;
         //设置

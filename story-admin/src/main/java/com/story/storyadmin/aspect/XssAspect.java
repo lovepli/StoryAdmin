@@ -15,7 +15,7 @@ import java.util.Arrays;
 /**
  * @author: 59688
  * @date: 2021/3/24
- * @description: aop判断是否存在sql注入
+ * @description: 防止xss攻击切面类 aop判断是否存在sql注入
  */
 //@Aspect
 //@Component

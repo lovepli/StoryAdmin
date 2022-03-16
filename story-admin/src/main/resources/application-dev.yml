@@ -79,7 +79,8 @@ dbbackup:
 
 # 日志相关
 logging:
-  file: d:/storyadmin.log #开发环境系统存放日志文件的目录
+  #file: d:/storyadmin.log #开发环境系统存放日志文件的目录,这里是存放在D盘目录下，日志文件以这种命名的压缩包文件storyadmin.log.2020-11-11.0
+  file: ./logs/storyadmin.log # 文件存在项目log文件夹中
   level:
     com:
       story:

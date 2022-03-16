@@ -12,6 +12,7 @@ public class GenericTest {
 
     //这个类是个泛型类，在上面已经介绍过
     public class Generic<T>{
+
         private T key;
 
         public Generic(T key) {

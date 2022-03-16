@@ -158,6 +158,11 @@ public class User extends BaseEntity<User> {
         this.email = email;
     }
 
+    public User(Long id, String name) {
+        this.id =id;
+        this.name = name;
+    }
+
     /**
      * 实体类继承Model类，必须重写pkVal方法
      * 重写这个方法，return当前类的主键

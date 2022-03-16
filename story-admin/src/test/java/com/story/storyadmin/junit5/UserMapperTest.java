@@ -30,7 +30,7 @@ public class UserMapperTest {
     private static User user;
 
     @BeforeAll //在所有测试方法前执行，只执行一次
-    static void setUp() {
+    public static void setUp() {
         user = new User();
         user.setId(99l);
         user.setName("张三三");
@@ -40,7 +40,7 @@ public class UserMapperTest {
 
     @Test
     @DisplayName("增加用户")
-    void addUserTest() {
+    public void addUserTest() {
         //支持java8 lambda
         assertAll("添加用户成功.",
                 () -> assertNotNull(userMapper.insert(user)),
@@ -49,20 +49,20 @@ public class UserMapperTest {
 
     @Test
     @DisplayName("删除用户")
-    void deleteUserTest() {
+    public void deleteUserTest() {
         assertEquals(0, userMapper.deleteById(3l));
     }
 
     @Test
     @DisplayName("修改用户")
-    void modifyUserTest() {
+    public void modifyUserTest() {
         user.setId(3l);
         assertEquals(0, userMapper.updateById(user));
     }
 
     @Test
     @DisplayName("查询用户")
-    void queryUserTest() {
+    public void queryUserTest() {
         assertNull(userMapper.selectAll(user));
     }
 }

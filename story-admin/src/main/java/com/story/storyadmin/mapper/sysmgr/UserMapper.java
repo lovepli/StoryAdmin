@@ -143,6 +143,12 @@ public interface UserMapper extends BaseMapper<User> {
     List<T> selectTreeList(@Param("ew") Wrapper<T> wrapper);
 
 
+    // sql优化
+    int checkName(@Param("name") String name);
+
+    // 测试 手写mybatis框架的sql语句
+    public User getUserById(Long id);
+
 
 
 

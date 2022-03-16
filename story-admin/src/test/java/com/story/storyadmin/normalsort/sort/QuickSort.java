@@ -20,7 +20,7 @@ public class QuickSort {
         int j = end;
         int temp = arr[start];
         while (i < j) {
-// 从后往前比较
+         // 从后往前比较
             for (; j > i; j--) {
                 if (arr[j] < temp) {
                     arr[i] = arr[j];

@@ -90,6 +90,7 @@ class Task2 {
         subTask.start();
     }
 
+    //静态内部类
     static class SubTask extends Thread {
         @Override
         public void run() {

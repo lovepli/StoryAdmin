@@ -18,10 +18,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -143,4 +140,21 @@ public class LoginController extends BaseController{
         return result;
     }
 
+    /**
+     * 配置hsiro默认登录界面地址，前后端分离中登录界面跳转由前端路由控制，后台仅返回json数据
+     * @return
+     */
+    @GetMapping("/noLogin")
+    public Result noLogin(){
+       return  new Result(false, "当前用户未登录或登录信息已过期", null ,ResultEnum.PARAMETERS_MISSING.getCode());
+    }
+
+    /**
+     * 错误页面，认证不通过跳转(未授权页面跳转)
+     * @return
+     */
+    @GetMapping("/loginFail")
+    public Result loginFail(){
+        return  new Result(false, "本地登录认证失败", null ,ResultEnum.PARAMETERS_MISSING.getCode());
+    }
 }

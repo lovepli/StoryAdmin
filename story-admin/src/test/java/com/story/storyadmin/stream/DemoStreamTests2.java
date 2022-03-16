@@ -1,6 +1,8 @@
 package com.story.storyadmin.stream;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -441,6 +443,46 @@ public class DemoStreamTests2 {
         System.out.println("员工按性别分组情况：" + group);
         System.out.println("员工按性别、地区：" + group2);
     }
+
+    /**
+     * 分組求和另外一种写法，Map 骚操作之 merge() 的用法 https://mp.weixin.qq.com/s/M8bm6vt339VsnHUQsWO1-g
+     * merge() 可以这么理解：它将新的值赋值到 key （如果不存在）或更新给定的key 值对应的 value，
+     * 使用场景
+     * 这个使用场景相对来说还是比较多的，比如分组求和这类的操作，虽然 stream 中有相关 groupingBy() 方法，但如果你想在循环中做一些其他操作的时候，merge() 还是一个挺不错的选择的。
+     */
+    @Test
+    public void test15_2() throws JsonProcessingException {
+        List<Person> personList = new ArrayList<Person>();
+        personList.add(new Person("Tom", 8900, "male", "New York"));
+        personList.add(new Person("Jack", 7000, "male", "Washington"));
+        personList.add(new Person("Lily", 7800, "female", "Washington"));
+        personList.add(new Person("Anni", 8200, "female", "New York"));
+        personList.add(new Person("Owen", 9500, "male", "New York"));
+        personList.add(new Person("Alisa", 7900, "female", "New York"));
+
+        // 按照性别分组求薪资总和
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String,Integer> personSalaryMap = new HashMap<>();
+        personList.forEach(person -> {
+            if(personSalaryMap.containsKey(person.getSex())){
+                personSalaryMap.put(person.getSex(),personSalaryMap.get(person.getSex())+person.getSalary());
+            }else {
+                personSalaryMap.put(person.getSex(),person.getSalary());
+            }
+        });
+        System.out.println("1员工按性别分组求男女最大薪资总和：" +objectMapper.writeValueAsString(personSalaryMap));
+
+        // merge()简化方式：
+        Map<String,Integer> personSalaryMap2 = new HashMap<>();
+        personList.forEach(person ->
+            personSalaryMap2.merge(
+                    person.getSex(),
+                    person.getSalary(),
+                    Integer::sum));
+        System.out.println("2员工按性别分组求男女最大薪资总和：" +objectMapper.writeValueAsString(personSalaryMap2));
+    }
+
+
 
     /**
      * 6.4 接合(joining)

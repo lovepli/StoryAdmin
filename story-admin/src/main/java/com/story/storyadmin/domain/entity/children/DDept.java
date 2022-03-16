@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
+
 /**
  * @author: 59688
  * @date: 2021/7/9
@@ -33,8 +34,13 @@ public class DDept   extends Model<DDept>{
     @TableField("parent_id")
     private String parentId;
 
-        @Override
-        protected Serializable pkVal(){
+    // 增加属性20210915
+    /**部门地址 **/
+    @TableField("address")
+    private  String address;
+
+    @Override
+    protected Serializable pkVal(){
             return this.id;
         }
 }

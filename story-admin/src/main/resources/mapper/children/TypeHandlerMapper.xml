@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.storyadmin.mapper.children.TypeHandlerMapper">
+
+
+    <resultMap id="resultMap" type="com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.TypeHandlerDo">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="details" property="personDO" typeHandler="com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.ObjectJSONTypeHandler"/>
+        <result column="user_state" property="userStateEnum" typeHandler="com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.UserStateTypeHandler"/>
+        <result column="ids" property="ids" typeHandler="com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.SetTypeHandler"/>
+        <result column="contact" property="contact" typeHandler="com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.FastJsonTypeHandler"/>
+        <result column="gender" property="gender"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="int" resultMap="resultMap">
+        select id,create_time,details,user_state,ids,contact,gender
+        from test_type_handler
+        where id=#{param1};
+    </select>
+
+    <insert id="insert">
+        insert into test_type_handler(create_time,details,user_state,ids,contact,gender)
+        values (
+        #{createTime},
+        #{personDO, typeHandler=com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.ObjectJSONTypeHandler},
+        #{userStateEnum, typeHandler=com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.UserStateTypeHandler},
+        #{ids, typeHandler=com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.SetTypeHandler},
+        #{contact, typeHandler=com.story.storyadmin.domain.entity.children.myBatisTypeHandlerDO.FastJsonTypeHandler},
+        #{gender}
+        )
+    </insert>
+
+
+
+
+
+</mapper>

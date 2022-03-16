@@ -1,6 +1,8 @@
 # 配置端口
 server:
   port: 9430
+  #配置session过期时间
+  #session-timeout: 1800
   # 应用的访问路径（指定访问前缀）
 #  servlet:
 #    context-path: /storyAdmin
@@ -16,28 +18,51 @@ spring:
     charset: UTF-8
     suffix: .ftl
   # 20210524新增spring如下配置
-  # devtools config
+  #开启热部署
   devtools:
     restart:
       enabled: true # 设置开启热部署
       additional-paths: src/mian/java # 重启目录
       exclude: WEB-INF/** # WEB-INF下的文件内容不重启
-  # 文件上传配置 在springboot+tomcat架构下的文件上传校验，需做如下配置：
+  # 文件上传配置 在springboot+tomcat架构下的文件上传校验，需做如下配置文件上传的属性：
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
-  # 静态资源文件映射
+      enabled: true #是否支持多文件上传
+      file-size-threshold: 20MB #文件写入磁盘的阈值
+      max-file-size: 100MB #上传文件的最大值
+      max-request-size: 100MB #最大请求文件的大小
+#     location: #上传文件的保存地址
+#     resolve-lazily: false #是否在文件或参数访问时延迟解析多部门请求
+
+# 静态资源文件映射
   mvc:
+    throw-exception-if-no-handler-found: true
     static-path-parrern: /static/**
+    #配置全局日期格式化
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8 #指定时间区域类型
+
 
 # mybatis-plus相关配置
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
   mapper-locations: classpath:/mapper/**/*.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.story.storyadmin.domain.entity
+  #MP别名包扫描路径，通过该属性可以给包中的类注册别名，实体扫描，多个package用逗号或者分号分隔
+#  typeAliasesPackage: com.story.storyadmin.domain.entity
+  type-aliases-package: com.story.storyadmin.domain.entity
   mapperClassScan: com.story.storyadmin.mapper
+  type-handlers-package: com.story.storyadmin.myBatisTypeHandler
+  # MP配置扫描通用枚举 #支持通配符 *或者;分割
+  type-enums-package: com.story.storyadmin.enumerator.globalEnum
+  # 启动时是否检查XML文件的存在，默认不检查
+  #check-config-location: false
+
+  #ExecutorType:SIMPLE 执行器类型不做特殊的事情，为每个语句的执行创建一个新的预处理语句（PreparedStatement）
+  #ExecutorType:REUSE 执行器类型会复用预处理语句（PreparedStatement）
+  #ExecutorType:REUSE 执行器类型会批量执行所有的更新语句
+#  executor-type: simple
+
   # 以下配置均有默认值,可以不设置
   global-config:
     #db-config:
@@ -69,8 +94,10 @@ mybatis-plus:
   configuration:
     # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
     map-underscore-to-camel-case: true
-    # 是否开启耳机缓存
+    # 是否开启二级缓存
     cache-enabled: false
+    #配置jdbcTypeForNull， oracle数据库必须配置
+    #jdbc-type-for-null: null
     # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
     # call-setters-on-nulls: true
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用

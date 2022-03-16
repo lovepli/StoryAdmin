@@ -36,13 +36,14 @@ public interface DCourseMapper extends BaseMapper<DCourse> {
 
     CourseDTO2 getCourse31(String id);
 
-
-
     CourseDTO4 getCourse34(String id);
-
 
     CourseDTO3 getCourse4(String id);
 
     DCourseBO getCourseAndStudentByCourseId(String id);
+
+    /**#####################图解sql题目################################### **/
+
+
 
 }

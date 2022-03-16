@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -15,11 +16,13 @@ import java.io.Serializable;
  * @description: 分数表
  */
 @Data
+@ToString
 @TableName("d_score")
 public class DScore extends Model<DScore> {
 
         private static final  long serialVersionUID =1L;
 
+        /** 学号**/
         @TableId(value = "ds_id",type = IdType.INPUT)
         private String id;
 
@@ -27,7 +30,7 @@ public class DScore extends Model<DScore> {
         @TableField("ds_score")
         private int score;
 
-        // 课程id
+         /** 课程id **/
         @TableField("course_id")
         private String courseId;
 

@@ -50,6 +50,8 @@ import java.util.*;
  * @author sunnj
  * @since 2018-12-28
  */
+// @Autowired和@Resource的区别是什么？https://www.zhihu.com/question/39356740
+//spring的@Service方法不允许出现相同的类名，因为spring会将类名的第一个字母转换成小写，作为bean的名称，比如：userService，而默认情况下bean名称必须是唯一的。
 @Service  //@Service用于标注业务层组件
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
@@ -185,6 +187,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //md5进行密码解码
         String encodePassword = ShiroKit.md5(user.getPassword(), SecurityConsts.LOGIN_SALT);
         if (!encodePassword.equals(userBean.getPassword())) {
+            logger.error("用户名或密码错误");
             return new Result(false, "用户名或密码错误", null, ResultEnum.PASSWORD_CHECK_INVALID.getCode());
         }
         //账号是否锁定

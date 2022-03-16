@@ -6,6 +6,8 @@
         <id     property="id"     column="d_id"     />
         <result property="name"   column="d_name"   />
         <result property="parentId"   column="parent_id"   />
+
+        <result property="address"   column="address"   />
     </resultMap>
 
     <resultMap type="com.story.storyadmin.domain.entity.children.onetomany.DDeptBO" id="DeptMap" extends="BaseResultMap">
@@ -16,6 +18,11 @@
 
     <sql id="Base_Column_List">
         d_id,d_name,parent_id
+    </sql>
+
+<!--20210915增加属性-->
+    <sql id="Base_Column_List_2">
+        d_id,d_name,parent_id,address
     </sql>
 
     <select id="selectDeptById" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -109,6 +116,34 @@
         LEFT JOIN d_employee PI
         ON P.d_id = PI.dept_id
     </select>
+
+
+    <resultMap type="com.story.storyadmin.domain.entity.children.DDeptPOJO" id="BaseResultMap2">
+        <id     property="id"     column="d_id"     />
+        <result property="name"   column="d_name"   />
+        <result property="parentId"   column="parent_id"   />
+    </resultMap>
+    <resultMap id="NodeTreeResult" type="com.story.storyadmin.domain.entity.children.DDeptPOJO" extends="BaseResultMap2">
+        <collection property="childNode" column="d_id" ofType="com.story.storyadmin.domain.entity.children.DDeptPOJO"
+                    javaType="java.util.ArrayList" select="com.story.storyadmin.mapper.children.DDeptMapper.nextNoteTree">
+        </collection>
+    </resultMap>
+
+<!--noteTree ：获取所有父级节点数据；
+    nextNoteTree：循环获取子节点数据，直到叶子节点结束；-->
+    <select id="nextNoteTree" resultMap="NodeTreeResult">
+        select
+        <include refid="Base_Column_List"/>
+        from d_dept
+        where parent_id=#{parentId}
+    </select>
+    <select id="noteTree" resultMap="NodeTreeResult">
+        select
+        <include refid="Base_Column_List"/>
+        from d_dept
+        where parent_id='0'
+    </select>
+
 
 
 

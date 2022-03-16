@@ -34,6 +34,13 @@ public class DCourse extends Model<DCourse> {
     @TableField("teacher_id")
     private String teacherId;
 
+    public DCourse(){}
+
+    public DCourse(String id, String name, String teacherId) {
+        this.id = id;
+        this.name = name;
+        this.teacherId = teacherId;
+    }
 
     @Override
     protected Serializable pkVal(){

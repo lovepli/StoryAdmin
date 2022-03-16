@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.story.storyadmin.mapper.dictonecode.DictOneMapper">
+
+
+	<insert id="save" parameterType="com.story.storyadmin.domain.entity.dictonecode.DictOneDO"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sys_dict2
+		(
+		`name`,
+		`value`,
+		`type`,
+		`description`,
+		`sort`,
+		`parent_id`,
+		`create_by`,
+		`create_date`,
+		`update_by`,
+		`update_date`,
+		`remarks`,
+		`del_flag`
+		)
+		values
+		(
+		#{name},
+		#{value},
+		#{type},
+		#{description},
+		#{sort},
+		#{parentId},
+		#{createBy},
+		#{createDate},
+		#{updateBy},
+		#{updateDate},
+		#{remarks},
+		#{delFlag}
+		)
+	</insert>
+
+    <insert id="insertDictLists" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_dict2
+        (
+        `name`,
+        `value`,
+        `type`,
+        `description`,
+        `sort`,
+        `parent_id`,
+        `create_by`,
+        `create_date`,
+        `update_by`,
+        `update_date`,
+        `remarks`,
+        `del_flag`
+        )
+        values
+        <foreach collection="list" item="dict" separator=",">
+            (
+            #{dict.name},
+            #{dict.value},
+            #{dict.type},
+            #{dict.description},
+            #{dict.sort},
+            #{dict.parentId},
+            #{dict.createBy},
+            #{dict.createDate},
+            #{dict.updateBy},
+            #{dict.updateDate},
+            #{dict.remarks},
+            #{dict.delFlag}
+            )
+        </foreach>
+    </insert>
+
+
+
+
+</mapper>

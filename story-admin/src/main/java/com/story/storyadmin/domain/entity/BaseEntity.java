@@ -102,6 +102,7 @@ public class BaseEntity<T extends Model<?>> extends Model<T> {
     }
 
     /**
+     * 实体类继承 Model 类，并重写 pkVal 方法。return当前类的主键
      * 序列化的ID
      * @return
      */

@@ -83,7 +83,7 @@ public class ShiroConfig {
         shiroFilter.setSecurityManager(securityManager);
 
         //1、添加自己的过滤器并且取名为jwt和logout
-        // 添加jwt过滤器和logout过滤器
+        // 添加自定义jwt过滤器和logout过滤器
         Map<String, Filter> filterMap = new HashMap<>();
         //这里没有使用@Bean注册JwtFilter对象到spring容器中，而是直接new对象
         filterMap.put("jwt", new JwtFilter(jwtProp,syncCacheService,jedisUtils));
@@ -92,6 +92,10 @@ public class ShiroConfig {
 
         //2、自定义url过滤规则
         /**
+         *          * shiro 拦截配置说明：
+         *          * anon:匿名拦截器，即不需要登录即可访问，一般用于静态资源过滤，登录入口
+         *          * anthc：如果没有登录会跳到相应的登录页面
+         *          * user:用户拦截器，用户已经身份验证/记住我登录的都可以访问
          *
         //动态配置拦截器注入
         Map<String, String> filterRuleMap = new HashMap<>(16);
@@ -104,6 +108,8 @@ public class ShiroConfig {
         filterRuleMap.put("/", "anon");
         filterRuleMap.put("/captchaImage", "anon");
         filterRuleMap.put("/user/login", "anon");
+        //配置静态资源过滤
+        filterRuleMap.put("/static/**", "anon");
         filterRuleMap.put("/logout", "logout");
         filterRuleMap.put("/swagger-ui.html", "anon");
         filterRuleMap.put("/swagger-resources/**", "anon");
@@ -114,7 +120,17 @@ public class ShiroConfig {
         filterRuleMap.put("/common/**", "anon");
         //filterRuleMap.put("/mongoDBTest/**", "anon");
         //filterRuleMap.put("/redisCacheTest/**", "anon");
+        //filterRuleMap.put("/dictThreadTest/**", "anon");
+        filterRuleMap.put("/fangshua/**", "anon");
         filterRuleMap.put("/**", "jwt");
+       // filterRuleMap.put("/**", "authc"); //对所有用户进行验证（所有url必须认证通过之后才可访问，一般将/**放置在拦截的最下方）
+
+        // loginUrl：没有登录的用户请求需要登录的页面时自动跳转到登录页面。
+        //shiroFilter.setLoginUrl("/user/noLogin");
+        //unauthorizedUrl：没有权限默认跳转的页面，登录的用户访问了没有被授权的资源自动跳转到的页面。
+        //shiroFilter.setUnauthorizedUrl("/user/loginFail");
+        // successUrl：登录成功默认跳转页面，不配置则跳转至”/”，可以不配置，直接通过代码进行处理。
+        //shiroFilter.setSuccessUrl("");
 
         shiroFilter.setFilterChainDefinitionMap(filterRuleMap);
 

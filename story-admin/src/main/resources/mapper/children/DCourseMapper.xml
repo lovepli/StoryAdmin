@@ -2,11 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.story.storyadmin.mapper.children.DCourseMapper">
 
+<!--Mybatis 强大的结果映射器ResultMap知识点https://mp.weixin.qq.com/s/dnT2f62YLr-TeSMHdqvc2g-->
+<!--一、resultMap的映射方式-->
+<!--    1、以下resultMap的映射方式的是通过 Getter 和 Setter 方法进行注入，也就是实体类必须有无参构造，对应属性必须有Getter 和 Setter 方法。-->
     <resultMap type="com.story.storyadmin.domain.entity.children.DCourse" id="BaseResultMap">
         <id     property="id"     column="c_id"     />
         <result property="name"   column="c_name"   />
         <result property="teacherId"  column="teacher_id"   />
     </resultMap>
+
+<!--2、Getter 和 Setter 方法进行注入是我们最常用的方式。但是 Mybatis 同样支持构造注入，如果 Employee 存在有参构造方法，则resultMap的映射方式可以下面这样写-->
+    <resultMap type="com.story.storyadmin.domain.entity.children.DCourse" id="DCourseConstructorMap">
+        <constructor>
+            <idArg column="c_id" javaType="String" name="id"/>
+            <arg column="c_name" javaType="String" name="name"/>
+            <arg column="teacher_id" javaType="String" name="teacherId"/>
+        </constructor>
+    </resultMap>
+
+<!--二、resultMap的继承-->
+<!--三、resultMap的一对一关联-->
+<!--四、resultMap的一对多关联-->
+<!--五、resultMap的鉴别器（其实也可以用魔数来实现，不妨尝试实现下）-->
+
 
     <sql id="Base_Column_List">
         c_id,c_name,teacher_id
@@ -216,6 +234,11 @@ select:使用另一个查询封装的结果-->
             <result property="sex"  column="s_sex"   />
         </collection>
     </resultMap>
+
+
+    <!--#####################################################图sql题目##############################################################-->
+
+
 
 
 

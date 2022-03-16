@@ -2,6 +2,7 @@ package com.story.storyadmin.web.async;
 
 import com.story.storyadmin.constant.enumtype.ResultEnum;
 import com.story.storyadmin.domain.vo.Result;
+import com.story.storyadmin.service.async.AsyncService;
 import com.story.storyadmin.utils.ApplicationContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopContext;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +27,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  * @description: SpringBoot 中异步调用的使用
  */
 @Slf4j
-@RestController
-@RequestMapping("/app")
+//@RestController
+//@RequestMapping("/app")
 public class EmailController {
+
   // 获取ApplicationContext对象方式有多种,这种最简单,其它的大家自行了解一下
   @Autowired
   private ApplicationContext applicationContext;
@@ -145,4 +148,7 @@ public class EmailController {
    * <p>其实我们的注入对象都是从 Spring 容器中给当前 Spring 组件进行成员变量的赋值，由于某些类使用了 AOP 注解，那么实际上在 Spring
    * 容器中实际存在的是它的代理对象。那么我们就可以通过上下文获取自己的代理对象调用异步方法。
    */
+
+
+
 }
